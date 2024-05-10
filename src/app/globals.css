@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply outline-none;
+  }
+
+  body {
+    @apply overflow-x-hidden overflow-y-visible;
+  }
+}
+
+@layer components {
+  .body-scrollbar::-webkit-scrollbar,
+  .custom-scrollbar::-webkit-scrollbar {
+    @apply w-[10px] bg-white;
+  }
+
+  .body-scrollbar::-webkit-scrollbar-thumb,
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply border-y-0 border-x border-solid border-white transition duration-300 ease-in-out bg-[#cacaca] hover:bg-neutral-400;
+  }
+
+  .invisible-scrollbar {
+    scrollbar-width: none;
+  }
+
+  .invisible-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .overflow-hidden {
+    overflow: hidden;
+  }
+}
