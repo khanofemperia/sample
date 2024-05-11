@@ -1,5 +1,6 @@
 import { TbChevronLeft, TbChevronRight, TbChevronDown } from "react-icons/tb";
 import { PiShoppingCartSimpleBold } from "react-icons/pi";
+import { MdOutlineEdit } from "react-icons/md";
 import {
   HiOutlineSearch,
   HiX,
@@ -17,3 +18,4 @@ export const ChevronDownIcon = TbChevronDown;
 export const HamburgerMenuIcon = HiOutlineMenu;
 export const ArrowLeftIcon = HiArrowLeft;
 export const ArrowRightIcon = HiArrowRight;
+export const EditIcon = MdOutlineEdit;

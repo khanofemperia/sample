@@ -349,7 +349,6 @@ export function NewProductOverlay() {
                             )}
                         </div>
                         <div className="w-full h-9 border-t overflow-hidden">
-                          {/* https://i.pinimg.com/564x/71/5c/35/715c35df0db25fdee482c48e6aa797aa.jpg */}
                           <input
                             type="text"
                             name="poster"

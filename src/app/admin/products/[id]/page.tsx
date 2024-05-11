@@ -1,3 +1,133 @@
+import { EditIcon } from "@/icons";
+import Image from "next/image";
+
 export default function EditProduct({ params }: { params: { id: string } }) {
-  return <div>Edit Product</div>;
+  return (
+    <>
+      <div className="max-w-[768px] flex flex-col gap-10 px-5">
+        <div>
+          <p className="text-sm mb-4">
+            Important for SEO: a name that includes target keywords in the first
+            four words, a short URL with three or four keywords, and prices that
+            help your business grow while making customers feel they're getting
+            a good deal.
+          </p>
+          <div className="w-full shadow rounded-xl bg-white">
+            <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
+              <h2 className="font-semibold text-xl">Basic details</h2>
+              <button className="w-9 h-9 rounded-full flex items-center justify-center transition duration-300 ease-in-out active:bg-lightgray">
+                <EditIcon size={20} />
+              </button>
+            </div>
+            <div className="flex flex-col gap-5 p-5 pt-4">
+              <div>
+                <h3 className="text-sm font-semibold mb-2">Category</h3>
+                <div className="w-max max-w-full h-9 px-3 rounded-md bg-lightgray flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
+                  Shoes
+                </div>
+              </div>
+              <div>
+                <h3 className="text-sm font-semibold mb-2">Name</h3>
+                <div className="w-max max-w-full h-9 px-3 rounded-md bg-lightgray flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
+                  Trendy Outdoor Waterproof Anti Slip Durable Women's Rain
+                  Boots, Solid Color Garden Shoes
+                </div>
+              </div>
+              <div>
+                <h3 className="text-sm font-semibold mb-2">Slug</h3>
+                <div className="w-max max-w-full h-9 px-3 rounded-md bg-lightgray flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
+                  womens-rain-boots-waterproof-ankle-boots-96665
+                </div>
+              </div>
+              <div>
+                <h3 className="text-sm font-semibold mb-2">Price</h3>
+                <div className="w-max max-w-full h-9 px-3 rounded-md bg-lightgray flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
+                  $29.99
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <p className="text-sm mb-4">
+            Images that show off your product, helping people see its features
+            and quality. They grab attention and let customers imagine owning
+            it.
+          </p>
+          <div className="w-full shadow rounded-xl bg-white">
+            <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
+              <h2 className="font-semibold text-xl">Visuals</h2>
+            </div>
+            <div className="flex flex-col gap-5 p-5">
+              <div className="border rounded-xl">
+                <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
+                  <h3 className="text-sm font-semibold">Poster</h3>
+                  <button className="w-9 h-9 rounded-full flex items-center justify-center transition duration-300 ease-in-out active:bg-lightgray">
+                    <EditIcon size={20} />
+                  </button>
+                </div>
+                <div className="p-5">
+                  <div className="w-full max-w-[280px] rounded-xl aspect-square flex items-center justify-center overflow-hidden">
+                    <Image
+                      src="https://img.kwcdn.com/product/fancy/cea70fe7-e0e2-4c7b-b75c-817dac438fff.jpg?imageView2/2/w/800/q/70/format/webp"
+                      alt="Trendy Outdoor Waterproof Anti Slip Durable Women's Rain Boots, Solid Color Garden Shoes"
+                      width={280}
+                      height={280}
+                      priority
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="border rounded-xl">
+                <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
+                  <h3 className="text-sm font-semibold">Images</h3>
+                  <button className="w-9 h-9 rounded-full flex items-center justify-center transition duration-300 ease-in-out active:bg-lightgray">
+                    <EditIcon size={20} />
+                  </button>
+                </div>
+                <div className="p-5 flex flex-wrap gap-2">
+                  <div className="max-w-[148px] lg:max-w-[210px] w-[calc(50%-4px)] rounded-xl aspect-square flex items-center justify-center overflow-hidden">
+                    <Image
+                      src="https://img.kwcdn.com/product/fancy/cea70fe7-e0e2-4c7b-b75c-817dac438fff.jpg?imageView2/2/w/800/q/70/format/webp"
+                      alt="Trendy Outdoor Waterproof Anti Slip Durable Women's Rain Boots, Solid Color Garden Shoes"
+                      width={210}
+                      height={210}
+                      priority
+                    />
+                  </div>
+                  <div className="max-w-[148px] lg:max-w-[210px] w-[calc(50%-4px)] rounded-xl aspect-square flex items-center justify-center overflow-hidden">
+                    <Image
+                      src="https://img.kwcdn.com/product/fancy/6049195d-f932-4973-8676-7463c4a0a984.jpg?imageView2/2/w/800/q/70/format/webp"
+                      alt="Trendy Outdoor Waterproof Anti Slip Durable Women's Rain Boots, Solid Color Garden Shoes"
+                      width={210}
+                      height={210}
+                      priority
+                    />
+                  </div>
+                  <div className="max-w-[148px] lg:max-w-[210px] w-[calc(50%-4px)] rounded-xl aspect-square flex items-center justify-center overflow-hidden">
+                    <Image
+                      src="https://img.kwcdn.com/product/fancy/c82abc4f-4598-4e06-9430-e0ba6e166ca7.jpg?imageView2/2/w/800/q/70/format/webp"
+                      alt="Trendy Outdoor Waterproof Anti Slip Durable Women's Rain Boots, Solid Color Garden Shoes"
+                      width={210}
+                      height={210}
+                      priority
+                    />
+                  </div>
+                  <div className="max-w-[148px] lg:max-w-[210px] w-[calc(50%-4px)] rounded-xl aspect-square flex items-center justify-center overflow-hidden">
+                    <Image
+                      src="https://img.kwcdn.com/product/fancy/b5b65d3f-7858-49b1-9378-688be8f870a9.jpg?imageView2/2/w/800/q/70/format/webp"
+                      alt="Trendy Outdoor Waterproof Anti Slip Durable Women's Rain Boots, Solid Color Garden Shoes"
+                      width={280}
+                      height={280}
+                      priority
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }

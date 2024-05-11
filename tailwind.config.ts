@@ -28,6 +28,8 @@ const config: Config = {
         "lightgray-dimmed": "#e5e5e5",
       },
       boxShadow: {
+        DEFAULT:
+          "0px 1.8px 4px rgba(0,0,0,0.2), 0px 0px 3px rgba(0,0,0,0.1)",
         "thick-bottom": "#21212140 0px 3px 2px 0px, #E5E5E5 0px 0px 1px 1px",
         dropdown: "#00000040 0px 4px 8px -2px, #00000014 0px 0px 0px 1px",
       },

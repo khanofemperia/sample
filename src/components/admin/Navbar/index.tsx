@@ -5,7 +5,7 @@ import PageNav from "./PageNav";
 export default function Navbar() {
   return (
     <nav className="w-full h-14 fixed top-0 z-10 shadow-[0px_1px_2px_#DDDDDD] bg-lightgray">
-      <div className="max-w-screen-lg w-full h-full pl-5 pr-[10px] mx-auto flex items-center justify-between">
+      <div className="max-w-screen-lg w-full h-full pl-5 pr-[10px] lg:p-0 mx-auto flex items-center justify-between">
         <div className="h-full flex items-center gap-5">
           <PageNav />
           <div className="hidden h-full lg:flex lg:gap-4 *:h-full *:flex *:items-center *:px-1 *:relative *:before:content-[''] *:before:w-full *:before:h-[1px] *:before:absolute *:before:bottom-[-1px] *:before:left-0 *:before:right-0">
