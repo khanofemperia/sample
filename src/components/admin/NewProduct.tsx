@@ -4,7 +4,7 @@ import { CreateProductAction } from "@/actions/create-product";
 import AlertMessage from "@/components/shared/AlertMessage";
 import { capitalizeFirstLetter, isValidRemoteImage } from "@/libraries/utils";
 import { FormEvent, useState, useEffect, useRef } from "react";
-import Spinner from "@/elements/Spinners/white";
+import Spinner from "@/elements/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
 import { useNavbarMenuStore } from "@/zustand/admin/navbarMenuStore";
 import { ArrowLeftIcon, ChevronDownIcon, CloseIcon } from "@/icons";

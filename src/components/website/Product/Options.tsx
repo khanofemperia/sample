@@ -9,7 +9,7 @@ import { productInternationalSizes } from "@/libraries/utils";
 import { formatNumberWithCommas } from "@/libraries/utils";
 import { useAlertStore } from "@/zustand/website/alertStore";
 import { useEffect, useState, useTransition } from "react";
-import SpinnerWhite from "@/elements/Spinners/white";
+import SpinnerWhite from "@/elements/Spinners/White";
 
 type ProductInfoType = {
   colors: { name: string; image: string }[] | null;

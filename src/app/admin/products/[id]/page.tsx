@@ -1,3 +1,4 @@
+import DataChip from "@/elements/DataChip";
 import { EditIcon } from "@/icons";
 import Image from "next/image";
 
@@ -268,7 +269,32 @@ export default function EditProduct({ params }: { params: { id: string } }) {
                       truly, Tara!
                     </p>
                   </div>
-                 </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <p className="text-sm mb-4 md:max-w-[85%]">
+            Choose whether your product is a work-in-progress (draft) or ready
+            to be seen (published), and decide if you want shoppers to see it
+            (visible) or keep it private (hidden).
+          </p>
+          <div className="w-full max-w-[400px] shadow rounded-xl bg-white">
+            <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
+              <h2 className="font-semibold text-xl">Settings</h2>
+              <button className="w-9 h-9 rounded-full flex items-center justify-center transition duration-300 ease-in-out active:bg-lightgray">
+                <EditIcon size={20} />
+              </button>
+            </div>
+            <div className="flex flex-col gap-5 p-5">
+              <div>
+                <h3 className="font-semibold text-sm mb-2">Status</h3>
+                <DataChip value="published" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-sm mb-2">Visibility</h3>
+                <DataChip value="visible" />
               </div>
             </div>
           </div>
