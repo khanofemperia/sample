@@ -1,8 +1,20 @@
+import {
+  BasicDetailsOverlay,
+  BasicDetailsButton,
+} from "@/components/admin/EditProduct/BasicDetailsOverlay";
 import DataChip from "@/elements/DataChip";
 import { EditIcon } from "@/icons";
+import { fetchData } from "@/libraries/utils";
 import Image from "next/image";
 
-export default function EditProduct({ params }: { params: { id: string } }) {
+export default async function EditProduct({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const product = await fetchData<ProductType>(`api/products/${params.id}`);
+  console.log(product);
+
   return (
     <>
       <div className="max-w-[768px] flex flex-col gap-10 px-5">
@@ -16,9 +28,7 @@ export default function EditProduct({ params }: { params: { id: string } }) {
           <div className="w-full shadow rounded-xl bg-white">
             <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
               <h2 className="font-semibold text-xl">Basic details</h2>
-              <button className="w-9 h-9 rounded-full flex items-center justify-center transition duration-300 ease-in-out active:bg-lightgray">
-                <EditIcon size={20} />
-              </button>
+              <BasicDetailsButton />
             </div>
             <div className="flex flex-col gap-5 p-5 pt-4">
               <div>
@@ -300,6 +310,7 @@ export default function EditProduct({ params }: { params: { id: string } }) {
           </div>
         </div>
       </div>
+      {/* <BasicDetailsOverlay data={{category, name, slug, price}} /> */}
     </>
   );
 }

@@ -1,6 +1,47 @@
 import { customAlphabet } from "nanoid";
 import { REMOTE_PATTERNS } from "./config";
 
+/**
+ * Fetches data from a specified API endpoint.
+ *
+ * @template DataType - The type of data expected from the API response.
+ * @param {string} path - The path to the API endpoint (e.g., '/api/products', 'api/articles/123').
+ * @param {string[]} [fields] - An optional array of field names to be included in the API response.
+ *
+ * @example
+ * // Fetch products with specific fields
+ * const products = await fetchData<ProductType>('/api/products', ['id', 'name', 'price']);
+ * console.log(products);
+ *
+ * @example
+ * // Fetch an article with all fields
+ * const article = await fetchData<ArticleType>('api/articles/123');
+ * console.log(article);
+ */
+export async function fetchData<DataType>(path: string, fields?: string[]): Promise<DataType> {
+  const baseUrl = 'http://localhost:3000';
+  const cleanedPath = path.replace(/^\/+|\/+$/g, ''); 
+
+  if (!cleanedPath) {
+    throw new Error('Path cannot be empty');
+  }
+
+  const normalizedPath = cleanedPath.startsWith('/') ? cleanedPath.slice(1) : `/${cleanedPath}`;
+  const url = fields
+    ? `${baseUrl}/${normalizedPath}?fields=${fields.join(",")}`
+    : `${baseUrl}/${normalizedPath}`;
+
+  const response = await fetch(url, {
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch data from ${url}`);
+  }
+
+  return response.json();
+}
+
 export function generateId() {
   const nanoid = customAlphabet("1234567890", 5);
   return nanoid();

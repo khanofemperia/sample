@@ -21,19 +21,19 @@ export async function GET(request: NextRequest) {
 
   const fields = query.split(",");
   const products = snapshot.docs.map((doc) => {
-    const productData = doc.data();
+    const data = doc.data();
     const selectedFields: Partial<ProductType> = {};
 
     fields.forEach((field) => {
-      if (productData.hasOwnProperty(field)) {
-        selectedFields[field as keyof ProductType] = productData[field];
+      if (data.hasOwnProperty(field)) {
+        selectedFields[field as keyof ProductType] = data[field];
       }
     });
 
     return {
       id: doc.id,
       ...selectedFields,
-      last_updated: productData["last_updated"],
+      last_updated: data["last_updated"],
     };
   });
 

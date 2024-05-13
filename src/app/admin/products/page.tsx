@@ -1,5 +1,5 @@
 import { NewProductOverlay } from "@/components/admin/NewProduct";
-import { formatNumberWithCommas } from "@/libraries/utils";
+import { fetchData, formatNumberWithCommas } from "@/libraries/utils";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -20,14 +20,18 @@ async function getProducts(): Promise<ProductType[]> {
 }
 
 export default async function Products() {
-  const products = await getProducts();
+  const products = await fetchData<ProductType[]>("/api/products", [
+    "id",
+    "name",
+    "price",
+  ]);
 
   return (
     <>
       <div className="mx-auto flex flex-wrap justify-start px-5 md:px-0 md:w-[762px] lg:w-[1016px]">
         {products.map(({ id, name, price, poster }, index) => (
           <Link
-          key={index}
+            key={index}
             href={`/admin/products/${id}`}
             className="aspect-square w-1/2 min-[425px]:w-[calc(100%/3)] md:w-[254px] pt-2 pb-[6px] px-5 select-none transition duration-200 ease-in-out active:bg-blue-100 lg:hover:bg-blue-100"
           >
