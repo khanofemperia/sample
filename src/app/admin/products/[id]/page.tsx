@@ -6,14 +6,20 @@ import DataChip from "@/elements/DataChip";
 import { EditIcon } from "@/icons";
 import { fetchData } from "@/libraries/utils";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 
 export default async function EditProduct({
   params,
 }: {
   params: { id: string };
 }) {
-  const product = await fetchData<ProductType>(`api/products/${params.id}`);
-  console.log(product);
+  const product = await fetchData<ProductType | null>(
+    `api/products/${params.id}0`
+  );
+
+  if (!product) {
+    notFound();
+  }
 
   return (
     <>

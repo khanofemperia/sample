@@ -10,10 +10,7 @@ export async function GET(
   const snapshot = await getDoc(documentRef);
 
   if (!snapshot.exists()) {
-    return NextResponse.json({
-      message: "Product not found",
-      product: null,
-    });
+    return NextResponse.json(null);
   }
 
   const data = snapshot.data();
@@ -36,8 +33,5 @@ export async function GET(
     ...selectedFields,
   };
 
-  return NextResponse.json({
-    message: "Get product",
-    product: product,
-  });
+  return NextResponse.json(product);
 }
