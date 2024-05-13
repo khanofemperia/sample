@@ -111,7 +111,7 @@ export function formatDate(date: Date) {
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
-export function formatNumberWithCommas(num: string | number): string {
+export function formatThousands(num: string | number): string {
   const numString = typeof num === "number" ? num.toString() : num;
 
   if (!/^-?\d*\.?\d*$/.test(numString)) {

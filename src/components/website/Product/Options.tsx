@@ -6,7 +6,7 @@ import { ChevronLeftIcon, ChevronRightIcon, CloseIcon } from "@/icons";
 import { useOverlayStore } from "@/zustand/website/overlayStore";
 import { productInternationalSizes } from "@/libraries/utils";
 // import { AddToCartAction } from "@/actions/add-to-cart";
-import { formatNumberWithCommas } from "@/libraries/utils";
+import { formatThousands } from "@/libraries/utils";
 import { useAlertStore } from "@/zustand/website/alertStore";
 import { useEffect, useState, useTransition } from "react";
 import SpinnerWhite from "@/elements/Spinners/White";
@@ -440,7 +440,7 @@ export default function ProductOptions({
             {isPending ? (
               <SpinnerWhite size={28} />
             ) : (
-              `Add to Cart - $${formatNumberWithCommas(productInfo.price)}`
+              `Add to Cart - $${formatThousands(productInfo.price)}`
             )}
           </button>
         </div>

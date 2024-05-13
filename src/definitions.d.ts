@@ -54,3 +54,5 @@ type CollectionType = {
   date_created: string;
   last_updated: string;
 };
+
+type ChipValueType = "published" | "draft" | "visible" | "hidden";

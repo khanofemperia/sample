@@ -4,22 +4,36 @@ import {
 } from "@/components/admin/EditProduct/BasicDetailsOverlay";
 import DataChip from "@/elements/DataChip";
 import { EditIcon } from "@/icons";
-import { fetchData } from "@/libraries/utils";
+import { fetchData, formatThousands } from "@/libraries/utils";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import styles from "./styles.module.css";
 
 export default async function EditProduct({
   params,
 }: {
   params: { id: string };
 }) {
-  const product = await fetchData<ProductType | null>(
-    `api/products/${params.id}0`
-  );
+  const data = await fetchData<ProductType | null>(`api/products/${params.id}`);
 
-  if (!product) {
+  if (!data) {
     notFound();
   }
+
+  const {
+    id,
+    category,
+    name,
+    slug,
+    price,
+    poster,
+    images,
+    sizes,
+    colors,
+    description,
+    status,
+    visibility,
+  } = data;
 
   return (
     <>
@@ -40,26 +54,25 @@ export default async function EditProduct({
               <div>
                 <h3 className="text-sm font-semibold mb-2">Category</h3>
                 <div className="w-max max-w-full h-9 px-4 rounded-full bg-lightgray flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
-                  Shoes
+                  {category}
                 </div>
               </div>
               <div>
                 <h3 className="text-sm font-semibold mb-2">Name</h3>
                 <div className="w-max max-w-full h-9 px-4 rounded-full bg-lightgray flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
-                  Trendy Outdoor Waterproof Anti Slip Durable Women's Rain
-                  Boots, Solid Color Garden Shoes
+                  {name}
                 </div>
               </div>
               <div>
                 <h3 className="text-sm font-semibold mb-2">Slug</h3>
                 <div className="w-max max-w-full h-9 px-4 rounded-full bg-lightgray flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
-                  womens-rain-boots-waterproof-ankle-boots-96665
+                  {slug}-{id}
                 </div>
               </div>
               <div>
                 <h3 className="text-sm font-semibold mb-2">Price</h3>
                 <div className="w-max max-w-full h-9 px-4 rounded-full bg-lightgray flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
-                  $29.99
+                  ${formatThousands(price)}
                 </div>
               </div>
             </div>
@@ -86,8 +99,8 @@ export default async function EditProduct({
                 <div className="p-5">
                   <div className="w-full max-w-[280px] rounded-xl aspect-square flex items-center justify-center overflow-hidden">
                     <Image
-                      src="https://img.kwcdn.com/product/fancy/cea70fe7-e0e2-4c7b-b75c-817dac438fff.jpg?imageView2/2/w/800/q/70/format/webp"
-                      alt="Trendy Outdoor Waterproof Anti Slip Durable Women's Rain Boots, Solid Color Garden Shoes"
+                      src={poster}
+                      alt={name}
                       width={280}
                       height={280}
                       priority
@@ -103,42 +116,24 @@ export default async function EditProduct({
                   </button>
                 </div>
                 <div className="p-5 flex flex-wrap gap-2">
-                  <div className="max-w-[148px] lg:max-w-[210px] w-[calc(50%-4px)] rounded-xl aspect-square flex items-center justify-center overflow-hidden">
-                    <Image
-                      src="https://img.kwcdn.com/product/fancy/cea70fe7-e0e2-4c7b-b75c-817dac438fff.jpg?imageView2/2/w/800/q/70/format/webp"
-                      alt="Trendy Outdoor Waterproof Anti Slip Durable Women's Rain Boots, Solid Color Garden Shoes"
-                      width={210}
-                      height={210}
-                      priority
-                    />
-                  </div>
-                  <div className="max-w-[148px] lg:max-w-[210px] w-[calc(50%-4px)] rounded-xl aspect-square flex items-center justify-center overflow-hidden">
-                    <Image
-                      src="https://img.kwcdn.com/product/fancy/6049195d-f932-4973-8676-7463c4a0a984.jpg?imageView2/2/w/800/q/70/format/webp"
-                      alt="Trendy Outdoor Waterproof Anti Slip Durable Women's Rain Boots, Solid Color Garden Shoes"
-                      width={210}
-                      height={210}
-                      priority
-                    />
-                  </div>
-                  <div className="max-w-[148px] lg:max-w-[210px] w-[calc(50%-4px)] rounded-xl aspect-square flex items-center justify-center overflow-hidden">
-                    <Image
-                      src="https://img.kwcdn.com/product/fancy/c82abc4f-4598-4e06-9430-e0ba6e166ca7.jpg?imageView2/2/w/800/q/70/format/webp"
-                      alt="Trendy Outdoor Waterproof Anti Slip Durable Women's Rain Boots, Solid Color Garden Shoes"
-                      width={210}
-                      height={210}
-                      priority
-                    />
-                  </div>
-                  <div className="max-w-[148px] lg:max-w-[210px] w-[calc(50%-4px)] rounded-xl aspect-square flex items-center justify-center overflow-hidden">
-                    <Image
-                      src="https://img.kwcdn.com/product/fancy/b5b65d3f-7858-49b1-9378-688be8f870a9.jpg?imageView2/2/w/800/q/70/format/webp"
-                      alt="Trendy Outdoor Waterproof Anti Slip Durable Women's Rain Boots, Solid Color Garden Shoes"
-                      width={280}
-                      height={280}
-                      priority
-                    />
-                  </div>
+                  {!images ? (
+                    <p className="italic text-gray">Nothing yet</p>
+                  ) : (
+                    images.map((url, index) => (
+                      <div
+                        key={index}
+                        className="max-w-[148px] lg:max-w-[210px] w-[calc(50%-4px)] rounded-xl aspect-square flex items-center justify-center overflow-hidden"
+                      >
+                        <Image
+                          src={url}
+                          alt={name}
+                          width={210}
+                          height={210}
+                          priority
+                        />
+                      </div>
+                    ))
+                  )}
                 </div>
               </div>
             </div>
@@ -154,90 +149,61 @@ export default async function EditProduct({
             <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
               <h2 className="font-semibold text-xl">Options</h2>
             </div>
-            <div className="flex flex-col gap-5 p-5">
-              <div className="border rounded-xl">
-                <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
-                  <h3 className="text-sm font-semibold">Sizes</h3>
-                  <button className="w-9 h-9 rounded-full flex items-center justify-center transition duration-300 ease-in-out active:bg-lightgray">
-                    <EditIcon size={20} />
-                  </button>
+            <div className="p-5">
+              {sizes || colors ? (
+                <div className="flex flex-col gap-5 *:border *:rounded-xl">
+                  {sizes && (
+                    <div>
+                      <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
+                        <h3 className="text-sm font-semibold">Sizes</h3>
+                        <button className="w-9 h-9 rounded-full flex items-center justify-center transition duration-300 ease-in-out active:bg-lightgray">
+                          <EditIcon size={20} />
+                        </button>
+                      </div>
+                      <div className="p-5">
+                        <div className="w-full max-w-[508px] flex flex-wrap gap-2 *:h-9 *:min-w-14 *:px-4 *:rounded-full *:flex *:items-center *:justify-center *:bg-lightgray">
+                          {sizes.entry_labels.map((size, index) => (
+                            <span key={index}>{size.name}</span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {colors && (
+                    <div>
+                      <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
+                        <h3 className="text-sm font-semibold">Colors</h3>
+                        <button className="w-9 h-9 rounded-full flex items-center justify-center transition duration-300 ease-in-out active:bg-lightgray">
+                          <EditIcon size={20} />
+                        </button>
+                      </div>
+                      <div className="p-5 flex flex-wrap gap-2">
+                        {colors.map((color, index) => (
+                          <div
+                            key={index}
+                            className="max-w-[148px] lg:max-w-[210px] w-[calc(50%-4px)] rounded-xl border flex flex-col items-center justify-center overflow-hidden"
+                          >
+                            <div className="w-full aspect-square">
+                              <Image
+                                src={color.image}
+                                alt={color.name}
+                                width={210}
+                                height={210}
+                                priority
+                              />
+                            </div>
+                            <div className="w-max max-w-full h-9 px-3 border-t flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
+                              {color.name}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
-                <div className="p-5">
-                  <div className="w-full max-w-[508px] flex flex-wrap gap-2 *:h-9 *:min-w-14 *:px-4 *:rounded-full *:flex *:items-center *:justify-center *:bg-lightgray">
-                    <span>2</span>
-                    <span>4</span>
-                    <span>6</span>
-                    <span>8/10</span>
-                    <span>14</span>
-                  </div>
-                </div>
-              </div>
-              <div className="border rounded-xl">
-                <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
-                  <h3 className="text-sm font-semibold">Colors</h3>
-                  <button className="w-9 h-9 rounded-full flex items-center justify-center transition duration-300 ease-in-out active:bg-lightgray">
-                    <EditIcon size={20} />
-                  </button>
-                </div>
-                <div className="p-5 flex flex-wrap gap-2">
-                  <div className="max-w-[148px] lg:max-w-[210px] w-[calc(50%-4px)] rounded-xl border flex flex-col items-center justify-center overflow-hidden">
-                    <div className="w-full aspect-square">
-                      <Image
-                        src="https://img.kwcdn.com/product/fancy/cea70fe7-e0e2-4c7b-b75c-817dac438fff.jpg?imageView2/2/w/800/q/70/format/webp"
-                        alt="Trendy Outdoor Waterproof Anti Slip Durable Women's Rain Boots, Solid Color Garden Shoes"
-                        width={210}
-                        height={210}
-                        priority
-                      />
-                    </div>
-                    <div className="w-max max-w-full h-9 px-3 border-t flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
-                      Beige
-                    </div>
-                  </div>
-                  <div className="max-w-[148px] lg:max-w-[210px] w-[calc(50%-4px)] rounded-xl border flex flex-col items-center justify-center overflow-hidden">
-                    <div className="w-full aspect-square">
-                      <Image
-                        src="https://img.kwcdn.com/product/fancy/6049195d-f932-4973-8676-7463c4a0a984.jpg?imageView2/2/w/800/q/70/format/webp"
-                        alt="Trendy Outdoor Waterproof Anti Slip Durable Women's Rain Boots, Solid Color Garden Shoes"
-                        width={210}
-                        height={210}
-                        priority
-                      />
-                    </div>
-                    <div className="w-max max-w-full h-9 px-3 border-t flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
-                      Camel
-                    </div>
-                  </div>
-                  <div className="max-w-[148px] lg:max-w-[210px] w-[calc(50%-4px)] rounded-xl border flex flex-col items-center justify-center overflow-hidden">
-                    <div className="w-full aspect-square">
-                      <Image
-                        src="https://img.kwcdn.com/product/fancy/c82abc4f-4598-4e06-9430-e0ba6e166ca7.jpg?imageView2/2/w/800/q/70/format/webp"
-                        alt="Trendy Outdoor Waterproof Anti Slip Durable Women's Rain Boots, Solid Color Garden Shoes"
-                        width={210}
-                        height={210}
-                        priority
-                      />
-                    </div>
-                    <div className="w-max max-w-full h-9 px-3 border-t flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
-                      Black
-                    </div>
-                  </div>
-                  <div className="max-w-[148px] lg:max-w-[210px] w-[calc(50%-4px)] rounded-xl border flex flex-col items-center justify-center overflow-hidden">
-                    <div className="w-full aspect-square">
-                      <Image
-                        src="https://img.kwcdn.com/product/fancy/b5b65d3f-7858-49b1-9378-688be8f870a9.jpg?imageView2/2/w/800/q/70/format/webp"
-                        alt="Trendy Outdoor Waterproof Anti Slip Durable Women's Rain Boots, Solid Color Garden Shoes"
-                        width={210}
-                        height={210}
-                        priority
-                      />
-                    </div>
-                    <div className="w-max max-w-full h-9 px-3 border-t flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
-                      Black & Red
-                    </div>
-                  </div>
-                </div>
-              </div>
+              ) : (
+                <p className="italic text-gray">Nothing yet</p>
+              )}
             </div>
           </div>
         </div>
@@ -256,37 +222,16 @@ export default async function EditProduct({
               </button>
             </div>
             <div className="p-5">
-              <div className="bg-lightgray p-5 rounded-2xl">
-                <div className="line-clamp-4">
-                  <div>
-                    <p>
-                      <strong>Feeling Stressed? Overwhelmed?**</strong>
-                    </p>
-                  </div>
-                  <div>
-                    <br />
-                  </div>
-                  <div>
-                    <p>
-                      Are you a busy woman juggling a million things? Feeling
-                      like life's one big to-do list?{" "}
-                      <strong>We've all been there!</strong>
-                    </p>
-                  </div>
-                  <div>
-                    <br />
-                  </div>
-                  <div>
-                    <p>
-                      But what if there was a way to find{" "}
-                      <strong>inner peace, heal your relationships,</strong> and
-                      even <strong>get fit,</strong> all in one amazing class?
-                      Introducing <strong>Therapeutic Yoga</strong> with yours
-                      truly, Tara!
-                    </p>
-                  </div>
+              {!description ? (
+                <p className="italic text-gray">Nothing yet</p>
+              ) : (
+                <div className="bg-lightgray p-5 rounded-2xl">
+                  <div
+                    className={`${styles.description} line-clamp-5`}
+                    dangerouslySetInnerHTML={{ __html: description || "" }}
+                  />
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
@@ -306,11 +251,11 @@ export default async function EditProduct({
             <div className="flex flex-col gap-5 p-5">
               <div>
                 <h3 className="font-semibold text-sm mb-2">Status</h3>
-                <DataChip value="published" />
+                <DataChip value={status as ChipValueType} />
               </div>
               <div>
                 <h3 className="font-semibold text-sm mb-2">Visibility</h3>
-                <DataChip value="visible" />
+                <DataChip value={visibility as ChipValueType} />
               </div>
             </div>
           </div>

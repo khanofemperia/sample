@@ -1,8 +1,6 @@
 import clsx from "clsx";
 import { capitalizeFirstLetter } from "@/libraries/utils";
 
-type ChipValueType = "published" | "draft" | "visible" | "hidden";
-
 type DataChipType = {
   value: ChipValueType;
 };
@@ -22,5 +20,5 @@ export default function DataChip({ value }: DataChipType) {
     "bg-custom-gray/10 border-custom-gray/15 text-custom-gray"
   );
 
-  return <div className={chipColor}>{capitalizeFirstLetter(value)}</div>;
+  return <div className={chipColor}>{capitalizeFirstLetter(value.toLowerCase())}</div>;
 }
