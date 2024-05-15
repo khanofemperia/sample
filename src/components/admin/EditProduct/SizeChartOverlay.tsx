@@ -270,7 +270,7 @@ export function SizeChartOverlay({ chart }: { chart: SizeChartType | null }) {
                 {/*  */}
                 <div>
                   <div>
-                    <div className="flex flex-row gap-5 mb-4">
+                    <div className="flex flex-col gap-5 mb-5">
                       <div className="flex flex-col gap-2">
                         <label
                           className="font-semibold text-sm"
@@ -324,20 +324,24 @@ export function SizeChartOverlay({ chart }: { chart: SizeChartType | null }) {
                     </button>
                   </div>
                   {showChart && (
-                    <div className="mt-8 flex flex-col gap-4">
+                    <div className="mt-8 flex flex-col gap-5">
                       <div>
-                        <h3 className="heading-size-h3 mb-4">Inches</h3>
-                        <div className="border border-neutral-200 w-max rounded overflow-hidden">
+                        <h2 className="font-semibold text-sm mb-4">Inches</h2>
+                        <div className="w-full border border-neutral-200 rounded overflow-hidden">
                           <table className="w-max">
                             <thead className="h-10 border-b border-neutral-200 bg-gray">
                               <tr>
                                 {columns.map((column, index) => (
                                   <th
                                     key={index}
-                                    className={`font-semibold leading-5 text-[15px] text-nowrap px-5 ${
+                                    className={`px-5 text-nowrap text-sm ${
                                       index === columns.length - 1
                                         ? ""
                                         : "border-r border-neutral-200"
+                                    } ${
+                                      index === 0
+                                        ? "sticky left-0 bg-neutral-100"
+                                        : ""
                                     }`}
                                   >
                                     {column.name}
@@ -352,10 +356,10 @@ export function SizeChartOverlay({ chart }: { chart: SizeChartType | null }) {
                                   className={`h-10 ${
                                     entryIndex === entries.length - 1
                                       ? ""
-                                      : " border-b border-neutral-200"
+                                      : "border-b"
                                   }`}
                                 >
-                                  <td className="font-semibold leading-5 text-[15px] text-center border-r border-neutral-200 w-[100px] bg-gray">
+                                  <td className="text-sm text-center border-r w-[100px] sticky left-0 bg-neutral-100">
                                     {entry.size}
                                   </td>
                                   {columns
@@ -402,8 +406,10 @@ export function SizeChartOverlay({ chart }: { chart: SizeChartType | null }) {
                         </div>
                       </div>
                       <div>
-                        <h3 className="heading-size-h3 mb-4">Centimeters</h3>
-                        <div className="border border-neutral-200 w-max rounded overflow-hidden">
+                        <h2 className="font-semibold text-sm mb-4">
+                          Centimeters
+                        </h2>
+                        <div className="w-full border border-neutral-200 rounded overflow-hidden">
                           <table className="w-max bg-white">
                             <thead className="h-10 border-b border-neutral-200 bg-gray">
                               <tr>
