@@ -7,6 +7,7 @@ import {
   HiOutlineMenu,
   HiArrowLeft,
   HiArrowRight,
+  HiMinus,
 } from "react-icons/hi";
 
 export const CloseIcon = HiX;
@@ -19,3 +20,5 @@ export const HamburgerMenuIcon = HiOutlineMenu;
 export const ArrowLeftIcon = HiArrowLeft;
 export const ArrowRightIcon = HiArrowRight;
 export const EditIcon = MdOutlineEdit;
+export const MinusIcon = HiMinus;
+

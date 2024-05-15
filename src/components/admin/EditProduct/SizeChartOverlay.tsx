@@ -17,12 +17,12 @@ type DataType = {
   price: string;
 };
 
-export function BasicDetailsButton() {
+export function SizeChartButton() {
   const { showOverlay } = useOverlayStore();
 
   const { pageName, overlayName } = useOverlayStore((state) => ({
     pageName: state.pages.editProduct.name,
-    overlayName: state.pages.editProduct.overlays.basicDetails.name,
+    overlayName: state.pages.editProduct.overlays.sizes.name,
   }));
 
   return (
@@ -36,7 +36,7 @@ export function BasicDetailsButton() {
   );
 }
 
-export function BasicDetailsOverlay({ data }: { data: DataType }) {
+export function SizeChartOverlay({ data }: { data: DataType }) {
   const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
@@ -74,8 +74,8 @@ export function BasicDetailsOverlay({ data }: { data: DataType }) {
   const { pageName, isOverlayVisible, overlayName } = useOverlayStore(
     (state) => ({
       pageName: state.pages.editProduct.name,
-      overlayName: state.pages.editProduct.overlays.basicDetails.name,
-      isOverlayVisible: state.pages.editProduct.overlays.basicDetails.isVisible,
+      overlayName: state.pages.editProduct.overlays.sizes.name,
+      isOverlayVisible: state.pages.editProduct.overlays.sizes.isVisible,
     })
   );
 
@@ -136,12 +136,12 @@ export function BasicDetailsOverlay({ data }: { data: DataType }) {
   const onHideOverlay = () => {
     setLoading(false);
     hideOverlay({ pageName, overlayName });
-    setSelectedCategory("Select");
+    setSelectedCategory(data.category);
     setFormData({
-      category: "",
-      name: "",
-      slug: "",
-      price: "",
+      category: data.category,
+      name: data.name,
+      slug: data.slug,
+      price: data.price,
     });
   };
 
@@ -159,7 +159,7 @@ export function BasicDetailsOverlay({ data }: { data: DataType }) {
               <div className="w-full h-[calc(100vh-188px)] md:h-auto">
                 <div className="md:hidden flex items-end justify-center pt-4 pb-2 absolute top-0 left-0 right-0 bg-white">
                   <div className="relative flex justify-center items-center w-full h-7">
-                    <h2 className="font-semibold text-lg">Basic details</h2>
+                    <h2 className="font-semibold text-lg">Sizes</h2>
                     <button
                       onClick={onHideOverlay}
                       type="button"
@@ -177,7 +177,7 @@ export function BasicDetailsOverlay({ data }: { data: DataType }) {
                   >
                     <ArrowLeftIcon className="fill-custom-blue" size={18} />
                     <span className="font-semibold text-sm text-custom-blue">
-                      Basic details
+                      Sizes
                     </span>
                   </button>
                   <button

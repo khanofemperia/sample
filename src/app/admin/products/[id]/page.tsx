@@ -8,6 +8,11 @@ import { fetchData, formatThousands } from "@/libraries/utils";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import styles from "./styles.module.css";
+import { PosterButton, PosterOverlay } from "@/components/admin/EditProduct/PosterOverlay";
+import { ImagesButton, ImagesOverlay } from "@/components/admin/EditProduct/ImagesOverlay";
+import { SettingsButton, SettingsOverlay } from "@/components/admin/EditProduct/SettingsOverlay";
+import { SizeChartButton, SizeChartOverlay } from "@/components/admin/EditProduct/SizeChartOverlay";
+import { ColorsButton, ColorsOverlay } from "@/components/admin/EditProduct/ColorsOverlay";
 
 export default async function EditProduct({
   params,
@@ -92,9 +97,7 @@ export default async function EditProduct({
               <div className="border rounded-xl">
                 <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
                   <h3 className="text-sm font-semibold">Poster</h3>
-                  <button className="w-9 h-9 rounded-full flex items-center justify-center transition duration-300 ease-in-out active:bg-lightgray">
-                    <EditIcon size={20} />
-                  </button>
+                  <PosterButton />
                 </div>
                 <div className="p-5">
                   <div className="w-full max-w-[280px] rounded-xl aspect-square flex items-center justify-center overflow-hidden">
@@ -111,9 +114,7 @@ export default async function EditProduct({
               <div className="border rounded-xl">
                 <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
                   <h3 className="text-sm font-semibold">Images</h3>
-                  <button className="w-9 h-9 rounded-full flex items-center justify-center transition duration-300 ease-in-out active:bg-lightgray">
-                    <EditIcon size={20} />
-                  </button>
+                  <ImagesButton />
                 </div>
                 <div className="p-5 flex flex-wrap gap-2">
                   {!images ? (
@@ -156,9 +157,7 @@ export default async function EditProduct({
                     <div>
                       <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
                         <h3 className="text-sm font-semibold">Sizes</h3>
-                        <button className="w-9 h-9 rounded-full flex items-center justify-center transition duration-300 ease-in-out active:bg-lightgray">
-                          <EditIcon size={20} />
-                        </button>
+                        <SizeChartButton />
                       </div>
                       <div className="p-5">
                         <div className="w-full max-w-[508px] flex flex-wrap gap-2 *:h-9 *:min-w-14 *:px-4 *:rounded-full *:flex *:items-center *:justify-center *:bg-lightgray">
@@ -173,9 +172,7 @@ export default async function EditProduct({
                     <div>
                       <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
                         <h3 className="text-sm font-semibold">Colors</h3>
-                        <button className="w-9 h-9 rounded-full flex items-center justify-center transition duration-300 ease-in-out active:bg-lightgray">
-                          <EditIcon size={20} />
-                        </button>
+                        <ColorsButton />
                       </div>
                       <div className="p-5 flex flex-wrap gap-2">
                         {colors.map((color, index) => (
@@ -244,9 +241,7 @@ export default async function EditProduct({
           <div className="w-full max-w-[400px] shadow rounded-xl bg-white">
             <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
               <h2 className="font-semibold text-xl">Settings</h2>
-              <button className="w-9 h-9 rounded-full flex items-center justify-center transition duration-300 ease-in-out active:bg-lightgray">
-                <EditIcon size={20} />
-              </button>
+              <SettingsButton />
             </div>
             <div className="flex flex-col gap-5 p-5">
               <div>
@@ -261,7 +256,12 @@ export default async function EditProduct({
           </div>
         </div>
       </div>
-      {/* <BasicDetailsOverlay data={{category, name, slug, price}} /> */}
+      <BasicDetailsOverlay data={{ category, name, slug, price }} />
+      <PosterOverlay data={{ category, name, slug, price, poster }} />
+      <ImagesOverlay data={{ category, name, slug, price, images }} />
+      <SettingsOverlay data={{ category, name, slug, price }} />
+      <ColorsOverlay data={{ category, name, slug, price }} />
+      <SizeChartOverlay data={{ category, name, slug, price }} />
     </>
   );
 }
