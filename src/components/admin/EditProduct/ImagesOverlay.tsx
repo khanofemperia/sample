@@ -5,7 +5,13 @@ import { capitalizeFirstLetter, isValidRemoteImage } from "@/libraries/utils";
 import { FormEvent, useState, useEffect, useRef } from "react";
 import Spinner from "@/elements/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
-import { ArrowLeftIcon, ChevronDownIcon, CloseIcon, EditIcon, MinusIcon } from "@/icons";
+import {
+  ArrowLeftIcon,
+  ChevronDownIcon,
+  CloseIcon,
+  EditIcon,
+  MinusIcon,
+} from "@/icons";
 import clsx from "clsx";
 import Image from "next/image";
 import Overlay from "@/elements/Overlay";
@@ -179,8 +185,11 @@ export function ImagesOverlay({ data }: { data: DataType }) {
                           />
                         )}
                       </div>
-                      <button className="h-8 w-8 rounded-full flex items-center justify-center absolute top-2 right-2 transition duration-300 ease-in-out bg-custom-red/70 active:bg-custom-red">
-                      <MinusIcon className="fill-white" size={20} />
+                      <button
+                        onClick={() => removeImage(index)}
+                        className="h-8 w-8 rounded-full flex items-center justify-center absolute top-2 right-2 transition duration-300 ease-in-out bg-custom-red/70 active:bg-custom-red"
+                      >
+                        <MinusIcon className="fill-white" size={20} />
                       </button>
                     </div>
                     <div className="w-full h-9 border-t">
