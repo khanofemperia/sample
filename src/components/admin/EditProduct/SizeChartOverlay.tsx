@@ -266,208 +266,202 @@ export function SizeChartOverlay({ chart }: { chart: SizeChartType | null }) {
                   )}
                 </button>
               </div>
-              <div className="w-full h-full mt-[52px] md:mt-0 p-5 pb-28 md:pb-10 flex flex-col gap-5 overflow-x-hidden overflow-y-visible invisible-scrollbar md:overflow-hidden">
-                {/*  */}
+              <div className="w-full h-full mt-[52px] md:mt-0 p-5 pb-28 md:pb-10 overflow-x-hidden overflow-y-visible invisible-scrollbar md:overflow-hidden">
                 <div>
-                  <div>
-                    <div className="flex flex-col gap-5 mb-5">
-                      <div className="flex flex-col gap-2">
-                        <label
-                          className="font-semibold text-sm"
-                          htmlFor="columns"
-                        >
-                          Columns
-                        </label>
-                        <input
-                          onChange={handleColumnsInputChange}
-                          defaultValue={
-                            columns.length
-                              ? columns.map((column) => column.name).join(", ")
-                              : ""
-                          }
-                          className="w-full h-9 px-3 rounded-md transition duration-300 ease-in-out border focus:border-custom-blue"
-                          type="text"
-                          name="name"
-                          placeholder="Size, Length, etc."
-                          required
-                        />
-                      </div>
-                      <div className="flex flex-col gap-2">
-                        <label
-                          className="font-semibold text-sm"
-                          htmlFor="entryLabels"
-                        >
-                          Entry labels
-                        </label>
-                        <input
-                          onChange={handleEntryLabelsInputChange}
-                          defaultValue={
-                            entryLabels.length
-                              ? entryLabels
-                                  .map((label) => label.name)
-                                  .join(", ")
-                              : ""
-                          }
-                          className="w-full h-9 px-3 rounded-md transition duration-300 ease-in-out border focus:border-custom-blue"
-                          type="text"
-                          name="entryLabels"
-                          placeholder="S, M, L, etc."
-                          required
-                        />
-                      </div>
+                  <div className="flex flex-col gap-5 mb-5">
+                    <div className="flex flex-col gap-2">
+                      <label
+                        className="font-semibold text-sm"
+                        htmlFor="columns"
+                      >
+                        Columns
+                      </label>
+                      <input
+                        onChange={handleColumnsInputChange}
+                        defaultValue={
+                          columns.length
+                            ? columns.map((column) => column.name).join(", ")
+                            : ""
+                        }
+                        className="w-full h-9 px-3 rounded-md transition duration-300 ease-in-out border focus:border-custom-blue"
+                        type="text"
+                        name="name"
+                        placeholder="Size, Length, etc."
+                        required
+                      />
                     </div>
-                    <button
-                      onClick={createSizeChart}
-                      className="h-9 w-max px-3 rounded-full flex items-center justify-center transition duration-300 ease-in-out bg-lightgray active:bg-lightgray-dimmed"
-                    >
-                      Create Size Chart
-                    </button>
+                    <div className="flex flex-col gap-2">
+                      <label
+                        className="font-semibold text-sm"
+                        htmlFor="entryLabels"
+                      >
+                        Entry labels
+                      </label>
+                      <input
+                        onChange={handleEntryLabelsInputChange}
+                        defaultValue={
+                          entryLabels.length
+                            ? entryLabels.map((label) => label.name).join(", ")
+                            : ""
+                        }
+                        className="w-full h-9 px-3 rounded-md transition duration-300 ease-in-out border focus:border-custom-blue"
+                        type="text"
+                        name="entryLabels"
+                        placeholder="S, M, L, etc."
+                        required
+                      />
+                    </div>
                   </div>
-                  {showChart && (
-                    <div className="mt-8 flex flex-col gap-5">
-                      <div>
-                        <h2 className="font-semibold text-sm mb-4">Inches</h2>
-                        <div className="w-full border border-neutral-200 rounded overflow-hidden">
-                          <table className="w-max">
-                            <thead className="h-10 border-b border-neutral-200 bg-gray">
-                              <tr>
-                                {columns.map((column, index) => (
-                                  <th
-                                    key={index}
-                                    className={`px-5 text-nowrap text-sm ${
-                                      index === columns.length - 1
-                                        ? ""
-                                        : "border-r border-neutral-200"
-                                    } ${
-                                      index === 0
-                                        ? "sticky left-0 bg-neutral-100"
-                                        : ""
-                                    }`}
-                                  >
-                                    {column.name}
-                                  </th>
-                                ))}
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {entries.map((entry, entryIndex) => (
-                                <tr
-                                  key={entryIndex}
-                                  className={`h-10 ${
-                                    entryIndex === entries.length - 1
+                  <button
+                    onClick={createSizeChart}
+                    className="h-9 w-max px-3 rounded-full flex items-center justify-center transition duration-300 ease-in-out bg-lightgray active:bg-lightgray-dimmed"
+                  >
+                    Create Size Chart
+                  </button>
+                </div>
+                {showChart && (
+                  <div className="mt-8 flex flex-col gap-5 cursor-context-menu">
+                    <div>
+                      <h2 className="font-semibold text-sm mb-4">Inches</h2>
+                      <div className="border w-full max-w-[max-content] rounded overflow-y-hidden overflow-x-visible custom-x-scrollbar">
+                        <table className="w-max">
+                          <thead className="h-10 border-b border-neutral-200 bg-gray">
+                            <tr>
+                              {columns.map((column, index) => (
+                                <th
+                                  key={index}
+                                  className={`px-5 text-nowrap text-sm ${
+                                    index === columns.length - 1
                                       ? ""
-                                      : "border-b"
+                                      : "border-r"
+                                  } ${
+                                    index === 0
+                                      ? "sticky left-0 bg-neutral-100"
+                                      : ""
                                   }`}
                                 >
-                                  <td className="text-sm text-center border-r w-[100px] sticky left-0 bg-neutral-100">
-                                    {entry.size}
-                                  </td>
-                                  {columns
-                                    .slice(1)
-                                    .map((column, columnIndex) => (
-                                      <td
-                                        key={columnIndex}
-                                        className={`text-center w-[100px] ${
-                                          columnIndex === columns.length - 2
-                                            ? ""
-                                            : " border-r border-neutral-200"
-                                        }`}
-                                      >
-                                        <input
-                                          className="w-full h-[37px] px-3 outline-none text-center"
-                                          type="text"
-                                          placeholder="0"
-                                          value={
-                                            measurementInputs[
+                                  {column.name}
+                                </th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {entries.map((entry, entryIndex) => (
+                              <tr
+                                key={entryIndex}
+                                className={`h-10 ${
+                                  entryIndex === entries.length - 1
+                                    ? ""
+                                    : "border-b"
+                                }`}
+                              >
+                                <td className="text-sm text-center border-r w-[100px] sticky left-0 bg-neutral-100">
+                                  {entry.size}
+                                </td>
+                                {columns.slice(1).map((column, columnIndex) => (
+                                  <td
+                                    key={columnIndex}
+                                    className={`text-center w-[100px] ${
+                                      columnIndex === columns.length - 2
+                                        ? ""
+                                        : " border-r border-neutral-200"
+                                    }`}
+                                  >
+                                    <input
+                                      className="w-full h-[37px] px-3 outline-none text-center"
+                                      type="text"
+                                      placeholder="0"
+                                      value={
+                                        measurementInputs[
+                                          `${entryIndex}-${column.name}`
+                                        ] !== undefined
+                                          ? measurementInputs[
                                               `${entryIndex}-${column.name}`
-                                            ] !== undefined
-                                              ? measurementInputs[
-                                                  `${entryIndex}-${column.name}`
-                                                ]
-                                              : entry.measurements[
-                                                  column.name as keyof typeof entry.measurements
-                                                ]?.in === "0"
-                                              ? ""
-                                              : entry.measurements[
-                                                  column.name as keyof typeof entry.measurements
-                                                ]?.in || ""
-                                          }
-                                          onChange={handleMeasurementInputChange(
-                                            entryIndex,
-                                            column.name
-                                          )}
-                                        />
-                                      </td>
-                                    ))}
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                      <div>
-                        <h2 className="font-semibold text-sm mb-4">
-                          Centimeters
-                        </h2>
-                        <div className="w-full border border-neutral-200 rounded overflow-hidden">
-                          <table className="w-max bg-white">
-                            <thead className="h-10 border-b border-neutral-200 bg-gray">
-                              <tr>
-                                {columns.map((column, index) => (
-                                  <th
-                                    key={index}
-                                    className={`font-semibold leading-5 text-[15px] text-nowrap px-5 ${
-                                      index === columns.length - 1
-                                        ? ""
-                                        : "border-r border-neutral-200"
-                                    }`}
-                                  >
-                                    {column.name}
-                                  </th>
+                                            ]
+                                          : entry.measurements[
+                                              column.name as keyof typeof entry.measurements
+                                            ]?.in === "0"
+                                          ? ""
+                                          : entry.measurements[
+                                              column.name as keyof typeof entry.measurements
+                                            ]?.in || ""
+                                      }
+                                      onChange={handleMeasurementInputChange(
+                                        entryIndex,
+                                        column.name
+                                      )}
+                                    />
+                                  </td>
                                 ))}
                               </tr>
-                            </thead>
-                            <tbody>
-                              {entries.map((entry, entryIndex) => (
-                                <tr
-                                  key={entryIndex}
-                                  className={`h-10 ${
-                                    entryIndex === entries.length - 1
-                                      ? ""
-                                      : " border-b border-neutral-200"
-                                  }`}
-                                >
-                                  <td className="font-semibold leading-5 text-[15px] text-center border-r border-neutral-200 w-[100px] bg-gray">
-                                    {entry.size}
-                                  </td>
-                                  {columns
-                                    .slice(1)
-                                    .map((column, columnIndex) => (
-                                      <td
-                                        key={columnIndex}
-                                        className={`text-center w-[100px] ${
-                                          columnIndex === columns.length - 2
-                                            ? ""
-                                            : " border-r border-neutral-200"
-                                        }`}
-                                      >
-                                        {
-                                          entry.measurements[
-                                            column.name as keyof typeof entry.measurements
-                                          ]?.cm
-                                        }
-                                      </td>
-                                    ))}
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </div>
+                            ))}
+                          </tbody>
+                        </table>
                       </div>
                     </div>
-                  )}
-                </div>
-                {/*  */}
+                    <div>
+                      <h2 className="font-semibold text-sm mb-4">
+                        Centimeters
+                      </h2>
+                      <div className="border w-full max-w-[max-content] rounded overflow-y-hidden overflow-x-visible custom-x-scrollbar">
+                        <table className="w-max bg-white">
+                          <thead className="h-10 border-b border-neutral-200 bg-gray">
+                            <tr>
+                              {columns.map((column, index) => (
+                                <th
+                                  key={index}
+                                  className={`px-5 text-nowrap text-sm ${
+                                    index === columns.length - 1
+                                      ? ""
+                                      : "border-r"
+                                  } ${
+                                    index === 0
+                                      ? "sticky left-0 bg-neutral-100"
+                                      : ""
+                                  }`}
+                                >
+                                  {column.name}
+                                </th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {entries.map((entry, entryIndex) => (
+                              <tr
+                                key={entryIndex}
+                                className={`h-10 ${
+                                  entryIndex === entries.length - 1
+                                    ? ""
+                                    : " border-b"
+                                }`}
+                              >
+                                <td className="text-sm text-center border-r w-[100px] sticky left-0 bg-neutral-100">
+                                  {entry.size}
+                                </td>
+                                {columns.slice(1).map((column, columnIndex) => (
+                                  <td
+                                    key={columnIndex}
+                                    className={`text-center w-[100px] ${
+                                      columnIndex === columns.length - 2
+                                        ? ""
+                                        : " border-r border-neutral-200"
+                                    }`}
+                                  >
+                                    {
+                                      entry.measurements[
+                                        column.name as keyof typeof entry.measurements
+                                      ]?.cm
+                                    }
+                                  </td>
+                                ))}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
             <div className="md:hidden w-full pb-5 pt-2 px-5 absolute bottom-0">

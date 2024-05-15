@@ -23,6 +23,14 @@
     @apply rounded-full border-[2px] border-solid border-white transition duration-300 ease-in-out bg-[#bbbbbb] hover:bg-neutral-400;
   }
 
+  .custom-x-scrollbar::-webkit-scrollbar {
+    @apply h-[12px] rounded-full bg-white;
+  }
+
+  .custom-x-scrollbar::-webkit-scrollbar-thumb {
+    @apply rounded-full border-[2px] border-solid border-white transition duration-300 ease-in-out bg-[#bbbbbb] hover:bg-neutral-400;
+  }
+
   .invisible-scrollbar {
     scrollbar-width: none;
   }
