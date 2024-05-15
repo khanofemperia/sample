@@ -8,11 +8,26 @@ import { fetchData, formatThousands } from "@/libraries/utils";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import styles from "./styles.module.css";
-import { PosterButton, PosterOverlay } from "@/components/admin/EditProduct/PosterOverlay";
-import { ImagesButton, ImagesOverlay } from "@/components/admin/EditProduct/ImagesOverlay";
-import { SettingsButton, SettingsOverlay } from "@/components/admin/EditProduct/SettingsOverlay";
-import { SizeChartButton, SizeChartOverlay } from "@/components/admin/EditProduct/SizeChartOverlay";
-import { ColorsButton, ColorsOverlay } from "@/components/admin/EditProduct/ColorsOverlay";
+import {
+  PosterButton,
+  PosterOverlay,
+} from "@/components/admin/EditProduct/PosterOverlay";
+import {
+  ImagesButton,
+  ImagesOverlay,
+} from "@/components/admin/EditProduct/ImagesOverlay";
+import {
+  SettingsButton,
+  SettingsOverlay,
+} from "@/components/admin/EditProduct/SettingsOverlay";
+import {
+  SizeChartButton,
+  SizeChartOverlay,
+} from "@/components/admin/EditProduct/SizeChartOverlay";
+import {
+  ColorsButton,
+  ColorsOverlay,
+} from "@/components/admin/EditProduct/ColorsOverlay";
 
 export default async function EditProduct({
   params,
@@ -151,56 +166,56 @@ export default async function EditProduct({
               <h2 className="font-semibold text-xl">Options</h2>
             </div>
             <div className="p-5">
-              {sizes || colors ? (
-                <div className="flex flex-col gap-5 *:border *:rounded-xl">
-                  {sizes && (
-                    <div>
-                      <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
-                        <h3 className="text-sm font-semibold">Sizes</h3>
-                        <SizeChartButton />
-                      </div>
-                      <div className="p-5">
-                        <div className="w-full max-w-[508px] flex flex-wrap gap-2 *:h-9 *:min-w-14 *:px-4 *:rounded-full *:flex *:items-center *:justify-center *:bg-lightgray">
-                          {sizes.entry_labels.map((size, index) => (
-                            <span key={index}>{size.name}</span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  {colors && (
-                    <div>
-                      <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
-                        <h3 className="text-sm font-semibold">Colors</h3>
-                        <ColorsButton />
-                      </div>
-                      <div className="p-5 flex flex-wrap gap-2">
-                        {colors.map((color, index) => (
-                          <div
-                            key={index}
-                            className="max-w-[148px] lg:max-w-[210px] w-[calc(50%-4px)] rounded-xl border flex flex-col items-center justify-center overflow-hidden"
-                          >
-                            <div className="w-full aspect-square">
-                              <Image
-                                src={color.image}
-                                alt={color.name}
-                                width={210}
-                                height={210}
-                                priority
-                              />
-                            </div>
-                            <div className="w-max max-w-full h-9 px-3 border-t flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
-                              {color.name}
-                            </div>
-                          </div>
+              <div className="flex flex-col gap-5 *:border *:rounded-xl">
+                <div>
+                  <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
+                    <h3 className="text-sm font-semibold">Sizes</h3>
+                    <SizeChartButton />
+                  </div>
+                  <div className="p-5">
+                    {sizes?.entry_labels.length ? (
+                      <div className="w-full max-w-[508px] flex flex-wrap gap-2 *:h-9 *:min-w-14 *:px-4 *:rounded-full *:flex *:items-center *:justify-center *:bg-lightgray">
+                        {sizes.entry_labels.map((size, index) => (
+                          <span key={index}>{size.name}</span>
                         ))}
                       </div>
-                    </div>
-                  )}
+                    ) : (
+                      <p className="italic text-gray">Nothing yet</p>
+                    )}
+                  </div>
                 </div>
-              ) : (
-                <p className="italic text-gray">Nothing yet</p>
-              )}
+                <div>
+                  <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
+                    <h3 className="text-sm font-semibold">Colors</h3>
+                    <ColorsButton />
+                  </div>
+                  <div className="p-5 flex flex-wrap gap-2">
+                    {colors?.length ? (
+                      colors.map((color, index) => (
+                        <div
+                          key={index}
+                          className="max-w-[148px] lg:max-w-[210px] w-[calc(50%-4px)] rounded-xl border flex flex-col items-center justify-center overflow-hidden"
+                        >
+                          <div className="w-full aspect-square">
+                            <Image
+                              src={color.image}
+                              alt={color.name}
+                              width={210}
+                              height={210}
+                              priority
+                            />
+                          </div>
+                          <div className="w-max max-w-full h-9 px-3 border-t flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
+                            {color.name}
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="italic text-gray">Nothing yet</p>
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -260,8 +275,8 @@ export default async function EditProduct({
       <PosterOverlay data={{ category, name, slug, price, poster }} />
       <ImagesOverlay data={{ category, name, slug, price, images }} />
       <SettingsOverlay data={{ category, name, slug, price }} />
-      <ColorsOverlay data={{ category, name, slug, price }} />
-      <SizeChartOverlay data={{ category, name, slug, price }} />
+      <ColorsOverlay data={{ category, name, slug, price, colors }} />
+      <SizeChartOverlay chart={sizes} />
     </>
   );
 }
