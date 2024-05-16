@@ -69,20 +69,21 @@ export function isValidRemoteImage(url: string) {
   }
 }
 
-export function capitalizeFirstLetter(str: string) {
-  if (typeof str !== "string" || str.length === 0) {
-    return str;
+export function capitalizeFirstLetter(text: string) {
+  if (typeof text !== "string" || text.length === 0) {
+    return text;
   }
 
-  return str.charAt(0).toUpperCase() + str.slice(1);
+  const lowercaseText = text.toLowerCase();
+  return lowercaseText.charAt(0).toUpperCase() + lowercaseText.slice(1);
 }
 
-export function titleCase(str: string) {
-  if (typeof str !== "string" || str.length === 0) {
-    return str;
+export function titleCase(text: string) {
+  if (typeof text !== "string" || text.length === 0) {
+    return text;
   }
 
-  return str
+  return text
     .split(" ")
     .map((word) => capitalizeFirstLetter(word))
     .join(" ");

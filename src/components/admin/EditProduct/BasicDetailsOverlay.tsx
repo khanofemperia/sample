@@ -9,8 +9,10 @@ import { ArrowLeftIcon, ChevronDownIcon, CloseIcon, EditIcon } from "@/icons";
 import clsx from "clsx";
 import Image from "next/image";
 import Overlay from "@/elements/Overlay";
+import UpdateProductAction from "@/actions/update-product";
 
 type DataType = {
+  id: string;
   category: string;
   name: string;
   slug: string;
@@ -44,6 +46,7 @@ export function BasicDetailsOverlay({ data }: { data: DataType }) {
   const [selectedCategory, setSelectedCategory] = useState(data.category);
   const [categories, setCategories] = useState<CategoryType[]>([]);
   const [formData, setFormData] = useState({
+    id: data.id,
     category: data.category,
     name: data.name,
     slug: data.slug,
@@ -80,16 +83,18 @@ export function BasicDetailsOverlay({ data }: { data: DataType }) {
   );
 
   useEffect(() => {
-    if (isOverlayVisible) {
+    if (isOverlayVisible || showAlert) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "visible";
     }
 
     return () => {
-      document.body.style.overflow = "visible";
+      if (!isOverlayVisible && !showAlert) {
+        document.body.style.overflow = "visible";
+      }
     };
-  }, [isOverlayVisible]);
+  }, [isOverlayVisible, showAlert]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -121,8 +126,33 @@ export function BasicDetailsOverlay({ data }: { data: DataType }) {
     }));
   };
 
-  const handleSubmit = async (event: FormEvent) => {
+  const onHideOverlay = () => {
+    setLoading(false);
+    hideOverlay({ pageName, overlayName });
+  };
+
+  const hideAlertMessage = () => {
+    setShowAlert(false);
+    setAlertMessage("");
+  };
+
+  const handleSave = async (event: FormEvent) => {
     event.preventDefault();
+
+    setLoading(true);
+
+    try {
+      const message = await UpdateProductAction(formData);
+      setAlertMessage(message);
+      setShowAlert(true);
+    } catch (error) {
+      console.error(error);
+      setAlertMessage("Failed to update product");
+      setShowAlert(true);
+    } finally {
+      setLoading(false);
+      onHideOverlay();
+    }
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -133,35 +163,28 @@ export function BasicDetailsOverlay({ data }: { data: DataType }) {
     }));
   };
 
-  const onHideOverlay = () => {
-    setLoading(false);
-    hideOverlay({ pageName, overlayName });
-    setSelectedCategory("Select");
-    setFormData({
-      category: "",
-      name: "",
-      slug: "",
-      price: "",
-    });
-  };
-
-  const hideAlertMessage = () => {
-    setShowAlert(false);
-    setAlertMessage("");
-  };
-
   return (
     <>
       {isOverlayVisible && (
         <Overlay>
           <div className="absolute bottom-0 left-0 right-0 w-full h-[calc(100%-60px)] rounded-t-3xl overflow-hidden bg-white md:w-[500px] md:rounded-2xl md:shadow md:h-max md:mx-auto md:mt-20 md:mb-[50vh] md:relative md:bottom-auto md:left-auto md:right-auto md:top-auto md:-translate-x-0">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSave}>
               <div className="w-full h-[calc(100vh-188px)] md:h-auto">
                 <div className="md:hidden flex items-end justify-center pt-4 pb-2 absolute top-0 left-0 right-0 bg-white">
                   <div className="relative flex justify-center items-center w-full h-7">
                     <h2 className="font-semibold text-lg">Basic details</h2>
                     <button
-                      onClick={onHideOverlay}
+                      onClick={() => {
+                        hideOverlay({ pageName, overlayName });
+                        setSelectedCategory(data.category);
+                        setFormData({
+                          id: data.id,
+                          category: data.category,
+                          name: data.name,
+                          slug: data.slug,
+                          price: data.price,
+                        });
+                      }}
                       type="button"
                       className="w-7 h-7 rounded-full flex items-center justify-center absolute right-4 transition duration-300 ease-in-out bg-lightgray active:bg-lightgray-dimmed"
                     >
@@ -171,7 +194,17 @@ export function BasicDetailsOverlay({ data }: { data: DataType }) {
                 </div>
                 <div className="hidden md:flex md:items-center md:justify-between py-2 pr-4 pl-2">
                   <button
-                    onClick={onHideOverlay}
+                    onClick={() => {
+                      hideOverlay({ pageName, overlayName });
+                      setSelectedCategory(data.category);
+                      setFormData({
+                        id: data.id,
+                        category: data.category,
+                        name: data.name,
+                        slug: data.slug,
+                        price: data.price,
+                      });
+                    }}
                     type="button"
                     className="h-9 px-3 rounded-full flex items-center gap-1 transition duration-300 ease-in-out active:bg-lightgray"
                   >

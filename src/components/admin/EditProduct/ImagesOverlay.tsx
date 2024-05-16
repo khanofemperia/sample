@@ -16,12 +16,10 @@ import clsx from "clsx";
 import Image from "next/image";
 import Overlay from "@/elements/Overlay";
 import { HiOutlinePlus } from "react-icons/hi2";
+import UpdateProductAction from "@/actions/update-product";
 
 type DataType = {
-  category: string;
-  name: string;
-  slug: string;
-  price: string;
+  id: string;
   images: string[] | null;
 };
 
@@ -45,7 +43,6 @@ export function ImagesButton() {
 }
 
 export function ImagesOverlay({ data }: { data: DataType }) {
-  const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
@@ -62,26 +59,55 @@ export function ImagesOverlay({ data }: { data: DataType }) {
   );
 
   useEffect(() => {
-    if (isOverlayVisible) {
+    if (isOverlayVisible || showAlert) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "visible";
     }
 
     return () => {
-      document.body.style.overflow = "visible";
+      if (!isOverlayVisible && !showAlert) {
+        document.body.style.overflow = "visible";
+      }
     };
-  }, [isOverlayVisible]);
+  }, [isOverlayVisible, showAlert]);
 
   const onHideOverlay = () => {
     setLoading(false);
     hideOverlay({ pageName, overlayName });
-    setImages(data?.images ?? []);
   };
 
   const hideAlertMessage = () => {
     setShowAlert(false);
     setAlertMessage("");
+  };
+
+  const handleSave = async () => {
+    setLoading(true);
+    try {
+      const filteredImages = images.filter((image) => image !== "");
+
+      if (filteredImages.length === 0) {
+        setAlertMessage("No images added");
+        setShowAlert(true);
+        setImages(data?.images ?? []);
+      } else {
+        const message = await UpdateProductAction({
+          id: data.id,
+          images: filteredImages,
+        });
+        setAlertMessage(message);
+        setShowAlert(true);
+        setImages(filteredImages);
+      }
+    } catch (error) {
+      console.error(error);
+      setAlertMessage("Failed to update product");
+      setShowAlert(true);
+    } finally {
+      setLoading(false);
+      onHideOverlay();
+    }
   };
 
   const addImage = () => {
@@ -117,7 +143,10 @@ export function ImagesOverlay({ data }: { data: DataType }) {
                 <div className="relative flex justify-center items-center w-full h-7">
                   <h2 className="font-semibold text-lg">Images</h2>
                   <button
-                    onClick={onHideOverlay}
+                    onClick={() => {
+                      hideOverlay({ pageName, overlayName });
+                      setImages(data?.images ?? []);
+                    }}
                     type="button"
                     className="w-7 h-7 rounded-full flex items-center justify-center absolute right-4 transition duration-300 ease-in-out bg-lightgray active:bg-lightgray-dimmed"
                   >
@@ -127,7 +156,10 @@ export function ImagesOverlay({ data }: { data: DataType }) {
               </div>
               <div className="hidden md:flex md:items-center md:justify-between py-2 pr-4 pl-2">
                 <button
-                  onClick={onHideOverlay}
+                  onClick={() => {
+                    hideOverlay({ pageName, overlayName });
+                    setImages(data?.images ?? []);
+                  }}
                   type="button"
                   className="h-9 px-3 rounded-full flex items-center gap-1 transition duration-300 ease-in-out active:bg-lightgray"
                 >
@@ -137,7 +169,8 @@ export function ImagesOverlay({ data }: { data: DataType }) {
                   </span>
                 </button>
                 <button
-                  type="submit"
+                  onClick={handleSave}
+                  type="button"
                   disabled={loading}
                   className={clsx(
                     "relative h-9 w-max px-4 rounded-full overflow-hidden transition duration-300 ease-in-out text-white bg-custom-blue",
@@ -209,7 +242,8 @@ export function ImagesOverlay({ data }: { data: DataType }) {
             </div>
             <div className="md:hidden w-full pb-5 pt-2 px-5 absolute bottom-0">
               <button
-                type="submit"
+                onClick={handleSave}
+                type="button"
                 disabled={loading}
                 className={clsx(
                   "relative h-12 w-full rounded-full overflow-hidden transition duration-300 ease-in-out text-white bg-custom-blue",

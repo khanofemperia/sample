@@ -1,20 +1,16 @@
 "use client";
 
-import AlertMessage from "@/components/shared/AlertMessage";
-import { capitalizeFirstLetter, isValidRemoteImage } from "@/libraries/utils";
-import { FormEvent, useState, useEffect, useRef } from "react";
+import { capitalizeFirstLetter } from "@/libraries/utils";
+import { useState, useEffect, useRef } from "react";
 import Spinner from "@/elements/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
 import { ArrowLeftIcon, ChevronDownIcon, CloseIcon, EditIcon } from "@/icons";
 import clsx from "clsx";
-import Image from "next/image";
 import Overlay from "@/elements/Overlay";
 
 type DataType = {
-  category: string;
-  name: string;
-  slug: string;
-  price: string;
+  status: string;
+  visibility: string;
 };
 
 export function SettingsButton() {
@@ -37,20 +33,15 @@ export function SettingsButton() {
 }
 
 export function SettingsOverlay({ data }: { data: DataType }) {
-  const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
-  const [showAlert, setShowAlert] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(data.category);
-  const [categories, setCategories] = useState<CategoryType[]>([]);
-  const [formData, setFormData] = useState({
-    category: data.category,
-    name: data.name,
-    slug: data.slug,
-    price: data.price,
-  });
+  const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
+  const [isVisibilityDropdownOpen, setIsVisibilityDropdownOpen] =
+    useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [selectedStatus, setSelectedStatus] = useState(data.status);
+  const [selectedVisibility, setSelectedVisibility] = useState(data.visibility);
 
-  const categoryRef = useRef(null);
+  const statusRef = useRef(null);
+  const visibilityRef = useRef(null);
 
   const { hideOverlay } = useOverlayStore();
 
@@ -75,216 +66,98 @@ export function SettingsOverlay({ data }: { data: DataType }) {
   }, [isOverlayVisible]);
 
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (!categoryRef.current || !(event.target instanceof Node)) {
+    function clickOutsideStatus(event: MouseEvent) {
+      if (!statusRef.current || !(event.target instanceof Node)) {
         return;
       }
 
-      const targetNode = categoryRef.current as Node;
+      const targetNode = statusRef.current as Node;
 
       if (!targetNode.contains(event.target)) {
-        setIsCategoryDropdownOpen(false);
+        setIsStatusDropdownOpen(false);
       }
     }
 
-    document.addEventListener("mousedown", handleClickOutside);
+    function clickOutsideVisibility(event: MouseEvent) {
+      if (!visibilityRef.current || !(event.target instanceof Node)) {
+        return;
+      }
+
+      const targetNode = visibilityRef.current as Node;
+
+      if (!targetNode.contains(event.target)) {
+        setIsVisibilityDropdownOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", clickOutsideStatus);
+    document.addEventListener("mousedown", clickOutsideVisibility);
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", clickOutsideStatus);
+      document.removeEventListener("mousedown", clickOutsideVisibility);
     };
   }, []);
-
-  const handleCategorySelect = (category: string) => {
-    setSelectedCategory(category);
-    setIsCategoryDropdownOpen(false);
-
-    setFormData((prevData) => ({
-      ...prevData,
-      category: capitalizeFirstLetter(category),
-    }));
-  };
-
-  const handleSubmit = async (event: FormEvent) => {
-    event.preventDefault();
-  };
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
 
   const onHideOverlay = () => {
     setLoading(false);
     hideOverlay({ pageName, overlayName });
-    setSelectedCategory(data.category);
-    setFormData({
-      category: data.category,
-      name: data.name,
-      slug: data.slug,
-      price: data.price,
-    });
   };
 
-  const hideAlertMessage = () => {
-    setShowAlert(false);
-    setAlertMessage("");
+  const toggleStatusDropdown = () => {
+    setIsVisibilityDropdownOpen(false);
+    setIsStatusDropdownOpen((prevState) => !prevState);
+  };
+
+  const toggleVisibilityDropdown = () => {
+    setIsStatusDropdownOpen(false);
+    setIsVisibilityDropdownOpen((prevState) => !prevState);
+  };
+
+  const handleStatusSelect = (status: string) => {
+    setSelectedStatus(status);
+    setIsStatusDropdownOpen(false);
+  };
+
+  const handleVisibilitySelect = (visibility: string) => {
+    setSelectedVisibility(visibility);
+    setIsVisibilityDropdownOpen(false);
   };
 
   return (
     <>
       {isOverlayVisible && (
         <Overlay>
-          <div className="absolute bottom-0 left-0 right-0 w-full h-[calc(100%-60px)] rounded-t-3xl overflow-hidden bg-white md:w-[500px] md:rounded-2xl md:shadow md:h-max md:mx-auto md:mt-20 md:mb-[50vh] md:relative md:bottom-auto md:left-auto md:right-auto md:top-auto md:-translate-x-0">
-            <form onSubmit={handleSubmit}>
-              <div className="w-full h-[calc(100vh-188px)] md:h-auto">
-                <div className="md:hidden flex items-end justify-center pt-4 pb-2 absolute top-0 left-0 right-0 bg-white">
-                  <div className="relative flex justify-center items-center w-full h-7">
-                    <h2 className="font-semibold text-lg">Settings</h2>
-                    <button
-                      onClick={onHideOverlay}
-                      type="button"
-                      className="w-7 h-7 rounded-full flex items-center justify-center absolute right-4 transition duration-300 ease-in-out bg-lightgray active:bg-lightgray-dimmed"
-                    >
-                      <CloseIcon size={18} />
-                    </button>
-                  </div>
-                </div>
-                <div className="hidden md:flex md:items-center md:justify-between py-2 pr-4 pl-2">
+          <div className="absolute bottom-0 left-0 right-0 w-full h-[calc(100%-60px)] overflow-hidden md:overflow-visible rounded-t-3xl bg-white md:w-[500px] md:rounded-2xl md:shadow md:h-max md:mx-auto md:mt-20 md:mb-[50vh] md:relative md:bottom-auto md:left-auto md:right-auto md:top-auto md:-translate-x-0">
+            <div className="w-full">
+              <div className="md:hidden flex items-end justify-center pt-4 pb-2 absolute top-0 left-0 right-0 bg-white">
+                <div className="relative flex justify-center items-center w-full h-7">
+                  <h2 className="font-semibold text-lg">Settings</h2>
                   <button
                     onClick={onHideOverlay}
                     type="button"
-                    className="h-9 px-3 rounded-full flex items-center gap-1 transition duration-300 ease-in-out active:bg-lightgray"
+                    className="w-7 h-7 rounded-full flex items-center justify-center absolute right-4 transition duration-300 ease-in-out bg-lightgray active:bg-lightgray-dimmed"
                   >
-                    <ArrowLeftIcon className="fill-custom-blue" size={18} />
-                    <span className="font-semibold text-sm text-custom-blue">
-                      Settings
-                    </span>
+                    <CloseIcon size={18} />
                   </button>
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className={clsx(
-                      "relative h-9 w-max px-4 rounded-full overflow-hidden transition duration-300 ease-in-out text-white bg-custom-blue",
-                      {
-                        "bg-opacity-50": loading,
-                        "active:bg-custom-blue-dimmed": !loading,
-                      }
-                    )}
-                  >
-                    {loading ? (
-                      <div className="flex gap-1 items-center justify-center w-full h-full">
-                        <Spinner />
-                        <span className="text-white">Saving</span>
-                      </div>
-                    ) : (
-                      <span className="text-white">Save</span>
-                    )}
-                  </button>
-                </div>
-                <div className="w-full h-full mt-[52px] md:mt-0 p-5 pb-28 md:pb-10 flex flex-col gap-5 overflow-x-hidden overflow-y-visible invisible-scrollbar md:overflow-hidden">
-                  <div className="flex flex-col gap-2">
-                    <h2 className="font-semibold text-sm">Category</h2>
-                    <div ref={categoryRef} className="w-full h-9 relative">
-                      <button
-                        onClick={() =>
-                          setIsCategoryDropdownOpen((prevState) => !prevState)
-                        }
-                        type="button"
-                        className="h-9 w-full px-3 rounded-md flex items-center justify-between transition duration-300 ease-in-out bg-lightgray active:bg-lightgray-dimmed"
-                      >
-                        <span
-                          className={clsx({
-                            "text-gray": selectedCategory === "Select",
-                          })}
-                        >
-                          {selectedCategory}
-                        </span>
-                        <ChevronDownIcon
-                          className="-mr-[4px] stroke-gray"
-                          size={20}
-                        />
-                      </button>
-                      <div
-                        className={clsx("w-full absolute top-10 z-10", {
-                          hidden: !isCategoryDropdownOpen,
-                          block: isCategoryDropdownOpen,
-                        })}
-                      >
-                        <div className="overflow-hidden h-full max-h-[228px] overflow-x-hidden overflow-y-visible custom-scrollbar w-full py-[6px] flex flex-col gap-0 rounded-md shadow-dropdown bg-white">
-                          {categories.map((category, index) => (
-                            <div
-                              key={index}
-                              className="w-full min-h-9 h-9 flex items-center px-[12px] cursor-context-menu transition duration-300 ease-in-out hover:bg-lightgray"
-                              onClick={() =>
-                                handleCategorySelect(category.name)
-                              }
-                            >
-                              {category.name}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <label htmlFor="name" className="font-semibold text-sm">
-                      Name
-                    </label>
-                    <div className="w-full h-9 relative">
-                      <input
-                        type="text"
-                        name="name"
-                        placeholder="Denim Mini Skirt"
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        className="w-full h-9 px-3 rounded-md transition duration-300 ease-in-out border focus:border-custom-blue"
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <label htmlFor="slug" className="font-semibold text-sm">
-                      Slug
-                    </label>
-                    <div className="w-full h-9 relative">
-                      <input
-                        type="text"
-                        name="slug"
-                        placeholder="denim-mini-skirt"
-                        value={formData.slug}
-                        onChange={handleInputChange}
-                        className="w-full h-9 px-3 rounded-md transition duration-300 ease-in-out border focus:border-custom-blue"
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <label htmlFor="price" className="font-semibold text-sm">
-                      Price
-                    </label>
-                    <div className="w-full h-9 relative">
-                      <input
-                        type="text"
-                        name="price"
-                        placeholder="34.99"
-                        value={formData.price}
-                        onChange={handleInputChange}
-                        className="w-full h-9 px-3 rounded-md transition duration-300 ease-in-out border focus:border-custom-blue"
-                        required
-                      />
-                    </div>
-                  </div>
                 </div>
               </div>
-              <div className="md:hidden w-full pb-5 pt-2 px-5 absolute bottom-0">
+              <div className="hidden md:flex md:items-center md:justify-between py-2 pr-4 pl-2">
+                <button
+                  onClick={onHideOverlay}
+                  type="button"
+                  className="h-9 px-3 rounded-full flex items-center gap-1 transition duration-300 ease-in-out active:bg-lightgray"
+                >
+                  <ArrowLeftIcon className="fill-custom-blue" size={18} />
+                  <span className="font-semibold text-sm text-custom-blue">
+                    Settings
+                  </span>
+                </button>
                 <button
                   type="submit"
                   disabled={loading}
                   className={clsx(
-                    "relative h-12 w-full rounded-full overflow-hidden transition duration-300 ease-in-out text-white bg-custom-blue",
+                    "relative h-9 w-max px-4 rounded-full overflow-hidden transition duration-300 ease-in-out text-white bg-custom-blue",
                     {
                       "bg-opacity-50": loading,
                       "active:bg-custom-blue-dimmed": !loading,
@@ -301,15 +174,120 @@ export function SettingsOverlay({ data }: { data: DataType }) {
                   )}
                 </button>
               </div>
-            </form>
+              <div className="w-full max-w-[425px] mx-auto h-full mt-[52px] md:m-0 p-5 pb-28 md:pb-10 flex flex-col md:flex-row gap-5">
+                <div className="flex flex-col gap-2">
+                  <h2 className="font-semibold text-sm">Status</h2>
+                  <div className="w-full md:w-max h-9 relative">
+                    <button
+                      onClick={toggleStatusDropdown}
+                      type="button"
+                      className="h-9 w-full md:w-max px-3 md:px-4 rounded-md md:rounded-full flex md:gap-2 items-center justify-between transition duration-300 ease-in-out bg-lightgray active:bg-lightgray-dimmed"
+                    >
+                      <span
+                        className={clsx({
+                          "text-gray": selectedStatus === "Select",
+                        })}
+                      >
+                        {capitalizeFirstLetter(selectedStatus)}
+                      </span>
+                      <ChevronDownIcon
+                        className="-mr-[4px] stroke-gray"
+                        size={20}
+                      />
+                    </button>
+                    <div
+                      ref={statusRef}
+                      className={clsx("w-full md:w-36 absolute top-10 z-10", {
+                        hidden: !isStatusDropdownOpen,
+                        block: isStatusDropdownOpen,
+                      })}
+                    >
+                      <div className="overflow-hidden h-full max-h-[228px] overflow-x-hidden overflow-y-visible custom-scrollbar w-full py-[6px] flex flex-col gap-0 rounded-md shadow-dropdown bg-white">
+                        <div
+                          onClick={() => handleStatusSelect("Draft")}
+                          className="w-full min-h-9 h-9 flex items-center px-[12px] cursor-context-menu transition duration-300 ease-in-out hover:bg-lightgray"
+                        >
+                          Draft
+                        </div>
+                        <div
+                          onClick={() => handleStatusSelect("Published")}
+                          className="w-full min-h-9 h-9 flex items-center px-[12px] cursor-context-menu transition duration-300 ease-in-out hover:bg-lightgray"
+                        >
+                          Published
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <h2 className="font-semibold text-sm">Visibility</h2>
+                  <div ref={visibilityRef} className="w-full md:w-max h-9 relative">
+                    <button
+                      onClick={toggleVisibilityDropdown}
+                      type="button"
+                      className="h-9 w-full md:w-max px-3 md:px-4 rounded-md md:rounded-full flex md:gap-2 items-center justify-between transition duration-300 ease-in-out bg-lightgray active:bg-lightgray-dimmed"
+                    >
+                      <span
+                        className={clsx({
+                          "text-gray": selectedVisibility === "Select",
+                        })}
+                      >
+                        {capitalizeFirstLetter(selectedVisibility)}
+                      </span>
+                      <ChevronDownIcon
+                        className="-mr-[4px] stroke-gray"
+                        size={20}
+                      />
+                    </button>
+                    <div
+                      className={clsx("w-full md:w-36 absolute top-10 z-10", {
+                        hidden: !isVisibilityDropdownOpen,
+                        block: isVisibilityDropdownOpen,
+                      })}
+                    >
+                      <div className="overflow-hidden h-full max-h-[228px] overflow-x-hidden overflow-y-visible custom-scrollbar w-full py-[6px] flex flex-col gap-0 rounded-md shadow-dropdown bg-white">
+                        <div
+                          onClick={() => handleVisibilitySelect("Hidden")}
+                          className="w-full min-h-9 h-9 flex items-center px-[12px] cursor-context-menu transition duration-300 ease-in-out hover:bg-lightgray"
+                        >
+                          Hidden
+                        </div>
+                        <div
+                          onClick={() => handleVisibilitySelect("Visible")}
+                          className="w-full min-h-9 h-9 flex items-center px-[12px] cursor-context-menu transition duration-300 ease-in-out hover:bg-lightgray"
+                        >
+                          Visible
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="md:hidden w-full pb-5 pt-2 px-5 absolute bottom-0">
+              <button
+                type="submit"
+                disabled={loading}
+                className={clsx(
+                  "relative h-12 w-full rounded-full overflow-hidden transition duration-300 ease-in-out text-white bg-custom-blue",
+                  {
+                    "bg-opacity-50": loading,
+                    "active:bg-custom-blue-dimmed": !loading,
+                  }
+                )}
+              >
+                {loading ? (
+                  <div className="flex gap-1 items-center justify-center w-full h-full">
+                    <Spinner />
+                    <span className="text-white">Saving</span>
+                  </div>
+                ) : (
+                  <span className="text-white">Save</span>
+                )}
+              </button>
+            </div>
           </div>
         </Overlay>
-      )}
-      {showAlert && (
-        <AlertMessage
-          message={alertMessage}
-          hideAlertMessage={hideAlertMessage}
-        />
       )}
     </>
   );

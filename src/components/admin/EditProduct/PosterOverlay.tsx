@@ -9,12 +9,10 @@ import { ArrowLeftIcon, ChevronDownIcon, CloseIcon, EditIcon } from "@/icons";
 import clsx from "clsx";
 import Image from "next/image";
 import Overlay from "@/elements/Overlay";
+import UpdateProductAction from "@/actions/update-product";
 
 type DataType = {
-  category: string;
-  name: string;
-  slug: string;
-  price: string;
+  id: string;
   poster: string;
 };
 
@@ -38,19 +36,10 @@ export function PosterButton() {
 }
 
 export function PosterOverlay({ data }: { data: DataType }) {
-  const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(data.category);
-  const [categories, setCategories] = useState<CategoryType[]>([]);
-  const [formData, setFormData] = useState({
-    category: data.category,
-    name: data.name,
-    slug: data.slug,
-    price: data.price,
-    poster: data.poster,
-  });
+  const [poster, setPoster] = useState(data.poster);
 
   const categoryRef = useRef(null);
 
@@ -65,70 +54,22 @@ export function PosterOverlay({ data }: { data: DataType }) {
   );
 
   useEffect(() => {
-    if (isOverlayVisible) {
+    if (isOverlayVisible || showAlert) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "visible";
     }
 
     return () => {
-      document.body.style.overflow = "visible";
-    };
-  }, [isOverlayVisible]);
-
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (!categoryRef.current || !(event.target instanceof Node)) {
-        return;
+      if (!isOverlayVisible && !showAlert) {
+        document.body.style.overflow = "visible";
       }
-
-      const targetNode = categoryRef.current as Node;
-
-      if (!targetNode.contains(event.target)) {
-        setIsCategoryDropdownOpen(false);
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
-
-  const handleCategorySelect = (category: string) => {
-    setSelectedCategory(category);
-    setIsCategoryDropdownOpen(false);
-
-    setFormData((prevData) => ({
-      ...prevData,
-      category: capitalizeFirstLetter(category),
-    }));
-  };
-
-  const handleSubmit = async (event: FormEvent) => {
-    event.preventDefault();
-  };
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  }, [isOverlayVisible, showAlert]);
 
   const onHideOverlay = () => {
     setLoading(false);
     hideOverlay({ pageName, overlayName });
-    setSelectedCategory(data.category);
-    setFormData({
-      category: data.category,
-      name: data.name,
-      slug: data.slug,
-      price: data.price,
-      poster: data.poster,
-    });
   };
 
   const hideAlertMessage = () => {
@@ -136,18 +77,44 @@ export function PosterOverlay({ data }: { data: DataType }) {
     setAlertMessage("");
   };
 
+  const handleSave = async (event: FormEvent) => {
+    event.preventDefault();
+
+    setLoading(true);
+
+    try {
+      const message = await UpdateProductAction({ id: data.id, poster });
+      setAlertMessage(message);
+      setShowAlert(true);
+    } catch (error) {
+      console.error(error);
+      setAlertMessage("Failed to update product");
+      setShowAlert(true);
+    } finally {
+      setLoading(false);
+      onHideOverlay();
+    }
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPoster(event.target.value);
+  };
+
   return (
     <>
       {isOverlayVisible && (
         <Overlay>
           <div className="absolute bottom-0 left-0 right-0 w-full h-[calc(100%-60px)] rounded-t-3xl overflow-hidden bg-white md:w-[424px] md:rounded-2xl md:shadow md:h-max md:mx-auto md:mt-20 md:mb-[50vh] md:relative md:bottom-auto md:left-auto md:right-auto md:top-auto md:-translate-x-0">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSave}>
               <div className="w-full h-[calc(100vh-188px)] md:h-auto">
                 <div className="md:hidden flex items-end justify-center pt-4 pb-2 absolute top-0 left-0 right-0 bg-white">
                   <div className="relative flex justify-center items-center w-full h-7">
                     <h2 className="font-semibold text-lg">Poster</h2>
                     <button
-                      onClick={onHideOverlay}
+                      onClick={() => {
+                        hideOverlay({ pageName, overlayName });
+                        setPoster(data.poster);
+                      }}
                       type="button"
                       className="w-7 h-7 rounded-full flex items-center justify-center absolute right-4 transition duration-300 ease-in-out bg-lightgray active:bg-lightgray-dimmed"
                     >
@@ -157,7 +124,10 @@ export function PosterOverlay({ data }: { data: DataType }) {
                 </div>
                 <div className="hidden md:flex md:items-center md:justify-between py-2 pr-4 pl-2">
                   <button
-                    onClick={onHideOverlay}
+                    onClick={() => {
+                      hideOverlay({ pageName, overlayName });
+                      setPoster(data.poster);
+                    }}
                     type="button"
                     className="h-9 px-3 rounded-full flex items-center gap-1 transition duration-300 ease-in-out active:bg-lightgray"
                   >
@@ -191,23 +161,22 @@ export function PosterOverlay({ data }: { data: DataType }) {
                   <div>
                     <div className="w-full max-w-[383px] mx-auto border rounded-md overflow-hidden">
                       <div className="w-full aspect-square flex items-center justify-center overflow-hidden">
-                        {formData.poster &&
-                          isValidRemoteImage(formData.poster) && (
-                            <Image
-                              src={formData.poster}
-                              alt={formData.name || "Poster"}
-                              width={383}
-                              height={383}
-                              priority
-                            />
-                          )}
+                        {poster && isValidRemoteImage(poster) && (
+                          <Image
+                            src={poster}
+                            alt="Poster"
+                            width={383}
+                            height={383}
+                            priority
+                          />
+                        )}
                       </div>
                       <div className="w-full h-9 border-t overflow-hidden">
                         <input
                           type="text"
                           name="poster"
                           placeholder="Paste image URL"
-                          value={formData.poster}
+                          value={poster}
                           onChange={handleInputChange}
                           className="h-full w-full px-3 text-gray"
                         />

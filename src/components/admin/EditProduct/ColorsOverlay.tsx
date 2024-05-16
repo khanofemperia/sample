@@ -35,7 +35,7 @@ export function ColorsButton() {
 
   const { pageName, overlayName } = useOverlayStore((state) => ({
     pageName: state.pages.editProduct.name,
-    overlayName: state.pages.editProduct.overlays.images.name,
+    overlayName: state.pages.editProduct.overlays.colors.name,
   }));
 
   return (
@@ -61,8 +61,8 @@ export function ColorsOverlay({ data }: { data: DataType }) {
   const { pageName, isOverlayVisible, overlayName } = useOverlayStore(
     (state) => ({
       pageName: state.pages.editProduct.name,
-      overlayName: state.pages.editProduct.overlays.images.name,
-      isOverlayVisible: state.pages.editProduct.overlays.images.isVisible,
+      overlayName: state.pages.editProduct.overlays.colors.name,
+      isOverlayVisible: state.pages.editProduct.overlays.colors.isVisible,
     })
   );
 
