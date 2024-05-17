@@ -1,17 +1,11 @@
 "use client";
 
 import AlertMessage from "@/components/shared/AlertMessage";
-import { capitalizeFirstLetter, isValidRemoteImage } from "@/libraries/utils";
-import { FormEvent, useState, useEffect, useRef } from "react";
+import { isValidRemoteImage } from "@/libraries/utils";
+import { useState, useEffect } from "react";
 import Spinner from "@/elements/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
-import {
-  ArrowLeftIcon,
-  ChevronDownIcon,
-  CloseIcon,
-  EditIcon,
-  MinusIcon,
-} from "@/icons";
+import { ArrowLeftIcon, CloseIcon, EditIcon, MinusIcon } from "@/icons";
 import clsx from "clsx";
 import Image from "next/image";
 import Overlay from "@/elements/Overlay";

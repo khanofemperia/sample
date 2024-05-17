@@ -1,5 +1,5 @@
 import { NewProductOverlay } from "@/components/admin/NewProduct";
-import { fetchData, formatNumberWithCommas } from "@/libraries/utils";
+import { fetchData, formatThousands } from "@/libraries/utils";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -48,7 +48,7 @@ export default async function Products() {
                 )}
               </div>
               <div className="flex items-center justify-center absolute bottom-0 text-sm w-full">
-                <span>${formatNumberWithCommas(price)}</span>
+                <span>${formatThousands(price)}</span>
               </div>
             </div>
           </Link>

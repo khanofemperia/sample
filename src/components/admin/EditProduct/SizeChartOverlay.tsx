@@ -7,6 +7,7 @@ import { useOverlayStore } from "@/zustand/admin/overlayStore";
 import { ArrowLeftIcon, CloseIcon, EditIcon } from "@/icons";
 import clsx from "clsx";
 import Overlay from "@/elements/Overlay";
+import UpdateProductAction from "@/actions/update-product";
 
 type ColumnType = {
   index: number;
@@ -21,6 +22,11 @@ type EntryLabelType = {
 type ProductSizeType = {
   size: string;
   measurements: Record<string, { in: string; cm: string }>;
+};
+
+type DataType = {
+  id: string;
+  chart: SizeChartType | null;
 };
 
 export function SizeChartButton() {
@@ -42,15 +48,18 @@ export function SizeChartButton() {
   );
 }
 
-export function SizeChartOverlay({ chart }: { chart: SizeChartType | null }) {
-  const chartExists = chart !== null && Object.keys(chart || {}).length > 0;
+export function SizeChartOverlay({ data }: { data: DataType }) {
+  const chartExists =
+    data.chart !== null && Object.keys(data.chart || {}).length > 0;
   const chartColumns = chartExists
-    ? (chart?.columns || []).sort((a: any, b: any) => a.index - b.index)
+    ? (data.chart?.columns || []).sort((a: any, b: any) => a.index - b.index)
     : [];
   const chartEntryLabels = chartExists
-    ? (chart?.entry_labels || []).sort((a: any, b: any) => a.index - b.index)
+    ? (data.chart?.entry_labels || []).sort(
+        (a: any, b: any) => a.index - b.index
+      )
     : [];
-  const chartEntries = chartExists ? chart?.sizes || [] : [];
+  const chartEntries = chartExists ? data.chart?.sizes || [] : [];
 
   const [showChart, setShowChart] = useState<boolean>(chartExists || false);
   const [columns, setColumns] = useState<ColumnType[]>(chartColumns);
@@ -75,16 +84,18 @@ export function SizeChartOverlay({ chart }: { chart: SizeChartType | null }) {
   );
 
   useEffect(() => {
-    if (isOverlayVisible) {
+    if (isOverlayVisible || showAlert) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "visible";
     }
 
     return () => {
-      document.body.style.overflow = "visible";
+      if (!isOverlayVisible && !showAlert) {
+        document.body.style.overflow = "visible";
+      }
     };
-  }, [isOverlayVisible]);
+  }, [isOverlayVisible, showAlert]);
 
   const onHideOverlay = () => {
     setLoading(false);
@@ -94,6 +105,48 @@ export function SizeChartOverlay({ chart }: { chart: SizeChartType | null }) {
   const hideAlertMessage = () => {
     setShowAlert(false);
     setAlertMessage("");
+  };
+
+  const handleSave = async () => {
+    if (
+      (columns.length > 0 || entryLabels.length > 0) &&
+      entries.length === 0
+    ) {
+      setAlertMessage("Click 'Create Size Chart' before saving");
+      setShowAlert(true);
+      return;
+    }
+
+    setLoading(true);
+
+    const updatedChart = {
+      columns,
+      entry_labels: entryLabels,
+      sizes: entries,
+    };
+
+    try {
+      const message = await UpdateProductAction({
+        id: data.id,
+        sizes: columns.length && entryLabels.length ? updatedChart : null,
+      });
+
+      if (!(columns.length && entryLabels.length)) {
+        setColumns([]);
+        setEntryLabels([]);
+        setEntries([]);
+      }
+
+      setAlertMessage(message);
+      setShowAlert(true);
+    } catch (error) {
+      console.error(error);
+      setAlertMessage("Failed to update product");
+      setShowAlert(true);
+    } finally {
+      setLoading(false);
+      onHideOverlay();
+    }
   };
 
   const generateNewSizes = () => {
@@ -147,8 +200,16 @@ export function SizeChartOverlay({ chart }: { chart: SizeChartType | null }) {
   };
 
   const createSizeChart = () => {
-    generateNewSizes();
-    setShowChart(true);
+    if (columns.length === 0) {
+      setAlertMessage("Provide column names");
+      setShowAlert(true);
+    } else if (entryLabels.length === 0) {
+      setAlertMessage("Input entry labels");
+      setShowAlert(true);
+    } else {
+      generateNewSizes();
+      setShowChart(true);
+    }
   };
 
   const InchesToCentimeters = (value: number, columnName: string) => {
@@ -226,7 +287,14 @@ export function SizeChartOverlay({ chart }: { chart: SizeChartType | null }) {
                 <div className="relative flex justify-center items-center w-full h-7">
                   <h2 className="font-semibold text-lg">Sizes</h2>
                   <button
-                    onClick={onHideOverlay}
+                    onClick={() => {
+                      setShowChart(chartExists || false);
+                      setColumns(chartColumns);
+                      setEntryLabels(chartEntryLabels);
+                      setEntries(chartEntries);
+                      setMeasurementInputs({});
+                      hideOverlay({ pageName, overlayName });
+                    }}
                     type="button"
                     className="w-7 h-7 rounded-full flex items-center justify-center absolute right-4 transition duration-300 ease-in-out bg-lightgray active:bg-lightgray-dimmed"
                   >
@@ -236,7 +304,14 @@ export function SizeChartOverlay({ chart }: { chart: SizeChartType | null }) {
               </div>
               <div className="hidden md:flex md:items-center md:justify-between py-2 pr-4 pl-2">
                 <button
-                  onClick={onHideOverlay}
+                  onClick={() => {
+                    setShowChart(chartExists || false);
+                    setColumns(chartColumns);
+                    setEntryLabels(chartEntryLabels);
+                    setEntries(chartEntries);
+                    setMeasurementInputs({});
+                    hideOverlay({ pageName, overlayName });
+                  }}
                   type="button"
                   className="h-9 px-3 rounded-full flex items-center gap-1 transition duration-300 ease-in-out active:bg-lightgray"
                 >
@@ -246,7 +321,8 @@ export function SizeChartOverlay({ chart }: { chart: SizeChartType | null }) {
                   </span>
                 </button>
                 <button
-                  type="submit"
+                  onClick={handleSave}
+                  type="button"
                   disabled={loading}
                   className={clsx(
                     "relative h-9 w-max px-4 rounded-full overflow-hidden transition duration-300 ease-in-out text-white bg-custom-blue",
@@ -466,7 +542,8 @@ export function SizeChartOverlay({ chart }: { chart: SizeChartType | null }) {
             </div>
             <div className="md:hidden w-full pb-5 pt-2 px-5 absolute bottom-0">
               <button
-                type="submit"
+                onClick={handleSave}
+                type="button"
                 disabled={loading}
                 className={clsx(
                   "relative h-12 w-full rounded-full overflow-hidden transition duration-300 ease-in-out text-white bg-custom-blue",

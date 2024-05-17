@@ -4,7 +4,11 @@ import {
 } from "@/components/admin/EditProduct/BasicDetailsOverlay";
 import DataChip from "@/elements/DataChip";
 import { EditIcon } from "@/icons";
-import { fetchData, formatThousands } from "@/libraries/utils";
+import {
+  fetchData,
+  formatThousands,
+  isValidRemoteImage,
+} from "@/libraries/utils";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import styles from "./styles.module.css";
@@ -115,15 +119,19 @@ export default async function EditProduct({
                   <PosterButton />
                 </div>
                 <div className="p-5">
-                  <div className="w-full max-w-[280px] rounded-xl aspect-square flex items-center justify-center overflow-hidden">
-                    <Image
-                      src={poster}
-                      alt={name}
-                      width={280}
-                      height={280}
-                      priority
-                    />
-                  </div>
+                  {!poster || !isValidRemoteImage(poster) ? (
+                    <p className="italic text-gray">Nothing yet</p>
+                  ) : (
+                    <div className="w-full max-w-[280px] rounded-xl aspect-square flex items-center justify-center overflow-hidden">
+                      <Image
+                        src={poster}
+                        alt={name}
+                        width={280}
+                        height={280}
+                        priority
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="border rounded-xl">
@@ -132,23 +140,27 @@ export default async function EditProduct({
                   <ImagesButton />
                 </div>
                 <div className="p-5 flex flex-wrap gap-2">
-                  {!images ? (
+                  {!images ||
+                  images.every((url) => !isValidRemoteImage(url)) ? (
                     <p className="italic text-gray">Nothing yet</p>
                   ) : (
-                    images.map((url, index) => (
-                      <div
-                        key={index}
-                        className="max-w-[148px] lg:max-w-[210px] w-[calc(50%-4px)] rounded-xl aspect-square flex items-center justify-center overflow-hidden"
-                      >
-                        <Image
-                          src={url}
-                          alt={name}
-                          width={210}
-                          height={210}
-                          priority
-                        />
-                      </div>
-                    ))
+                    images.map(
+                      (url, index) =>
+                        isValidRemoteImage(url) && (
+                          <div
+                            key={index}
+                            className="max-w-[148px] lg:max-w-[210px] w-[calc(50%-4px)] border rounded-xl aspect-square flex items-center justify-center overflow-hidden"
+                          >
+                            <Image
+                              src={url}
+                              alt={name}
+                              width={210}
+                              height={210}
+                              priority
+                            />
+                          </div>
+                        )
+                    )
                   )}
                 </div>
               </div>
@@ -190,28 +202,34 @@ export default async function EditProduct({
                     <ColorsButton />
                   </div>
                   <div className="p-5 flex flex-wrap gap-2">
-                    {colors?.length ? (
-                      colors.map((color, index) => (
-                        <div
-                          key={index}
-                          className="max-w-[148px] lg:max-w-[210px] w-[calc(50%-4px)] rounded-xl border flex flex-col items-center justify-center overflow-hidden"
-                        >
-                          <div className="w-full aspect-square">
-                            <Image
-                              src={color.image}
-                              alt={color.name}
-                              width={210}
-                              height={210}
-                              priority
-                            />
-                          </div>
-                          <div className="w-max max-w-full h-9 px-3 border-t flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
-                            {color.name}
-                          </div>
-                        </div>
-                      ))
-                    ) : (
+                    {!colors ||
+                    !colors.some((color) => isValidRemoteImage(color.image)) ? (
                       <p className="italic text-gray">Nothing yet</p>
+                    ) : (
+                      colors.map(
+                        (color, index) =>
+                          isValidRemoteImage(color.image) && (
+                            <div
+                              key={index}
+                              className="max-w-[148px] lg:max-w-[210px] w-[calc(50%-4px)] rounded-xl border flex flex-col items-center justify-center overflow-hidden"
+                            >
+                              <div className="w-full aspect-square overflow-hidden">
+                                <Image
+                                  src={color.image}
+                                  alt={color.name}
+                                  width={210}
+                                  height={210}
+                                  priority
+                                />
+                              </div>
+                              <div className="w-full h-9 flex justify-center">
+                                <div className="w-max max-w-full px-3 font-medium flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
+                                  {color.name}
+                                </div>
+                              </div>
+                            </div>
+                          )
+                      )
                     )}
                   </div>
                 </div>
@@ -275,8 +293,8 @@ export default async function EditProduct({
       <PosterOverlay data={{ id, poster }} />
       <ImagesOverlay data={{ id, images }} />
       <SettingsOverlay data={{ status, visibility }} />
-      <ColorsOverlay data={{ category, name, slug, price, colors }} />
-      <SizeChartOverlay chart={sizes} />
+      <ColorsOverlay data={{ id, colors }} />
+      <SizeChartOverlay data={{ id, chart: sizes }} />
     </>
   );
 }

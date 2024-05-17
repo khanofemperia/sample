@@ -16,34 +16,14 @@ type EditProduct = {
   price?: string;
   slug?: string;
   description?: string;
-  poster?: string;
-  images?: string[];
-  sizes?: SizeChartType;
-  colors?: ColorType[];
+  poster?: string | null;
+  images?: string[] | null;
+  sizes?: SizeChartType | null;
+  colors?: ColorType[] | null;
   status?: string;
   visibility?: string;
 };
 
-type GenerateResponseProps = {
-  status: {
-    code: number;
-    flag: "success" | "failed";
-    message: string;
-  };
-};
-
-function generateResponse(
-  code: number,
-  message: string
-): GenerateResponseProps {
-  return {
-    status: {
-      code,
-      flag: code === statusCodes.success.code ? "success" : "failed",
-      message,
-    },
-  };
-}
 
 export default async function UpdateProductAction(data: EditProduct) {
   try {
@@ -56,6 +36,8 @@ export default async function UpdateProductAction(data: EditProduct) {
       ...data,
       last_updated: currentTimestamp(),
     };
+
+    console.log(data);
 
     await setDoc(docRef, updatedProduct);
     revalidatePath("/admin/products/[id]", "page");
