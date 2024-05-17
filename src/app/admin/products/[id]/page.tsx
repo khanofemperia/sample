@@ -292,9 +292,9 @@ export default async function EditProduct({
       <BasicDetailsOverlay data={{ id, category, name, slug, price }} />
       <PosterOverlay data={{ id, poster }} />
       <ImagesOverlay data={{ id, images }} />
-      <SettingsOverlay data={{ status, visibility }} />
       <ColorsOverlay data={{ id, colors }} />
       <SizeChartOverlay data={{ id, chart: sizes }} />
+      <SettingsOverlay data={{ id, status, visibility }} />
     </>
   );
 }
