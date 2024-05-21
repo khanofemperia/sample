@@ -7,8 +7,12 @@
     @apply outline-none;
   }
 
-  body {
+  /* body {
     @apply overflow-x-hidden overflow-y-visible;
+  } */
+
+  body {
+    @apply !overflow-hidden;
   }
 }
 

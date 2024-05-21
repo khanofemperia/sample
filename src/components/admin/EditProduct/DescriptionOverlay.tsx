@@ -1,14 +1,14 @@
 "use client";
 
-import AlertMessage from "@/components/shared/AlertMessage";
 import { capitalizeFirstLetter } from "@/libraries/utils";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Spinner from "@/elements/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
-import { ArrowLeftIcon, ChevronDownIcon, CloseIcon, EditIcon } from "@/icons";
+import { ArrowLeftIcon, EditIcon } from "@/icons";
 import clsx from "clsx";
 import Overlay from "@/elements/Overlay";
 import UpdateProductAction from "@/actions/update-product";
+import TextEditor from "@/components/shared/TextEditor";
 
 type DataType = {
   id: string;
@@ -36,10 +36,6 @@ export function DescriptionButton() {
 }
 
 export function DescriptionOverlay({ data }: { data: DataType }) {
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-  }, []);
-
   return (
     <Overlay>
       <div className="absolute bottom-0 left-0 right-0 w-full h-[calc(100%-60px)] overflow-hidden md:overflow-visible rounded-t-3xl bg-white md:w-[600px] md:rounded-2xl md:shadow md:h-max md:mx-auto md:mt-20 md:mb-[50vh] md:relative md:bottom-auto md:left-auto md:right-auto md:top-auto md:-translate-x-0">
@@ -64,10 +60,7 @@ export function DescriptionOverlay({ data }: { data: DataType }) {
             </button>
           </div>
           <div className="w-full p-5">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore,
-            blanditiis fuga! Consectetur similique nam, quibusdam fuga odio esse
-            distinctio sed nisi autem! Laboriosam reiciendis, unde eligendi
-            tenetur natus quam reprehenderit.
+            <TextEditor />
           </div>
         </div>
       </div>

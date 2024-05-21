@@ -93,7 +93,7 @@ function $prepopulatedRichText() {
   }
 }
 
-export default function EditorShell(): JSX.Element {
+export default function TextEditor(): JSX.Element {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
