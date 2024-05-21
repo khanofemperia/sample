@@ -32,6 +32,7 @@ import {
   ColorsButton,
   ColorsOverlay,
 } from "@/components/admin/EditProduct/ColorsOverlay";
+import { DescriptionOverlay } from "@/components/admin/EditProduct/DescriptionOverlay";
 
 export default async function EditProduct({
   params,
@@ -294,6 +295,7 @@ export default async function EditProduct({
       <ImagesOverlay data={{ id, images }} />
       <ColorsOverlay data={{ id, colors }} />
       <SizeChartOverlay data={{ id, chart: sizes }} />
+      <DescriptionOverlay data={{ id, status, visibility }} />
       <SettingsOverlay data={{ id, status, visibility }} />
     </>
   );
