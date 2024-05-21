@@ -67,7 +67,7 @@ export default function Editor(): JSX.Element {
   return (
     <>
       <ToolbarPlugin setIsLinkEditMode={setIsLinkEditMode} />
-      <div className="editor-container">
+      <div className="relative z-0 bg-white">
         <AutoFocusPlugin />
         <AutoEmbedPlugin />
         <HashtagPlugin />
@@ -75,10 +75,8 @@ export default function Editor(): JSX.Element {
         <HistoryPlugin />
         <RichTextPlugin
           contentEditable={
-            <div className="editor-scroller">
-              <div className="editor" ref={onRef}>
-                <ContentEditable />
-              </div>
+            <div className="resize-none relative" ref={onRef}>
+              <ContentEditable />
             </div>
           }
           placeholder={placeholder}

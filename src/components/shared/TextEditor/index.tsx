@@ -111,12 +111,12 @@ export default function TextEditor(): JSX.Element {
   };
 
   if (!isClient) {
-    return <></>; // Render nothing on the server
+    return <></>;
   }
 
   return (
     <LexicalComposer initialConfig={initialConfig}>
-      <div className="editor-shell">
+      <div className="border relative">
         <Editor />
       </div>
     </LexicalComposer>
