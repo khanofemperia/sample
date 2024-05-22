@@ -116,7 +116,7 @@ export default function TextEditor(): JSX.Element {
 
   return (
     <LexicalComposer initialConfig={initialConfig}>
-      <div className="border relative">
+      <div className="editor-shell border rounded-xl relative">
         <Editor />
       </div>
     </LexicalComposer>
