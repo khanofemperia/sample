@@ -28,21 +28,6 @@ import YouTubePlugin from "./plugins/YouTubePlugin";
 import ContentEditable from "./ui/ContentEditable";
 import Placeholder from "./ui/Placeholder";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { LexicalEditor, EditorState } from "lexical";
-
-type OnChangePluginType = {
-  onChange: (editorState: EditorState) => void;
-}
-
-function OnChangePlugin({ onChange }: OnChangePluginType): null {
-  const [editor] = useLexicalComposerContext();
-  useEffect(() => {
-    return editor.registerUpdateListener(({ editorState }) => {
-      onChange(editorState);
-    });
-  }, [editor, onChange]);
-  return null;
-}
 
 export default function Editor(): JSX.Element {
   const isEditable = useLexicalEditable();
