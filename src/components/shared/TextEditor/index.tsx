@@ -22,6 +22,7 @@ export default function TextEditor(): JSX.Element {
       throw error;
     },
     theme: EditorTheme,
+    editable: false,
   };
 
   if (!isClient) {
@@ -29,10 +30,12 @@ export default function TextEditor(): JSX.Element {
   }
 
   return (
-    <LexicalComposer initialConfig={initialConfig}>
-      <div className="editor-shell border rounded-xl relative">
-        <Editor />
-      </div>
-    </LexicalComposer>
+    <div>
+      <LexicalComposer initialConfig={initialConfig}>
+        <div className="editor-shell relative">
+          <Editor />
+        </div>
+      </LexicalComposer>
+    </div>
   );
 }
