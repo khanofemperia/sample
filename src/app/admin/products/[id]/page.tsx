@@ -295,7 +295,7 @@ export default async function EditProduct({
       <ImagesOverlay data={{ id, images }} />
       <ColorsOverlay data={{ id, colors }} />
       <SizeChartOverlay data={{ id, chart: sizes }} />
-      <DescriptionOverlay data={{ id, status, visibility }} />
+      <DescriptionOverlay />
       <SettingsOverlay data={{ id, status, visibility }} />
     </>
   );

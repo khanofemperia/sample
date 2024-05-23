@@ -1,7 +1,7 @@
 "use client";
 
 import { capitalizeFirstLetter } from "@/libraries/utils";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Spinner from "@/elements/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
 import { ArrowLeftIcon, EditIcon } from "@/icons";
@@ -9,12 +9,7 @@ import clsx from "clsx";
 import Overlay from "@/elements/Overlay";
 import UpdateProductAction from "@/actions/update-product";
 import TextEditor from "@/components/shared/TextEditor";
-
-type DataType = {
-  id: string;
-  status: string;
-  visibility: string;
-};
+import { useTextEditorStore } from "@/zustand/shared/textEditorStore";
 
 export function DescriptionButton() {
   const { showOverlay } = useOverlayStore();
@@ -35,7 +30,14 @@ export function DescriptionButton() {
   );
 }
 
-export function DescriptionOverlay({ data }: { data: DataType }) {
+export function DescriptionOverlay() {
+  const { editorStateJSON } = useTextEditorStore();
+
+  const handleSave = () => {
+    console.log("Saving editor state...");
+    console.log(editorStateJSON);
+  };
+
   return (
     <Overlay>
       <div className="absolute bottom-0 left-0 right-0 w-full h-[calc(100%-60px)] overflow-hidden md:overflow-visible rounded-t-3xl bg-white md:w-[600px] md:rounded-2xl md:shadow md:h-max md:mx-auto md:mt-20 md:mb-[50vh] md:relative md:bottom-auto md:left-auto md:right-auto md:top-auto md:-translate-x-0">
@@ -52,6 +54,7 @@ export function DescriptionOverlay({ data }: { data: DataType }) {
             </button>
             <button
               type="button"
+              onClick={handleSave}
               className={clsx(
                 "relative h-9 w-max px-4 rounded-full overflow-hidden transition duration-300 ease-in-out text-white bg-custom-blue"
               )}

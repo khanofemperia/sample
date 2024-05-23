@@ -27,6 +27,22 @@ import TwitterPlugin from "./plugins/TwitterPlugin";
 import YouTubePlugin from "./plugins/YouTubePlugin";
 import ContentEditable from "./ui/ContentEditable";
 import Placeholder from "./ui/Placeholder";
+import { EditorState } from "lexical";
+import { useTextEditorStore } from "@/zustand/shared/textEditorStore";
+
+type OnChangePluginType = {
+  onChange: (editorState: EditorState) => void;
+}
+
+function OnChangePlugin({ onChange }: OnChangePluginType): null {
+  const [editor] = useLexicalComposerContext();
+  useEffect(() => {
+    return editor.registerUpdateListener(({ editorState }) => {
+      onChange(editorState);
+    });
+  }, [editor, onChange]);
+  return null;
+}
 
 export default function Editor(): JSX.Element {
   const isEditable = useLexicalEditable();
@@ -65,22 +81,30 @@ export default function Editor(): JSX.Element {
     };
   }, [isSmallWidthViewport]);
 
-  const saveToDatabase = async () => {
-    const editorState = editor.getEditorState();
-    const editorStateJSON = JSON.stringify(editorState.toJSON());
+  const { setEditorStateJSON } = useTextEditorStore();
 
-    console.log("Saving editor state...");
-    console.log(editorStateJSON);
+  useEffect(() => {
+    const updateEditorStateJSON = () => {
+      const editorState = editor.getEditorState();
+      const editorStateJSON = JSON.stringify(editorState.toJSON());
+      setEditorStateJSON(editorStateJSON);
+    };
+
+    updateEditorStateJSON();
+    const unregisterUpdateListener = editor.registerUpdateListener(updateEditorStateJSON);
+
+    return () => {
+      unregisterUpdateListener();
+    };
+  }, [editor, setEditorStateJSON]);
+
+  const onChange = (editorState: EditorState) => {
+    const editorStateJSON = editorState.toJSON();
+    setEditorStateJSON(JSON.stringify(editorStateJSON));
   };
 
   return (
     <>
-      <button
-        onClick={saveToDatabase}
-        className="bg-custom-blue text-white h-9 px-3 rounded-full mb-2 flex items-center justify-center"
-      >
-        Save
-      </button>
       <div className="h-8 w-max mb-2 border rounded-full overflow-hidden flex">
         <button
           className="h-full pl-3 pr-2 font-semibold text-sm"
@@ -138,6 +162,7 @@ export default function Editor(): JSX.Element {
               />
             </>
           )}
+          <OnChangePlugin onChange={onChange} />
         </div>
       </div>
     </>
