@@ -160,7 +160,7 @@ export function DescriptionOverlay({ data }: { data: DataType }) {
                   )}
                 </button>
               </div>
-              <div className="w-full max-w-[425px] mx-auto h-full mt-[52px] md:m-0 p-5 pb-28 md:pb-10 flex flex-col md:flex-row gap-5">
+              <div className="w-full p-5">
                 <TextEditor />
               </div>
             </div>
