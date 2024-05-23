@@ -13,6 +13,7 @@ import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { TablePlugin } from "@lexical/react/LexicalTablePlugin";
 import useLexicalEditable from "@lexical/react/useLexicalEditable";
+import { $generateHtmlFromNodes } from "@lexical/html";
 
 import AutoEmbedPlugin from "./plugins/AutoEmbedPlugin";
 import AutoLinkPlugin from "./plugins/AutoLinkPlugin";
@@ -27,18 +28,13 @@ import TwitterPlugin from "./plugins/TwitterPlugin";
 import YouTubePlugin from "./plugins/YouTubePlugin";
 import ContentEditable from "./ui/ContentEditable";
 import Placeholder from "./ui/Placeholder";
-import { EditorState } from "lexical";
 import { useTextEditorStore } from "@/zustand/shared/textEditorStore";
 
-type OnChangePluginType = {
-  onChange: (editorState: EditorState) => void;
-}
-
-function OnChangePlugin({ onChange }: OnChangePluginType): null {
+function OnChangePlugin({ onChange }: { onChange: () => void }): null {
   const [editor] = useLexicalComposerContext();
   useEffect(() => {
-    return editor.registerUpdateListener(({ editorState }) => {
-      onChange(editorState);
+    return editor.registerUpdateListener(() => {
+      onChange();
     });
   }, [editor, onChange]);
   return null;
@@ -81,26 +77,13 @@ export default function Editor(): JSX.Element {
     };
   }, [isSmallWidthViewport]);
 
-  const { setEditorStateJSON } = useTextEditorStore();
+  const { setHtmlString } = useTextEditorStore();
 
-  useEffect(() => {
-    const updateEditorStateJSON = () => {
-      const editorState = editor.getEditorState();
-      const editorStateJSON = JSON.stringify(editorState.toJSON());
-      setEditorStateJSON(editorStateJSON);
-    };
-
-    updateEditorStateJSON();
-    const unregisterUpdateListener = editor.registerUpdateListener(updateEditorStateJSON);
-
-    return () => {
-      unregisterUpdateListener();
-    };
-  }, [editor, setEditorStateJSON]);
-
-  const onChange = (editorState: EditorState) => {
-    const editorStateJSON = editorState.toJSON();
-    setEditorStateJSON(JSON.stringify(editorStateJSON));
+  const onChange = () => {
+    editor.update(() => {
+      const htmlString = $generateHtmlFromNodes(editor, null);
+      setHtmlString(htmlString);
+    });
   };
 
   return (
@@ -118,6 +101,18 @@ export default function Editor(): JSX.Element {
           onClick={() => editor.setEditable(true)}
         >
           Edit Mode
+        </button>
+        <div className="h-full w-[1px] bg-[#e5e7eb]"></div>
+        <button
+          className="h-full pr-3 pl-2 font-semibold text-sm"
+          onClick={() => {
+            editor.update(() => {
+              const htmlString = $generateHtmlFromNodes(editor, null);
+              console.log(htmlString);
+            });
+          }}
+        >
+          Testing
         </button>
       </div>
       <div className="border rounded-xl">

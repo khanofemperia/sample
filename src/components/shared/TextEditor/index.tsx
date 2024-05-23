@@ -27,15 +27,14 @@ function isValidJSON(str: string | null | undefined): boolean {
 
 export default function TextEditor(): JSX.Element {
   const [isClient, setIsClient] = useState(false);
-
-  const { editorStateJSON } = useTextEditorStore();
+  const { htmlString } = useTextEditorStore();
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
   const initialConfig = {
-    editorState: isValidJSON(editorStateJSON) ? editorStateJSON : initialState,
+    editorState: isValidJSON(htmlString) ? htmlString : initialState,
     namespace: "TextEditor",
     nodes: [...Nodes],
     onError: (error: Error) => {

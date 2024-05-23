@@ -43,10 +43,10 @@ export function DescriptionOverlay({ data }: { data: DataType }) {
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState<boolean>(false);
 
-  const { editorStateJSON, setEditorStateJSON } = useTextEditorStore();
+  const { htmlString, setHtmlString } = useTextEditorStore();
 
   useEffect(() => {
-    setEditorStateJSON(description);
+    setHtmlString(description);
   }, [description]);
 
   const { hideOverlay } = useOverlayStore();
@@ -89,7 +89,7 @@ export function DescriptionOverlay({ data }: { data: DataType }) {
     try {
       const message = await UpdateProductAction({
         id: data.id,
-        description: editorStateJSON,
+        description: htmlString,
       });
       setAlertMessage(message);
       setShowAlert(true);

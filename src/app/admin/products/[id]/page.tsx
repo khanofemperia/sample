@@ -3,7 +3,6 @@ import {
   BasicDetailsButton,
 } from "@/components/admin/EditProduct/BasicDetailsOverlay";
 import DataChip from "@/elements/DataChip";
-import { EditIcon } from "@/icons";
 import {
   fetchData,
   formatThousands,
