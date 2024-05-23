@@ -7,7 +7,6 @@ import Spinner from "@/elements/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
 import { ArrowLeftIcon, ChevronDownIcon, CloseIcon, EditIcon } from "@/icons";
 import clsx from "clsx";
-import Image from "next/image";
 import Overlay from "@/elements/Overlay";
 import UpdateProductAction from "@/actions/update-product";
 

@@ -32,7 +32,7 @@ import {
   ColorsButton,
   ColorsOverlay,
 } from "@/components/admin/EditProduct/ColorsOverlay";
-import { DescriptionOverlay } from "@/components/admin/EditProduct/DescriptionOverlay";
+import { DescriptionButton, DescriptionOverlay } from "@/components/admin/EditProduct/DescriptionOverlay";
 
 export default async function EditProduct({
   params,
@@ -248,9 +248,7 @@ export default async function EditProduct({
           <div className="w-full shadow rounded-xl bg-white">
             <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
               <h2 className="font-semibold text-xl">Product description</h2>
-              <button className="w-9 h-9 rounded-full flex items-center justify-center transition duration-300 ease-in-out active:bg-lightgray">
-                <EditIcon size={20} />
-              </button>
+              <DescriptionButton />
             </div>
             <div className="p-5">
               {!description ? (
@@ -295,7 +293,7 @@ export default async function EditProduct({
       <ImagesOverlay data={{ id, images }} />
       <ColorsOverlay data={{ id, colors }} />
       <SizeChartOverlay data={{ id, chart: sizes }} />
-      <DescriptionOverlay />
+      <DescriptionOverlay data={{ id, description }} />
       <SettingsOverlay data={{ id, status, visibility }} />
     </>
   );

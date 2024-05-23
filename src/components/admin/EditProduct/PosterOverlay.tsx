@@ -40,9 +40,7 @@ export function PosterOverlay({ data }: { data: DataType }) {
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [poster, setPoster] = useState(data.poster);
-
-  const categoryRef = useRef(null);
-
+  
   const { hideOverlay } = useOverlayStore();
 
   const { pageName, isOverlayVisible, overlayName } = useOverlayStore(

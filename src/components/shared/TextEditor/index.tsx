@@ -7,6 +7,7 @@ import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import Editor from "./Editor";
 import Nodes from "./nodes/TextEditorNodes";
 import EditorTheme from "./Theme";
+import { useTextEditorStore } from "@/zustand/shared/textEditorStore";
 
 export default function TextEditor(): JSX.Element {
   const [isClient, setIsClient] = useState(false);
@@ -15,7 +16,10 @@ export default function TextEditor(): JSX.Element {
     setIsClient(true);
   }, []);
 
+  const { editorStateJSON } = useTextEditorStore();
+
   const initialConfig = {
+    editorState: editorStateJSON,
     namespace: "TextEditor",
     nodes: [...Nodes],
     onError: (error: Error) => {
