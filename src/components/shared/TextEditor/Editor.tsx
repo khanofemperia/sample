@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { useEffect, useState } from "react";
-
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
 import { CheckListPlugin } from "@lexical/react/LexicalCheckListPlugin";
 import ClickableLinkPlugin from "@lexical/react/LexicalClickableLinkPlugin";
@@ -27,7 +27,6 @@ import TwitterPlugin from "./plugins/TwitterPlugin";
 import YouTubePlugin from "./plugins/YouTubePlugin";
 import ContentEditable from "./ui/ContentEditable";
 import Placeholder from "./ui/Placeholder";
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 
 export default function Editor(): JSX.Element {
   const isEditable = useLexicalEditable();
@@ -39,7 +38,7 @@ export default function Editor(): JSX.Element {
     useState<boolean>(false);
   const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
   const [isClient, setIsClient] = useState(false);
-  const [editorState, setEditorState] = useState<string | undefined>();
+  const [editor] = useLexicalComposerContext();
 
   const onRef = (_floatingAnchorElem: HTMLDivElement) => {
     if (_floatingAnchorElem !== null) {
@@ -66,12 +65,10 @@ export default function Editor(): JSX.Element {
     };
   }, [isSmallWidthViewport]);
 
-  const [editor] = useLexicalComposerContext();
-
   const saveToDatabase = async () => {
     const editorState = editor.getEditorState();
     const editorStateJSON = JSON.stringify(editorState.toJSON());
-    
+
     console.log("Saving editor state...");
     console.log(editorStateJSON);
   };
