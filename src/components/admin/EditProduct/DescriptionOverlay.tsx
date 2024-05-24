@@ -8,8 +8,6 @@ import { ArrowLeftIcon, CloseIcon, EditIcon } from "@/icons";
 import clsx from "clsx";
 import Overlay from "@/elements/Overlay";
 import UpdateProductAction from "@/actions/update-product";
-import { useTextEditorStore } from "@/zustand/shared/textEditorStore";
-import TextEditor from "@/components/shared/TextEditor";
 
 type DataType = {
   id: string;
@@ -42,12 +40,6 @@ export function DescriptionOverlay({ data }: { data: DataType }) {
   const [loading, setLoading] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState<boolean>(false);
-
-  const { htmlString, setHtmlString } = useTextEditorStore();
-
-  useEffect(() => {
-    setHtmlString(description);
-  }, [description]);
 
   const { hideOverlay } = useOverlayStore();
 
@@ -89,7 +81,7 @@ export function DescriptionOverlay({ data }: { data: DataType }) {
     try {
       const message = await UpdateProductAction({
         id: data.id,
-        description: htmlString,
+        description,
       });
       setAlertMessage(message);
       setShowAlert(true);
@@ -161,7 +153,7 @@ export function DescriptionOverlay({ data }: { data: DataType }) {
                 </button>
               </div>
               <div className="w-full p-5">
-                <TextEditor />
+                
               </div>
             </div>
             <div className="md:hidden w-full pb-5 pt-2 px-5 absolute bottom-0">
