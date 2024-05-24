@@ -13,7 +13,8 @@ import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { TablePlugin } from "@lexical/react/LexicalTablePlugin";
 import useLexicalEditable from "@lexical/react/useLexicalEditable";
-import { $generateHtmlFromNodes } from "@lexical/html";
+import { $generateHtmlFromNodes, $generateNodesFromDOM } from "@lexical/html";
+import { $insertNodes, $getRoot } from "lexical";
 
 import AutoEmbedPlugin from "./plugins/AutoEmbedPlugin";
 import AutoLinkPlugin from "./plugins/AutoLinkPlugin";
@@ -29,14 +30,34 @@ import YouTubePlugin from "./plugins/YouTubePlugin";
 import ContentEditable from "./ui/ContentEditable";
 import Placeholder from "./ui/Placeholder";
 import { useTextEditorStore } from "@/zustand/shared/textEditorStore";
+import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 
-function OnChangePlugin({ onChange }: { onChange: () => void }): null {
+function MyOnChangePlugin({ onChange }: { onChange: () => void }): null {
   const [editor] = useLexicalComposerContext();
   useEffect(() => {
     return editor.registerUpdateListener(() => {
       onChange();
     });
   }, [editor, onChange]);
+  return null;
+}
+
+function LoadHtmlPlugin() {
+  const [editor] = useLexicalComposerContext();
+  const { htmlString } = useTextEditorStore();
+
+  editor.update(() => {
+    let nodes = [];
+
+    const parser = new DOMParser();
+    const dom = parser.parseFromString(htmlString, "text/html");
+    nodes = $generateNodesFromDOM(editor, dom);
+
+    const root = $getRoot();
+    root.clear();
+    root.append(...nodes);
+  });
+
   return null;
 }
 
@@ -102,18 +123,6 @@ export default function Editor(): JSX.Element {
         >
           Edit Mode
         </button>
-        <div className="h-full w-[1px] bg-[#e5e7eb]"></div>
-        <button
-          className="h-full pr-3 pl-2 font-semibold text-sm"
-          onClick={() => {
-            editor.update(() => {
-              const htmlString = $generateHtmlFromNodes(editor, null);
-              console.log(htmlString);
-            });
-          }}
-        >
-          Testing
-        </button>
       </div>
       <div className="border rounded-xl">
         {editor.isEditable() && (
@@ -134,6 +143,7 @@ export default function Editor(): JSX.Element {
             placeholder={placeholder}
             ErrorBoundary={LexicalErrorBoundary}
           />
+          <LoadHtmlPlugin />
           <ListPlugin />
           <CheckListPlugin />
           <ListMaxIndentLevelPlugin maxDepth={7} />
@@ -157,7 +167,7 @@ export default function Editor(): JSX.Element {
               />
             </>
           )}
-          <OnChangePlugin onChange={onChange} />
+          <MyOnChangePlugin onChange={onChange} />
         </div>
       </div>
     </>
