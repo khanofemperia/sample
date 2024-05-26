@@ -61,29 +61,14 @@
   font-style: normal;
 }
 
-.sun-editor * {
-  font-family: "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
-  font-size: 16px !important;
-  line-height: 24px !important;
-}
 .sun-editor {
   border-radius: 12px !important;
   overflow: hidden !important;
 }
 
 .sun-editor .se-toolbar {
-  outline: none !important;
-}
-
-.sun-editor .se-btn-tray {
-  padding: 4px 0 2px 6px !important;
-  background: white;
-  border-bottom: 1px solid #262626;
-}
-
-.sun-editor .se-toolbar-sticky-dummy {
-  display: none !important;
-  height: 0 !important;
+  position: sticky !important;
+  top: 0 !important;
 }
 
 .editor-container > textarea {
@@ -94,10 +79,16 @@
   border-color: #0a5ddc !important;
 }
 
-.sun-editor-editable {
-  padding: 32px 20px !important;
+.sun-editor .se-btn-select.se-btn-tool-format {
+  width: 90px !important;
 }
 
-.sun-editor .se-list-layer.se-list-format ul * {
-  font-weight: normal !important;
+.sun-editor .se-wrapper .se-placeholder {
+  color: #6c6c6c !important;
+  padding: 32px 20px !important;
+  display: none !important;
+}
+
+.sun-editor-editable {
+  min-height: 280px !important;
 }

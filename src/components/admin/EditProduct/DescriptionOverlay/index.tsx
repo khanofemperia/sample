@@ -1,7 +1,5 @@
 "use client";
 
-import "./styles.css";
-import "suneditor/dist/css/suneditor.min.css";
 
 import AlertMessage from "@/components/shared/AlertMessage";
 import { useState, useEffect, useRef } from "react";
@@ -13,6 +11,8 @@ import Overlay from "@/elements/Overlay";
 import UpdateProductAction from "@/actions/update-product";
 import dynamic from "next/dynamic";
 import SunEditorCore from "suneditor/src/lib/core";
+import "./styles.css";
+import "suneditor/dist/css/suneditor.min.css";
 
 const SunEditor = dynamic(() => import("suneditor-react"), {
   ssr: false,
@@ -126,7 +126,7 @@ export function DescriptionOverlay({ data }: { data: DataType }) {
     <>
       {isOverlayVisible && (
         <Overlay>
-          <div className="absolute bottom-0 left-0 right-0 w-full h-[calc(100%-60px)] overflow-hidden md:overflow-visible rounded-t-3xl bg-white md:w-[320px] md:rounded-2xl md:shadow md:h-max md:mx-auto md:mt-20 md:mb-[50vh] md:relative md:bottom-auto md:left-auto md:right-auto md:top-auto md:-translate-x-0">
+          <div className="absolute bottom-0 left-0 right-0 w-full h-[calc(100%-60px)] md:overflow-visible rounded-t-3xl bg-white md:w-[650px] md:rounded-2xl md:shadow md:h-max md:mx-auto md:mt-20 md:mb-[50vh] md:relative md:bottom-auto md:left-auto md:right-auto md:top-auto md:-translate-x-0">
             <div className="w-full">
               <div className="md:hidden flex items-end justify-center pt-4 pb-2 absolute top-0 left-0 right-0 bg-white">
                 <div className="relative flex justify-center items-center w-full h-7">
@@ -135,6 +135,7 @@ export function DescriptionOverlay({ data }: { data: DataType }) {
                     onClick={() => {
                       hideOverlay({ pageName, overlayName });
                       setDescription(data.description || "");
+                      setIsReadOnly(true);
                     }}
                     type="button"
                     className="w-7 h-7 rounded-full flex items-center justify-center absolute right-4 transition duration-300 ease-in-out bg-lightgray active:bg-lightgray-dimmed"
@@ -148,6 +149,7 @@ export function DescriptionOverlay({ data }: { data: DataType }) {
                   onClick={() => {
                     hideOverlay({ pageName, overlayName });
                     setDescription(data.description || "");
+                    setIsReadOnly(true);
                   }}
                   type="button"
                   className="h-9 px-3 rounded-full flex items-center gap-1 transition duration-300 ease-in-out active:bg-lightgray"
@@ -213,10 +215,8 @@ export function DescriptionOverlay({ data }: { data: DataType }) {
                 </div>
                 <SunEditor
                   getSunEditorInstance={getSunEditorInstance}
-                  placeholder="Start typing..."
                   hideToolbar={isReadOnly}
                   disable={isReadOnly}
-                  setDefaultStyle="font-size: 16px; line-height: 24px;"
                   onChange={(content: string) => setEditorContent(content)}
                   setContents={description || ""}
                   setOptions={{
