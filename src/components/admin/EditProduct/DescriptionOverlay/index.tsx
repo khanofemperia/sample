@@ -1,6 +1,5 @@
 "use client";
 
-
 import AlertMessage from "@/components/shared/AlertMessage";
 import { useState, useEffect, useRef } from "react";
 import Spinner from "@/elements/Spinners/White";
@@ -9,14 +8,6 @@ import { ArrowLeftIcon, CloseIcon, EditIcon } from "@/icons";
 import clsx from "clsx";
 import Overlay from "@/elements/Overlay";
 import UpdateProductAction from "@/actions/update-product";
-import dynamic from "next/dynamic";
-import SunEditorCore from "suneditor/src/lib/core";
-import "./styles.css";
-import "suneditor/dist/css/suneditor.min.css";
-
-const SunEditor = dynamic(() => import("suneditor-react"), {
-  ssr: false,
-});
 
 type DataType = {
   id: string;
@@ -49,14 +40,6 @@ export function DescriptionOverlay({ data }: { data: DataType }) {
   const [loading, setLoading] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState<boolean>(false);
-  const [isReadOnly, setIsReadOnly] = useState(true);
-  const [editorContent, setEditorContent] = useState("");
-
-  const editor = useRef<SunEditorCore>();
-
-  const getSunEditorInstance = (sunEditor: SunEditorCore) => {
-    editor.current = sunEditor;
-  };
 
   const { hideOverlay } = useOverlayStore();
 
@@ -92,35 +75,7 @@ export function DescriptionOverlay({ data }: { data: DataType }) {
     hideOverlay({ pageName, overlayName });
   };
 
-  const handleSave = async () => {
-    setLoading(true);
-
-    try {
-      const message = await UpdateProductAction({
-        id: data.id,
-        description: editorContent,
-      });
-      setAlertMessage(message);
-      setShowAlert(true);
-    } catch (error) {
-      console.error(error);
-      setAlertMessage("Failed to update product");
-      setShowAlert(true);
-    } finally {
-      setLoading(false);
-      onHideOverlay();
-    }
-  };
-
-  const toggleEditor = (mode: string) => {
-    setIsReadOnly(mode === "reading");
-
-    const editor = document.querySelector(".sun-editor");
-
-    if (editor) {
-      editor.classList.toggle("editing-mode", mode === "editing");
-    }
-  };
+  const handleSave = async () => {};
 
   return (
     <>
@@ -135,7 +90,6 @@ export function DescriptionOverlay({ data }: { data: DataType }) {
                     onClick={() => {
                       hideOverlay({ pageName, overlayName });
                       setDescription(data.description || "");
-                      setIsReadOnly(true);
                     }}
                     type="button"
                     className="w-7 h-7 rounded-full flex items-center justify-center absolute right-4 transition duration-300 ease-in-out bg-lightgray active:bg-lightgray-dimmed"
@@ -149,7 +103,6 @@ export function DescriptionOverlay({ data }: { data: DataType }) {
                   onClick={() => {
                     hideOverlay({ pageName, overlayName });
                     setDescription(data.description || "");
-                    setIsReadOnly(true);
                   }}
                   type="button"
                   className="h-9 px-3 rounded-full flex items-center gap-1 transition duration-300 ease-in-out active:bg-lightgray"
@@ -181,62 +134,7 @@ export function DescriptionOverlay({ data }: { data: DataType }) {
                   )}
                 </button>
               </div>
-              <div className="editor-container w-full p-5">
-                <div className="flex items-center w-max mb-[6px] rounded-full">
-                  <button
-                    onClick={() => toggleEditor("reading")}
-                    className={clsx(
-                      "border-l border-y h-[25px] px-2 pr-[6px] text-sm font-bold text-gray flex items-center justify-center rounded-tl-full rounded-bl-full",
-                      {
-                        "bg-lightgray cursor-context-menu": isReadOnly,
-                      }
-                    )}
-                  >
-                    Read-only
-                  </button>
-                  <div
-                    className={`h-[25px] w-[1px] ${
-                      isReadOnly ? "bg-[#e5e7eb]" : "bg-custom-blue"
-                    }`}
-                  ></div>
-                  <button
-                    onClick={() => toggleEditor("editing")}
-                    className={clsx(
-                      "border-r border-y h-[25px] pr-2 pl-[6px] text-sm font-bold flex items-center justify-center rounded-tr-full rounded-br-full",
-                      {
-                        "bg-custom-blue/15 text-custom-blue border-custom-blue cursor-context-menu":
-                          !isReadOnly,
-                        "text-gray border border-l-0": isReadOnly,
-                      }
-                    )}
-                  >
-                    Editing mode
-                  </button>
-                </div>
-                <SunEditor
-                  getSunEditorInstance={getSunEditorInstance}
-                  hideToolbar={isReadOnly}
-                  disable={isReadOnly}
-                  onChange={(content: string) => setEditorContent(content)}
-                  setContents={description || ""}
-                  setOptions={{
-                    resizingBar: false,
-                    showPathLabel: false,
-                    buttonList: [
-                      ["undo", "redo"],
-                      ["formatBlock"],
-                      ["bold", "underline", "italic", "strike", "removeFormat"],
-                      ["outdent", "indent", "list"],
-                      ["link", "image"],
-                    ],
-                    formats: ["p", "h2", "h3"],
-                    icons: {
-                      undo: `<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="26" width="26" xmlns="http://www.w3.org/2000/svg"><path d="M125.7 160H176c17.7 0 32 14.3 32 32s-14.3 32-32 32H48c-17.7 0-32-14.3-32-32V64c0-17.7 14.3-32 32-32s32 14.3 32 32v51.2L97.6 97.6c87.5-87.5 229.3-87.5 316.8 0s87.5 229.3 0 316.8s-229.3 87.5-316.8 0c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0c62.5 62.5 163.8 62.5 226.3 0s62.5-163.8 0-226.3s-163.8-62.5-226.3 0L125.7 160z"></path></svg>`,
-                      redo: `<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="26" width="26" xmlns="http://www.w3.org/2000/svg"><path d="M386.3 160H336c-17.7 0-32 14.3-32 32s14.3 32 32 32H464c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32s-32 14.3-32 32v51.2L414.4 97.6c-87.5-87.5-229.3-87.5-316.8 0s-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3s163.8-62.5 226.3 0L386.3 160z"></path></svg>`,
-                    },
-                  }}
-                />
-              </div>
+              <div className="editor-container w-full p-5"></div>
             </div>
             <div className="md:hidden w-full pb-5 pt-2 px-5 absolute bottom-0">
               <button
