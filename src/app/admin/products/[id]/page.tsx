@@ -31,7 +31,10 @@ import {
   ColorsButton,
   ColorsOverlay,
 } from "@/components/admin/EditProduct/ColorsOverlay";
-import { DescriptionButton, DescriptionOverlay } from "@/components/admin/EditProduct/DescriptionOverlay";
+import {
+  DescriptionButton,
+  DescriptionOverlay,
+} from "@/components/admin/EditProduct/DescriptionOverlay";
 
 export default async function EditProduct({
   params,
@@ -265,7 +268,8 @@ export default async function EditProduct({
         <div>
           <p className="text-sm mb-4 md:max-w-[85%]">
             Choose whether your product is a work-in-progress (draft) or ready
-            to be seen (published), and decide if you want shoppers to see it or keep it private (hidden).
+            to be seen (published), and decide if you want shoppers to see it or
+            keep it private (hidden).
           </p>
           <div className="w-full max-w-[400px] shadow rounded-xl bg-white">
             <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
@@ -273,7 +277,7 @@ export default async function EditProduct({
               <VisibilityButton />
             </div>
             <div className="p-5">
-                <DataChip value={visibility as ChipValueType} />
+              <DataChip value={visibility as ChipValueType} />
             </div>
           </div>
         </div>

@@ -136,7 +136,7 @@ export function VisibilityOverlay({ data }: { data: DataType }) {
             <div className="w-full">
               <div className="md:hidden flex items-end justify-center pt-4 pb-2 absolute top-0 left-0 right-0 bg-white">
                 <div className="relative flex justify-center items-center w-full h-7">
-                  <h2 className="font-semibold text-lg">visibility</h2>
+                  <h2 className="font-semibold text-lg">Visibility</h2>
                   <button
                     onClick={() => {
                       hideOverlay({ pageName, overlayName });
@@ -160,7 +160,7 @@ export function VisibilityOverlay({ data }: { data: DataType }) {
                 >
                   <ArrowLeftIcon className="fill-custom-blue" size={18} />
                   <span className="font-semibold text-sm text-custom-blue">
-                    visibility
+                    Visibility
                   </span>
                 </button>
                 <button
@@ -187,7 +187,6 @@ export function VisibilityOverlay({ data }: { data: DataType }) {
               </div>
               <div className="w-full max-w-[425px] mx-auto h-full mt-[52px] md:m-0 p-5 pb-28 md:pb-10">
                 <div className="flex flex-col gap-2">
-                  <h2 className="font-semibold text-sm">Visibility</h2>
                   <div className="visibility w-full md:w-max h-9 relative">
                     <button
                       onClick={toggleVisibilityDropdown}
@@ -208,16 +207,22 @@ export function VisibilityOverlay({ data }: { data: DataType }) {
                     >
                       <div className="overflow-hidden h-full max-h-[228px] overflow-x-hidden overflow-y-visible custom-scrollbar w-full py-[6px] flex flex-col gap-0 rounded-md shadow-dropdown bg-white">
                         <div
+                          onClick={() => handleVisibilitySelect("Draft")}
+                          className="w-full min-h-9 h-9 flex items-center px-[12px] cursor-context-menu transition duration-300 ease-in-out hover:bg-lightgray"
+                        >
+                          Draft
+                        </div>
+                        <div
+                          onClick={() => handleVisibilitySelect("Published")}
+                          className="w-full min-h-9 h-9 flex items-center px-[12px] cursor-context-menu transition duration-300 ease-in-out hover:bg-lightgray"
+                        >
+                          Published
+                        </div>
+                        <div
                           onClick={() => handleVisibilitySelect("Hidden")}
                           className="w-full min-h-9 h-9 flex items-center px-[12px] cursor-context-menu transition duration-300 ease-in-out hover:bg-lightgray"
                         >
                           Hidden
-                        </div>
-                        <div
-                          onClick={() => handleVisibilitySelect("Visible")}
-                          className="w-full min-h-9 h-9 flex items-center px-[12px] cursor-context-menu transition duration-300 ease-in-out hover:bg-lightgray"
-                        >
-                          Visible
                         </div>
                       </div>
                     </div>
