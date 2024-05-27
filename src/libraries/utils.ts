@@ -10,7 +10,7 @@ import { REMOTE_PATTERNS } from "./config";
  *
  * @example
  * // Fetch products with specific fields
- * const products = await fetchData<ProductType>('/api/products', ['id', 'name', 'price']);
+ * const products = await fetchData<ProductType[]>('/api/products', ['id', 'name', 'price']);
  * console.log(products);
  *
  * @example
