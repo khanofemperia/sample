@@ -39,9 +39,10 @@ import {
 export default async function EditProduct({
   params,
 }: {
-  params: { id: string };
+  params: { slug: string };
 }) {
-  const data = await fetchData<ProductType | null>(`api/products/${params.id}`);
+  const productId = params.slug.split("-").pop();
+  const data = await fetchData<ProductType | null>(`api/products/${productId}`);
 
   if (!data) {
     notFound();

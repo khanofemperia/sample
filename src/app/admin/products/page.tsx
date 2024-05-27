@@ -9,15 +9,16 @@ export default async function Products() {
     "poster",
     "name",
     "price",
+    "slug",
   ]);
 
   return (
     <>
       <div className="mx-auto flex flex-wrap justify-start px-5 md:px-0 md:w-[762px] lg:w-[1016px]">
-        {products.map(({ id, name, price, poster }, index) => (
+        {products.map(({ id, name, price, poster, slug }, index) => (
           <Link
             key={index}
-            href={`/admin/products/${id}`}
+            href={`/admin/products/${slug}-${id}`}
             className="aspect-square w-1/2 min-[425px]:w-[calc(100%/3)] md:w-[254px] pt-2 pb-[6px] px-5 select-none transition duration-200 ease-in-out active:bg-blue-100 lg:hover:bg-blue-100"
           >
             <div className="relative w-full h-full">

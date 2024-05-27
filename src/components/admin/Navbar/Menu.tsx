@@ -6,9 +6,11 @@ import Link from "next/link";
 import { useEffect } from "react";
 import { NewProductButton } from "../NewProduct";
 import { useNavbarMenuStore } from "@/zustand/admin/navbarMenuStore";
+import { usePathname } from "next/navigation";
 
 export default function Menu() {
   const { navbarMenuVisible, setNavbarMenu } = useNavbarMenuStore();
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -26,6 +28,13 @@ export default function Menu() {
     };
   }, [navbarMenuVisible, setNavbarMenu]);
 
+  const isProductsPage = pathname === "/admin/products";
+  const isProductEditingPage = /^\/admin\/products\/[a-z0-9-]+-\d{5}$/.test(
+    pathname
+  );
+  const showSeparator = isProductsPage || isProductEditingPage;
+  const productSlug = isProductEditingPage ? pathname.split("/").pop() : undefined;
+
   return (
     <div className="menu relative h-10 rounded-full">
       <button
@@ -41,8 +50,18 @@ export default function Menu() {
         })}
       >
         <div className="overflow-hidden h-full w-full py-[5px] flex flex-col gap-0 rounded-xl shadow-thick-bottom bg-white">
-          <NewProductButton />
-          <div className="h-[1px] my-[5px] bg-[#e5e7eb]"></div>
+          {isProductsPage && <NewProductButton />}
+          {isProductEditingPage && (
+            <Link
+              href={`/shop/${productSlug}`}
+              className="h-9 w-[calc(100%-10px)] mx-auto px-4 rounded-md flex items-center cursor-pointer transition duration-300 ease-in-out active:bg-lightgray"
+            >
+              Visit product
+            </Link>
+          )}
+          {showSeparator && (
+            <div className="h-[1px] my-[5px] bg-[#e5e7eb]"></div>
+          )}
           <Link
             href="#"
             className="h-9 w-[calc(100%-10px)] mx-auto px-4 rounded-md flex items-center cursor-pointer transition duration-300 ease-in-out active:bg-lightgray"
