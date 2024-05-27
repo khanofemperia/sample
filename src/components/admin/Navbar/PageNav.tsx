@@ -50,25 +50,25 @@ export default function PageNav() {
       >
         <div className="overflow-hidden h-full w-full py-[5px] flex flex-col gap-0 rounded-xl shadow-thick-bottom bg-white">
           <Link
-            href="#"
+            href="/admin"
             className="h-9 w-[calc(100%-10px)] mx-auto px-4 rounded-md flex items-center cursor-pointer transition duration-300 ease-in-out active:bg-lightgray"
           >
             Overview
           </Link>
           <Link
-            href="#"
+            href="/admin/shop"
             className="h-9 w-[calc(100%-10px)] mx-auto px-4 rounded-md flex items-center cursor-pointer transition duration-300 ease-in-out active:bg-lightgray"
           >
             Shop
           </Link>
           <Link
-            href="#"
+            href="/admin/blog"
             className="h-9 w-[calc(100%-10px)] mx-auto px-4 rounded-md flex items-center cursor-pointer transition duration-300 ease-in-out active:bg-lightgray"
           >
             Blog
           </Link>
           <Link
-            href="#"
+            href="/admin/newsletter"
             className="h-9 w-[calc(100%-10px)] mx-auto px-4 rounded-md flex items-center cursor-pointer transition duration-300 ease-in-out active:bg-lightgray"
           >
             Newsletter
