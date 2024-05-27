@@ -92,8 +92,8 @@ export const useOverlayStore = createWithEqualityFn<OverlayStoreProps>(
             name: "description",
             isVisible: false,
           },
-          settings: {
-            name: "settings",
+          visibility: {
+            name: "visibility",
             isVisible: false,
           },
         },

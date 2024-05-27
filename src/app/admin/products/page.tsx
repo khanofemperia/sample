@@ -3,22 +3,6 @@ import { fetchData, formatThousands } from "@/libraries/utils";
 import Image from "next/image";
 import Link from "next/link";
 
-async function getProducts(): Promise<ProductType[]> {
-  const fields = ["id", "name", "price", "poster"];
-  const response = await fetch(
-    `http://localhost:3000/api/products?fields=${fields.join(",")}`,
-    {
-      cache: "no-store",
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch products");
-  }
-
-  return response.json();
-}
-
 export default async function Products() {
   const products = await fetchData<ProductType[]>("/api/products", [
     "id",

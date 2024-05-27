@@ -9,7 +9,6 @@ const chipStyles: Record<ChipValueType, string> = {
   published:
     "bg-custom-green/10 border border-custom-green/15 text-custom-green",
   draft: "bg-lightgray border border-[#6c6c6c]/15 text-gray",
-  visible: "bg-[#b67c04]/10 border border-[#b67c04]/15 text-[#b67c04]",
   hidden: "bg-lightgray border border-[#6c6c6c]/15 text-gray",
 };
 

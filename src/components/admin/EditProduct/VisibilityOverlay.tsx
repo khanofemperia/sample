@@ -12,16 +12,15 @@ import UpdateProductAction from "@/actions/update-product";
 
 type DataType = {
   id: string;
-  status: string;
   visibility: string;
 };
 
-export function SettingsButton() {
+export function VisibilityButton() {
   const { showOverlay } = useOverlayStore();
 
   const { pageName, overlayName } = useOverlayStore((state) => ({
     pageName: state.pages.editProduct.name,
-    overlayName: state.pages.editProduct.overlays.settings.name,
+    overlayName: state.pages.editProduct.overlays.visibility.name,
   }));
 
   return (
@@ -35,11 +34,10 @@ export function SettingsButton() {
   );
 }
 
-export function SettingsOverlay({ data }: { data: DataType }) {
+export function VisibilityOverlay({ data }: { data: DataType }) {
   const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
   const [isVisibilityDropdownOpen, setIsVisibilityDropdownOpen] =
     useState(false);
-  const [selectedStatus, setSelectedStatus] = useState(data.status);
   const [selectedVisibility, setSelectedVisibility] = useState(data.visibility);
   const [loading, setLoading] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState("");
@@ -50,8 +48,8 @@ export function SettingsOverlay({ data }: { data: DataType }) {
   const { pageName, isOverlayVisible, overlayName } = useOverlayStore(
     (state) => ({
       pageName: state.pages.editProduct.name,
-      overlayName: state.pages.editProduct.overlays.settings.name,
-      isOverlayVisible: state.pages.editProduct.overlays.settings.isVisible,
+      overlayName: state.pages.editProduct.overlays.visibility.name,
+      isOverlayVisible: state.pages.editProduct.overlays.visibility.isVisible,
     })
   );
 
@@ -105,7 +103,6 @@ export function SettingsOverlay({ data }: { data: DataType }) {
     try {
       const message = await UpdateProductAction({
         id: data.id,
-        status: selectedStatus,
         visibility: selectedVisibility,
       });
       setAlertMessage(message);
@@ -120,20 +117,11 @@ export function SettingsOverlay({ data }: { data: DataType }) {
     }
   };
 
-  const toggleStatusDropdown = () => {
-    setIsVisibilityDropdownOpen(false);
-    setIsStatusDropdownOpen((prevState) => !prevState);
-  };
-
   const toggleVisibilityDropdown = () => {
     setIsStatusDropdownOpen(false);
     setIsVisibilityDropdownOpen((prevState) => !prevState);
   };
 
-  const handleStatusSelect = (status: string) => {
-    setSelectedStatus(status);
-    setIsStatusDropdownOpen(false);
-  };
 
   const handleVisibilitySelect = (visibility: string) => {
     setSelectedVisibility(visibility);
@@ -148,11 +136,10 @@ export function SettingsOverlay({ data }: { data: DataType }) {
             <div className="w-full">
               <div className="md:hidden flex items-end justify-center pt-4 pb-2 absolute top-0 left-0 right-0 bg-white">
                 <div className="relative flex justify-center items-center w-full h-7">
-                  <h2 className="font-semibold text-lg">Settings</h2>
+                  <h2 className="font-semibold text-lg">visibility</h2>
                   <button
                     onClick={() => {
                       hideOverlay({ pageName, overlayName });
-                      setSelectedStatus(data.status);
                       setSelectedVisibility(data.visibility);
                     }}
                     type="button"
@@ -166,7 +153,6 @@ export function SettingsOverlay({ data }: { data: DataType }) {
                 <button
                   onClick={() => {
                     hideOverlay({ pageName, overlayName });
-                    setSelectedStatus(data.status);
                     setSelectedVisibility(data.visibility);
                   }}
                   type="button"
@@ -174,7 +160,7 @@ export function SettingsOverlay({ data }: { data: DataType }) {
                 >
                   <ArrowLeftIcon className="fill-custom-blue" size={18} />
                   <span className="font-semibold text-sm text-custom-blue">
-                    Settings
+                    visibility
                   </span>
                 </button>
                 <button
@@ -199,44 +185,7 @@ export function SettingsOverlay({ data }: { data: DataType }) {
                   )}
                 </button>
               </div>
-              <div className="w-full max-w-[425px] mx-auto h-full mt-[52px] md:m-0 p-5 pb-28 md:pb-10 flex flex-col md:flex-row gap-5">
-                <div className="flex flex-col gap-2">
-                  <h2 className="font-semibold text-sm">Status</h2>
-                  <div className="status w-full md:w-max h-9 relative">
-                    <button
-                      onClick={toggleStatusDropdown}
-                      type="button"
-                      className="h-9 w-full md:w-max px-3 md:px-4 rounded-md md:rounded-full flex md:gap-2 items-center justify-between transition duration-300 ease-in-out bg-lightgray active:bg-lightgray-dimmed"
-                    >
-                      <span>{capitalizeFirstLetter(selectedStatus)}</span>
-                      <ChevronDownIcon
-                        className="-mr-[4px] stroke-gray"
-                        size={20}
-                      />
-                    </button>
-                    <div
-                      className={clsx("w-full md:w-36 absolute top-10 z-10", {
-                        hidden: !isStatusDropdownOpen,
-                        block: isStatusDropdownOpen,
-                      })}
-                    >
-                      <div className="overflow-hidden h-full max-h-[228px] overflow-x-hidden overflow-y-visible custom-scrollbar w-full py-[6px] flex flex-col gap-0 rounded-md shadow-dropdown bg-white">
-                        <div
-                          onClick={() => handleStatusSelect("Draft")}
-                          className="w-full min-h-9 h-9 flex items-center px-[12px] cursor-context-menu transition duration-300 ease-in-out hover:bg-lightgray"
-                        >
-                          Draft
-                        </div>
-                        <div
-                          onClick={() => handleStatusSelect("Published")}
-                          className="w-full min-h-9 h-9 flex items-center px-[12px] cursor-context-menu transition duration-300 ease-in-out hover:bg-lightgray"
-                        >
-                          Published
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <div className="w-full max-w-[425px] mx-auto h-full mt-[52px] md:m-0 p-5 pb-28 md:pb-10">
                 <div className="flex flex-col gap-2">
                   <h2 className="font-semibold text-sm">Visibility</h2>
                   <div className="visibility w-full md:w-max h-9 relative">

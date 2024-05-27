@@ -20,9 +20,9 @@ import {
   ImagesOverlay,
 } from "@/components/admin/EditProduct/ImagesOverlay";
 import {
-  SettingsButton,
-  SettingsOverlay,
-} from "@/components/admin/EditProduct/SettingsOverlay";
+  VisibilityButton,
+  VisibilityOverlay,
+} from "@/components/admin/EditProduct/VisibilityOverlay";
 import {
   SizeChartButton,
   SizeChartOverlay,
@@ -55,7 +55,6 @@ export default async function EditProduct({
     sizes,
     colors,
     description,
-    status,
     visibility,
   } = data;
 
@@ -266,23 +265,15 @@ export default async function EditProduct({
         <div>
           <p className="text-sm mb-4 md:max-w-[85%]">
             Choose whether your product is a work-in-progress (draft) or ready
-            to be seen (published), and decide if you want shoppers to see it
-            (visible) or keep it private (hidden).
+            to be seen (published), and decide if you want shoppers to see it or keep it private (hidden).
           </p>
           <div className="w-full max-w-[400px] shadow rounded-xl bg-white">
             <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
-              <h2 className="font-semibold text-xl">Settings</h2>
-              <SettingsButton />
+              <h2 className="font-semibold text-xl">Visibility</h2>
+              <VisibilityButton />
             </div>
-            <div className="flex flex-col gap-5 p-5">
-              <div>
-                <h3 className="font-semibold text-sm mb-2">Status</h3>
-                <DataChip value={status as ChipValueType} />
-              </div>
-              <div>
-                <h3 className="font-semibold text-sm mb-2">Visibility</h3>
+            <div className="p-5">
                 <DataChip value={visibility as ChipValueType} />
-              </div>
             </div>
           </div>
         </div>
@@ -293,7 +284,7 @@ export default async function EditProduct({
       <ColorsOverlay data={{ id, colors }} />
       <SizeChartOverlay data={{ id, chart: sizes }} />
       <DescriptionOverlay data={{ id, description }} />
-      <SettingsOverlay data={{ id, status, visibility }} />
+      <VisibilityOverlay data={{ id, visibility }} />
     </>
   );
 }

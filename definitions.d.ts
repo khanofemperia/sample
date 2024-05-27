@@ -31,7 +31,6 @@ type ProductType = {
   colors: { name: string; image: string }[] | null;
   sizes: SizeChartType | null;
   description: string | null;
-  status: string;
   visibility: string;
   date_created: string;
   last_updated: string;
@@ -49,10 +48,9 @@ type CollectionType = {
   collection_type: string;
   image?: string;
   products: ProductType[];
-  status: string;
   visibility: string;
   date_created: string;
   last_updated: string;
 };
 
-type ChipValueType = "published" | "draft" | "visible" | "hidden";
+type ChipValueType = "draft" | "published" | "hidden";
