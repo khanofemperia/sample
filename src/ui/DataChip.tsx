@@ -16,7 +16,6 @@ export default function DataChip({ value }: DataChipType) {
   const chipColor = clsx(
     "px-3 rounded-full h-6 w-max flex items-center",
     chipStyles[value.toLowerCase() as ChipValueType],
-    "bg-custom-gray/10 border-custom-gray/15 text-custom-gray"
   );
 
   return <div className={chipColor}>{capitalizeFirstLetter(value.toLowerCase())}</div>;
