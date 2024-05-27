@@ -6,6 +6,7 @@ import Link from "next/link";
 export default async function Products() {
   const products = await fetchData<ProductType[]>("/api/products", [
     "id",
+    "poster",
     "name",
     "price",
   ]);

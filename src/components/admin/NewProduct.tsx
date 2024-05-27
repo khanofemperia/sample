@@ -4,7 +4,7 @@ import { CreateProductAction } from "@/actions/create-product";
 import AlertMessage from "@/components/shared/AlertMessage";
 import { capitalizeFirstLetter, isValidRemoteImage } from "@/libraries/utils";
 import { FormEvent, useState, useEffect, useRef } from "react";
-import Spinner from "@/elements/Spinners/White";
+import Spinner from "@/ui/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
 import { useNavbarMenuStore } from "@/zustand/admin/navbarMenuStore";
 import { ArrowLeftIcon, ChevronDownIcon, CloseIcon } from "@/icons";
@@ -211,7 +211,7 @@ export function NewProductOverlay() {
                     type="button"
                     className="h-9 px-3 rounded-full flex items-center gap-1 transition duration-300 ease-in-out active:bg-lightgray"
                   >
-                    <ArrowLeftIcon className="fill-custom-blue" size={18} />
+                    <ArrowLeftIcon className="fill-custom-blue -ml-[2px]" size={18} />
                     <span className="font-semibold text-sm text-custom-blue">
                       New product
                     </span>
