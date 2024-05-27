@@ -2,11 +2,11 @@
 
 import AlertMessage from "@/components/shared/AlertMessage";
 import { useState, useEffect, ChangeEvent } from "react";
-import Spinner from "@/elements/Spinners/White";
+import Spinner from "@/ui/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
 import { ArrowLeftIcon, CloseIcon, EditIcon } from "@/icons";
 import clsx from "clsx";
-import Overlay from "@/elements/Overlay";
+import Overlay from "@/ui/Overlay";
 import UpdateProductAction from "@/actions/update-product";
 
 type ColumnType = {

@@ -2,7 +2,7 @@ import {
   BasicDetailsOverlay,
   BasicDetailsButton,
 } from "@/components/admin/EditProduct/BasicDetailsOverlay";
-import DataChip from "@/elements/DataChip";
+import DataChip from "@/ui/DataChip";
 import {
   fetchData,
   formatThousands,

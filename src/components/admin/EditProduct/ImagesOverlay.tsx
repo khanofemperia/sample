@@ -3,12 +3,12 @@
 import AlertMessage from "@/components/shared/AlertMessage";
 import { isValidRemoteImage } from "@/libraries/utils";
 import { useState, useEffect } from "react";
-import Spinner from "@/elements/Spinners/White";
+import Spinner from "@/ui/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
 import { ArrowLeftIcon, CloseIcon, EditIcon, MinusIcon } from "@/icons";
 import clsx from "clsx";
 import Image from "next/image";
-import Overlay from "@/elements/Overlay";
+import Overlay from "@/ui/Overlay";
 import { HiOutlinePlus } from "react-icons/hi2";
 import UpdateProductAction from "@/actions/update-product";
 
