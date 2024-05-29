@@ -1,5 +1,5 @@
 import { TbChevronLeft, TbChevronRight, TbChevronDown } from "react-icons/tb";
-import { PiShoppingCartSimpleBold } from "react-icons/pi";
+import { PiArrowsClockwiseBold, PiShoppingCartSimpleBold } from "react-icons/pi";
 import { FaMinus } from "react-icons/fa6";
 import { MdOutlineEdit } from "react-icons/md";
 import {
@@ -8,8 +8,8 @@ import {
   HiOutlineMenu,
   HiArrowLeft,
   HiArrowRight,
-  HiMinus,
 } from "react-icons/hi";
+import { HiArrowUpRight } from "react-icons/hi2";
 
 export const CloseIcon = HiX;
 export const CartIcon = PiShoppingCartSimpleBold;
@@ -22,4 +22,6 @@ export const ArrowLeftIcon = HiArrowLeft;
 export const ArrowRightIcon = HiArrowRight;
 export const EditIcon = MdOutlineEdit;
 export const MinusIcon = FaMinus;
+export const VisitPageIcon = HiArrowUpRight;
+export const ChangeIndexIcon = PiArrowsClockwiseBold;
 
