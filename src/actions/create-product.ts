@@ -38,7 +38,7 @@ export async function CreateProductAction(data: CreateProductType) {
 
     return "Product created";
   } catch (error) {
-    console.error(error);
+    console.error("Error creating product:", error);
     return "Failed to create product";
   }
 }

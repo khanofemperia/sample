@@ -2,7 +2,11 @@
 
 import { CreateProductAction } from "@/actions/create-product";
 import AlertMessage from "@/components/shared/AlertMessage";
-import { capitalizeFirstLetter, isValidRemoteImage } from "@/libraries/utils";
+import {
+  capitalizeFirstLetter,
+  formatDate,
+  isValidRemoteImage,
+} from "@/libraries/utils";
 import { FormEvent, useState, useEffect, useRef } from "react";
 import Spinner from "@/ui/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
@@ -10,6 +14,21 @@ import { useNavbarMenuStore } from "@/zustand/admin/navbarMenuStore";
 import { ArrowLeftIcon, ChevronDownIcon, CloseIcon } from "@/icons";
 import clsx from "clsx";
 import Image from "next/image";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { CiImageOn } from "react-icons/ci";
+import { CreateCollectionAction } from "@/actions/create-collection";
+
+type RequestDataType = {
+  title: string;
+  slug: string;
+  campaign_duration: {
+    start_date: string;
+    end_date: string;
+  };
+  collection_type: string;
+  image?: string;
+};
 
 export function NewCollectionButton() {
   const { showOverlay } = useOverlayStore();
@@ -36,39 +55,30 @@ export function NewCollectionButton() {
   );
 }
 
-export function NewProductOverlay() {
-  const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
+export function NewCollectionOverlay() {
+  const FEATURED = "FEATURED";
+  const BANNER = "BANNER";
+
+  const today = new Date();
+
+  const [isCategoryDropdownOpen, setIsCollectionTypeDropdownOpen] =
+    useState(false);
   const [loading, setLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("Select");
-  const [categories, setCategories] = useState<CategoryType[]>([]);
-  const [formData, setFormData] = useState({
-    category: "",
-    name: "",
-    slug: "",
-    price: "",
-    poster: "",
-  });
+  const [selectedCollectionType, setSelectedCollectionType] =
+    useState(FEATURED);
+  const [title, setTitle] = useState<string>("");
+  const [slug, setSlug] = useState<string>("");
+  const [bannerImage, setBannerImage] = useState<string>(
+    "https://firebasestorage.googleapis.com/v0/b/sample-f415e.appspot.com/o/images%2Fvalentines.gif?alt=media&token=80d6e4d3-c237-4418-9d95-a7da7fafcf61"
+  );
+  const [startDate, setStartDate] = useState<Date | null>(today);
+  const [endDate, setEndDate] = useState<Date | null>(
+    new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000) // 7 days from today
+  );
 
-  const categoryRef = useRef(null);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch("/api/categories");
-        if (!response.ok) {
-          throw new Error("Failed to fetch categories");
-        }
-        const data = await response.json();
-        setCategories(data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-
-    fetchCategories();
-  }, []);
+  const collectionTypeRef = useRef(null);
 
   const { hideOverlay } = useOverlayStore();
 
@@ -96,14 +106,14 @@ export function NewProductOverlay() {
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (!categoryRef.current || !(event.target instanceof Node)) {
+      if (!collectionTypeRef.current || !(event.target instanceof Node)) {
         return;
       }
 
-      const targetNode = categoryRef.current as Node;
+      const targetNode = collectionTypeRef.current as Node;
 
       if (!targetNode.contains(event.target)) {
-        setIsCategoryDropdownOpen(false);
+        setIsCollectionTypeDropdownOpen(false);
       }
     }
 
@@ -114,73 +124,64 @@ export function NewProductOverlay() {
     };
   }, []);
 
-  const handleCategorySelect = (category: string) => {
-    setSelectedCategory(category);
-    setIsCategoryDropdownOpen(false);
-
-    setFormData((prevData) => ({
-      ...prevData,
-      category: capitalizeFirstLetter(category),
-    }));
+  const handleCollectionTypeSelect = (type: string) => {
+    setSelectedCollectionType(type);
+    setIsCollectionTypeDropdownOpen(false);
   };
+
+  const isValidDateRange =
+    startDate &&
+    endDate &&
+    startDate.toISOString().split("T")[0] < endDate.toISOString().split("T")[0];
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
-    if (!formData.category || formData.category.toLowerCase() === "select") {
-      setAlertMessage("Select a category");
+    if (!isValidDateRange) {
+      setAlertMessage("Start date must be before end date");
       setShowAlert(true);
-      return;
-    } else if (!isValidRemoteImage(formData.poster)) {
-      setAlertMessage(
-        "Invalid poster URL. Try an image from Pinterest or your Firebase Storage."
-      );
-      setShowAlert(true);
-      return;
-    }
+    } else {
+      setLoading(true);
 
-    setLoading(true);
+      const campaignDuration = {
+        start_date: formatDate(startDate),
+        end_date: formatDate(endDate),
+      };
 
-    try {
-      const message = await CreateProductAction(formData);
-      setAlertMessage(message);
-      setShowAlert(true);
-    } catch (error) {
-      console.error(error);
-      setAlertMessage("Failed to create product");
-      setShowAlert(true);
-    } finally {
-      setLoading(false);
-      onHideOverlay();
-    }
-  };
+      try {
+        const requestData: RequestDataType = {
+          title,
+          slug,
+          campaign_duration: campaignDuration,
+          collection_type: selectedCollectionType,
+        };
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+        if (selectedCollectionType === BANNER) {
+          requestData.image = bannerImage;
+        }
 
-    if (name === "poster") {
-      setFormData((prevData) => ({
-        ...prevData,
-        poster: value,
-      }));
+        const message = await CreateCollectionAction(requestData);
+        setAlertMessage(message);
+        setShowAlert(true);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        onHideOverlay();
+      }
     }
   };
 
   const onHideOverlay = () => {
     setLoading(false);
     hideOverlay({ pageName, overlayName });
-    setSelectedCategory("Select");
-    setFormData({
-      category: "",
-      name: "",
-      slug: "",
-      price: "",
-      poster: "",
-    });
+    setSelectedCollectionType(FEATURED);
+    setTitle("");
+    setSlug("");
+    setBannerImage("");
+    setStartDate(today);
+    setEndDate(
+      new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000) // 7 days from today
+    );
   };
 
   const hideAlertMessage = () => {
@@ -192,12 +193,12 @@ export function NewProductOverlay() {
     <>
       {isOverlayVisible && (
         <div className="fixed top-0 bottom-0 left-0 right-0 z-50 bg-glass-black backdrop-blur-sm md:overflow-x-hidden md:overflow-y-visible md:custom-scrollbar">
-          <div className="absolute bottom-0 left-0 right-0 w-full h-[calc(100%-60px)] rounded-t-3xl overflow-hidden bg-white md:w-[500px] md:rounded-2xl md:shadow-lg md:h-max md:mx-auto md:mt-20 md:mb-[50vh] md:relative md:bottom-auto md:left-auto md:right-auto md:top-auto md:-translate-x-0">
+          <div className="absolute bottom-0 left-0 right-0 w-full h-[calc(100%-60px)] rounded-t-3xl bg-white md:w-[500px] md:rounded-2xl md:shadow-lg md:h-max md:mx-auto md:mt-20 md:mb-[50vh] md:relative md:bottom-auto md:left-auto md:right-auto md:top-auto md:-translate-x-0">
             <form onSubmit={handleSubmit}>
               <div className="w-full h-[calc(100vh-188px)] md:h-auto">
                 <div className="md:hidden flex items-end justify-center pt-4 pb-2 absolute top-0 left-0 right-0 bg-white">
                   <div className="relative flex justify-center items-center w-full h-7">
-                    <h2 className="font-semibold text-lg">New product</h2>
+                    <h2 className="font-semibold text-lg">New collection</h2>
                     <button
                       onClick={onHideOverlay}
                       type="button"
@@ -218,7 +219,7 @@ export function NewProductOverlay() {
                       size={18}
                     />
                     <span className="font-semibold text-sm text-custom-blue">
-                      New product
+                      New collection
                     </span>
                   </button>
                   <button
@@ -244,21 +245,24 @@ export function NewProductOverlay() {
                 </div>
                 <div className="w-full h-full mt-[52px] md:mt-0 px-5 pt-5 pb-28 md:pb-10 flex flex-col gap-5 overflow-x-hidden overflow-y-visible invisible-scrollbar md:overflow-hidden">
                   <div className="flex flex-col gap-2">
-                    <h2 className="font-semibold text-sm">Category</h2>
-                    <div ref={categoryRef} className="w-full h-9 relative">
+                    <h2 className="font-semibold text-sm">Type</h2>
+                    <div
+                      ref={collectionTypeRef}
+                      className="w-full h-9 relative"
+                    >
                       <button
                         onClick={() =>
-                          setIsCategoryDropdownOpen((prevState) => !prevState)
+                          setIsCollectionTypeDropdownOpen(
+                            (prevState) => !prevState
+                          )
                         }
                         type="button"
                         className="h-9 w-full px-3 rounded-md flex items-center justify-between transition duration-300 ease-in-out bg-lightgray active:bg-lightgray-dimmed"
                       >
-                        <span
-                          className={clsx({
-                            "text-gray": selectedCategory === "Select",
-                          })}
-                        >
-                          {selectedCategory}
+                        <span>
+                          {capitalizeFirstLetter(
+                            selectedCollectionType.toLowerCase()
+                          )}
                         </span>
                         <ChevronDownIcon
                           className="-mr-[4px] stroke-gray"
@@ -272,32 +276,111 @@ export function NewProductOverlay() {
                         })}
                       >
                         <div className="overflow-hidden h-full w-full py-[6px] flex flex-col gap-0 rounded-md shadow-dropdown bg-white">
-                          {categories.map((category, index) => (
-                            <div
-                              key={index}
-                              className="w-full h-9 flex items-center px-[12px] cursor-context-menu transition duration-300 ease-in-out hover:bg-lightgray"
-                              onClick={() =>
-                                handleCategorySelect(category.name)
-                              }
-                            >
-                              {category.name}
-                            </div>
-                          ))}
+                          <div
+                            className="w-full h-9 flex items-center px-[12px] cursor-context-menu transition duration-300 ease-in-out hover:bg-lightgray"
+                            onClick={() => handleCollectionTypeSelect(FEATURED)}
+                          >
+                            Featured
+                          </div>
+                          <div
+                            className="w-full h-9 flex items-center px-[12px] cursor-context-menu transition duration-300 ease-in-out hover:bg-lightgray"
+                            onClick={() => handleCollectionTypeSelect(BANNER)}
+                          >
+                            Banner
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
+                  {selectedCollectionType === BANNER && (
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="image" className="font-semibold text-sm">
+                        Image
+                      </label>
+                      <div>
+                        <div className="w-full border rounded-md overflow-hidden">
+                          <div className="w-full min-h-[86px] flex items-center justify-center overflow-hidden">
+                            {!bannerImage ? (
+                              <CiImageOn
+                                className="fill-neutral-200"
+                                size={80}
+                              />
+                            ) : (
+                              <Image
+                                src={bannerImage}
+                                alt={title}
+                                width={766}
+                                height={308}
+                                priority={true}
+                              />
+                            )}
+                          </div>
+                          <div className="w-full h-9 border-t overflow-hidden">
+                            <input
+                              type="text"
+                              name="image"
+                              placeholder="Paste image URL"
+                              value={bannerImage}
+                              onChange={(e) => setBannerImage(e.target.value)}
+                              className="h-full w-full px-3 text-gray"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  <div>
+                    <h2 className="font-semibold text-sm">Campaign duration</h2>
+                    <div className="flex flex-col md:flex-row items-center gap-3 mt-4">
+                      <div
+                        className={clsx(
+                          "w-full md:max-w-[230px] flex gap-3 items-center border rounded-md overflow-hidden pl-3",
+                          {
+                            "border-red": !isValidDateRange,
+                          }
+                        )}
+                      >
+                        <span className="font-semibold text-sm text-gray">
+                          Start
+                        </span>
+                        <DatePicker
+                          selected={startDate}
+                          onChange={(date) => setStartDate(date)}
+                          className="w-full h-9 outline-none"
+                          required
+                        />
+                      </div>
+                      <div
+                        className={clsx(
+                          "w-full md:max-w-[230px] flex gap-3 items-center border rounded-md overflow-hidden pl-3",
+                          {
+                            "border-red": !isValidDateRange,
+                          }
+                        )}
+                      >
+                        <span className="font-semibold text-sm text-gray">
+                          End
+                        </span>
+                        <DatePicker
+                          selected={endDate}
+                          onChange={(date) => setEndDate(date)}
+                          className="w-full h-9 outline-none"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
                   <div className="flex flex-col gap-2">
-                    <label htmlFor="name" className="font-semibold text-sm">
-                      Name
+                    <label htmlFor="title" className="font-semibold text-sm">
+                      Title
                     </label>
                     <div className="w-full h-9 relative">
                       <input
                         type="text"
-                        name="name"
-                        placeholder="Denim Mini Skirt"
-                        value={formData.name}
-                        onChange={handleInputChange}
+                        name="title"
+                        placeholder={`Belle Jolie Lipstick - She "Marks" Her Man with Her Lips`}
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
                         className="w-full h-9 px-3 rounded-md transition duration-300 ease-in-out border focus:border-custom-blue"
                         required
                       />
@@ -311,59 +394,12 @@ export function NewProductOverlay() {
                       <input
                         type="text"
                         name="slug"
-                        placeholder="denim-mini-skirt"
-                        value={formData.slug}
-                        onChange={handleInputChange}
+                        placeholder="belle-jolie-lipstick-mark-your-man"
+                        value={slug}
+                        onChange={(e) => setSlug(e.target.value)}
                         className="w-full h-9 px-3 rounded-md transition duration-300 ease-in-out border focus:border-custom-blue"
                         required
                       />
-                    </div>
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <label htmlFor="price" className="font-semibold text-sm">
-                      Price
-                    </label>
-                    <div className="w-full h-9 relative">
-                      <input
-                        type="text"
-                        name="price"
-                        placeholder="34.99"
-                        value={formData.price}
-                        onChange={handleInputChange}
-                        className="w-full h-9 px-3 rounded-md transition duration-300 ease-in-out border focus:border-custom-blue"
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <label htmlFor="poster" className="font-semibold text-sm">
-                      Poster
-                    </label>
-                    <div>
-                      <div className="w-full max-w-[383px] border rounded-md overflow-hidden">
-                        <div className="w-full aspect-square flex items-center justify-center overflow-hidden">
-                          {formData.poster &&
-                            isValidRemoteImage(formData.poster) && (
-                              <Image
-                                src={formData.poster}
-                                alt={formData.name || "Poster"}
-                                width={383}
-                                height={383}
-                                priority
-                              />
-                            )}
-                        </div>
-                        <div className="w-full h-9 border-t overflow-hidden">
-                          <input
-                            type="text"
-                            name="poster"
-                            placeholder="Paste image URL"
-                            value={formData.poster}
-                            onChange={handleInputChange}
-                            className="h-full w-full px-3 text-gray"
-                          />
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>

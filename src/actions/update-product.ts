@@ -44,7 +44,7 @@ export default async function UpdateProductAction(data: EditProduct) {
 
     return "Product updated";
   } catch (error) {
-    console.error(error);
+    console.error("Error updating product:", error);
     return "Failed to update product";
   }
 }
