@@ -1,6 +1,11 @@
 "use client";
 
-import { ChangeIndexIcon, ChevronRightIcon, EditIcon } from "@/icons";
+import {
+  ChangeIndexIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  EditIcon,
+} from "@/icons";
 import { capitalizeFirstLetter } from "@/libraries/utils";
 import clsx from "clsx";
 import Link from "next/link";
@@ -16,13 +21,9 @@ export default function CollectionTable({
   const CAMPAIGN_STATUS_ENDED = "Ended";
   const CAMPAIGN_STATUS_UPCOMING = "Upcoming";
   const CAMPAIGN_STATUS_ACTIVE = "Active";
-  const FEATURED_COLLECTION = "FEATURED_COLLECTION";
-  const PROMOTIONAL_BANNER = "PROMOTIONAL_BANNER";
 
   const [currentPage, setCurrentPage] = useState(1);
   const [pageJumpValue, setPageJumpValue] = useState("1");
-  const [alertMessage, setAlertMessage] = useState("");
-  const [showAlert, setShowAlert] = useState<boolean>(false);
 
   const pagination = (
     data: CollectionType[],
@@ -82,11 +83,6 @@ export default function CollectionTable({
   const jumpToLastPage = () => {
     setPageJumpValue(String(totalPages));
     setCurrentPage(totalPages);
-  };
-
-  const hideAlertMessage = () => {
-    setShowAlert(false);
-    setAlertMessage("");
   };
 
   const formatDate = (dateString: string) => {
@@ -331,6 +327,40 @@ export default function CollectionTable({
           </div>
         </div>
       </div>
+      {collections.length > rowsPerPage && (
+        <div className="mt-10">
+          <div className="w-max mx-auto flex gap-1 h-9">
+            <button
+              onClick={handlePrevious}
+              className="w-9 h-9 flex items-center justify-center rounded-full ease-in-out duration-300 transition active:bg-lightgray-dimmed lg:hover:bg-lightgray-dimmed"
+            >
+              <ChevronLeftIcon className="-ml-[2px]" size={24} />
+            </button>
+            <input
+              value={pageJumpValue}
+              onChange={(e) => setPageJumpValue(e.target.value)}
+              onKeyDown={handleEnterKey}
+              className="min-w-[36px] max-w-[36px] h-9 px-1 text-center border cursor-text outline-none rounded-full bg-white"
+              type="text"
+            />
+            <div className="flex items-center justify-center px-1 cursor-context-menu">
+              of
+            </div>
+            <button
+              onClick={jumpToLastPage}
+              className="w-9 h-9 flex items-center justify-center rounded-full ease-in-out duration-300 transition active:bg-lightgray-dimmed lg:hover:bg-lightgray-dimmed"
+            >
+              {totalPages}
+            </button>
+            <button
+              onClick={handleNext}
+              className="w-9 h-9 flex items-center justify-center rounded-full ease-in-out duration-300 transition active:bg-lightgray-dimmed lg:hover:bg-lightgray-dimmed "
+            >
+              <ChevronRightIcon className="-mr-[2px]" size={24} />
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
