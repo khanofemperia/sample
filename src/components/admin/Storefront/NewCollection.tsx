@@ -11,13 +11,13 @@ import { ArrowLeftIcon, ChevronDownIcon, CloseIcon } from "@/icons";
 import clsx from "clsx";
 import Image from "next/image";
 
-export function NewProductButton() {
+export function NewCollectionButton() {
   const { showOverlay } = useOverlayStore();
   const { setNavbarMenu } = useNavbarMenuStore();
 
   const { pageName, overlayName } = useOverlayStore((state) => ({
-    pageName: state.pages.products.name,
-    overlayName: state.pages.products.overlays.newProduct.name,
+    pageName: state.pages.storefront.name,
+    overlayName: state.pages.storefront.overlays.newCollection.name,
   }));
 
   const openOverlay = () => {
@@ -31,7 +31,7 @@ export function NewProductButton() {
       className="h-9 w-[calc(100%-10px)] mx-auto px-4 rounded-md flex items-center cursor-pointer transition duration-300 ease-in-out active:bg-lightgray"
       onClick={openOverlay}
     >
-      New product
+      New collection
     </button>
   );
 }
@@ -74,9 +74,9 @@ export function NewProductOverlay() {
 
   const { pageName, isOverlayVisible, overlayName } = useOverlayStore(
     (state) => ({
-      pageName: state.pages.products.name,
-      overlayName: state.pages.products.overlays.newProduct.name,
-      isOverlayVisible: state.pages.products.overlays.newProduct.isVisible,
+      pageName: state.pages.storefront.name,
+      overlayName: state.pages.storefront.overlays.newCollection.name,
+      isOverlayVisible: state.pages.storefront.overlays.newCollection.isVisible,
     })
   );
 

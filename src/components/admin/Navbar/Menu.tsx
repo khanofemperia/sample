@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { NewProductButton } from "../NewProduct";
 import { useNavbarMenuStore } from "@/zustand/admin/navbarMenuStore";
 import { usePathname } from "next/navigation";
+import { NewCollectionButton } from "../Storefront/NewCollection";
 
 export default function Menu() {
   const { navbarMenuVisible, setNavbarMenu } = useNavbarMenuStore();
@@ -28,12 +29,16 @@ export default function Menu() {
     };
   }, [navbarMenuVisible, setNavbarMenu]);
 
-  const isProductsPage = pathname === "/admin/products";
-  const isProductEditingPage = /^\/admin\/products\/[a-z0-9-]+-\d{5}$/.test(
-    pathname
-  );
-  const showSeparator = isProductsPage || isProductEditingPage;
-  const productSlug = isProductEditingPage ? pathname.split("/").pop() : undefined;
+  const isProductsPage = pathname === "/admin/shop/products";
+  const isProductEditingPage =
+    /^\/admin\/shop\/products\/[a-z0-9-]+-\d{5}$/.test(pathname);
+  const isCollectionsPage = pathname === "/admin/shop";
+
+  const showSeparator =
+    isProductsPage || isCollectionsPage || isProductEditingPage;
+  const productSlug = isProductEditingPage
+    ? pathname.split("/").pop()
+    : undefined;
 
   return (
     <div className="menu relative h-10 rounded-full">
@@ -59,30 +64,33 @@ export default function Menu() {
               Visit product
             </Link>
           )}
+          {isCollectionsPage && <NewCollectionButton />}
           {showSeparator && (
             <div className="h-[1px] my-[5px] bg-[#e5e7eb]"></div>
           )}
+          <div className="lg:hidden">
+            <Link
+              href="/admin/shop"
+              className="h-9 w-[calc(100%-10px)] mx-auto px-4 rounded-md flex items-center cursor-pointer transition duration-300 ease-in-out active:bg-lightgray"
+            >
+              Storefront
+            </Link>
+            <Link
+              href="/admin/shop/products"
+              className="h-9 w-[calc(100%-10px)] mx-auto px-4 rounded-md flex items-center cursor-pointer transition duration-300 ease-in-out active:bg-lightgray"
+            >
+              Products
+            </Link>
+            <Link
+              href="/admin/shop/upsells"
+              className="h-9 w-[calc(100%-10px)] mx-auto px-4 rounded-md flex items-center cursor-pointer transition duration-300 ease-in-out active:bg-lightgray"
+            >
+              Upsells
+            </Link>
+            <div className="h-[1px] my-[5px] bg-[#e5e7eb]"></div>
+          </div>
           <Link
-            href="#"
-            className="h-9 w-[calc(100%-10px)] mx-auto px-4 rounded-md flex items-center cursor-pointer transition duration-300 ease-in-out active:bg-lightgray"
-          >
-            Storefront
-          </Link>
-          <Link
-            href="#"
-            className="h-9 w-[calc(100%-10px)] mx-auto px-4 rounded-md flex items-center cursor-pointer transition duration-300 ease-in-out active:bg-lightgray"
-          >
-            Products
-          </Link>
-          <Link
-            href="#"
-            className="h-9 w-[calc(100%-10px)] mx-auto px-4 rounded-md flex items-center cursor-pointer transition duration-300 ease-in-out active:bg-lightgray"
-          >
-            Upsells
-          </Link>
-          <div className="h-[1px] my-[5px] bg-[#e5e7eb]"></div>
-          <Link
-            href="#"
+            href="/"
             className="h-9 w-[calc(100%-10px)] mx-auto px-4 rounded-md flex items-center cursor-pointer transition duration-300 ease-in-out active:bg-lightgray"
           >
             Public website
