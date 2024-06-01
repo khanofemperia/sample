@@ -12,7 +12,7 @@ import Image from "next/image";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { CiImageOn } from "react-icons/ci";
-import { CreateCollectionAction } from "@/actions/create-collection";
+import { CreateCollectionAction } from "@/actions/collections";
 
 type RequestDataType = {
   title: string;
@@ -127,7 +127,7 @@ export function NewCollectionOverlay() {
     endDate &&
     startDate.toISOString().split("T")[0] < endDate.toISOString().split("T")[0];
 
-  const handleSubmit = async () => {
+  const handleSave = async () => {
     if (!isValidDateRange) {
       setAlertMessage("Start date must be before end date");
       setShowAlert(true);
@@ -213,7 +213,7 @@ export function NewCollectionOverlay() {
                   </span>
                 </button>
                 <button
-                  onClick={handleSubmit}
+                  onClick={handleSave}
                   disabled={loading}
                   className={clsx(
                     "relative h-9 w-max px-4 rounded-full overflow-hidden transition duration-300 ease-in-out text-white bg-custom-blue",
@@ -390,7 +390,7 @@ export function NewCollectionOverlay() {
             </div>
             <div className="md:hidden w-full pb-5 pt-2 px-5 absolute bottom-0">
               <button
-                onClick={handleSubmit}
+                onClick={handleSave}
                 disabled={loading}
                 className={clsx(
                   "relative h-12 w-full rounded-full overflow-hidden transition duration-300 ease-in-out text-white bg-custom-blue",

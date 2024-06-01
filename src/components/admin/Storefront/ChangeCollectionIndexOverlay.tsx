@@ -14,7 +14,7 @@ import {
 } from "@/icons";
 import clsx from "clsx";
 import Overlay from "@/ui/Overlay";
-import UpdateProductAction from "@/actions/update-product";
+import { ChangeCollectionIndexAction } from "@/actions/collections";
 import { useChangeCollectionIndexStore } from "@/zustand/admin/changeCollectionIndexStore";
 
 type ButtonDataType = {
@@ -101,9 +101,30 @@ export function ChangeCollectionIndexOverlay() {
     setAlertMessage("");
   };
 
+  const handleSave = async () => {
+    setLoading(true);
+    try {
+      const message = await ChangeCollectionIndexAction({
+        id: selectedCollection.id,
+        index: Number(selectedCollection.index),
+      });
+      setAlertMessage(message);
+      setShowAlert(true);
+    } catch (error) {
+      console.error(error);
+      setAlertMessage("An error occurred while updating the collection index.");
+      setShowAlert(true);
+    } finally {
+      setLoading(false);
+      onHideOverlay();
+    }
+  };
+
   const handleIndexChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newIndex = event.target.value;
-    setSelectedCollection({ ...selectedCollection, index: newIndex });
+    if (/^\d*$/.test(newIndex)) {
+      setSelectedCollection({ ...selectedCollection, index: newIndex });
+    }
   };
 
   return (
@@ -114,7 +135,7 @@ export function ChangeCollectionIndexOverlay() {
             <div className="w-full h-[calc(100vh-188px)] md:h-auto">
               <div className="md:hidden flex items-end justify-center pt-4 pb-2 absolute top-0 left-0 right-0 bg-white">
                 <div className="relative flex justify-center items-center w-full h-7">
-                  <h2 className="font-semibold text-lg">Basic details</h2>
+                  <h2 className="font-semibold text-lg">Reposition up/down</h2>
                   <button
                     onClick={onHideOverlay}
                     type="button"
@@ -135,11 +156,11 @@ export function ChangeCollectionIndexOverlay() {
                     size={18}
                   />
                   <span className="font-semibold text-sm text-custom-blue">
-                    Basic details
+                    Reposition up/down
                   </span>
                 </button>
                 <button
-                  type="submit"
+                  onClick={handleSave}
                   disabled={loading}
                   className={clsx(
                     "relative h-9 w-max px-4 rounded-full overflow-hidden transition duration-300 ease-in-out text-white bg-custom-blue",
@@ -161,14 +182,21 @@ export function ChangeCollectionIndexOverlay() {
               </div>
               <div className="w-full h-full mt-[52px] md:mt-0 p-5 pb-28 md:pb-10 flex flex-col gap-5 overflow-x-hidden overflow-y-visible invisible-scrollbar md:overflow-hidden">
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="name" className="font-semibold text-sm">
-                    Name
+                  <h3 className="text-sm font-semibold mb-2">Title</h3>
+                  <div className="w-full max-w-full h-9 px-3 rounded-md bg-lightgray border flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
+                    {selectedCollection.title}
+                  </div>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="index" className="font-semibold text-sm">
+                    Index
                   </label>
                   <div className="w-full h-9 relative">
                     <input
                       type="text"
-                      name="name"
-                      placeholder="Denim Mini Skirt"
+                      name="index"
+                      value={selectedCollection.index}
+                      onChange={handleIndexChange}
                       className="w-full h-9 px-3 rounded-md transition duration-300 ease-in-out border focus:border-custom-blue"
                       required
                     />
@@ -178,7 +206,7 @@ export function ChangeCollectionIndexOverlay() {
             </div>
             <div className="md:hidden w-full pb-5 pt-2 px-5 absolute bottom-0">
               <button
-                type="submit"
+                onClick={handleSave}
                 disabled={loading}
                 className={clsx(
                   "relative h-12 w-full rounded-full overflow-hidden transition duration-300 ease-in-out text-white bg-custom-blue",

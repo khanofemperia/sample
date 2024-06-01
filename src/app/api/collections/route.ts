@@ -34,17 +34,15 @@ export async function GET(request: NextRequest) {
       id: doc.id,
       ...selectedFields,
       last_updated: data["last_updated"],
+      index: data["index"],
     };
   });
 
   return NextResponse.json(
-    sortCollections(collections).map(({ last_updated, ...rest }) => rest)
+    sortCollections(collections)
   );
 }
 
-function sortCollections<T extends { last_updated: string }>(collections: T[]): T[] {
-  return collections.sort(
-    (a, b) =>
-      new Date(b.last_updated).getTime() - new Date(a.last_updated).getTime()
-  );
+function sortCollections<T extends { index: number }>(collections: T[]): T[] {
+  return collections.sort((a, b) => a.index - b.index);
 }
