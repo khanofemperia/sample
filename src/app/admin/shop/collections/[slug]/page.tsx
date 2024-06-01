@@ -219,9 +219,9 @@ export default async function EditCollection({
         </div>
         <div>
           <p className="text-sm mb-4 md:max-w-[85%]">
-            Keep track of your campaign. Upcoming, Active, or Ended. This helps
-            you plan your marketing effectively and make adjustments as needed
-            for maximum impact.
+            Create a title that sticks in people's minds. Make it enticing
+            enough to make them stop and pay attention. Finally, reinforce it
+            with a short, keyword-rich slug (3-5 words).
           </p>
           <div className="w-full max-w-[400px] shadow rounded-xl bg-white">
             <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
