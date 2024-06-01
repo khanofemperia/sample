@@ -33,7 +33,7 @@ export async function CreateCollectionAction(data: CreateCollectionType) {
       collection_type: data.collection_type,
       campaign_duration: data.campaign_duration,
       index: 1,
-      products: null,
+      products: [],
       visibility: "DRAFT",
       last_updated: currentTimestamp(),
       date_created: currentTimestamp(),

@@ -20,8 +20,6 @@ export default async function EditCollection({
     notFound();
   }
 
-  console.log(data);
-
   const { id, visibility } = data;
 
   return (
