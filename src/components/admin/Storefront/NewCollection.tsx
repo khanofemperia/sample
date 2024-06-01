@@ -1,10 +1,7 @@
 "use client";
 
 import AlertMessage from "@/components/shared/AlertMessage";
-import {
-  capitalizeFirstLetter,
-  formatDate,
-} from "@/libraries/utils";
+import { capitalizeFirstLetter, formatDate } from "@/libraries/utils";
 import { useState, useEffect, useRef } from "react";
 import Spinner from "@/ui/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
@@ -68,9 +65,7 @@ export function NewCollectionOverlay() {
     useState(FEATURED);
   const [title, setTitle] = useState<string>("");
   const [slug, setSlug] = useState<string>("");
-  const [bannerImage, setBannerImage] = useState<string>(
-    "https://firebasestorage.googleapis.com/v0/b/sample-f415e.appspot.com/o/images%2Fvalentines.gif?alt=media&token=80d6e4d3-c237-4418-9d95-a7da7fafcf61"
-  );
+  const [bannerImage, setBannerImage] = useState<string>("");
   const [startDate, setStartDate] = useState<Date | null>(today);
   const [endDate, setEndDate] = useState<Date | null>(
     new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000) // 7 days from today
@@ -241,10 +236,7 @@ export function NewCollectionOverlay() {
               <div className="w-full h-full mt-[52px] md:mt-0 px-5 pt-5 pb-28 md:pb-10 flex flex-col gap-5 overflow-x-hidden overflow-y-visible invisible-scrollbar md:overflow-hidden">
                 <div className="flex flex-col gap-2">
                   <h2 className="font-semibold text-sm">Type</h2>
-                  <div
-                    ref={collectionTypeRef}
-                    className="w-full h-9 relative"
-                  >
+                  <div ref={collectionTypeRef} className="w-full h-9 relative">
                     <button
                       onClick={() =>
                         setIsCollectionTypeDropdownOpen(
@@ -296,10 +288,7 @@ export function NewCollectionOverlay() {
                       <div className="w-full border rounded-md overflow-hidden">
                         <div className="w-full min-h-[86px] flex items-center justify-center overflow-hidden">
                           {!bannerImage ? (
-                            <CiImageOn
-                              className="fill-neutral-200"
-                              size={80}
-                            />
+                            <CiImageOn className="fill-neutral-200" size={80} />
                           ) : (
                             <Image
                               src={bannerImage}
