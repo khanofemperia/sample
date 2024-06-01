@@ -25,7 +25,7 @@ export default async function EditCollection({
   return (
     <>
       <div className="max-w-[768px] flex flex-col gap-10 px-5">
-        {/* <div>
+        <div>
           <p className="text-sm mb-4 md:max-w-[85%]">
             Important for SEO: a name that includes target keywords in the first
             four words, a short URL with three or four keywords, and prices that
@@ -35,37 +35,37 @@ export default async function EditCollection({
           <div className="w-full shadow rounded-xl bg-white">
             <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
               <h2 className="font-semibold text-xl">Basic details</h2>
-              <BasicDetailsButton />
+              {/* <BasicDetailsButton /> */}
             </div>
             <div className="flex flex-col gap-5 p-5 pt-4">
               <div>
                 <h3 className="text-sm font-semibold mb-2">Category</h3>
                 <div className="w-max max-w-full h-9 px-4 rounded-full bg-lightgray flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
-                  {category}
+                  {/* {category} */}
                 </div>
               </div>
               <div>
                 <h3 className="text-sm font-semibold mb-2">Name</h3>
                 <div className="w-max max-w-full h-9 px-4 rounded-full bg-lightgray flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
-                  {name}
+                  {/* {name} */}
                 </div>
               </div>
               <div>
                 <h3 className="text-sm font-semibold mb-2">Slug</h3>
                 <div className="w-max max-w-full h-9 px-4 rounded-full bg-lightgray flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
-                  {slug}-{id}
+                  {/* {slug}-{id} */}
                 </div>
               </div>
               <div>
                 <h3 className="text-sm font-semibold mb-2">Price</h3>
                 <div className="w-max max-w-full h-9 px-4 rounded-full bg-lightgray flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
-                  ${formatThousands(price)}
+                  {/* ${formatThousands(price)} */}
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div>
+        {/* <div>
           <p className="text-sm mb-4 md:max-w-[85%]">
             Images that show off your product, helping people see its features
             and quality. They grab attention and let customers imagine owning
@@ -200,32 +200,39 @@ export default async function EditCollection({
             </div>
           </div>
         </div>
+        */}
         <div>
           <p className="text-sm mb-4 md:max-w-[85%]">
-            Tell your product's story! Describe the features and benefits that
-            make customers love it. Highlight what makes it unique and how it
-            solves problems or improves lives. Keep it clear and concise, using
-            descriptive language to engage the reader.
+            Keep track of your campaign. Upcoming, Active, or Ended. This helps
+            you plan your marketing effectively and make adjustments as needed
+            for maximum impact.
           </p>
-          <div className="w-full shadow rounded-xl bg-white">
+          <div className="w-full max-w-[400px] shadow rounded-xl bg-white">
             <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
-              <h2 className="font-semibold text-xl">Product description</h2>
-              <DescriptionButton />
+              <h2 className="font-semibold text-xl">Campaign duration</h2>
+              <VisibilityButton />
             </div>
             <div className="p-5">
-              {!description ? (
-                <p className="italic text-gray">Nothing yet</p>
-              ) : (
-                <div className="bg-lightgray p-5 rounded-2xl">
-                  <div
-                    className={`${styles.description} line-clamp-5`}
-                    dangerouslySetInnerHTML={{ __html: description || "" }}
-                  />
-                </div>
-              )}
+              <DataChip value={visibility as ChipValueType} />
             </div>
           </div>
-        </div> */}
+        </div>
+        <div>
+          <p className="text-sm mb-4 md:max-w-[85%]">
+            Keep track of your campaign. Upcoming, Active, or Ended. This helps
+            you plan your marketing effectively and make adjustments as needed
+            for maximum impact.
+          </p>
+          <div className="w-full max-w-[400px] shadow rounded-xl bg-white">
+            <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
+              <h2 className="font-semibold text-xl">Campaign duration</h2>
+              <VisibilityButton />
+            </div>
+            <div className="p-5">
+              <DataChip value={visibility as ChipValueType} />
+            </div>
+          </div>
+        </div>
         <div>
           <p className="text-sm mb-4 md:max-w-[85%]">
             Choose whether your collection is a work-in-progress (draft) or
