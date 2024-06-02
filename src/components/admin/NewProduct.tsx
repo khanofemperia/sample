@@ -10,6 +10,7 @@ import { useNavbarMenuStore } from "@/zustand/admin/navbarMenuStore";
 import { ArrowLeftIcon, ChevronDownIcon, CloseIcon } from "@/icons";
 import clsx from "clsx";
 import Image from "next/image";
+import Overlay from "@/ui/Overlay";
 
 export function NewProductButton() {
   const { showOverlay } = useOverlayStore();
@@ -189,7 +190,7 @@ export function NewProductOverlay() {
   return (
     <>
       {isOverlayVisible && (
-        <div className="fixed top-0 bottom-0 left-0 right-0 z-50 bg-glass-black backdrop-blur-sm md:overflow-x-hidden md:overflow-y-visible md:custom-scrollbar">
+        <Overlay>
           <div className="absolute bottom-0 left-0 right-0 w-full h-[calc(100%-60px)] rounded-t-3xl overflow-hidden bg-white md:w-[500px] md:rounded-2xl md:shadow-lg md:h-max md:mx-auto md:mt-20 md:mb-[50vh] md:relative md:bottom-auto md:left-auto md:right-auto md:top-auto md:-translate-x-0">
             <div className="w-full h-[calc(100vh-188px)] md:h-auto">
               <div className="md:hidden flex items-end justify-center pt-4 pb-2 absolute top-0 left-0 right-0 bg-white">
@@ -273,9 +274,7 @@ export function NewProductOverlay() {
                           <div
                             key={index}
                             className="w-full h-9 flex items-center px-[12px] cursor-context-menu transition duration-300 ease-in-out hover:bg-lightgray"
-                            onClick={() =>
-                              handleCategorySelect(category.name)
-                            }
+                            onClick={() => handleCategorySelect(category.name)}
                           >
                             {category.name}
                           </div>
@@ -388,7 +387,7 @@ export function NewProductOverlay() {
               </button>
             </div>
           </div>
-        </div>
+        </Overlay>
       )}
       {showAlert && (
         <AlertMessage

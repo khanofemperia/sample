@@ -9,6 +9,7 @@ import { HiOutlineBan, HiOutlineClock } from "react-icons/hi";
 import { IoHourglassOutline } from "react-icons/io5";
 import clsx from "clsx";
 import { ChevronRightIcon } from "@/icons";
+import { CampaignDurationButton, CampaignDurationOverlay } from "@/components/admin/Storefront/EditCollection/CampaignDurationOverlay";
 
 export default async function EditCollection({
   params,
@@ -70,7 +71,7 @@ export default async function EditCollection({
           <div className="w-full max-w-[400px] shadow rounded-xl bg-white">
             <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
               <h2 className="font-semibold text-xl">Campaign duration</h2>
-              <VisibilityButton />
+              <CampaignDurationButton />
             </div>
             <div className="p-5 pt-4 text-sm">
               <div className="flex items-center gap-1">
@@ -249,6 +250,7 @@ export default async function EditCollection({
           </div>
         </div>
       </div>
+      <CampaignDurationOverlay data={{ id, campaign_duration }} />
       <VisibilityOverlay data={{ id, visibility }} />
     </>
   );

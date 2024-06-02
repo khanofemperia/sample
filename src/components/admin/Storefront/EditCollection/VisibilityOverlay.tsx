@@ -8,7 +8,7 @@ import { useOverlayStore } from "@/zustand/admin/overlayStore";
 import { ArrowLeftIcon, ChevronDownIcon, CloseIcon, EditIcon } from "@/icons";
 import clsx from "clsx";
 import Overlay from "@/ui/Overlay";
-import UpdateProductAction from "@/actions/update-product";
+import { UpdateCollectionAction } from "@/actions/collections";
 
 type DataType = {
   id: string;
@@ -19,8 +19,8 @@ export function VisibilityButton() {
   const { showOverlay } = useOverlayStore();
 
   const { pageName, overlayName } = useOverlayStore((state) => ({
-    pageName: state.pages.editProduct.name,
-    overlayName: state.pages.editProduct.overlays.visibility.name,
+    pageName: state.pages.editCollection.name,
+    overlayName: state.pages.editCollection.overlays.visibility.name,
   }));
 
   return (
@@ -47,9 +47,10 @@ export function VisibilityOverlay({ data }: { data: DataType }) {
 
   const { pageName, isOverlayVisible, overlayName } = useOverlayStore(
     (state) => ({
-      pageName: state.pages.editProduct.name,
-      overlayName: state.pages.editProduct.overlays.visibility.name,
-      isOverlayVisible: state.pages.editProduct.overlays.visibility.isVisible,
+      pageName: state.pages.editCollection.name,
+      overlayName: state.pages.editCollection.overlays.visibility.name,
+      isOverlayVisible:
+        state.pages.editCollection.overlays.visibility.isVisible,
     })
   );
 
@@ -91,7 +92,7 @@ export function VisibilityOverlay({ data }: { data: DataType }) {
     setShowAlert(false);
     setAlertMessage("");
   };
-  
+
   const onHideOverlay = () => {
     setLoading(false);
     hideOverlay({ pageName, overlayName });
@@ -101,7 +102,7 @@ export function VisibilityOverlay({ data }: { data: DataType }) {
     setLoading(true);
 
     try {
-      const message = await UpdateProductAction({
+      const message = await UpdateCollectionAction({
         id: data.id,
         visibility: selectedVisibility,
       });
@@ -109,7 +110,7 @@ export function VisibilityOverlay({ data }: { data: DataType }) {
       setShowAlert(true);
     } catch (error) {
       console.error(error);
-      setAlertMessage("Failed to update product");
+      setAlertMessage("Failed to update collection");
       setShowAlert(true);
     } finally {
       setLoading(false);
@@ -121,7 +122,6 @@ export function VisibilityOverlay({ data }: { data: DataType }) {
     setIsStatusDropdownOpen(false);
     setIsVisibilityDropdownOpen((prevState) => !prevState);
   };
-
 
   const handleVisibilitySelect = (visibility: string) => {
     setSelectedVisibility(visibility);
@@ -158,7 +158,10 @@ export function VisibilityOverlay({ data }: { data: DataType }) {
                   type="button"
                   className="h-9 px-3 rounded-full flex items-center gap-1 transition duration-300 ease-in-out active:bg-lightgray"
                 >
-                  <ArrowLeftIcon className="fill-custom-blue -ml-[2px]" size={18} />
+                  <ArrowLeftIcon
+                    className="fill-custom-blue -ml-[2px]"
+                    size={18}
+                  />
                   <span className="font-semibold text-sm text-custom-blue">
                     Visibility
                   </span>

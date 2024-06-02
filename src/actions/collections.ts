@@ -13,7 +13,7 @@ import { generateId } from "@/libraries/utils";
 import { currentTimestamp } from "@/libraries/utils";
 import { revalidatePath } from "next/cache";
 
-type CreateCollectionType = {
+export async function CreateCollectionAction(data: {
   title: string;
   slug: string;
   collection_type: string;
@@ -21,9 +21,7 @@ type CreateCollectionType = {
     start_date: string;
     end_date: string;
   };
-};
-
-export async function CreateCollectionAction(data: CreateCollectionType) {
+}) {
   try {
     const documentRef = doc(database, "collections", generateId());
 
@@ -106,5 +104,56 @@ export async function ChangeCollectionIndexAction(data: {
   } catch (error) {
     console.error("Error changing collection index:", error);
     return "Error, reload and try again";
+  }
+}
+
+export async function UpdateCollectionAction(data: {
+  id: string;
+  campaign_duration?: { start_date: string; end_date: string };
+  image?: string;
+  title?: string;
+  slug?: string;
+  visibility?: string;
+}) {
+  try {
+    const collectionRef = doc(database, "collections", data.id);
+    const collectionSnapshot = await getDoc(collectionRef);
+
+    if (!collectionSnapshot.exists()) {
+      return "Collection not found";
+    }
+
+    const updateData: Record<string, any> = {};
+
+    if (data.campaign_duration) {
+      updateData.campaign_duration = data.campaign_duration;
+    }
+
+    if (data.image) {
+      updateData.image = data.image;
+    }
+
+    if (data.title) {
+      updateData.title = data.title;
+    }
+
+    if (data.slug) {
+      updateData.slug = data.slug;
+    }
+
+    if (data.visibility) {
+      updateData.visibility = data.visibility;
+    }
+
+    await updateDoc(collectionRef, {
+      ...updateData,
+      last_updated: currentTimestamp(),
+    });
+    revalidatePath("/admin/shop/collections/[slug]", "page");
+
+    return "Collection updated";
+  } catch (error) {
+    console.error("Error updating collection:", error);
+    return "Failed to update collection";
   }
 }
