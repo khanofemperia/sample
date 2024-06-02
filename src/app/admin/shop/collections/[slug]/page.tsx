@@ -256,6 +256,23 @@ export default async function EditCollection({
             </div>
           </div>
         </div>
+        <div>
+          <p className="text-sm mb-4 md:max-w-[85%]">
+            Create a collection that feels put-together! Offer products that go
+            well together, look good next to each other, and fit the theme (like
+            "summer beach" or "work attire"). Don't forget variety! Give
+            customers choices in style, color, size, and price.
+          </p>
+          <div className="w-full max-w-[400px] shadow rounded-xl bg-white">
+            <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
+              <h2 className="font-semibold text-xl">Visibility</h2>
+              <VisibilityButton />
+            </div>
+            <div className="p-5">
+              <DataChip value={visibility as ChipValueType} />
+            </div>
+          </div>
+        </div>
       </div>
       <CampaignDurationOverlay data={{ id, campaign_duration }} />
       <BasicDetailsOverlay data={{ id, title, slug }} />
