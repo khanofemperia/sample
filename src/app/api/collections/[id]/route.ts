@@ -94,6 +94,7 @@ export async function GET(
 
   return NextResponse.json({
     ...collection,
+    id: docSnap.id,
     products: updatedProducts,
   });
 }

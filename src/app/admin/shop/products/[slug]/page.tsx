@@ -268,7 +268,7 @@ export default async function EditProduct({
         </div>
         <div>
           <p className="text-sm mb-4 md:max-w-[85%]">
-            Choose whether your product is a work-in-progress (draft) or ready
+            Choose whether the product is a work-in-progress (draft) or ready
             to be seen (published), and decide if you want shoppers to see it or
             keep it private (hidden).
           </p>
