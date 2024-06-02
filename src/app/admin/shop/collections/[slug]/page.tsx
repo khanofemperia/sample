@@ -259,9 +259,9 @@ export default async function EditCollection({
         <div>
           <p className="text-sm mb-4 md:max-w-[85%]">
             Create a collection that feels put-together! Offer products that go
-            well together, look good next to each other, and fit the theme (like
-            "summer beach" or "work attire"). Don't forget variety! Give
-            customers choices in style, color, size, and price.
+            well together, look good next to each other, and fit the theme. Mix things up with different
+            styles, colors, sizes, and prices so everyone finds something they
+            love.
           </p>
           <div className="w-full max-w-[400px] shadow rounded-xl bg-white">
             <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
