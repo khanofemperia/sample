@@ -10,7 +10,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import Overlay from "@/ui/Overlay";
 import { HiOutlinePlus } from "react-icons/hi2";
-import UpdateProductAction from "@/actions/update-product";
+import { UpdateProductAction } from "@/actions/products";
 
 type DataType = {
   id: string;

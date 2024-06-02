@@ -8,7 +8,7 @@ import { useOverlayStore } from "@/zustand/admin/overlayStore";
 import { ArrowLeftIcon, ChevronDownIcon, CloseIcon, EditIcon } from "@/icons";
 import clsx from "clsx";
 import Overlay from "@/ui/Overlay";
-import UpdateProductAction from "@/actions/update-product";
+import { UpdateProductAction } from "@/actions/products";
 
 type DataType = {
   id: string;
@@ -207,7 +207,10 @@ export function BasicDetailsOverlay({ data }: { data: DataType }) {
                     type="button"
                     className="h-9 px-3 rounded-full flex items-center gap-1 transition duration-300 ease-in-out active:bg-lightgray"
                   >
-                    <ArrowLeftIcon className="fill-custom-blue -ml-[2px]" size={18} />
+                    <ArrowLeftIcon
+                      className="fill-custom-blue -ml-[2px]"
+                      size={18}
+                    />
                     <span className="font-semibold text-sm text-custom-blue">
                       Basic details
                     </span>

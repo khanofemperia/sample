@@ -2,14 +2,14 @@
 
 import AlertMessage from "@/components/shared/AlertMessage";
 import { isValidRemoteImage } from "@/libraries/utils";
-import { FormEvent, useState, useEffect, useRef } from "react";
+import { FormEvent, useState, useEffect } from "react";
 import Spinner from "@/ui/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
 import { ArrowLeftIcon, ChevronDownIcon, CloseIcon, EditIcon } from "@/icons";
 import clsx from "clsx";
 import Image from "next/image";
 import Overlay from "@/ui/Overlay";
-import UpdateProductAction from "@/actions/update-product";
+import { UpdateProductAction } from "@/actions/products";
 
 type DataType = {
   id: string;

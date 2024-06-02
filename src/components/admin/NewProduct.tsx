@@ -1,6 +1,6 @@
 "use client";
 
-import { CreateProductAction } from "@/actions/create-product";
+import { CreateProductAction } from "@/actions/products";
 import AlertMessage from "@/components/shared/AlertMessage";
 import { capitalizeFirstLetter, isValidRemoteImage } from "@/libraries/utils";
 import { useState, useEffect, useRef } from "react";
