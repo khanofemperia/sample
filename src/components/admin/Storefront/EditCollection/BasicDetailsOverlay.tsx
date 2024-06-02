@@ -1,23 +1,20 @@
 "use client";
 
 import AlertMessage from "@/components/shared/AlertMessage";
-import { formatDate } from "@/libraries/utils";
 import { useState, useEffect } from "react";
 import Spinner from "@/ui/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
 import { ArrowLeftIcon, CloseIcon, EditIcon } from "@/icons";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import clsx from "clsx";
 import Overlay from "@/ui/Overlay";
 import { UpdateCollectionAction } from "@/actions/collections";
 
-export function CampaignDurationButton() {
+export function BasicDetailsButton() {
   const { showOverlay } = useOverlayStore();
 
   const { pageName, overlayName } = useOverlayStore((state) => ({
     pageName: state.pages.editCollection.name,
-    overlayName: state.pages.editCollection.overlays.campaignDuration.name,
+    overlayName: state.pages.editCollection.overlays.visibility.name,
   }));
 
   return (
@@ -31,32 +28,29 @@ export function CampaignDurationButton() {
   );
 }
 
-export function CampaignDurationOverlay({
+export function BasicDetailsOverlay({
   data,
 }: {
   data: {
     id: string;
-    campaign_duration: { start_date: string; end_date: string };
+    title: string;
+    slug: string;
   };
 }) {
   const [loading, setLoading] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState<boolean>(false);
-  const [startDate, setStartDate] = useState<Date | null>(
-    new Date(data.campaign_duration.start_date)
-  );
-  const [endDate, setEndDate] = useState<Date | null>(
-    new Date(data.campaign_duration.end_date)
-  );
+  const [title, setTitle] = useState<string>(data.title);
+  const [slug, setSlug] = useState<string>(data.slug);
 
   const { hideOverlay } = useOverlayStore();
 
   const { pageName, isOverlayVisible, overlayName } = useOverlayStore(
     (state) => ({
       pageName: state.pages.editCollection.name,
-      overlayName: state.pages.editCollection.overlays.campaignDuration.name,
+      overlayName: state.pages.editCollection.overlays.visibility.name,
       isOverlayVisible:
-        state.pages.editCollection.overlays.campaignDuration.isVisible,
+        state.pages.editCollection.overlays.visibility.isVisible,
     })
   );
 
@@ -82,37 +76,28 @@ export function CampaignDurationOverlay({
   const onHideOverlay = () => {
     setLoading(false);
     hideOverlay({ pageName, overlayName });
+    setTitle(data.title);
+    setSlug(data.slug);
   };
 
-  const isValidDateRange =
-    startDate &&
-    endDate &&
-    startDate.toISOString().split("T")[0] < endDate.toISOString().split("T")[0];
-
   const handleSave = async () => {
-    if (!isValidDateRange) {
-      setAlertMessage("Start date must be before end date");
+    setLoading(true);
+
+    try {
+      const message = await UpdateCollectionAction({
+        id: data.id,
+        title,
+        slug,
+      });
+      setAlertMessage(message);
       setShowAlert(true);
-    } else {
-      setLoading(true);
-
-      const campaignDuration = {
-        start_date: formatDate(startDate),
-        end_date: formatDate(endDate),
-      };
-
-      try {
-        const message = await UpdateCollectionAction({
-          id: data.id,
-          campaign_duration: campaignDuration,
-        });
-        setAlertMessage(message);
-        setShowAlert(true);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        onHideOverlay();
-      }
+    } catch (error) {
+      console.error(error);
+      setAlertMessage("Failed to update collection");
+      setShowAlert(true);
+    } finally {
+      setLoading(false);
+      onHideOverlay();
     }
   };
 
@@ -124,7 +109,7 @@ export function CampaignDurationOverlay({
             <div className="w-full h-[calc(100vh-188px)] md:h-auto">
               <div className="md:hidden flex items-end justify-center pt-4 pb-2 absolute top-0 left-0 right-0 bg-white">
                 <div className="relative flex justify-center items-center w-full h-7">
-                  <h2 className="font-semibold text-lg">Campaign duration</h2>
+                  <h2 className="font-semibold text-lg">Basic details</h2>
                   <button
                     onClick={onHideOverlay}
                     type="button"
@@ -145,7 +130,7 @@ export function CampaignDurationOverlay({
                     size={18}
                   />
                   <span className="font-semibold text-sm text-custom-blue">
-                    Campaign duration
+                    Basic details
                   </span>
                 </button>
                 <button
@@ -169,39 +154,35 @@ export function CampaignDurationOverlay({
                   )}
                 </button>
               </div>
-              <div className="w-full h-full mt-[52px] md:mt-0 px-5 pt-5 pb-28 md:pb-10 overflow-x-hidden overflow-y-visible invisible-scrollbar md:overflow-hidden">
-                <div className="flex flex-col md:flex-row items-center gap-3 mt-4">
-                  <div
-                    className={clsx(
-                      "w-full md:max-w-[230px] flex gap-3 items-center border rounded-md overflow-hidden pl-3",
-                      {
-                        "border-red": !isValidDateRange,
-                      }
-                    )}
-                  >
-                    <span className="font-semibold text-sm text-gray">
-                      Start
-                    </span>
-                    <DatePicker
-                      selected={startDate}
-                      onChange={(date) => setStartDate(date)}
-                      className="w-full h-9 outline-none"
+              <div className="w-full h-full mt-[52px] md:mt-0 px-5 pt-5 pb-28 md:pb-10 flex flex-col gap-5 overflow-x-hidden overflow-y-visible invisible-scrollbar md:overflow-hidden">
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="title" className="font-semibold text-sm">
+                    Title
+                  </label>
+                  <div className="w-full h-9 relative">
+                    <input
+                      type="text"
+                      name="title"
+                      placeholder={`Belle Jolie Lipstick - She "Marks" Her Man with Her Lips`}
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                      className="w-full h-9 px-3 rounded-md transition duration-300 ease-in-out border focus:border-custom-blue"
                       required
                     />
                   </div>
-                  <div
-                    className={clsx(
-                      "w-full md:max-w-[230px] flex gap-3 items-center border rounded-md overflow-hidden pl-3",
-                      {
-                        "border-red": !isValidDateRange,
-                      }
-                    )}
-                  >
-                    <span className="font-semibold text-sm text-gray">End</span>
-                    <DatePicker
-                      selected={endDate}
-                      onChange={(date) => setEndDate(date)}
-                      className="w-full h-9 outline-none"
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="slug" className="font-semibold text-sm">
+                    Slug
+                  </label>
+                  <div className="w-full h-9 relative">
+                    <input
+                      type="text"
+                      name="slug"
+                      placeholder="belle-jolie-lipstick-mark-your-man"
+                      value={slug}
+                      onChange={(e) => setSlug(e.target.value)}
+                      className="w-full h-9 px-3 rounded-md transition duration-300 ease-in-out border focus:border-custom-blue"
                       required
                     />
                   </div>

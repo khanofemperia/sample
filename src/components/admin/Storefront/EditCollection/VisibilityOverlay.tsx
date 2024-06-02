@@ -10,11 +10,6 @@ import clsx from "clsx";
 import Overlay from "@/ui/Overlay";
 import { UpdateCollectionAction } from "@/actions/collections";
 
-type DataType = {
-  id: string;
-  visibility: string;
-};
-
 export function VisibilityButton() {
   const { showOverlay } = useOverlayStore();
 
@@ -34,7 +29,14 @@ export function VisibilityButton() {
   );
 }
 
-export function VisibilityOverlay({ data }: { data: DataType }) {
+export function VisibilityOverlay({
+  data,
+}: {
+  data: {
+    id: string;
+    visibility: string;
+  };
+}) {
   const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
   const [isVisibilityDropdownOpen, setIsVisibilityDropdownOpen] =
     useState(false);

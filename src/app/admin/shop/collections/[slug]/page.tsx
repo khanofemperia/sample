@@ -9,7 +9,14 @@ import { HiOutlineBan, HiOutlineClock } from "react-icons/hi";
 import { IoHourglassOutline } from "react-icons/io5";
 import clsx from "clsx";
 import { ChevronRightIcon } from "@/icons";
-import { CampaignDurationButton, CampaignDurationOverlay } from "@/components/admin/Storefront/EditCollection/CampaignDurationOverlay";
+import {
+  CampaignDurationButton,
+  CampaignDurationOverlay,
+} from "@/components/admin/Storefront/EditCollection/CampaignDurationOverlay";
+import {
+  BasicDetailsButton,
+  BasicDetailsOverlay,
+} from "@/components/admin/Storefront/EditCollection/BasicDetailsOverlay";
 
 export default async function EditCollection({
   params,
@@ -209,7 +216,7 @@ export default async function EditCollection({
           <div className="w-full shadow rounded-xl bg-white">
             <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
               <h2 className="font-semibold text-xl">Basic details</h2>
-              <VisibilityButton />
+              <BasicDetailsButton />
             </div>
             <div className="flex flex-col gap-5 p-5 pt-4">
               <div>
@@ -251,6 +258,7 @@ export default async function EditCollection({
         </div>
       </div>
       <CampaignDurationOverlay data={{ id, campaign_duration }} />
+      <BasicDetailsOverlay data={{ id, title, slug }} />
       <VisibilityOverlay data={{ id, visibility }} />
     </>
   );
