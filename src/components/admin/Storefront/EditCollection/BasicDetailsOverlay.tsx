@@ -14,7 +14,7 @@ export function BasicDetailsButton() {
 
   const { pageName, overlayName } = useOverlayStore((state) => ({
     pageName: state.pages.editCollection.name,
-    overlayName: state.pages.editCollection.overlays.visibility.name,
+    overlayName: state.pages.editCollection.overlays.basicDetails.name,
   }));
 
   return (
@@ -48,9 +48,9 @@ export function BasicDetailsOverlay({
   const { pageName, isOverlayVisible, overlayName } = useOverlayStore(
     (state) => ({
       pageName: state.pages.editCollection.name,
-      overlayName: state.pages.editCollection.overlays.visibility.name,
+      overlayName: state.pages.editCollection.overlays.basicDetails.name,
       isOverlayVisible:
-        state.pages.editCollection.overlays.visibility.isVisible,
+        state.pages.editCollection.overlays.basicDetails.isVisible,
     })
   );
 
