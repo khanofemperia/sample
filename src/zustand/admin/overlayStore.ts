@@ -222,20 +222,20 @@ export const useOverlayStore = createWithEqualityFn<OverlayStoreProps>(
             name: "campaignDuration",
             isVisible: false,
           },
-          collectionProducts: {
-            name: "collectionProducts",
+          productList: {
+            name: "productList",
             isVisible: false,
           },
           visibility: {
             name: "visibility",
             isVisible: false,
           },
-          addCollectionProducts: {
-            name: "addCollectionProducts",
+          addProduct: {
+            name: "addProduct",
             isVisible: false,
           },
-          removeCollectionProducts: {
-            name: "removeCollectionProducts",
+          removeProduct: {
+            name: "removeProduct",
             isVisible: false,
           },
           changeProductIndex: {

@@ -19,6 +19,7 @@ import {
 } from "@/components/admin/Storefront/EditCollection/BasicDetailsOverlay";
 import Link from "next/link";
 import Image from "next/image";
+import { ProductListButton, ProductListOverlay } from "@/components/admin/Storefront/EditCollection/ProductListOverlay";
 
 export default async function EditCollection({
   params,
@@ -267,7 +268,7 @@ export default async function EditCollection({
           <div className="w-full shadow rounded-xl bg-white">
             <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
               <h2 className="font-semibold text-xl">Products (48)</h2>
-              <VisibilityButton />
+              <ProductListButton />
             </div>
             <div className="p-5 flex flex-wrap justify-start">
               <Link
@@ -334,6 +335,7 @@ export default async function EditCollection({
       <CampaignDurationOverlay data={{ id, campaign_duration }} />
       <BasicDetailsOverlay data={{ id, title, slug }} />
       <VisibilityOverlay data={{ id, visibility }} />
+      <ProductListOverlay data={{ id, visibility }} />
     </>
   );
 }

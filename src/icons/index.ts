@@ -8,6 +8,7 @@ import {
   HiOutlineMenu,
   HiArrowLeft,
   HiArrowRight,
+  HiPlus,
 } from "react-icons/hi";
 import { HiArrowUpRight } from "react-icons/hi2";
 
@@ -22,6 +23,7 @@ export const ArrowLeftIcon = HiArrowLeft;
 export const ArrowRightIcon = HiArrowRight;
 export const EditIcon = MdOutlineEdit;
 export const MinusIcon = FaMinus;
+export const PlusIcon = HiPlus;
 export const VisitPageIcon = HiArrowUpRight;
 export const ChangeIndexIcon = PiArrowsClockwiseBold;
 
