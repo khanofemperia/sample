@@ -266,7 +266,8 @@ export default async function EditCollection({
           </p>
           <div className="w-full shadow rounded-xl bg-white">
             <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
-              <h2 className="font-semibold text-xl">Products</h2>
+              <h2 className="font-semibold text-xl">Products (48)</h2>
+              <VisibilityButton />
             </div>
             <div className="p-5 flex flex-wrap justify-start">
               <Link
