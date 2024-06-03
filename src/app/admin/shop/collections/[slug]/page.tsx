@@ -17,6 +17,8 @@ import {
   BasicDetailsButton,
   BasicDetailsOverlay,
 } from "@/components/admin/Storefront/EditCollection/BasicDetailsOverlay";
+import Link from "next/link";
+import Image from "next/image";
 
 export default async function EditCollection({
   params,
@@ -262,13 +264,68 @@ export default async function EditCollection({
             complement each other. Mix styles, colors, sizes, and prices so
             everyone finds something they love.
           </p>
-          <div className="w-full max-w-[400px] shadow rounded-xl bg-white">
+          <div className="w-full shadow rounded-xl bg-white">
             <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
-              <h2 className="font-semibold text-xl">Visibility</h2>
-              <VisibilityButton />
+              <h2 className="font-semibold text-xl">Products</h2>
             </div>
-            <div className="p-5">
-              <DataChip value={visibility as ChipValueType} />
+            <div className="p-5 flex flex-wrap justify-start">
+              <Link
+                href="#"
+                className="aspect-square w-1/2 min-[425px]:w-[calc(100%/3)] md:w-[229px] pt-2 pb-[6px] px-5 select-none transition duration-200 ease-in-out active:bg-blue-100 lg:hover:bg-blue-100"
+              >
+                <div className="relative w-full h-full">
+                  <div className="aspect-square w-full overflow-hidden shadow-[2px_2px_4px_#9E9E9E] bg-white">
+                    <Image
+                      src="https://i.pinimg.com/736x/e5/93/ed/e593ed7abfc547e9818c303510246ebb.jpg"
+                      alt="Product"
+                      width={216}
+                      height={216}
+                      priority
+                    />
+                  </div>
+                  <div className="flex items-center justify-center absolute bottom-0 text-sm w-full">
+                    <span>$34.99</span>
+                  </div>
+                </div>
+              </Link>
+              <Link
+                href="#"
+                className="aspect-square w-1/2 min-[425px]:w-[calc(100%/3)] md:w-[229px] pt-2 pb-[6px] px-5 select-none transition duration-200 ease-in-out active:bg-blue-100 lg:hover:bg-blue-100"
+              >
+                <div className="relative w-full h-full">
+                  <div className="aspect-square w-full overflow-hidden shadow-[2px_2px_4px_#9E9E9E] bg-white">
+                    <Image
+                      src="https://i.pinimg.com/564x/a0/7b/11/a07b11962835ce26faef0d701f03ce83.jpg"
+                      alt="Product"
+                      width={216}
+                      height={216}
+                      priority
+                    />
+                  </div>
+                  <div className="flex items-center justify-center absolute bottom-0 text-sm w-full">
+                    <span>$34.99</span>
+                  </div>
+                </div>
+              </Link>
+              <Link
+                href="#"
+                className="aspect-square w-1/2 min-[425px]:w-[calc(100%/3)] md:w-[229px] pt-2 pb-[6px] px-5 select-none transition duration-200 ease-in-out active:bg-blue-100 lg:hover:bg-blue-100"
+              >
+                <div className="relative w-full h-full">
+                  <div className="aspect-square w-full overflow-hidden shadow-[2px_2px_4px_#9E9E9E] bg-white">
+                    <Image
+                      src="https://i.pinimg.com/564x/34/fe/a4/34fea4694b9a5b4a112316ce66a62d32.jpg"
+                      alt="Product"
+                      width={216}
+                      height={216}
+                      priority
+                    />
+                  </div>
+                  <div className="flex items-center justify-center absolute bottom-0 text-sm w-full">
+                    <span>$34.99</span>
+                  </div>
+                </div>
+              </Link>
             </div>
           </div>
         </div>
