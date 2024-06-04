@@ -142,7 +142,7 @@ export function ProductListOverlay({
                   </button>
                 </div>
                 <div className="w-full h-full mt-[52px] md:mt-0 px-5 pt-5 pb-28 md:pb-10 flex flex-col gap-2 overflow-x-hidden overflow-y-visible invisible-scrollbar md:overflow-hidden">
-                  <div className="w-full flex flex-col gap-2 items-center justify-between">
+                  <div className="w-full flex gap-2 items-center justify-between">
                     <div className="flex gap-1 *:h-9 *:px-3 *:rounded-full *:flex *:items-center *:justify-center *:font-semibold *:text-sm *:ease-in-out *:duration-300 *:transition">
                       <button className="bg-lightgray text-custom-blue hover:bg-lightgray-dimmed">
                         View all (48)
@@ -155,7 +155,7 @@ export function ProductListOverlay({
                       </button>
                     </div>
                     <div>
-                      <div className="h-9 w-full rounded-full overflow-hidden flex items-center bg-lightgray">
+                      <div className="h-9 rounded-full overflow-hidden flex items-center bg-lightgray">
                         <input
                           type="text"
                           placeholder="Paste ID (#12345)"
