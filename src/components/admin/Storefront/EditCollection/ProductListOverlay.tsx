@@ -143,14 +143,14 @@ export function ProductListOverlay({
                 </div>
                 <div className="w-full h-full mt-[52px] md:mt-0 px-5 pt-5 pb-28 md:pb-10 flex flex-col gap-2 overflow-x-hidden overflow-y-visible invisible-scrollbar md:overflow-hidden">
                   <div className="w-full flex gap-2 items-center justify-between">
-                    <div className="flex gap-5 px-4 rounded-full bg-lightgray *:h-9 *:rounded-full *:flex *:items-center *:justify-center *:font-semibold *:text-sm *:ease-in-out *:duration-300 *:transition">
-                      <button className="text-black hover:text-custom-blue">
+                    <div className="flex rounded-full bg-lightgray *:h-9 *:rounded-full *:flex *:items-center *:justify-center *:font-semibold *:text-sm *:ease-in-out *:duration-300 *:transition">
+                      <button className="px-3 pl-[14px] h-9 hover:bg-lightgray-dimmed rounded-full text-custom-blue">
                         View all (48)
                       </button>
-                      <button className="text-gray hover:text-custom-blue">
+                      <button className="px-3 h-9 hover:bg-lightgray-dimmed rounded-full text-gray hover:text-black">
                         Published (41)
                       </button>
-                      <button className="text-gray hover:text-custom-blue">
+                      <button className="px-3 pr-[14px] h-9 hover:bg-lightgray-dimmed rounded-full text-gray hover:text-black">
                         Inactive (7)
                       </button>
                     </div>
