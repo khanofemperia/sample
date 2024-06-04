@@ -157,3 +157,67 @@ export async function UpdateCollectionAction(data: {
     return "Failed to update collection";
   }
 }
+
+export async function AddProductAction(data: {
+  collectionId: string;
+  productId: string;
+}) {
+  try {
+    const { collectionId, productId } = data;
+    const productRef = doc(database, "products", productId);
+    const productSnapshot = await getDoc(productRef);
+
+    if (!productSnapshot.exists()) {
+      return "Product not found";
+    }
+
+    const collectionRef = doc(database, "collections", collectionId);
+    const collectionSnapshot = await getDoc(collectionRef);
+
+    if (!collectionSnapshot.exists()) {
+      return "Collection not found";
+    }
+
+    const newProduct = {
+      index: 1,
+      id: productId,
+    };
+
+    const collectionData = collectionSnapshot.data();
+
+    const collectionProducts = Array.isArray(collectionData.products)
+      ? collectionData.products
+      : [];
+
+    const productAlreadyExists = collectionProducts.some(
+      (product) => product.id === productId
+    );
+
+    if (productAlreadyExists) {
+      return "Product already exists in the collection";
+    }
+
+    collectionProducts.sort((a, b) => a.index - b.index);
+
+    // Update the index for existing products
+    const updatedProducts = collectionProducts.map((product, index) => {
+      product.index = index + 2;
+      return { ...product };
+    });
+
+    // Add the new product at the beginning of the array
+    updatedProducts.unshift(newProduct);
+
+    await updateDoc(collectionRef, {
+      products: updatedProducts,
+      last_updated: currentTimestamp(),
+    });
+
+    revalidatePath("/admin/shop/collections/[slug]", "page");
+
+    return "Product added to collection";
+  } catch (error) {
+    console.error("Error adding product to collection:", error);
+    return "Failed to add product to collection";
+  }
+}

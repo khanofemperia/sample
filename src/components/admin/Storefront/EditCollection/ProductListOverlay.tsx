@@ -1,23 +1,22 @@
 "use client";
 
 import AlertMessage from "@/components/shared/AlertMessage";
-import { capitalizeFirstLetter } from "@/libraries/utils";
 import { useState, useEffect } from "react";
-import Spinner from "@/ui/Spinners/White";
+import Spinner from "@/ui/Spinners/Gray";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
 import {
   ArrowLeftIcon,
   ChangeIndexIcon,
-  ChevronDownIcon,
   CloseIcon,
   EditIcon,
   PlusIcon,
 } from "@/icons";
 import clsx from "clsx";
 import Overlay from "@/ui/Overlay";
-import { UpdateCollectionAction } from "@/actions/collections";
+import {
+  AddProductAction,
+} from "@/actions/collections";
 import Image from "next/image";
-import { IoIosCloseCircleOutline } from "react-icons/io";
 import { IoCloseCircleOutline } from "react-icons/io5";
 
 export function ProductListButton() {
@@ -47,6 +46,7 @@ export function ProductListOverlay({
     visibility: string;
   };
 }) {
+  const [productId, setProductId] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState<boolean>(false);
@@ -81,29 +81,40 @@ export function ProductListOverlay({
     setAlertMessage("");
   };
 
-  const onHideOverlay = () => {
-    setLoading(false);
-    hideOverlay({ pageName, overlayName });
-  };
+  const addProduct = async () => {
+    if (!productId.trim()) {
+      setAlertMessage("Product ID cannot be empty");
+      setShowAlert(true);
+      return;
+    }
 
-  const handleSave = async () => {
     setLoading(true);
 
-    // try {
-    //   const message = await UpdateCollectionAction({
-    //     id: data.id,
-    //     visibility: selectedVisibility,
-    //   });
-    //   setAlertMessage(message);
-    //   setShowAlert(true);
-    // } catch (error) {
-    //   console.error(error);
-    //   setAlertMessage("Failed to update collection");
-    //   setShowAlert(true);
-    // } finally {
-    //   setLoading(false);
-    //   onHideOverlay();
-    // }
+    try {
+      const message = await AddProductAction({
+        collectionId: data.id,
+        productId,
+      });
+      setAlertMessage(message);
+      setShowAlert(true);
+      setProductId("");
+    } catch (error) {
+      console.error("Error adding product:", error);
+      setAlertMessage("Failed to add product to the collection");
+      setShowAlert(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setProductId(event.target.value);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      addProduct();
+    }
   };
 
   return (
@@ -160,12 +171,25 @@ export function ProductListOverlay({
                     <div className="h-9 rounded-full overflow-hidden flex items-center border shadow-sm">
                       <input
                         type="text"
+                        value={productId}
+                        onChange={handleInputChange}
+                        onKeyDown={handleKeyDown}
                         placeholder="Paste ID (#12345)"
                         className="h-full w-40 w-44s pl-4 bg-transparent"
                       />
                       <div className="h-full flex items-center justify-center">
-                        <button className="w-11 h-9 rounded-full flex items-center justify-center ease-in-out duration-300 transition active:bg-lightgray lg:hover:bg-lightgray">
-                          <PlusIcon size={22} />
+                        <button
+                          onClick={addProduct}
+                          disabled={loading}
+                          className={clsx(
+                            "w-11 h-9 rounded-full flex items-center justify-center transition duration-300 ease-in-out",
+                            {
+                              "active:bg-lightgray lg:hover:bg-lightgray":
+                                !loading,
+                            }
+                          )}
+                        >
+                          {loading ? <Spinner /> : <PlusIcon size={22} />}
                         </button>
                       </div>
                     </div>
@@ -215,14 +239,17 @@ export function ProductListOverlay({
                               </td>
                               <td className="px-3 w-[200px] min-w-[200px]">
                                 <div className="flex items-center justify-center">
-                                  <button className="h-9 w-9 rounded-full flex items-center justify-center ease-in-out duration-300 transition active:bg-lightgray">
+                                  <button className="h-9 w-9 rounded-full flex items-center justify-center ease-in-out duration-300 transition active:bg-lightgray lg:hover:bg-lightgray">
                                     <EditIcon size={20} />
                                   </button>
-                                  <button className="h-9 w-9 rounded-full flex items-center justify-center ease-in-out duration-300 transition active:bg-lightgray">
+                                  <button className="h-9 w-9 rounded-full flex items-center justify-center ease-in-out duration-300 transition active:bg-lightgray lg:hover:bg-lightgray">
                                     <ChangeIndexIcon size={18} />
                                   </button>
-                                  <button className="h-9 w-9 rounded-full flex items-center justify-center ease-in-out duration-300 transition active:bg-lightgray">
-                                    <IoCloseCircleOutline className="stroke-grays" size={24} />
+                                  <button className="h-9 w-9 rounded-full flex items-center justify-center ease-in-out duration-300 transition active:bg-lightgray lg:hover:bg-lightgray">
+                                    <IoCloseCircleOutline
+                                      className="stroke-grays"
+                                      size={24}
+                                    />
                                   </button>
                                 </div>
                               </td>
