@@ -143,29 +143,27 @@ export function ProductListOverlay({
                 </div>
                 <div className="w-full h-full mt-[52px] md:mt-0 px-5 pt-5 pb-28 md:pb-10 flex flex-col gap-2 overflow-x-hidden overflow-y-visible invisible-scrollbar md:overflow-hidden">
                   <div className="w-full flex gap-2 items-center justify-between">
-                    <div className="flex gap-1 *:h-9 *:px-3 *:rounded-full *:flex *:items-center *:justify-center *:font-semibold *:text-sm *:ease-in-out *:duration-300 *:transition">
-                      <button className="bg-lightgray text-custom-blue hover:bg-lightgray-dimmed">
+                    <div className="flex gap-5 px-4 rounded-full bg-lightgray *:h-9 *:rounded-full *:flex *:items-center *:justify-center *:font-semibold *:text-sm *:ease-in-out *:duration-300 *:transition">
+                      <button className="text-black hover:text-custom-blue">
                         View all (48)
                       </button>
-                      <button className="bg-lightgray text-gray hover:bg-lightgray-dimmed">
+                      <button className="text-gray hover:text-custom-blue">
                         Published (41)
                       </button>
-                      <button className="bg-lightgray text-gray hover:bg-lightgray-dimmed">
+                      <button className="text-gray hover:text-custom-blue">
                         Inactive (7)
                       </button>
                     </div>
-                    <div>
-                      <div className="h-9 rounded-full overflow-hidden flex items-center bg-lightgray">
-                        <input
-                          type="text"
-                          placeholder="Paste ID (#12345)"
-                          className="h-full w-full w-44s pl-4 bg-transparent"
-                        />
-                        <div className="h-full flex items-center justify-center">
-                          <button className="w-11 h-9 rounded-full flex items-center justify-center ease-in-out duration-300 transition active:bg-lightgray-dimmed lg:hover:bg-lightgray-dimmed">
-                            <PlusIcon size={24} />
-                          </button>
-                        </div>
+                    <div className="h-9 rounded-full overflow-hidden flex items-center border shadow-sm">
+                      <input
+                        type="text"
+                        placeholder="Paste ID (#12345)"
+                        className="h-full w-40 w-44s pl-4 bg-transparent"
+                      />
+                      <div className="h-full flex items-center justify-center">
+                        <button className="w-11 h-9 rounded-full flex items-center justify-center ease-in-out duration-300 transition active:bg-lightgray lg:hover:bg-lightgray">
+                          <PlusIcon size={24} />
+                        </button>
                       </div>
                     </div>
                   </div>
