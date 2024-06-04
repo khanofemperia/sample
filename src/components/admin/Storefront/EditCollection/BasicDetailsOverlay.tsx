@@ -127,7 +127,7 @@ export function BasicDetailsOverlay({
                 >
                   <ArrowLeftIcon
                     className="fill-custom-blue -ml-[2px]"
-                    size={18}
+                    size={20}
                   />
                   <span className="font-semibold text-sm text-custom-blue">
                     Basic details

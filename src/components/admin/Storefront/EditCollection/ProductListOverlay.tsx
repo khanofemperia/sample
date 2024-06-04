@@ -7,6 +7,7 @@ import Spinner from "@/ui/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
 import {
   ArrowLeftIcon,
+  ChangeIndexIcon,
   ChevronDownIcon,
   CloseIcon,
   EditIcon,
@@ -16,6 +17,8 @@ import clsx from "clsx";
 import Overlay from "@/ui/Overlay";
 import { UpdateCollectionAction } from "@/actions/collections";
 import Image from "next/image";
+import { IoIosCloseCircleOutline } from "react-icons/io";
+import { IoCloseCircleOutline } from "react-icons/io5";
 
 export function ProductListButton() {
   const { showOverlay } = useOverlayStore();
@@ -134,7 +137,7 @@ export function ProductListOverlay({
                   >
                     <ArrowLeftIcon
                       className="fill-custom-blue -ml-[2px]"
-                      size={18}
+                      size={20}
                     />
                     <span className="font-semibold text-sm text-custom-blue">
                       Products
@@ -162,7 +165,7 @@ export function ProductListOverlay({
                       />
                       <div className="h-full flex items-center justify-center">
                         <button className="w-11 h-9 rounded-full flex items-center justify-center ease-in-out duration-300 transition active:bg-lightgray lg:hover:bg-lightgray">
-                          <PlusIcon size={24} />
+                          <PlusIcon size={22} />
                         </button>
                       </div>
                     </div>
@@ -211,17 +214,17 @@ export function ProductListOverlay({
                                 </p>
                               </td>
                               <td className="px-3 w-[200px] min-w-[200px]">
-                                {/* <div className="flex items-center justify-center">
-                                <Link
-                                  href={`/admin/shop/collections/${slug}-${id}`}
-                                  className="h-9 w-9 rounded-full flex items-center justify-center ease-in-out duration-300 transition active:bg-lightgray"
-                                >
-                                  <EditIcon size={18} />
-                                </Link>
-                                <ChangeProductIndexButton
-                                  data={{ id, title, index: String(index) }}
-                                />
-                              </div> */}
+                                <div className="flex items-center justify-center">
+                                  <button className="h-9 w-9 rounded-full flex items-center justify-center ease-in-out duration-300 transition active:bg-lightgray">
+                                    <EditIcon size={20} />
+                                  </button>
+                                  <button className="h-9 w-9 rounded-full flex items-center justify-center ease-in-out duration-300 transition active:bg-lightgray">
+                                    <ChangeIndexIcon size={20} />
+                                  </button>
+                                  <button className="h-9 w-9 rounded-full flex items-center justify-center ease-in-out duration-300 transition active:bg-lightgray">
+                                    <IoCloseCircleOutline className="stroke-grays" size={24} />
+                                  </button>
+                                </div>
                               </td>
                             </tr>
                           </tbody>

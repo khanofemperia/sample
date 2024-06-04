@@ -5,7 +5,7 @@ import { isValidRemoteImage } from "@/libraries/utils";
 import { FormEvent, useState, useEffect } from "react";
 import Spinner from "@/ui/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
-import { ArrowLeftIcon, ChevronDownIcon, CloseIcon, EditIcon } from "@/icons";
+import { ArrowLeftIcon, CloseIcon, EditIcon } from "@/icons";
 import clsx from "clsx";
 import Image from "next/image";
 import Overlay from "@/ui/Overlay";
@@ -129,7 +129,7 @@ export function PosterOverlay({ data }: { data: DataType }) {
                     type="button"
                     className="h-9 px-3 rounded-full flex items-center gap-1 transition duration-300 ease-in-out active:bg-lightgray"
                   >
-                    <ArrowLeftIcon className="fill-custom-blue -ml-[2px]" size={18} />
+                    <ArrowLeftIcon className="fill-custom-blue -ml-[2px]" size={20} />
                     <span className="font-semibold text-sm text-custom-blue">
                       Poster
                     </span>
