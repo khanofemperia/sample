@@ -219,7 +219,7 @@ export function ProductListOverlay({
                                     <EditIcon size={20} />
                                   </button>
                                   <button className="h-9 w-9 rounded-full flex items-center justify-center ease-in-out duration-300 transition active:bg-lightgray">
-                                    <ChangeIndexIcon size={20} />
+                                    <ChangeIndexIcon size={18} />
                                   </button>
                                   <button className="h-9 w-9 rounded-full flex items-center justify-center ease-in-out duration-300 transition active:bg-lightgray">
                                     <IoCloseCircleOutline className="stroke-grays" size={24} />

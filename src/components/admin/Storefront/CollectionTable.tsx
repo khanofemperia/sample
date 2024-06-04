@@ -362,7 +362,7 @@ export default function CollectionTable({
                                   href={`/admin/shop/collections/${slug}-${id}`}
                                   className="h-9 w-9 rounded-full flex items-center justify-center ease-in-out duration-300 transition active:bg-lightgray"
                                 >
-                                  <EditIcon size={18} />
+                                  <EditIcon size={20} />
                                 </Link>
                                 <ChangeCollectionIndexButton
                                   data={{ id, title, index: String(index) }}
