@@ -194,7 +194,7 @@ export async function AddProductAction(data: {
     );
 
     if (productAlreadyExists) {
-      return "Product already exists in the collection";
+      return "Product already in the collection";
     }
 
     collectionProducts.sort((a, b) => a.index - b.index);

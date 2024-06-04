@@ -39,7 +39,7 @@ export default async function EditCollection({
     notFound();
   }
 
-  const { id, campaign_duration, collection_type, title, slug, visibility } =
+  const { id, campaign_duration, collection_type, title, slug, visibility, products } =
     data;
 
   const formatDate = (dateString: string) => {
@@ -335,7 +335,7 @@ export default async function EditCollection({
       <CampaignDurationOverlay data={{ id, campaign_duration }} />
       <BasicDetailsOverlay data={{ id, title, slug }} />
       <VisibilityOverlay data={{ id, visibility }} />
-      <ProductListOverlay data={{ id, visibility }} />
+      <ProductListOverlay data={{ id, products }} />
     </>
   );
 }
