@@ -64,20 +64,6 @@ export function RemoveProductOverlay({
     })
   );
 
-  useEffect(() => {
-    if (isOverlayVisible || showAlert) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "visible";
-    }
-
-    return () => {
-      if (!isOverlayVisible && !showAlert) {
-        document.body.style.overflow = "visible";
-      }
-    };
-  }, [isOverlayVisible, showAlert]);
-
   const hideAlertMessage = () => {
     setShowAlert(false);
     setAlertMessage("");
@@ -111,10 +97,25 @@ export function RemoveProductOverlay({
     <>
       {isOverlayVisible && (
         <Overlay>
-          <div className="absolute bottom-0 left-0 right-0 w-full h-[calc(100%-60px)] overflow-hidden md:overflow-visible rounded-t-3xl bg-white md:w-[500px] md:rounded-2xl md:shadow md:h-max md:mx-auto md:mt-20 md:mb-[50vh] md:relative md:bottom-auto md:left-auto md:right-auto md:top-auto md:-translate-x-0">
-            <button onClick={handleSave} className="h-9 px-3 rounded-full bg-custom-red">
-              Remove
-            </button>
+          <div className="absolute bottom-0 left-0 right-0 w-full h-[calc(100%-60px)] overflow-hidden md:overflow-visible rounded-t-3xl bg-white md:w-[400px] md:rounded-2xl md:shadow md:h-max md:mx-auto md:mt-20 md:mb-[50vh] md:relative md:bottom-auto md:left-auto md:right-auto md:top-auto md:-translate-x-0">
+            <div className="p-5 w-full h-full">
+              <div className="w-full flex justify-center gap-1">
+                <button
+                  onClick={() => {
+                    hideOverlay({ pageName, overlayName });
+                  }}
+                  className="h-9 px-3 rounded-full ease-in-out duration-300 transition border active:bg-lightgray-dimmed lg:hover:bg-lightgray-dimmed"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleSave}
+                  className="h-9 px-3 rounded-full ease-in-out duration-300 transition text-white bg-custom-red active:bg-[#ed2d2d] lg:hover:bg-[#ed2d2d]"
+                >
+                  Remove
+                </button>
+              </div>
+            </div>
           </div>
         </Overlay>
       )}
