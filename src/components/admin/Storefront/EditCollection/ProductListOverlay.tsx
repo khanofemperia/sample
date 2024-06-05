@@ -127,17 +127,37 @@ export function ProductListOverlay({
     }
   };
 
-  const filteredProducts = data.products.filter((product) => {
+  const getFilteredProducts = (filter: string) => {
     if (filter === PUBLISHED) {
-      return product.visibility.toUpperCase() === PUBLISHED;
+      return data.products.filter(
+        (product) => product.visibility.toUpperCase() === PUBLISHED
+      );
     } else if (filter === INACTIVE) {
-      return (
-        product.visibility.toUpperCase() === HIDDEN ||
-        product.visibility.toUpperCase() === DRAFT
+      return data.products.filter(
+        (product) =>
+          product.visibility.toUpperCase() === HIDDEN ||
+          product.visibility.toUpperCase() === DRAFT
       );
     }
-    return true;
-  });
+    return data.products;
+  };
+
+  const filteredProducts = getFilteredProducts(filter);
+
+  const handleFilterChange = (newFilter: string) => {
+    const newFilteredProducts = getFilteredProducts(newFilter);
+
+    if (newFilteredProducts.length === 0) {
+      setAlertMessage(
+        `${capitalizeFirstLetter(
+          newFilter.toLowerCase()
+        )} filter has no products`
+      );
+      setShowAlert(true);
+    } else {
+      setFilter(newFilter);
+    }
+  };
 
   return (
     <>
@@ -178,10 +198,10 @@ export function ProductListOverlay({
                   </button>
                 </div>
                 <div className="w-full h-full mt-[52px] md:mt-0 px-5 pt-5 pb-28 md:pb-10 flex flex-col gap-2 overflow-x-hidden overflow-y-visible invisible-scrollbar md:overflow-hidden">
-                  <div className="w-full flex gap-2 items-center justify-between">
-                    <div className="flex rounded-full bg-lightgray *:h-9 *:rounded-full *:flex *:items-center *:justify-center *:font-semibold *:text-sm *:ease-in-out *:duration-300 *:transition">
+                  <div className="w-full flex flex-col min-[588px]:flex-row gap-2 items-center justify-between">
+                    <div className="max-w-full flex flex-nowrap rounded-full bg-lightgray overflow-x-visible overflow-y-hidden invisible-scrollbar *:min-w-max *:h-9 *:rounded-full *:flex *:items-center *:justify-center *:font-semibold *:text-sm *:ease-in-out *:duration-300 *:transition">
                       <button
-                        onClick={() => setFilter(ALL)}
+                        onClick={() => handleFilterChange(ALL)}
                         className={`px-3 pl-[14px] h-9 hover:bg-lightgray-dimmed rounded-full ${
                           filter === ALL
                             ? "text-custom-blue"
@@ -191,7 +211,7 @@ export function ProductListOverlay({
                         View all ({data.products.length})
                       </button>
                       <button
-                        onClick={() => setFilter(PUBLISHED)}
+                        onClick={() => handleFilterChange(PUBLISHED)}
                         className={`px-3 h-9 hover:bg-lightgray-dimmed rounded-full ${
                           filter === PUBLISHED
                             ? "text-custom-blue"
@@ -208,7 +228,7 @@ export function ProductListOverlay({
                         )
                       </button>
                       <button
-                        onClick={() => setFilter(INACTIVE)}
+                        onClick={() => handleFilterChange(INACTIVE)}
                         className={`px-3 pr-[14px] h-9 hover:bg-lightgray-dimmed rounded-full ${
                           filter === INACTIVE
                             ? "text-custom-blue"
@@ -226,14 +246,14 @@ export function ProductListOverlay({
                         )
                       </button>
                     </div>
-                    <div className="h-9 rounded-full overflow-hidden flex items-center border shadow-sm">
+                    <div className="w-full min-[588px]:w-56 h-9 rounded-full overflow-hidden flex items-center border shadow-sm">
                       <input
                         type="text"
                         value={productId}
                         onChange={handleInputChange}
                         onKeyDown={handleKeyDown}
                         placeholder="Paste ID (#12345)"
-                        className="h-full w-40 w-44s pl-4 bg-transparent"
+                        className="h-full w-full pl-4 bg-transparent"
                       />
                       <div className="h-full flex items-center justify-center">
                         <button
@@ -252,86 +272,89 @@ export function ProductListOverlay({
                       </div>
                     </div>
                   </div>
-                  <div className="w-full h-full py-3 border rounded-xl bg-white">
-                    <div className="h-full">
-                      <div className="h-full overflow-auto custom-x-scrollbar">
-                        <table className="w-full text-sm">
-                          <thead className="border-y bg-neutral-100">
-                            <tr className="h-10 *:font-semibold *:text-gray">
-                              <td className="text-center border-r">#</td>
-                              <td className="pl-3 border-r">Poster</td>
-                              <td className="pl-3 border-r">Name</td>
-                              <td className="pl-3 border-r">Price</td>
-                              <td className="pl-3 border-r">Visibility</td>
-                              <td className="pl-3"></td>
-                            </tr>
-                          </thead>
-                          <tbody className="*:h-[98px] *:border-b">
-                            {filteredProducts.map(
-                              (
-                                { id, poster, name, price, visibility },
-                                index
-                              ) => (
-                                <tr key={id} className="h-[98px]">
-                                  <td className="w-14 min-w-14 text-center font-medium border-r">
-                                    {index + 1}
-                                  </td>
-                                  <td className="p-3 w-[120px] min-w-[120px] border-r">
-                                    <div className="aspect-square w-full overflow-hidden bg-white">
-                                      <Image
-                                        src={poster}
-                                        alt={name}
-                                        width={216}
-                                        height={216}
-                                        priority
-                                      />
-                                    </div>
-                                  </td>
-                                  <td className="px-3 w-[200px] min-w-[200px] border-r">
-                                    <p className="line-clamp-3">{name}</p>
-                                  </td>
-                                  <td className="px-3 w-[100px] min-w-[100px] border-r">
-                                    <p>{price}</p>
-                                  </td>
-                                  <td className="px-3 w-[100px] min-w-[100px] border-r">
-                                    {visibility.toUpperCase() === PUBLISHED ? (
-                                      <p className="px-3 rounded-full h-6 w-max flex gap-1 items-center bg-custom-green/10 border border-custom-green/15 text-custom-green">
-                                        {capitalizeFirstLetter(
-                                          visibility.toLowerCase()
-                                        )}
-                                      </p>
-                                    ) : (
-                                      <p className="px-3 rounded-full h-6 w-max flex gap-1 items-center bg-lightgray border border-[#6c6c6c]/15 text-gray">
-                                        {capitalizeFirstLetter(
-                                          visibility.toLowerCase()
-                                        )}
-                                      </p>
-                                    )}
-                                  </td>
-                                  <td className="px-3 w-[200px] min-w-[200px]">
-                                    <div className="flex items-center justify-center">
-                                      <button className="h-9 w-9 rounded-full flex items-center justify-center ease-in-out duration-300 transition active:bg-lightgray lg:hover:bg-lightgray">
-                                        <EditIcon size={20} />
-                                      </button>
-                                      <button className="h-9 w-9 rounded-full flex items-center justify-center ease-in-out duration-300 transition active:bg-lightgray lg:hover:bg-lightgray">
-                                        <ChangeIndexIcon size={18} />
-                                      </button>
-                                      <button className="h-9 w-9 rounded-full flex items-center justify-center ease-in-out duration-300 transition active:bg-lightgray lg:hover:bg-lightgray">
-                                        <IoCloseCircleOutline
-                                          className="stroke-grays"
-                                          size={24}
+                  {filteredProducts.length > 0 && (
+                    <div className="w-full h-full py-3 border rounded-xl bg-white">
+                      <div className="h-full">
+                        <div className="h-full overflow-auto custom-x-scrollbar">
+                          <table className="w-full text-sm">
+                            <thead className="border-y bg-neutral-100">
+                              <tr className="h-10 *:font-semibold *:text-gray">
+                                <td className="text-center border-r">#</td>
+                                <td className="pl-3 border-r">Poster</td>
+                                <td className="pl-3 border-r">Name</td>
+                                <td className="pl-3 border-r">Price</td>
+                                <td className="pl-3 border-r">Visibility</td>
+                                <td className="pl-3"></td>
+                              </tr>
+                            </thead>
+                            <tbody className="*:h-[98px] *:border-b">
+                              {filteredProducts.map(
+                                (
+                                  { id, poster, name, price, visibility },
+                                  index
+                                ) => (
+                                  <tr key={id} className="h-[98px]">
+                                    <td className="w-14 min-w-14 text-center font-medium border-r">
+                                      {index + 1}
+                                    </td>
+                                    <td className="p-3 w-[120px] min-w-[120px] border-r">
+                                      <div className="aspect-square w-full overflow-hidden bg-white">
+                                        <Image
+                                          src={poster}
+                                          alt={name}
+                                          width={216}
+                                          height={216}
+                                          priority
                                         />
-                                      </button>
-                                    </div>
-                                  </td>
-                                </tr>
-                              )
-                            )}
-                          </tbody>
-                        </table>
+                                      </div>
+                                    </td>
+                                    <td className="px-3 w-[200px] min-w-[200px] border-r">
+                                      <p className="line-clamp-3">{name}</p>
+                                    </td>
+                                    <td className="px-3 w-[100px] min-w-[100px] border-r">
+                                      <p>{price}</p>
+                                    </td>
+                                    <td className="px-3 w-[100px] min-w-[100px] border-r">
+                                      {visibility.toUpperCase() ===
+                                      PUBLISHED ? (
+                                        <p className="px-3 rounded-full h-6 w-max flex gap-1 items-center bg-custom-green/10 border border-custom-green/15 text-custom-green">
+                                          {capitalizeFirstLetter(
+                                            visibility.toLowerCase()
+                                          )}
+                                        </p>
+                                      ) : (
+                                        <p className="px-3 rounded-full h-6 w-max flex gap-1 items-center bg-lightgray border border-[#6c6c6c]/15 text-gray">
+                                          {capitalizeFirstLetter(
+                                            visibility.toLowerCase()
+                                          )}
+                                        </p>
+                                      )}
+                                    </td>
+                                    <td className="px-3 w-[140px] min-w-[140px]">
+                                      <div className="flex items-center justify-center">
+                                        <button className="h-9 w-9 rounded-full flex items-center justify-center ease-in-out duration-300 transition active:bg-lightgray lg:hover:bg-lightgray">
+                                          <EditIcon size={20} />
+                                        </button>
+                                        <button className="h-9 w-9 rounded-full flex items-center justify-center ease-in-out duration-300 transition active:bg-lightgray lg:hover:bg-lightgray">
+                                          <ChangeIndexIcon size={18} />
+                                        </button>
+                                        <button className="h-9 w-9 rounded-full flex items-center justify-center ease-in-out duration-300 transition active:bg-lightgray lg:hover:bg-lightgray">
+                                          <IoCloseCircleOutline
+                                            className="stroke-grays"
+                                            size={24}
+                                          />
+                                        </button>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                )
+                              )}
+                            </tbody>
+                          </table>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>
