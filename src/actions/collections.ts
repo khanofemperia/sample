@@ -13,6 +13,23 @@ import { generateId } from "@/libraries/utils";
 import { currentTimestamp } from "@/libraries/utils";
 import { revalidatePath } from "next/cache";
 
+type DataType = {
+  image: string;
+  title: string;
+  slug: string;
+  campaign_duration: {
+    start_date: string;
+    end_date: string;
+  };
+  visibility: string;
+  status: string;
+  collection_type: string;
+  index: number;
+  last_updated: string;
+  date_created: string;
+  products: { id: string; index: number }[];
+};
+
 export async function CreateCollectionAction(data: {
   title: string;
   slug: string;
@@ -219,5 +236,49 @@ export async function AddProductAction(data: {
   } catch (error) {
     console.error("Error adding product to collection:", error);
     return "Failed to add product to collection";
+  }
+}
+
+export async function RemoveProductAction(data: {
+  collectionId: string;
+  productId: string;
+}) {
+  try {
+    const { collectionId, productId } = data;
+    const productRef = doc(database, "products", productId);
+    const productSnapshot = await getDoc(productRef);
+
+    if (!productSnapshot.exists()) {
+      return "Product not found";
+    }
+
+    const collectionRef = doc(database, "collections", collectionId);
+    const collectionSnapshot = await getDoc(collectionRef);
+
+    if (!collectionSnapshot.exists()) {
+      return "Collection not found";
+    }
+
+    const collectionData = collectionSnapshot.data() as DataType;
+
+    const updatedProducts = collectionData.products.filter(
+      (product) => product.id !== productId
+    );
+
+    updatedProducts.forEach((product, index) => {
+      product.index = index + 1;
+    });
+
+    await updateDoc(collectionRef, {
+      products: updatedProducts,
+      last_updated: currentTimestamp(),
+    });
+
+    revalidatePath("/admin/shop/collections/[slug]", "page");
+
+    return "Product removed from collection";
+  } catch (error) {
+    console.error("Error removing product from collection:", error);
+    return "Failed to remove product from collection";
   }
 }

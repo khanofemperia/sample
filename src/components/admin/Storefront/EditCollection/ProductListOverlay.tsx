@@ -17,6 +17,11 @@ import { AddProductAction } from "@/actions/collections";
 import Image from "next/image";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { capitalizeFirstLetter } from "@/libraries/utils";
+import Link from "next/link";
+import {
+  RemoveProductButton,
+  RemoveProductOverlay,
+} from "./RemoveProductOverlay";
 
 export function ProductListButton() {
   const { showOverlay } = useOverlayStore();
@@ -290,7 +295,7 @@ export function ProductListOverlay({
                             <tbody className="*:h-[98px] *:border-b">
                               {filteredProducts.map(
                                 (
-                                  { id, poster, name, price, visibility },
+                                  { id, slug, poster, name, price, visibility },
                                   index
                                 ) => (
                                   <tr key={id} className="h-[98px]">
@@ -332,18 +337,16 @@ export function ProductListOverlay({
                                     </td>
                                     <td className="px-3 w-[140px] min-w-[140px]">
                                       <div className="flex items-center justify-center">
-                                        <button className="h-9 w-9 rounded-full flex items-center justify-center ease-in-out duration-300 transition active:bg-lightgray lg:hover:bg-lightgray">
+                                        <Link
+                                          href={`/admin/shop/products/${slug}-${id}`}
+                                          className="h-9 w-9 rounded-full flex items-center justify-center ease-in-out duration-300 transition active:bg-lightgray lg:hover:bg-lightgray"
+                                        >
                                           <EditIcon size={20} />
-                                        </button>
+                                        </Link>
                                         <button className="h-9 w-9 rounded-full flex items-center justify-center ease-in-out duration-300 transition active:bg-lightgray lg:hover:bg-lightgray">
                                           <ChangeIndexIcon size={18} />
                                         </button>
-                                        <button className="h-9 w-9 rounded-full flex items-center justify-center ease-in-out duration-300 transition active:bg-lightgray lg:hover:bg-lightgray">
-                                          <IoCloseCircleOutline
-                                            className="stroke-grays"
-                                            size={24}
-                                          />
-                                        </button>
+                                        <RemoveProductButton id={id} />
                                       </div>
                                     </td>
                                   </tr>
@@ -367,6 +370,7 @@ export function ProductListOverlay({
           hideAlertMessage={hideAlertMessage}
         />
       )}
+      <RemoveProductOverlay collectionId={data.id} />
     </>
   );
 }
