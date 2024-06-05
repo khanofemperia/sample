@@ -294,7 +294,7 @@ export function ProductListOverlay({
                                     <p>{price}</p>
                                   </td>
                                   <td className="px-3 w-[100px] min-w-[100px] border-r">
-                                    {visibility === "PUBLISHED" ? (
+                                    {visibility.toUpperCase() === PUBLISHED ? (
                                       <p className="px-3 rounded-full h-6 w-max flex gap-1 items-center bg-custom-green/10 border border-custom-green/15 text-custom-green">
                                         {capitalizeFirstLetter(
                                           visibility.toLowerCase()
