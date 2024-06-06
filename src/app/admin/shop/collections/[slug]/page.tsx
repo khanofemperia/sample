@@ -21,6 +21,34 @@ import Link from "next/link";
 import Image from "next/image";
 import { ProductListButton, ProductListOverlay } from "@/components/admin/Storefront/EditCollection/ProductListOverlay";
 
+type CollectionProductType = {
+  id: string;
+  name: string;
+  index: number;
+  price: string;
+  poster: string;
+  slug: string;
+  visibility: string;
+};
+
+type CollectionDataType = {
+  id: string;
+  image: string;
+  title: string;
+  slug: string;
+  campaign_duration: {
+    start_date: string;
+    end_date: string;
+  };
+  visibility: string;
+  status: string;
+  collection_type: string;
+  index: number;
+  last_updated: string;
+  date_created: string;
+  products: CollectionProductType[];
+};
+
 export default async function EditCollection({
   params,
 }: {
@@ -31,7 +59,7 @@ export default async function EditCollection({
   const CAMPAIGN_STATUS_ACTIVE = "Active";
 
   const collectionId = params.slug.split("-").pop();
-  const data = await fetchData<CollectionType | null>(
+  const data = await fetchData<CollectionDataType | null>(
     `api/collections/${collectionId}`
   );
 
