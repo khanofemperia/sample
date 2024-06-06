@@ -87,13 +87,13 @@ export default function CollectionTable({
     }
   };
 
-  const handleEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const pageJumpEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       jumpToPage();
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const pageJumpInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (/^\d*$/.test(value)) {
       setPageJumpValue(value);
@@ -388,8 +388,8 @@ export default function CollectionTable({
                   </button>
                   <input
                     value={pageJumpValue}
-                    onChange={handleInputChange}
-                    onKeyDown={handleEnterKey}
+                    onChange={pageJumpInputChange}
+                    onKeyDown={pageJumpEnterKey}
                     className={clsx(
                       "min-w-[36px] max-w-[36px] h-9 px-1 text-center border cursor-text outline-none rounded-full bg-white",
                       {
@@ -403,7 +403,7 @@ export default function CollectionTable({
                   </div>
                   <button
                     onClick={jumpToLastPage}
-                    className="w-9 h-9 flex items-center justify-center rounded-full ease-in-out duration-300 transition active:bg-lightgray-dimmed lg:hover:bg-lightgray-dimmed"
+                    className="w-9 h-9 flex items-center justify-center border rounded-full ease-in-out duration-300 transition active:bg-lightgray-dimmed lg:hover:bg-lightgray-dimmed"
                   >
                     {totalPages}
                   </button>

@@ -1,5 +1,9 @@
 import DataChip from "@/ui/DataChip";
-import { capitalizeFirstLetter, fetchData } from "@/libraries/utils";
+import {
+  capitalizeFirstLetter,
+  fetchData,
+  formatThousands,
+} from "@/libraries/utils";
 import { notFound } from "next/navigation";
 import {
   VisibilityButton,
@@ -311,63 +315,34 @@ export default async function EditCollection({
               <ProductListButton />
             </div>
             <div className="p-5 flex flex-wrap justify-start">
-              <Link
-                href="#"
-                className="aspect-square w-1/2 min-[425px]:w-[calc(100%/3)] md:w-[229px] pt-2 pb-[6px] px-5 select-none transition duration-200 ease-in-out active:bg-blue-100 lg:hover:bg-blue-100"
-              >
-                <div className="relative w-full h-full">
-                  <div className="aspect-square w-full overflow-hidden shadow-[2px_2px_4px_#9E9E9E] bg-white">
-                    <Image
-                      src="https://i.pinimg.com/736x/e5/93/ed/e593ed7abfc547e9818c303510246ebb.jpg"
-                      alt="Product"
-                      width={216}
-                      height={216}
-                      priority
-                    />
-                  </div>
-                  <div className="flex items-center justify-center absolute bottom-0 text-sm w-full">
-                    <span>$34.99</span>
-                  </div>
-                </div>
-              </Link>
-              <Link
-                href="#"
-                className="aspect-square w-1/2 min-[425px]:w-[calc(100%/3)] md:w-[229px] pt-2 pb-[6px] px-5 select-none transition duration-200 ease-in-out active:bg-blue-100 lg:hover:bg-blue-100"
-              >
-                <div className="relative w-full h-full">
-                  <div className="aspect-square w-full overflow-hidden shadow-[2px_2px_4px_#9E9E9E] bg-white">
-                    <Image
-                      src="https://i.pinimg.com/564x/a0/7b/11/a07b11962835ce26faef0d701f03ce83.jpg"
-                      alt="Product"
-                      width={216}
-                      height={216}
-                      priority
-                    />
-                  </div>
-                  <div className="flex items-center justify-center absolute bottom-0 text-sm w-full">
-                    <span>$34.99</span>
-                  </div>
-                </div>
-              </Link>
-              <Link
-                href="#"
-                className="aspect-square w-1/2 min-[425px]:w-[calc(100%/3)] md:w-[229px] pt-2 pb-[6px] px-5 select-none transition duration-200 ease-in-out active:bg-blue-100 lg:hover:bg-blue-100"
-              >
-                <div className="relative w-full h-full">
-                  <div className="aspect-square w-full overflow-hidden shadow-[2px_2px_4px_#9E9E9E] bg-white">
-                    <Image
-                      src="https://i.pinimg.com/564x/34/fe/a4/34fea4694b9a5b4a112316ce66a62d32.jpg"
-                      alt="Product"
-                      width={216}
-                      height={216}
-                      priority
-                    />
-                  </div>
-                  <div className="flex items-center justify-center absolute bottom-0 text-sm w-full">
-                    <span>$34.99</span>
-                  </div>
-                </div>
-              </Link>
+              {products.length > 0 ? (
+                products
+                  .slice(0, 3)
+                  .map(({ id, index, slug, poster, name, price }) => (
+                    <Link
+                      key={index}
+                      href={`/admin/shop/products/${slug}-${id}`}
+                      className="aspect-square w-1/2 min-[425px]:w-[calc(100%/3)] md:w-[229px] pt-2 pb-[6px] px-5 select-none transition duration-200 ease-in-out active:bg-blue-100 lg:hover:bg-blue-100"
+                    >
+                      <div className="relative w-full h-full">
+                        <div className="aspect-square w-full overflow-hidden flex items-center justify-center border shadow-[2px_2px_4px_#9E9E9E] bg-white">
+                          <Image
+                            src={poster}
+                            alt={name}
+                            width={216}
+                            height={216}
+                            priority
+                          />
+                        </div>
+                        <div className="flex items-center justify-center absolute bottom-0 text-sm w-full">
+                          <span>${formatThousands(price)}</span>
+                        </div>
+                      </div>
+                    </Link>
+                  ))
+              ) : (
+                <p className="italic text-gray">Nothing yet</p>
+              )}
             </div>
           </div>
         </div>

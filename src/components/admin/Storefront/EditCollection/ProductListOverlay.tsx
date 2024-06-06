@@ -17,7 +17,7 @@ import clsx from "clsx";
 import Overlay from "@/ui/Overlay";
 import { AddProductAction } from "@/actions/collections";
 import Image from "next/image";
-import { capitalizeFirstLetter } from "@/libraries/utils";
+import { capitalizeFirstLetter, formatThousands } from "@/libraries/utils";
 import Link from "next/link";
 import {
   RemoveProductButton,
@@ -260,7 +260,7 @@ export function ProductListOverlay({
       {isOverlayVisible && (
         <Overlay>
           <div className="md:mx-auto md:mt-20 md:mb-[50vh] md:px-5 lg:p-0">
-            <div className="absolute bottom-0 left-0 right-0 w-full h-[calc(100%-60px)] mx-auto overflow-hidden md:overflow-visible rounded-t-3xl bg-white md:w-full md:max-w-[773.8px] md:rounded-2xl md:shadow md:h-max md:relative md:bottom-auto md:left-auto md:right-auto md:top-auto md:-translate-x-0">
+            <div className="absolute bottom-0 left-0 right-0 w-full h-[calc(100%-60px)] mx-auto ease-in-out duration-300 transition overflow-hidden md:overflow-visible rounded-t-3xl bg-white md:w-full md:max-w-[773.8px] md:rounded-2xl md:shadow md:h-max md:relative md:bottom-auto md:left-auto md:right-auto md:top-auto md:-translate-x-0">
               <div className="w-full">
                 <div className="md:hidden flex items-end justify-center pt-4 pb-2 absolute top-0 left-0 right-0 bg-white">
                   <div className="relative flex justify-center items-center w-full h-7">
@@ -417,7 +417,7 @@ export function ProductListOverlay({
                                         <p className="line-clamp-3">{name}</p>
                                       </td>
                                       <td className="px-3 max-w-[100px] min-w-[100px] border-r">
-                                        <p>{price}</p>
+                                        <p>${formatThousands(price)}</p>
                                       </td>
                                       <td className="px-3 max-w-[116px] min-w-[116px] border-r">
                                         {visibility.toUpperCase() ===
@@ -484,7 +484,7 @@ export function ProductListOverlay({
                           </div>
                           <button
                             onClick={jumpToLastPage}
-                            className="w-9 h-9 flex items-center justify-center rounded-full ease-in-out duration-300 transition active:bg-lightgray-dimmed lg:hover:bg-lightgray-dimmed"
+                            className="w-9 h-9 flex items-center justify-center border rounded-full ease-in-out duration-300 transition active:bg-lightgray-dimmed lg:hover:bg-lightgray-dimmed"
                           >
                             {totalPages}
                           </button>
