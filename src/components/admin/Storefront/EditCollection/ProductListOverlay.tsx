@@ -7,6 +7,8 @@ import { useOverlayStore } from "@/zustand/admin/overlayStore";
 import {
   ArrowLeftIcon,
   ChangeIndexIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
   CloseIcon,
   EditIcon,
   PlusIcon,
@@ -15,13 +17,22 @@ import clsx from "clsx";
 import Overlay from "@/ui/Overlay";
 import { AddProductAction } from "@/actions/collections";
 import Image from "next/image";
-import { IoCloseCircleOutline } from "react-icons/io5";
 import { capitalizeFirstLetter } from "@/libraries/utils";
 import Link from "next/link";
 import {
   RemoveProductButton,
   RemoveProductOverlay,
 } from "./RemoveProductOverlay";
+
+type CollectionProductType = {
+  id: string;
+  name: string;
+  index: number;
+  price: string;
+  poster: string;
+  slug: string;
+  visibility: string;
+};
 
 export function ProductListButton() {
   const { showOverlay } = useOverlayStore();
@@ -45,7 +56,7 @@ export function ProductListButton() {
 export function ProductListOverlay({
   data,
 }: {
-  data: { id: string; products: ProductType[] };
+  data: { id: string; products: CollectionProductType[] };
 }) {
   const PUBLISHED = "PUBLISHED";
   const DRAFT = "DRAFT";
@@ -58,6 +69,9 @@ export function ProductListOverlay({
   const [showAlert, setShowAlert] = useState<boolean>(false);
   const [productId, setProductId] = useState("");
   const [filter, setFilter] = useState<string>(ALL);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageJumpValue, setPageJumpValue] = useState("1");
+  const [isPageInRange, setIsPageInRange] = useState(true);
 
   const { hideOverlay } = useOverlayStore();
 
@@ -161,6 +175,82 @@ export function ProductListOverlay({
       setShowAlert(true);
     } else {
       setFilter(newFilter);
+      setPageJumpValue("1");
+      setCurrentPage(1);
+      setIsPageInRange(true);
+    }
+  };
+
+  const pagination = (
+    data: CollectionProductType[],
+    currentPage: number,
+    rowsPerPage: number
+  ) => {
+    const startIndex = (currentPage - 1) * rowsPerPage;
+    const endIndex = startIndex + rowsPerPage;
+    const paginatedArray = data.slice(startIndex, endIndex);
+    const totalPages = Math.ceil(data.length / rowsPerPage);
+
+    return {
+      paginatedArray,
+      totalPages,
+    };
+  };
+
+  const rowsPerPage = 2;
+  const { paginatedArray: tableData, totalPages } = pagination(
+    filteredProducts,
+    currentPage,
+    rowsPerPage
+  );
+
+  const handlePrevious = () => {
+    setCurrentPage((prevPage) => {
+      const value = Math.max(prevPage - 1, 1);
+      setPageJumpValue(String(value));
+
+      return value;
+    });
+    setIsPageInRange(true);
+  };
+
+  const handleNext = () => {
+    setCurrentPage((prevPage) => {
+      const value = Math.min(prevPage + 1, totalPages);
+      setPageJumpValue(String(value));
+
+      return value;
+    });
+    setIsPageInRange(true);
+  };
+
+  const jumpToLastPage = () => {
+    setPageJumpValue(String(totalPages));
+    setCurrentPage(totalPages);
+    setIsPageInRange(true);
+  };
+
+  const jumpToPage = () => {
+    const page = parseInt(pageJumpValue, 10);
+
+    if (!isNaN(page) && page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+      setIsPageInRange(true);
+    } else {
+      setIsPageInRange(false);
+    }
+  };
+
+  const pageJumpEnterKey = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      jumpToPage();
+    }
+  };
+
+  const pageJumpInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    if (/^\d*$/.test(value)) {
+      setPageJumpValue(value);
     }
   };
 
@@ -277,7 +367,7 @@ export function ProductListOverlay({
                       </div>
                     </div>
                   </div>
-                  {filteredProducts.length > 0 && (
+                  {tableData.length > 0 && (
                     <div className="w-full h-full py-3 border rounded-xl bg-white">
                       <div className="h-full">
                         <div className="h-full overflow-auto custom-x-scrollbar">
@@ -293,17 +383,25 @@ export function ProductListOverlay({
                               </tr>
                             </thead>
                             <tbody className="*:h-[98px] *:border-b">
-                              {filteredProducts.map(
-                                (
-                                  { id, slug, poster, name, price, visibility },
-                                  index
-                                ) => (
-                                  <tr key={id} className="h-[98px]">
+                              {tableData.map(
+                                ({
+                                  id,
+                                  index,
+                                  slug,
+                                  poster,
+                                  name,
+                                  price,
+                                  visibility,
+                                }) => (
+                                  <tr
+                                    key={id}
+                                    className="h-[98px] max-h-[98px]"
+                                  >
                                     <td className="w-14 min-w-14 text-center font-medium border-r">
-                                      {index + 1}
+                                      {index}
                                     </td>
                                     <td className="p-3 w-[120px] min-w-[120px] border-r">
-                                      <div className="aspect-square w-full overflow-hidden bg-white">
+                                      <div className="aspect-square w-full overflow-hidden flex items-center justify-center bg-white">
                                         <Image
                                           src={poster}
                                           alt={name}
@@ -355,6 +453,45 @@ export function ProductListOverlay({
                             </tbody>
                           </table>
                         </div>
+                      </div>
+                    </div>
+                  )}
+                  {filteredProducts.length > rowsPerPage && (
+                    <div className="mt-2">
+                      <div className="w-max mx-auto flex gap-1 h-9">
+                        <button
+                          onClick={handlePrevious}
+                          className="w-9 h-9 flex items-center justify-center rounded-full ease-in-out duration-300 transition active:bg-lightgray-dimmed lg:hover:bg-lightgray-dimmed"
+                        >
+                          <ChevronLeftIcon className="-ml-[2px]" size={24} />
+                        </button>
+                        <input
+                          value={pageJumpValue}
+                          onChange={pageJumpInputChange}
+                          onKeyDown={pageJumpEnterKey}
+                          type="text"
+                          className={clsx(
+                            "min-w-[36px] max-w-[36px] h-9 px-1 text-center border cursor-text outline-none rounded-full bg-white",
+                            {
+                              "border-custom-red": !isPageInRange,
+                            }
+                          )}
+                        />
+                        <div className="flex items-center justify-center px-1 cursor-context-menu">
+                          of
+                        </div>
+                        <button
+                          onClick={jumpToLastPage}
+                          className="w-9 h-9 flex items-center justify-center rounded-full ease-in-out duration-300 transition active:bg-lightgray-dimmed lg:hover:bg-lightgray-dimmed"
+                        >
+                          {totalPages}
+                        </button>
+                        <button
+                          onClick={handleNext}
+                          className="w-9 h-9 flex items-center justify-center rounded-full ease-in-out duration-300 transition active:bg-lightgray-dimmed lg:hover:bg-lightgray-dimmed "
+                        >
+                          <ChevronRightIcon className="-mr-[2px]" size={24} />
+                        </button>
                       </div>
                     </div>
                   )}

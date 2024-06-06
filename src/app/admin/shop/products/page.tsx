@@ -22,7 +22,7 @@ export default async function Products() {
             className="aspect-square w-1/2 min-[425px]:w-[calc(100%/3)] md:w-[254px] pt-2 pb-[6px] px-5 select-none transition duration-200 ease-in-out active:bg-blue-100 lg:hover:bg-blue-100"
           >
             <div className="relative w-full h-full">
-              <div className="aspect-square w-full overflow-hidden shadow-[2px_2px_4px_#9E9E9E] bg-white">
+              <div className="aspect-square w-full overflow-hidden flex items-center justify-center shadow-[2px_2px_4px_#9E9E9E] bg-white">
                 {poster && (
                   <Image
                     src={poster}
