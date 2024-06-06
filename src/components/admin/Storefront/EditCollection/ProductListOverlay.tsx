@@ -556,6 +556,7 @@ export function ProductListOverlay({
         />
       )}
       <RemoveProductOverlay collectionId={data.id} />
+      <ChangeProductIndexOverlay />
     </>
   );
 }
