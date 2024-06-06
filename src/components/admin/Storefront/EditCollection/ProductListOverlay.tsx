@@ -501,12 +501,12 @@ export function ProductListOverlay({
                 ) : (
                   <div className="w-full flex flex-col gap-5 items-center mt-[52px] md:mt-0 px-5 pt-5 pb-28 md:pb-[90px]">
                     <div className="flex flex-col gap-[2px] items-center">
-                      <span className="font-semibold text-lg">
+                      <h2 className="font-semibold text-lg">
                         Collection is empty
-                      </span>
-                      <span className="text-sm text-center">
+                      </h2>
+                      <p className="text-sm text-center">
                         Enter ID below for your first product
-                      </span>
+                      </p>
                     </div>
                     <div className="w-full min-[588px]:w-56 h-9 rounded-full overflow-hidden flex items-center border shadow-sm">
                       <input
