@@ -403,7 +403,7 @@ export default function CollectionTable({
                   </div>
                   <button
                     onClick={jumpToLastPage}
-                    className="w-9 h-9 flex items-center justify-center border rounded-full ease-in-out duration-300 transition active:bg-lightgray-dimmed lg:hover:bg-lightgray-dimmed"
+                    className="w-9 h-9 flex items-center justify-center border rounded-full ease-in-out duration-300 transition bg-white active:bg-lightgray-dimmed lg:hover:bg-lightgray-dimmed"
                   >
                     {totalPages}
                   </button>

@@ -490,7 +490,7 @@ export function ProductListOverlay({
                           </button>
                           <button
                             onClick={handleNext}
-                            className="w-9 h-9 flex items-center justify-center rounded-full ease-in-out duration-300 transition active:bg-lightgray-dimmed lg:hover:bg-lightgray-dimmed "
+                            className="w-9 h-9 flex items-center justify-center rounded-full ease-in-out duration-300 transition bg-white active:bg-lightgray-dimmed lg:hover:bg-lightgray-dimmed "
                           >
                             <ChevronRightIcon className="-mr-[2px]" size={24} />
                           </button>
