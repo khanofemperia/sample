@@ -99,6 +99,16 @@ export function ProductListOverlay({
     };
   }, [isOverlayVisible, showAlert]);
 
+  const onHideOverlay = () => {
+    setLoading(false);
+    hideOverlay({ pageName, overlayName });
+    setFilter(ALL);
+    setPageJumpValue("1");
+    setCurrentPage(1);
+    setIsPageInRange(true);
+    setProductId("");
+  };
+
   const hideAlertMessage = () => {
     setShowAlert(false);
     setAlertMessage("");
@@ -131,6 +141,9 @@ export function ProductListOverlay({
       setShowAlert(true);
     } finally {
       setLoading(false);
+      setPageJumpValue("1");
+      setCurrentPage(1);
+      setIsPageInRange(true);
     }
   };
 
@@ -266,9 +279,7 @@ export function ProductListOverlay({
                   <div className="relative flex justify-center items-center w-full h-7">
                     <h2 className="font-semibold text-lg">Products</h2>
                     <button
-                      onClick={() => {
-                        hideOverlay({ pageName, overlayName });
-                      }}
+                      onClick={onHideOverlay}
                       type="button"
                       className="w-7 h-7 rounded-full flex items-center justify-center absolute right-4 transition duration-300 ease-in-out bg-lightgray active:bg-lightgray-dimmed"
                     >
@@ -278,9 +289,7 @@ export function ProductListOverlay({
                 </div>
                 <div className="hidden md:flex md:items-center md:justify-between py-2 pr-4 pl-2">
                   <button
-                    onClick={() => {
-                      hideOverlay({ pageName, overlayName });
-                    }}
+                    onClick={onHideOverlay}
                     type="button"
                     className="h-9 px-3 rounded-full flex items-center gap-1 transition duration-300 ease-in-out active:bg-lightgray"
                   >
