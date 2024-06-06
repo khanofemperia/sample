@@ -19,7 +19,10 @@ import {
 } from "@/components/admin/Storefront/EditCollection/BasicDetailsOverlay";
 import Link from "next/link";
 import Image from "next/image";
-import { ProductListButton, ProductListOverlay } from "@/components/admin/Storefront/EditCollection/ProductListOverlay";
+import {
+  ProductListButton,
+  ProductListOverlay,
+} from "@/components/admin/Storefront/EditCollection/ProductListOverlay";
 
 type CollectionProductType = {
   id: string;
@@ -67,8 +70,15 @@ export default async function EditCollection({
     notFound();
   }
 
-  const { id, campaign_duration, collection_type, title, slug, visibility, products } =
-    data;
+  const {
+    id,
+    campaign_duration,
+    collection_type,
+    title,
+    slug,
+    visibility,
+    products,
+  } = data;
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -295,7 +305,9 @@ export default async function EditCollection({
           </p>
           <div className="w-full shadow rounded-xl bg-white">
             <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
-              <h2 className="font-semibold text-xl">Products (48)</h2>
+              <h2 className="font-semibold text-xl">
+                {products.length ? `Products (${products.length})` : "Products"}
+              </h2>
               <ProductListButton />
             </div>
             <div className="p-5 flex flex-wrap justify-start">
