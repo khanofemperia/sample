@@ -316,10 +316,10 @@ export function NewCollectionOverlay() {
                 )}
                 <div>
                   <h2 className="font-semibold text-sm">Campaign duration</h2>
-                  <div className="flex flex-col md:flex-row items-center gap-3 mt-4">
+                  <div className="flex flex-col min-[478px]:flex-row items-start gap-3 mt-4">
                     <div
                       className={clsx(
-                        "w-full md:max-w-[230px] flex gap-2 items-center border rounded-md overflow-hidden pl-3",
+                        "w-[180px] flex gap-2 items-center border rounded-md overflow-hidden pl-3",
                         {
                           "border-red": !isValidDateRange,
                         }
@@ -337,7 +337,7 @@ export function NewCollectionOverlay() {
                     </div>
                     <div
                       className={clsx(
-                        "w-full md:max-w-[230px] flex gap-2 items-center border rounded-md overflow-hidden pl-3",
+                        "w-[180px] flex gap-2 items-center border rounded-md overflow-hidden pl-3",
                         {
                           "border-red": !isValidDateRange,
                         }
