@@ -282,3 +282,75 @@ export async function RemoveProductAction(data: {
     return "Failed to remove product from collection";
   }
 }
+
+export async function ChangeProductIndexAction(data: {
+  collectionId: string;
+  product: {
+    id: string;
+    index: number;
+  };
+}) {
+  try {
+    const { collectionId, product: productOneChanges } = data;
+    const productOneChangesRef = doc(
+      database,
+      "products",
+      productOneChanges.id
+    );
+    const productOneChangesSnapshot = await getDoc(productOneChangesRef);
+
+    if (!productOneChangesSnapshot.exists()) {
+      return "Product not found";
+    }
+
+    const collectionRef = doc(database, "collections", collectionId);
+    const collectionSnapshot = await getDoc(collectionRef);
+
+    if (!collectionSnapshot.exists()) {
+      return "Collection not found";
+    }
+
+    const collectionData = collectionSnapshot.data() as CollectionDataType;
+
+    if (
+      isNaN(productOneChanges.index) ||
+      productOneChanges.index < 1 ||
+      productOneChanges.index > collectionData.products.length
+    ) {
+      return "Index is invalid or out of range";
+    }
+
+    const productOne = collectionData.products.find(
+      (item) => item.id === productOneChanges.id
+    );
+
+    const productOneIndexBeforeSwap = productOne?.index;
+
+    const productTwo = collectionData.products.find(
+      (item) => item.index === productOneChanges.index
+    );
+
+    if (!productTwo) {
+      return "There's no product to switch indexes with";
+    }
+
+    if (productOne !== undefined && productOneIndexBeforeSwap !== undefined) {
+      productOne.index = productOneChanges.index;
+      productTwo.index = productOneIndexBeforeSwap;
+
+      await updateDoc(collectionRef, {
+        products: collectionData.products,
+        last_updated: currentTimestamp(),
+      });
+
+      revalidatePath("/admin/shop/collections/[slug]", "page");
+
+      return "Product index changed";
+    } else {
+      return "Failed to change product index";
+    }
+  } catch (error) {
+    console.error("Error changing product index:", error);
+    return "An error occurred";
+  }
+}
