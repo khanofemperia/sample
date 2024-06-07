@@ -196,7 +196,7 @@ export default async function EditCollection({
                       }
                     )}
                   >
-                    <span className="text-gray">Launch date</span>
+                    <span className="text-gray">Launch</span>
                     <ChevronRightIcon className="stroke-gray" size={16} />
                     <span
                       className={clsx({

@@ -262,7 +262,7 @@ export default function CollectionTable({
                                       )}
                                     >
                                       <span className="text-gray">
-                                        Launch date
+                                        Launch
                                       </span>
                                       <ChevronRightIcon
                                         className="stroke-gray"
