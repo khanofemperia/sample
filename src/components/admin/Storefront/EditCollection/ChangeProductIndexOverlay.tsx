@@ -77,9 +77,9 @@ export function ChangeProductIndexOverlay() {
   const { pageName, isOverlayVisible, overlayName } = useOverlayStore(
     (state) => ({
       pageName: state.pages.storefront.name,
-      overlayName: state.pages.storefront.overlays.changeCollectionIndex.name,
+      overlayName: state.pages.storefront.overlays.changeProductIndex.name,
       isOverlayVisible:
-        state.pages.storefront.overlays.changeCollectionIndex.isVisible,
+        state.pages.storefront.overlays.changeProductIndex.isVisible,
     })
   );
 
@@ -186,11 +186,11 @@ export function ChangeProductIndexOverlay() {
                   )}
                 </button>
               </div>
-              {/* <div className="w-full h-full mt-[52px] md:mt-0 p-5 pb-28 md:pb-10 flex flex-col gap-5 overflow-x-hidden overflow-y-visible invisible-scrollbar md:overflow-hidden">
+              <div className="w-full h-full mt-[52px] md:mt-0 p-5 pb-28 md:pb-10 flex flex-col gap-5 overflow-x-hidden overflow-y-visible invisible-scrollbar md:overflow-hidden">
                 <div className="flex flex-col gap-2">
-                  <h3 className="text-sm font-semibold mb-2">Title</h3>
+                  <h3 className="text-sm font-semibold mb-2">Name</h3>
                   <div className="w-full max-w-full h-9 px-3 rounded-md bg-lightgray border flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
-                    {selectedCollection.title}
+                    {selectedProduct.name}
                   </div>
                 </div>
                 <div className="flex flex-col gap-2">
@@ -201,14 +201,14 @@ export function ChangeProductIndexOverlay() {
                     <input
                       type="text"
                       name="index"
-                      value={selectedCollection.index}
+                      value={selectedProduct.index}
                       onChange={handleIndexChange}
                       className="w-full h-9 px-3 rounded-md transition duration-300 ease-in-out border focus:border-custom-blue"
                       required
                     />
                   </div>
                 </div>
-              </div> */}
+              </div>
             </div>
             <div className="md:hidden w-full pb-5 pt-2 px-5 absolute bottom-0">
               <button
