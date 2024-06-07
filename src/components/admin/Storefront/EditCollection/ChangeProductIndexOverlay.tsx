@@ -15,33 +15,38 @@ import {
 import clsx from "clsx";
 import Overlay from "@/ui/Overlay";
 import { ChangeCollectionIndexAction } from "@/actions/collections";
-import { useChangeCollectionIndexStore } from "@/zustand/admin/collections/changeCollectionIndexStore";
+import { useChangeProductIndexStore } from "@/zustand/admin/collections/changeProductIndexStore";
 
-type ButtonDataType = {
-  id: string;
-  index: string;
-  title: string;
-};
-
-export function ChangeCollectionIndexButton({
-  data,
+export function ChangeProductIndexButton({
+  collectionId,
+  product,
 }: {
-  data: ButtonDataType;
+  collectionId: string;
+  product: {
+    id: string;
+    name: string;
+    index: number;
+  };
 }) {
   const { showOverlay } = useOverlayStore();
-  const setSelectedCollection = useChangeCollectionIndexStore(
-    (state) => state.setSelectedCollection
+  const setSelectedProduct = useChangeProductIndexStore(
+    (state) => state.setSelectedProduct
   );
 
   const { pageName, overlayName } = useOverlayStore((state) => ({
     pageName: state.pages.storefront.name,
-    overlayName: state.pages.storefront.overlays.changeCollectionIndex.name,
+    overlayName: state.pages.storefront.overlays.changeProductIndex.name,
     isOverlayVisible:
-      state.pages.storefront.overlays.changeCollectionIndex.isVisible,
+      state.pages.storefront.overlays.changeProductIndex.isVisible,
   }));
 
   const handleClick = () => {
-    setSelectedCollection({ ...data });
+    setSelectedProduct({
+      id: product.id,
+      index: String(product.index),
+      name: product.name,
+      collectionId,
+    });
     showOverlay({ pageName, overlayName });
   };
 
@@ -55,18 +60,19 @@ export function ChangeCollectionIndexButton({
   );
 }
 
-export function ChangeCollectionIndexOverlay() {
+export function ChangeProductIndexOverlay() {
   const [loading, setLoading] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState<boolean>(false);
 
   const { hideOverlay, showOverlay } = useOverlayStore();
 
-  const { selectedCollection, setSelectedCollection } =
-    useChangeCollectionIndexStore((state) => ({
-      selectedCollection: state.selectedCollection,
-      setSelectedCollection: state.setSelectedCollection,
-    }));
+  const { selectedProduct, setSelectedProduct } = useChangeProductIndexStore(
+    (state) => ({
+      selectedProduct: state.selectedProduct,
+      setSelectedProduct: state.setSelectedProduct,
+    })
+  );
 
   const { pageName, isOverlayVisible, overlayName } = useOverlayStore(
     (state) => ({
@@ -105,8 +111,8 @@ export function ChangeCollectionIndexOverlay() {
     setLoading(true);
     try {
       const message = await ChangeCollectionIndexAction({
-        id: selectedCollection.id,
-        index: Number(selectedCollection.index),
+        id: selectedProduct.id,
+        index: Number(selectedProduct.index),
       });
       setAlertMessage(message);
       setShowAlert(true);
@@ -123,7 +129,7 @@ export function ChangeCollectionIndexOverlay() {
   const handleIndexChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newIndex = event.target.value;
     if (/^\d*$/.test(newIndex)) {
-      setSelectedCollection({ ...selectedCollection, index: newIndex });
+      setSelectedProduct({ ...selectedProduct, index: newIndex });
     }
   };
 
@@ -180,7 +186,7 @@ export function ChangeCollectionIndexOverlay() {
                   )}
                 </button>
               </div>
-              <div className="w-full h-full mt-[52px] md:mt-0 p-5 pb-28 md:pb-10 flex flex-col gap-5 overflow-x-hidden overflow-y-visible invisible-scrollbar md:overflow-hidden">
+              {/* <div className="w-full h-full mt-[52px] md:mt-0 p-5 pb-28 md:pb-10 flex flex-col gap-5 overflow-x-hidden overflow-y-visible invisible-scrollbar md:overflow-hidden">
                 <div className="flex flex-col gap-2">
                   <h3 className="text-sm font-semibold mb-2">Title</h3>
                   <div className="w-full max-w-full h-9 px-3 rounded-md bg-lightgray border flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
@@ -202,7 +208,7 @@ export function ChangeCollectionIndexOverlay() {
                     />
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className="md:hidden w-full pb-5 pt-2 px-5 absolute bottom-0">
               <button

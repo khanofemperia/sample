@@ -13,7 +13,7 @@ import {
   UpdateCollectionAction,
 } from "@/actions/collections";
 import { IoCloseCircleOutline } from "react-icons/io5";
-import { useCollectionStore } from "@/zustand/admin/collectionStore";
+import { useCollectionStore } from "@/zustand/admin/collections/collectionStore";
 
 export function RemoveProductButton({ id }: { id: string }) {
   const { showOverlay } = useOverlayStore();

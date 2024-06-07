@@ -24,6 +24,10 @@ import {
   RemoveProductOverlay,
 } from "./RemoveProductOverlay";
 import { IoFolderOpenOutline } from "react-icons/io5";
+import {
+  ChangeProductIndexButton,
+  ChangeProductIndexOverlay,
+} from "./ChangeProductIndexOverlay";
 
 type CollectionProductType = {
   id: string;
@@ -455,6 +459,14 @@ export function ProductListOverlay({
                                           <button className="h-9 w-9 rounded-full flex items-center justify-center ease-in-out duration-300 transition active:bg-lightgray lg:hover:bg-lightgray">
                                             <ChangeIndexIcon size={18} />
                                           </button>
+                                          <ChangeProductIndexButton
+                                            collectionId={data.id}
+                                            product={{
+                                              id,
+                                              name,
+                                              index,
+                                            }}
+                                          />
                                           <RemoveProductButton id={id} />
                                         </div>
                                       </td>
@@ -556,7 +568,6 @@ export function ProductListOverlay({
         />
       )}
       <RemoveProductOverlay collectionId={data.id} />
-      <ChangeProductIndexOverlay />
     </>
   );
 }
