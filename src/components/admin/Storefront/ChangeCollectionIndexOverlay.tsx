@@ -1,21 +1,18 @@
 "use client";
 
 import AlertMessage from "@/components/shared/AlertMessage";
-import { capitalizeFirstLetter } from "@/libraries/utils";
-import { FormEvent, useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Spinner from "@/ui/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
 import {
   ArrowLeftIcon,
   ChangeIndexIcon,
-  ChevronDownIcon,
   CloseIcon,
-  EditIcon,
 } from "@/icons";
 import clsx from "clsx";
 import Overlay from "@/ui/Overlay";
 import { ChangeCollectionIndexAction } from "@/actions/collections";
-import { useChangeCollectionIndexStore } from "@/zustand/admin/collections/changeCollectionIndexStore";
+import { useItemSelectorStore } from "@/zustand/admin/itemSelectorStore";
 
 type ButtonDataType = {
   id: string;
@@ -29,8 +26,8 @@ export function ChangeCollectionIndexButton({
   data: ButtonDataType;
 }) {
   const { showOverlay } = useOverlayStore();
-  const setSelectedCollection = useChangeCollectionIndexStore(
-    (state) => state.setSelectedCollection
+  const setSelectedItem = useItemSelectorStore(
+    (state) => state.setSelectedItem
   );
 
   const { pageName, overlayName } = useOverlayStore((state) => ({
@@ -41,7 +38,7 @@ export function ChangeCollectionIndexButton({
   }));
 
   const handleClick = () => {
-    setSelectedCollection({ ...data });
+    setSelectedItem({ ...data });
     showOverlay({ pageName, overlayName });
   };
 
@@ -62,10 +59,10 @@ export function ChangeCollectionIndexOverlay() {
 
   const { hideOverlay, showOverlay } = useOverlayStore();
 
-  const { selectedCollection, setSelectedCollection } =
-    useChangeCollectionIndexStore((state) => ({
-      selectedCollection: state.selectedCollection,
-      setSelectedCollection: state.setSelectedCollection,
+  const { selectedItem, setSelectedItem } =
+    useItemSelectorStore((state) => ({
+      selectedItem: state.selectedItem,
+      setSelectedItem: state.setSelectedItem,
     }));
 
   const { pageName, isOverlayVisible, overlayName } = useOverlayStore(
@@ -105,8 +102,8 @@ export function ChangeCollectionIndexOverlay() {
     setLoading(true);
     try {
       const message = await ChangeCollectionIndexAction({
-        id: selectedCollection.id,
-        index: Number(selectedCollection.index),
+        id: selectedItem.id,
+        index: Number(selectedItem.index),
       });
       setAlertMessage(message);
       setShowAlert(true);
@@ -123,7 +120,7 @@ export function ChangeCollectionIndexOverlay() {
   const handleIndexChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newIndex = event.target.value;
     if (/^\d*$/.test(newIndex)) {
-      setSelectedCollection({ ...selectedCollection, index: newIndex });
+      setSelectedItem({ ...selectedItem, index: newIndex });
     }
   };
 
@@ -131,7 +128,7 @@ export function ChangeCollectionIndexOverlay() {
     <>
       {isOverlayVisible && (
         <Overlay>
-          <div className="absolute bottom-0 left-0 right-0 w-full h-[calc(100%-60px)] rounded-t-3xl overflow-hidden bg-white md:w-[500px] md:rounded-2xl md:shadow md:h-max md:mx-auto md:mt-20 md:mb-[50vh] md:relative md:bottom-auto md:left-auto md:right-auto md:top-auto md:-translate-x-0">
+          <div className="absolute bottom-0 left-0 right-0 w-full h-[calc(100%-60px)] rounded-t-3xl overflow-hidden bg-white md:w-[500px] md:rounded-2xl md:shadow md:h-max md:mx-auto md:mt-20 md:relative md:bottom-auto md:left-auto md:right-auto md:top-auto md:-translate-x-0">
             <div className="w-full h-[calc(100vh-188px)] md:h-auto">
               <div className="md:hidden flex items-end justify-center pt-4 pb-2 absolute top-0 left-0 right-0 bg-white">
                 <div className="relative flex justify-center items-center w-full h-7">
@@ -183,8 +180,8 @@ export function ChangeCollectionIndexOverlay() {
               <div className="w-full h-full mt-[52px] md:mt-0 p-5 pb-28 md:pb-10 flex flex-col gap-5 overflow-x-hidden overflow-y-visible invisible-scrollbar md:overflow-hidden">
                 <div className="flex flex-col gap-2">
                   <h3 className="text-sm font-semibold mb-2">Title</h3>
-                  <div className="w-full max-w-full h-9 px-3 rounded-md bg-lightgray border flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
-                    {selectedCollection.title}
+                  <div className="w-full max-w-full h-9 px-3 rounded-md bg-neutral-100 border flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
+                    {selectedItem.title}
                   </div>
                 </div>
                 <div className="flex flex-col gap-2">
@@ -195,7 +192,7 @@ export function ChangeCollectionIndexOverlay() {
                     <input
                       type="text"
                       name="index"
-                      value={selectedCollection.index}
+                      value={selectedItem.index}
                       onChange={handleIndexChange}
                       className="w-full h-9 px-3 rounded-md transition duration-300 ease-in-out border focus:border-custom-blue"
                       required
