@@ -42,7 +42,7 @@ export function CampaignDurationOverlay({
   const [loading, setLoading] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState<boolean>(false);
-  const [startDate, setStartDate] = useState<Date | null>(
+  const [launchDate, setLaunchDate] = useState<Date | null>(
     new Date(data.campaign_duration.start_date)
   );
   const [endDate, setEndDate] = useState<Date | null>(
@@ -85,9 +85,9 @@ export function CampaignDurationOverlay({
   };
 
   const isValidDateRange =
-    startDate &&
+    launchDate &&
     endDate &&
-    startDate.toISOString().split("T")[0] < endDate.toISOString().split("T")[0];
+    launchDate.toISOString().split("T")[0] < endDate.toISOString().split("T")[0];
 
   const handleSave = async () => {
     if (!isValidDateRange) {
@@ -97,7 +97,7 @@ export function CampaignDurationOverlay({
       setLoading(true);
 
       const campaignDuration = {
-        start_date: formatDate(startDate),
+        start_date: formatDate(launchDate),
         end_date: formatDate(endDate),
       };
 
@@ -120,7 +120,7 @@ export function CampaignDurationOverlay({
     <>
       {isOverlayVisible && (
         <Overlay>
-          <div className="absolute bottom-0 left-0 right-0 w-full h-[calc(100%-60px)] rounded-t-3xl bg-white md:w-[500px] md:rounded-2xl md:shadow-lg md:h-max md:mx-auto md:mt-20 md:mb-[50vh] md:relative md:bottom-auto md:left-auto md:right-auto md:top-auto md:-translate-x-0">
+          <div className="absolute bottom-0 left-0 right-0 w-full h-[calc(100%-60px)] rounded-t-3xl bg-white md:w-[400px] md:rounded-2xl md:shadow-lg md:h-max md:mx-auto md:mt-20 md:mb-[50vh] md:relative md:bottom-auto md:left-auto md:right-auto md:top-auto md:-translate-x-0">
             <div className="w-full h-[calc(100vh-188px)] md:h-auto">
               <div className="md:hidden flex items-end justify-center pt-4 pb-2 absolute top-0 left-0 right-0 bg-white">
                 <div className="relative flex justify-center items-center w-full h-7">
@@ -170,40 +170,32 @@ export function CampaignDurationOverlay({
                 </button>
               </div>
               <div className="w-full h-full mt-[52px] md:mt-0 px-5 pt-5 pb-28 md:pb-10 overflow-x-hidden overflow-y-visible invisible-scrollbar md:overflow-hidden">
-                <div className="flex flex-col md:flex-row items-center gap-3 mt-4">
-                  <div
-                    className={clsx(
-                      "w-full md:max-w-[230px] flex gap-3 items-center border rounded-md overflow-hidden pl-3",
-                      {
-                        "border-red": !isValidDateRange,
-                      }
-                    )}
-                  >
-                    <span className="font-semibold text-sm text-gray">
-                      Start
-                    </span>
-                    <DatePicker
-                      selected={startDate}
-                      onChange={(date) => setStartDate(date)}
-                      className="w-full h-9 outline-none"
-                      required
-                    />
+                <div className="w-full flex flex-col gap-5">
+                  <div>
+                    <h2 className="text-sm font-semibold mx-auto mb-2 w-max">
+                      Launch
+                    </h2>
+                    <div className="mx-auto border rounded-md overflow-hidden w-max text-center">
+                      <DatePicker
+                        selected={launchDate}
+                        onChange={(date) => setLaunchDate(date)}
+                        className="text-center w-full h-9 outline-none"
+                        required
+                      />
+                    </div>
                   </div>
-                  <div
-                    className={clsx(
-                      "w-full md:max-w-[230px] flex gap-3 items-center border rounded-md overflow-hidden pl-3",
-                      {
-                        "border-red": !isValidDateRange,
-                      }
-                    )}
-                  >
-                    <span className="font-semibold text-sm text-gray">End</span>
-                    <DatePicker
-                      selected={endDate}
-                      onChange={(date) => setEndDate(date)}
-                      className="w-full h-9 outline-none"
-                      required
-                    />
+                  <div>
+                    <h2 className="text-sm font-semibold mx-auto mb-2 w-max">
+                      End date
+                    </h2>
+                    <div className="mx-auto border rounded-md overflow-hidden w-max text-center">
+                      <DatePicker
+                        selected={endDate}
+                        onChange={(date) => setEndDate(date)}
+                        className="text-center w-full h-9 outline-none"
+                        required
+                      />
+                    </div>
                   </div>
                 </div>
               </div>

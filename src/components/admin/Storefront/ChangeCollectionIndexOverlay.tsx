@@ -113,7 +113,6 @@ export function ChangeCollectionIndexOverlay() {
       setShowAlert(true);
     } finally {
       setLoading(false);
-      onHideOverlay();
     }
   };
 

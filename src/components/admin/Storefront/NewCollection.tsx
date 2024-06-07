@@ -67,7 +67,7 @@ export function NewCollectionOverlay() {
   const [title, setTitle] = useState<string>("");
   const [slug, setSlug] = useState<string>("");
   const [bannerImage, setBannerImage] = useState<string>("");
-  const [startDate, setStartDate] = useState<Date | null>(today);
+  const [launchDate, setLaunchDate] = useState<Date | null>(today);
   const [endDate, setEndDate] = useState<Date | null>(
     new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000) // 7 days from today
   );
@@ -124,9 +124,9 @@ export function NewCollectionOverlay() {
   };
 
   const isValidDateRange =
-    startDate &&
+    launchDate &&
     endDate &&
-    startDate.toISOString().split("T")[0] < endDate.toISOString().split("T")[0];
+    launchDate.toISOString().split("T")[0] < endDate.toISOString().split("T")[0];
 
   const handleSave = async () => {
     if (!isValidDateRange) {
@@ -136,7 +136,7 @@ export function NewCollectionOverlay() {
       setLoading(true);
 
       const campaignDuration = {
-        start_date: formatDate(startDate),
+        start_date: formatDate(launchDate),
         end_date: formatDate(endDate),
       };
 
@@ -170,7 +170,7 @@ export function NewCollectionOverlay() {
     setTitle("");
     setSlug("");
     setBannerImage("");
-    setStartDate(today);
+    setLaunchDate(today);
     setEndDate(
       new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000) // 7 days from today
     );
@@ -319,32 +319,32 @@ export function NewCollectionOverlay() {
                   <div className="flex flex-col md:flex-row items-center gap-3 mt-4">
                     <div
                       className={clsx(
-                        "w-full md:max-w-[230px] flex gap-3 items-center border rounded-md overflow-hidden pl-3",
+                        "w-full md:max-w-[230px] flex gap-2 items-center border rounded-md overflow-hidden pl-3",
                         {
                           "border-red": !isValidDateRange,
                         }
                       )}
                     >
-                      <span className="font-semibold text-sm text-gray">
-                        Start
+                      <span className="w-max text-nowrap font-semibold text-sm text-gray">
+                        Launch
                       </span>
                       <DatePicker
-                        selected={startDate}
-                        onChange={(date) => setStartDate(date)}
+                        selected={launchDate}
+                        onChange={(date) => setLaunchDate(date)}
                         className="w-full h-9 outline-none"
                         required
                       />
                     </div>
                     <div
                       className={clsx(
-                        "w-full md:max-w-[230px] flex gap-3 items-center border rounded-md overflow-hidden pl-3",
+                        "w-full md:max-w-[230px] flex gap-2 items-center border rounded-md overflow-hidden pl-3",
                         {
                           "border-red": !isValidDateRange,
                         }
                       )}
                     >
-                      <span className="font-semibold text-sm text-gray">
-                        End
+                      <span className="w-max text-nowrap font-semibold text-sm text-gray">
+                        End date
                       </span>
                       <DatePicker
                         selected={endDate}
