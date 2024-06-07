@@ -83,20 +83,6 @@ export function ChangeProductIndexOverlay() {
     })
   );
 
-  useEffect(() => {
-    if (isOverlayVisible || showAlert) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "visible";
-    }
-
-    return () => {
-      if (!isOverlayVisible && !showAlert) {
-        document.body.style.overflow = "visible";
-      }
-    };
-  }, [isOverlayVisible, showAlert]);
-
   const onHideOverlay = () => {
     hideOverlay({ pageName, overlayName });
     setLoading(false);
@@ -110,15 +96,18 @@ export function ChangeProductIndexOverlay() {
   const handleSave = async () => {
     setLoading(true);
     try {
-      const message = await ChangeCollectionIndexAction({
-        id: selectedProduct.id,
-        index: Number(selectedProduct.index),
+      const message = await ChangeProductIndexAction({
+        collectionId: selectedProduct.collectionId,
+        product: {
+          id: selectedProduct.id,
+          index: selectedProduct.index,
+        },
       });
       setAlertMessage(message);
       setShowAlert(true);
     } catch (error) {
       console.error(error);
-      setAlertMessage("An error occurred while updating the collection index.");
+      setAlertMessage("Error changing product index");
       setShowAlert(true);
     } finally {
       setLoading(false);
@@ -137,7 +126,7 @@ export function ChangeProductIndexOverlay() {
     <>
       {isOverlayVisible && (
         <Overlay>
-          <div className="absolute bottom-0 left-0 right-0 w-full h-[calc(100%-60px)] rounded-t-3xl overflow-hidden bg-white md:w-[500px] md:rounded-2xl md:shadow md:h-max md:mx-auto md:mt-20 md:mb-[50vh] md:relative md:bottom-auto md:left-auto md:right-auto md:top-auto md:-translate-x-0">
+          <div className="absolute bottom-0 left-0 right-0 w-full h-[calc(100%-60px)] rounded-t-3xl overflow-hidden bg-white md:w-[500px] md:rounded-2xl md:shadow md:h-max md:mx-auto md:mt-20 md:relative md:bottom-auto md:left-auto md:right-auto md:top-auto md:-translate-x-0">
             <div className="w-full h-[calc(100vh-188px)] md:h-auto">
               <div className="md:hidden flex items-end justify-center pt-4 pb-2 absolute top-0 left-0 right-0 bg-white">
                 <div className="relative flex justify-center items-center w-full h-7">

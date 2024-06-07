@@ -112,7 +112,7 @@ export function ChangeCollectionIndexOverlay() {
       setShowAlert(true);
     } catch (error) {
       console.error(error);
-      setAlertMessage("An error occurred while updating the collection index.");
+      setAlertMessage("Error changing collection index");
       setShowAlert(true);
     } finally {
       setLoading(false);
