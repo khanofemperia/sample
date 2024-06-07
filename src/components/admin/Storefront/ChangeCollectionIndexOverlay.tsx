@@ -112,7 +112,7 @@ export function ChangeCollectionIndexOverlay() {
       setAlertMessage("Error changing collection index");
       setShowAlert(true);
     } finally {
-      setLoading(false);
+      onHideOverlay();
     }
   };
 
