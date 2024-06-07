@@ -1,20 +1,17 @@
 "use client";
 
 import AlertMessage from "@/components/shared/AlertMessage";
-import { capitalizeFirstLetter } from "@/libraries/utils";
-import { FormEvent, useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import Spinner from "@/ui/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
 import {
   ArrowLeftIcon,
   ChangeIndexIcon,
-  ChevronDownIcon,
   CloseIcon,
-  EditIcon,
 } from "@/icons";
 import clsx from "clsx";
 import Overlay from "@/ui/Overlay";
-import { ChangeCollectionIndexAction, ChangeProductIndexAction } from "@/actions/collections";
+import { ChangeProductIndexAction } from "@/actions/collections";
 import { useChangeProductIndexStore } from "@/zustand/admin/collections/changeProductIndexStore";
 
 export function ChangeProductIndexButton({
@@ -65,7 +62,7 @@ export function ChangeProductIndexOverlay() {
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState<boolean>(false);
 
-  const { hideOverlay, showOverlay } = useOverlayStore();
+  const { hideOverlay } = useOverlayStore();
 
   const { selectedProduct, setSelectedProduct } = useChangeProductIndexStore(
     (state) => ({

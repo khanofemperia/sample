@@ -6,11 +6,11 @@ import { useState, useEffect } from "react";
 import Spinner from "@/ui/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
 import { ArrowLeftIcon, CloseIcon, EditIcon } from "@/icons";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import clsx from "clsx";
 import Overlay from "@/ui/Overlay";
 import { UpdateCollectionAction } from "@/actions/collections";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export function CampaignDurationButton() {
   const { showOverlay } = useOverlayStore();

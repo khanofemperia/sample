@@ -1,24 +1,21 @@
 "use client";
 
 import AlertMessage from "@/components/shared/AlertMessage";
-import { capitalizeFirstLetter } from "@/libraries/utils";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Spinner from "@/ui/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
-import { ArrowLeftIcon, ChevronDownIcon, CloseIcon } from "@/icons";
 import clsx from "clsx";
 import Overlay from "@/ui/Overlay";
 import {
   RemoveProductAction,
-  UpdateCollectionAction,
 } from "@/actions/collections";
 import { IoCloseCircleOutline } from "react-icons/io5";
-import { useCollectionStore } from "@/zustand/admin/collections/collectionStore";
+import { useItemSelectorStore } from "@/zustand/admin/itemSelectorStore";
 
 export function RemoveProductButton({ id }: { id: string }) {
   const { showOverlay } = useOverlayStore();
-  const setSelectedProduct = useCollectionStore(
-    (state) => state.setSelectedProduct
+  const setSelectedItem = useItemSelectorStore(
+    (state) => state.setSelectedItem
   );
 
   const { pageName, overlayName } = useOverlayStore((state) => ({
@@ -27,7 +24,7 @@ export function RemoveProductButton({ id }: { id: string }) {
   }));
 
   const handleClick = () => {
-    setSelectedProduct({ id });
+    setSelectedItem({ id });
     showOverlay({ pageName, overlayName });
   };
 
@@ -50,9 +47,9 @@ export function RemoveProductOverlay({
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState<boolean>(false);
 
-  const { showOverlay, hideOverlay } = useOverlayStore();
-  const { selectedProduct } = useCollectionStore((state) => ({
-    selectedProduct: state.selectedProduct,
+  const { hideOverlay } = useOverlayStore();
+  const { selectedItem } = useItemSelectorStore((state) => ({
+    selectedItem: state.selectedItem,
   }));
 
   const { pageName, isOverlayVisible, overlayName } = useOverlayStore(
@@ -69,24 +66,19 @@ export function RemoveProductOverlay({
     setAlertMessage("");
   };
 
-  const onHideOverlay = () => {
-    setLoading(false);
-    hideOverlay({ pageName, overlayName });
-  };
-
   const handleSave = async () => {
     setLoading(true);
 
     try {
       const message = await RemoveProductAction({
         collectionId,
-        productId: selectedProduct.id,
+        productId: selectedItem.id,
       });
       setAlertMessage(message);
       setShowAlert(true);
     } catch (error) {
-      console.error("Error adding product:", error);
-      setAlertMessage("Failed to add product to the collection");
+      console.error("Error adding product to collection:", error);
+      setAlertMessage("Error adding product to collection");
       setShowAlert(true);
     } finally {
       setLoading(false);
