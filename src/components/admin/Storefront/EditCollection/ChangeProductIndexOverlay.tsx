@@ -14,7 +14,7 @@ import {
 } from "@/icons";
 import clsx from "clsx";
 import Overlay from "@/ui/Overlay";
-import { ChangeCollectionIndexAction } from "@/actions/collections";
+import { ChangeCollectionIndexAction, ChangeProductIndexAction } from "@/actions/collections";
 import { useChangeProductIndexStore } from "@/zustand/admin/collections/changeProductIndexStore";
 
 export function ChangeProductIndexButton({
@@ -100,7 +100,7 @@ export function ChangeProductIndexOverlay() {
         collectionId: selectedProduct.collectionId,
         product: {
           id: selectedProduct.id,
-          index: selectedProduct.index,
+          index: Number(selectedProduct.index),
         },
       });
       setAlertMessage(message);

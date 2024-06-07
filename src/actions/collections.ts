@@ -310,7 +310,7 @@ export async function ChangeProductIndexAction(data: {
       return "Collection not found";
     }
 
-    const collectionData = collectionSnapshot.data() as CollectionDataType;
+    const collectionData = collectionSnapshot.data() as DataType;
 
     if (
       isNaN(productOneChanges.index) ||
