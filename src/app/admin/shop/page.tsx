@@ -69,7 +69,7 @@ export default async function Storefront() {
           </button>
           <button className="w-60 rounded-md p-5 relative cursor-pointer ease-in-out duration-300 transition shadow border border-transparent bg-white active:border-[#bfc5ce] lg:hover:border-[#bfc5ce]">
             <div className="w-full mb-4 flex items-center justify-between">
-              <h2 className="text-left font-semibold text-sm">Page hero</h2>
+              <h2 className="text-left font-semibold text-sm">Shop now</h2>
               <div
                 className={clsx(
                   "absolute top-5 right-5 w-10 h-5 rounded-full ease-in-out duration-200",
