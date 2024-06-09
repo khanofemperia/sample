@@ -34,9 +34,9 @@ export default async function Storefront() {
                 ></div>
               </div>
             </div>
-            <p className="w-48 text-left text-gray text-xs leading-[18px]">
-              It's the first thing visitors notice; use visuals that make a
-              strong first impression.
+            <p className="w-52 text-left text-gray text-xs leading-[18px]">
+              The first thing visitors notice. Use visuals that make a strong
+              first impression.
             </p>
           </button>
           <button className="flex flex-col items-start w-64 rounded-md p-5 relative cursor-pointer ease-in-out duration-300 transition shadow border border-transparent bg-white active:border-[#bfc5ce] lg:hover:border-[#bfc5ce]">
@@ -62,9 +62,9 @@ export default async function Storefront() {
                 ></div>
               </div>
             </div>
-            <p className="w-48 text-left text-gray text-xs leading-[18px]">
+            <p className="w-52 text-left text-gray text-xs leading-[18px]">
               Group similar products so they're easy to find: Dresses, Tops,
-              Bottoms, Outerwear, Shoes, Accessories.
+              Bottoms, and more.
             </p>
           </button>
           <button className="flex flex-col items-start w-64 rounded-md p-5 relative cursor-pointer ease-in-out duration-300 transition shadow border border-transparent bg-white active:border-[#bfc5ce] lg:hover:border-[#bfc5ce]">
@@ -90,9 +90,9 @@ export default async function Storefront() {
                 ></div>
               </div>
             </div>
-            <p className="w-48 text-left text-gray text-xs leading-[18px]">
-              This is a treasure hunt - a catalog featuring products from all
-              categories. Users scroll and the surprises roll in.
+            <p className="w-52 text-left text-gray text-xs leading-[18px]">
+              This is a treasure hunt - a mix of products from all
+              categories. Users scroll, and the surprises roll in.
             </p>
           </button>
         </div>
