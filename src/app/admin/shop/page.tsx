@@ -8,10 +8,10 @@ export default async function Storefront() {
 
   return (
     <>
-      <div className="mb-10">
+      <div className="mb-10 px-5 min-[1068px]:px-0">
         <h2 className="font-semibold text-lg mb-5">Elements</h2>
-        <div className="flex gap-2">
-          <button className="flex flex-col items-start w-64 rounded-md p-5 relative cursor-pointer ease-in-out duration-300 transition shadow border border-transparent bg-white active:border-[#bfc5ce] lg:hover:border-[#bfc5ce]">
+        <div className="w-full flex flex-wrap gap-2">
+          <button className="flex flex-col items-start w-full min-[560px]:w-[calc(100%/2-4px)] min-[824px]:w-64 rounded-xl p-5 relative cursor-pointer ease-in-out duration-300 transition shadow border border-transparent bg-white active:border-[#bfc5ce] lg:hover:border-[#bfc5ce]">
             <div className="w-full mb-4 flex items-center justify-between relative">
               <h2 className="text-left font-semibold text-sm">Page hero</h2>
               <div
@@ -39,7 +39,7 @@ export default async function Storefront() {
               first impression.
             </p>
           </button>
-          <button className="flex flex-col items-start w-64 rounded-md p-5 relative cursor-pointer ease-in-out duration-300 transition shadow border border-transparent bg-white active:border-[#bfc5ce] lg:hover:border-[#bfc5ce]">
+          <button className="flex flex-col items-start w-full min-[560px]:w-[calc(100%/2-4px)] min-[824px]:w-64 rounded-xl p-5 relative cursor-pointer ease-in-out duration-300 transition shadow border border-transparent bg-white active:border-[#bfc5ce] lg:hover:border-[#bfc5ce]">
             <div className="w-full mb-4 flex items-center justify-between relative">
               <h2 className="text-left font-semibold text-sm">Categories</h2>
               <div
@@ -67,7 +67,7 @@ export default async function Storefront() {
               Bottoms, and more.
             </p>
           </button>
-          <button className="flex flex-col items-start w-64 rounded-md p-5 relative cursor-pointer ease-in-out duration-300 transition shadow border border-transparent bg-white active:border-[#bfc5ce] lg:hover:border-[#bfc5ce]">
+          <button className="flex flex-col items-start w-full min-[560px]:w-[calc(100%/2-4px)] min-[824px]:w-64 rounded-xl p-5 relative cursor-pointer ease-in-out duration-300 transition shadow border border-transparent bg-white active:border-[#bfc5ce] lg:hover:border-[#bfc5ce]">
             <div className="w-full mb-4 flex items-center justify-between relative">
               <h2 className="text-left font-semibold text-sm">Shop now</h2>
               <div
@@ -97,7 +97,7 @@ export default async function Storefront() {
           </button>
         </div>
       </div>
-      <h2 className="font-semibold text-lg mb-5">Collections</h2>
+      <h2 className="font-semibold text-lg mb-5 px-5 min-[1068px]:px-0">Collections</h2>
       <CollectionTable collections={collections} />
       <NewCollectionOverlay />
     </>
