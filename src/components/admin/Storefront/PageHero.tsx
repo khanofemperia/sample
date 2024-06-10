@@ -81,10 +81,14 @@ export function PageHeroButton() {
 }
 
 export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
+  const HIDDEN = "HIDDEN";
+  const VISIBLE = "VISIBLE";
+
   const [loading, setLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [title, setTitle] = useState<string>(pageHero.title || "");
+  const [visibility, setVisibility] = useState<string>(pageHero.visibility);
   const [destinationUrl, setDestinationUrl] = useState<string>(
     pageHero.destination_url || ""
   );
@@ -114,7 +118,27 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
     };
   }, [isOverlayVisible, showAlert]);
 
-  const handleSave = async () => {};
+  const handleSave = async () => {
+    // setLoading(true);
+    // try {
+    //   const message = await UpdatePageHeroAction({
+    //     id: pageHero.id,
+    //     title: title,
+    //     image: image,
+    //     destination_url: destination_url,
+    //     visibility: visibility
+    //   });
+    //   setAlertMessage(message);
+    //   setShowAlert(true);
+    // } catch (error) {
+    //   console.error(error);
+    //   setAlertMessage("Error updating page hero");
+    //   setShowAlert(true);
+    // } finally {
+    //   setLoading(false);
+    //   onHideOverlay();
+    // }
+  };
 
   const onHideOverlay = () => {
     setLoading(false);
@@ -183,6 +207,39 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
                 </button>
               </div>
               <div className="w-full h-full mt-[52px] md:mt-0 px-5 pt-5 pb-28 md:pb-10 flex flex-col gap-5 overflow-x-hidden overflow-y-visible invisible-scrollbar md:overflow-hidden">
+                <div className="flex flex-col gap-2">
+                  <h2 className="font-semibold text-sm">Visibility</h2>
+                  <div className="w-max rounded-md h-9 flex gap-4 items-center justify-between px-3 bg-lightgray">
+                    <div className="text-sm">
+                      Display page hero on storefront
+                    </div>
+                    <div
+                      onClick={() =>
+                        setVisibility((prevVisibility) =>
+                          prevVisibility === VISIBLE ? HIDDEN : VISIBLE
+                        )
+                      }
+                      className={clsx(
+                        "w-10 h-5 rounded-full relative cursor-pointer ease-in-out duration-200",
+                        {
+                          "bg-white border": visibility === HIDDEN,
+                          "bg-custom-blue border border-custom-blue":
+                            visibility === VISIBLE,
+                        }
+                      )}
+                    >
+                      <div
+                        className={clsx(
+                          "w-[10px] h-[10px] rounded-full ease-in-out duration-300 absolute [top:50%] [transform:translateY(-50%)]",
+                          {
+                            "left-[5px] bg-black": visibility === HIDDEN,
+                            "left-[23px] bg-white": visibility === VISIBLE,
+                          }
+                        )}
+                      ></div>
+                    </div>
+                  </div>
+                </div>
                 <div className="flex flex-col gap-2">
                   <label htmlFor="image" className="font-semibold text-sm">
                     Image
