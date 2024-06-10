@@ -17,6 +17,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { CiImageOn } from "react-icons/ci";
 import { CreateCollectionAction } from "@/actions/collections";
 import Overlay from "@/ui/Overlay";
+import { UpdatePageHeroAction } from "@/actions/page-hero";
 
 type RequestDataType = {
   title: string;
@@ -119,25 +120,45 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
   }, [isOverlayVisible, showAlert]);
 
   const handleSave = async () => {
-    // setLoading(true);
-    // try {
-    //   const message = await UpdatePageHeroAction({
-    //     id: pageHero.id,
-    //     title: title,
-    //     image: image,
-    //     destination_url: destination_url,
-    //     visibility: visibility
-    //   });
-    //   setAlertMessage(message);
-    //   setShowAlert(true);
-    // } catch (error) {
-    //   console.error(error);
-    //   setAlertMessage("Error updating page hero");
-    //   setShowAlert(true);
-    // } finally {
-    //   setLoading(false);
-    //   onHideOverlay();
-    // }
+    setLoading(true);
+
+    try {
+      if (visibility === "VISIBLE" && (!title || !image || !destinationUrl)) {
+        let errorMessage = "";
+
+        if (!title) {
+          errorMessage = "Please provide the title";
+        } else if (!image) {
+          errorMessage = "Please provide the image";
+        } else if (!destinationUrl) {
+          errorMessage = "Please provide the destination URL";
+        }
+        setAlertMessage(errorMessage);
+        setShowAlert(true);
+      } else {
+        if (visibility === "HIDDEN" && (!title || !image || !destinationUrl)) {
+          setAlertMessage("Incomplete fields. Do you still want to save?");
+          setShowAlert(true);
+        } else {
+          const message = await UpdatePageHeroAction({
+            id: pageHero.id,
+            title: title,
+            image: image,
+            destination_url: destinationUrl,
+            visibility: visibility,
+          });
+          setAlertMessage(message);
+          setShowAlert(true);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      setAlertMessage("Error updating page hero");
+      setShowAlert(true);
+    } finally {
+      setLoading(false);
+      onHideOverlay();
+    }
   };
 
   const onHideOverlay = () => {
