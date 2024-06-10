@@ -136,20 +136,15 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
         setAlertMessage(errorMessage);
         setShowAlert(true);
       } else {
-        if (visibility === "HIDDEN" && (!title || !image || !destinationUrl)) {
-          setAlertMessage("Incomplete fields. Do you still want to save?");
-          setShowAlert(true);
-        } else {
-          const message = await UpdatePageHeroAction({
-            id: pageHero.id,
-            title: title,
-            image: image,
-            destination_url: destinationUrl,
-            visibility: visibility,
-          });
-          setAlertMessage(message);
-          setShowAlert(true);
-        }
+        const message = await UpdatePageHeroAction({
+          id: pageHero.id,
+          title: title,
+          image: image,
+          destination_url: destinationUrl,
+          visibility: visibility,
+        });
+        setAlertMessage(message);
+        setShowAlert(true);
       }
     } catch (error) {
       console.error(error);
@@ -157,7 +152,6 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
       setShowAlert(true);
     } finally {
       setLoading(false);
-      onHideOverlay();
     }
   };
 
