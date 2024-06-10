@@ -1,7 +1,11 @@
 "use client";
 
 import AlertMessage from "@/components/shared/AlertMessage";
-import { capitalizeFirstLetter, formatDate } from "@/libraries/utils";
+import {
+  capitalizeFirstLetter,
+  formatDate,
+  isValidRemoteImage,
+} from "@/libraries/utils";
 import { useState, useEffect, useRef } from "react";
 import Spinner from "@/ui/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
@@ -29,7 +33,7 @@ type PageHeroType = {
   id: string;
   image: string | null;
   title: string | null;
-  url: string | null;
+  destination_url: string | null;
   visibility: string;
 };
 
@@ -77,27 +81,14 @@ export function PageHeroButton() {
 }
 
 export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
-  const FEATURED = "FEATURED";
-  const BANNER = "BANNER";
-
-  const today = new Date();
-
-  const [isCategoryDropdownOpen, setIsCollectionTypeDropdownOpen] =
-    useState(false);
   const [loading, setLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
-  const [selectedCollectionType, setSelectedCollectionType] =
-    useState(FEATURED);
-  const [title, setTitle] = useState<string>("");
-  const [slug, setSlug] = useState<string>("");
-  const [bannerImage, setBannerImage] = useState<string>("");
-  const [launchDate, setLaunchDate] = useState<Date | null>(today);
-  const [endDate, setEndDate] = useState<Date | null>(
-    new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000) // 7 days from today
+  const [title, setTitle] = useState<string>(pageHero.title || "");
+  const [destinationUrl, setDestinationUrl] = useState<string>(
+    pageHero.destination_url || ""
   );
-
-  const collectionTypeRef = useRef(null);
+  const [image, setImage] = useState<string>(pageHero.image || "");
 
   const { hideOverlay } = useOverlayStore();
 
@@ -123,83 +114,14 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
     };
   }, [isOverlayVisible, showAlert]);
 
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (!collectionTypeRef.current || !(event.target instanceof Node)) {
-        return;
-      }
-
-      const targetNode = collectionTypeRef.current as Node;
-
-      if (!targetNode.contains(event.target)) {
-        setIsCollectionTypeDropdownOpen(false);
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  const handleCollectionTypeSelect = (type: string) => {
-    setSelectedCollectionType(type);
-    setIsCollectionTypeDropdownOpen(false);
-  };
-
-  const isValidDateRange =
-    launchDate &&
-    endDate &&
-    launchDate.toISOString().split("T")[0] <
-      endDate.toISOString().split("T")[0];
-
-  const handleSave = async () => {
-    if (!isValidDateRange) {
-      setAlertMessage("Start date must be before end date");
-      setShowAlert(true);
-    } else {
-      setLoading(true);
-
-      const campaignDuration = {
-        start_date: formatDate(launchDate),
-        end_date: formatDate(endDate),
-      };
-
-      try {
-        const requestData: RequestDataType = {
-          title,
-          slug,
-          campaign_duration: campaignDuration,
-          collection_type: selectedCollectionType,
-        };
-
-        if (selectedCollectionType === BANNER) {
-          requestData.image = bannerImage;
-        }
-
-        const message = await CreateCollectionAction(requestData);
-        setAlertMessage(message);
-        setShowAlert(true);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        onHideOverlay();
-      }
-    }
-  };
+  const handleSave = async () => {};
 
   const onHideOverlay = () => {
     setLoading(false);
     hideOverlay({ pageName, overlayName });
-    setSelectedCollectionType(FEATURED);
-    setTitle("");
-    setSlug("");
-    setBannerImage("");
-    setLaunchDate(today);
-    setEndDate(
-      new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000) // 7 days from today
-    );
+    setTitle(pageHero.title || "");
+    setDestinationUrl(pageHero.destination_url || "");
+    setImage(pageHero.image || "");
   };
 
   const hideAlertMessage = () => {
@@ -215,7 +137,7 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
             <div className="w-full h-[calc(100vh-188px)] md:h-auto">
               <div className="md:hidden flex items-end justify-center pt-4 pb-2 absolute top-0 left-0 right-0 bg-white">
                 <div className="relative flex justify-center items-center w-full h-7">
-                  <h2 className="font-semibold text-lg">New collection</h2>
+                  <h2 className="font-semibold text-lg">Edit page hero</h2>
                   <button
                     onClick={onHideOverlay}
                     type="button"
@@ -236,7 +158,7 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
                     size={20}
                   />
                   <span className="font-semibold text-sm text-custom-blue">
-                    New collection
+                    Edit page hero
                   </span>
                 </button>
                 <button
@@ -262,122 +184,34 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
               </div>
               <div className="w-full h-full mt-[52px] md:mt-0 px-5 pt-5 pb-28 md:pb-10 flex flex-col gap-5 overflow-x-hidden overflow-y-visible invisible-scrollbar md:overflow-hidden">
                 <div className="flex flex-col gap-2">
-                  <h2 className="font-semibold text-sm">Type</h2>
-                  <div ref={collectionTypeRef} className="w-full h-9 relative">
-                    <button
-                      onClick={() =>
-                        setIsCollectionTypeDropdownOpen(
-                          (prevState) => !prevState
-                        )
-                      }
-                      type="button"
-                      className="h-9 w-full px-3 rounded-md flex items-center justify-between transition duration-300 ease-in-out bg-lightgray active:bg-lightgray-dimmed"
-                    >
-                      <span>
-                        {capitalizeFirstLetter(
-                          selectedCollectionType.toLowerCase()
-                        )}
-                      </span>
-                      <ChevronDownIcon
-                        className="-mr-[4px] stroke-gray"
-                        size={20}
-                      />
-                    </button>
-                    <div
-                      className={clsx("w-full absolute top-10 z-10", {
-                        hidden: !isCategoryDropdownOpen,
-                        block: isCategoryDropdownOpen,
-                      })}
-                    >
-                      <div className="overflow-hidden h-full w-full py-[6px] flex flex-col gap-0 rounded-md shadow-dropdown bg-white">
-                        <div
-                          className="w-full h-9 flex items-center px-[12px] cursor-context-menu transition duration-300 ease-in-out hover:bg-lightgray"
-                          onClick={() => handleCollectionTypeSelect(FEATURED)}
-                        >
-                          Featured
-                        </div>
-                        <div
-                          className="w-full h-9 flex items-center px-[12px] cursor-context-menu transition duration-300 ease-in-out hover:bg-lightgray"
-                          onClick={() => handleCollectionTypeSelect(BANNER)}
-                        >
-                          Banner
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {selectedCollectionType === BANNER && (
-                  <div className="flex flex-col gap-2">
-                    <label htmlFor="image" className="font-semibold text-sm">
-                      Image
-                    </label>
-                    <div>
-                      <div className="w-full border rounded-md overflow-hidden">
-                        <div className="w-full min-h-[86px] flex items-center justify-center overflow-hidden">
-                          {!bannerImage ? (
-                            <CiImageOn className="fill-neutral-200" size={80} />
-                          ) : (
-                            <Image
-                              src={bannerImage}
-                              alt={title}
-                              width={766}
-                              height={308}
-                              priority={true}
-                            />
-                          )}
-                        </div>
-                        <div className="w-full h-9 border-t overflow-hidden">
-                          <input
-                            type="text"
-                            name="image"
-                            placeholder="Paste image URL"
-                            value={bannerImage}
-                            onChange={(e) => setBannerImage(e.target.value)}
-                            className="h-full w-full px-3 text-gray"
+                  <label htmlFor="image" className="font-semibold text-sm">
+                    Image
+                  </label>
+                  <div>
+                    <div className="w-full border rounded-md overflow-hidden">
+                      <div className="w-full min-h-[86px] flex items-center justify-center overflow-hidden">
+                        {image && isValidRemoteImage(image) ? (
+                          <Image
+                            src={image}
+                            alt={title}
+                            width={766}
+                            height={308}
+                            priority={true}
                           />
-                        </div>
+                        ) : (
+                          <CiImageOn className="fill-neutral-200" size={80} />
+                        )}
                       </div>
-                    </div>
-                  </div>
-                )}
-                <div>
-                  <h2 className="font-semibold text-sm">Campaign duration</h2>
-                  <div className="flex flex-col min-[478px]:flex-row items-start gap-3 mt-4">
-                    <div
-                      className={clsx(
-                        "w-[180px] flex gap-2 items-center border rounded-md overflow-hidden pl-3",
-                        {
-                          "border-red": !isValidDateRange,
-                        }
-                      )}
-                    >
-                      <span className="w-max text-nowrap font-semibold text-sm text-gray">
-                        Launch
-                      </span>
-                      <DatePicker
-                        selected={launchDate}
-                        onChange={(date) => setLaunchDate(date)}
-                        className="w-full h-9 outline-none"
-                        required
-                      />
-                    </div>
-                    <div
-                      className={clsx(
-                        "w-[180px] flex gap-2 items-center border rounded-md overflow-hidden pl-3",
-                        {
-                          "border-red": !isValidDateRange,
-                        }
-                      )}
-                    >
-                      <span className="w-max text-nowrap font-semibold text-sm text-gray">
-                        End date
-                      </span>
-                      <DatePicker
-                        selected={endDate}
-                        onChange={(date) => setEndDate(date)}
-                        className="w-full h-9 outline-none"
-                        required
-                      />
+                      <div className="w-full h-9 border-t overflow-hidden">
+                        <input
+                          type="text"
+                          name="image"
+                          placeholder="Paste image URL"
+                          value={image}
+                          onChange={(e) => setImage(e.target.value)}
+                          className="h-full w-full px-3 text-gray"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -389,27 +223,28 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
                     <input
                       type="text"
                       name="title"
-                      placeholder={`Belle Jolie Lipstick - She "Marks" Her Man with Her Lips`}
+                      placeholder="Shop Denim Skirts"
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
-                      className="w-full h-9 px-3 rounded-md transition duration-300 ease-in-out border focus:border-custom-blue"
-                      required
+                      className="w-full h-9 px-3 rounded-md border"
                     />
                   </div>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="slug" className="font-semibold text-sm">
-                    Slug
+                  <label
+                    htmlFor="destination_url"
+                    className="font-semibold text-sm"
+                  >
+                    Destination URL
                   </label>
                   <div className="w-full h-9 relative">
                     <input
                       type="text"
-                      name="slug"
-                      placeholder="belle-jolie-lipstick-mark-your-man"
-                      value={slug}
-                      onChange={(e) => setSlug(e.target.value)}
-                      className="w-full h-9 px-3 rounded-md transition duration-300 ease-in-out border focus:border-custom-blue"
-                      required
+                      name="destination_url"
+                      placeholder="https://cherlygood.com/shop/denim-skirts"
+                      value={destinationUrl}
+                      onChange={(e) => setDestinationUrl(e.target.value)}
+                      className="w-full h-9 px-3 rounded-md border"
                     />
                   </div>
                 </div>

@@ -204,7 +204,7 @@ export function ImagesOverlay({ data }: { data: DataType }) {
                       <div className="w-full h-full flex items-center justify-center">
                         {image && isValidRemoteImage(image) && (
                           <Image
-                            src={image} // https://i.pinimg.com/564x/71/5c/35/715c35df0db25fdee482c48e6aa797aa.jpg
+                            src={image}
                             alt=""
                             width={400}
                             height={400}

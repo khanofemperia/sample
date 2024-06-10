@@ -6,7 +6,7 @@ import { customAlphabet } from "nanoid";
 type PageHeroType = {
   image?: string | null;
   title?: string | null;
-  url?: string | null;
+  destination_url?: string | null;
   visibility: string;
 }
 
@@ -14,14 +14,14 @@ type ResponseDataType = {
   id: string;
   image: string | null;
   title: string | null;
-  url: string | null;
+  destination_url: string | null;
   visibility: string;
 }
 
 const defaultPageHero = {
   image: null,
   title: null,
-  url: null,
+  destination_url: null,
   visibility: "HIDDEN",
 };
 

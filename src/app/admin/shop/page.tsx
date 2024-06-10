@@ -11,7 +11,7 @@ type PageHeroType = {
   id: string;
   image: string | null;
   title: string | null;
-  url: string | null;
+  destination_url: string | null;
   visibility: string;
 };
 
