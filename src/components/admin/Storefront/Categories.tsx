@@ -35,7 +35,7 @@ export function CategoriesButton({
   const { showOverlay } = useOverlayStore();
   const { pageName, overlayName } = useOverlayStore((state) => ({
     pageName: state.pages.storefront.name,
-    overlayName: state.pages.storefront.overlays.editPageHero.name,
+    overlayName: state.pages.storefront.overlays.categories.name,
   }));
 
   return (
@@ -102,8 +102,8 @@ export function CategoriesOverlay({
   const { pageName, isOverlayVisible, overlayName } = useOverlayStore(
     (state) => ({
       pageName: state.pages.storefront.name,
-      overlayName: state.pages.storefront.overlays.editPageHero.name,
-      isOverlayVisible: state.pages.storefront.overlays.editPageHero.isVisible,
+      overlayName: state.pages.storefront.overlays.categories.name,
+      isOverlayVisible: state.pages.storefront.overlays.categories.isVisible,
     })
   );
 
@@ -121,7 +121,26 @@ export function CategoriesOverlay({
     };
   }, [isOverlayVisible, showAlert]);
 
-  const handleSave = async () => {};
+  const handleSave = async () => {
+    setLoading(true);
+
+    try {
+      const updatedCategories = categories.map((category, index) => ({
+        id: category.id,
+        visibility: visibilityStates[index] ? VISIBLE : HIDDEN,
+      }));
+
+      return console.log(updatedCategories);
+
+      // const result = await UpdateCategoriesAction(updatedCategories);
+      // setAlertMessage(result.status.message);
+      // setShowAlert(true);
+    } catch (error) {
+      console.error("Error updating categories:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const onHideOverlay = () => {
     setLoading(false);
@@ -133,11 +152,19 @@ export function CategoriesOverlay({
     setAlertMessage("");
   };
 
+  const toggleVisibility = (index: number) => {
+    setVisibilityStates((prev) => {
+      const newVisibilityStates = [...prev];
+      newVisibilityStates[index] = !newVisibilityStates[index];
+      return newVisibilityStates;
+    });
+  };
+
   return (
     <>
       {isOverlayVisible && (
         <Overlay>
-          <div className="absolute bottom-0 left-0 right-0 w-full h-[calc(100%-60px)] rounded-t-3xl bg-white md:w-[500px] md:rounded-2xl md:shadow-lg md:h-max md:mx-auto md:mt-20 md:mb-[50vh] md:relative md:bottom-auto md:left-auto md:right-auto md:top-auto md:-translate-x-0">
+          <div className="absolute bottom-0 left-0 right-0 w-full h-[calc(100%-60px)] rounded-t-3xl bg-white md:w-[536px] md:rounded-2xl md:shadow-lg md:h-max md:mx-auto md:mt-20 md:mb-[50vh] md:relative md:bottom-auto md:left-auto md:right-auto md:top-auto md:-translate-x-0">
             <div className="w-full h-[calc(100vh-188px)] md:h-auto">
               <div className="md:hidden flex items-end justify-center pt-4 pb-2 absolute top-0 left-0 right-0 bg-white">
                 <div className="relative flex justify-center items-center w-full h-7">
@@ -223,7 +250,56 @@ export function CategoriesOverlay({
                     </div>
                   </div>
                 </div>
-                <div className="flex flex-col gap-2">sample</div>
+                <div className="flex flex-col gap-2">
+                  <h2 className="font-semibold text-sm">Categories</h2>
+                  <div className="flex flex-wrap gap-2">
+                    {categories.map(({ index, image, name }, mapIndex) => (
+                      <div
+                        key={mapIndex}
+                        className="w-[calc(50%-4px)] min-[466px]:w-[calc(33.333333%-6px)] min-[608px]:w-[calc(25%-6px)] min-[768px]:w-40 border rounded-xl relative overflow-hidden"
+                      >
+                        <div className="w-full aspect-square mb-2 flex flex-col gap-1 items-center pt-5">
+                          <div className="w-[calc(100%-56px)] max-w-[140px] aspect-square rounded-full overflow-hidden flex items-center justify-center shadow-[rgba(0,0,0,0.2)_0px_1px_3px_0px,_rgba(27,31,35,0.15)_0px_0px_0px_1px]">
+                            <Image
+                              src={`/images/categories/${image}`}
+                              alt={name}
+                              width={140}
+                              height={140}
+                              priority={true}
+                            />
+                          </div>
+                          <span className="text-gray">{name}</span>
+                        </div>
+                        <div className="w-full py-2 px-5 flex items-center justify-between border-t">
+                          <span className="text-sm font-semibold">{index}</span>
+                          <div
+                            onClick={() => toggleVisibility(mapIndex)}
+                            className={clsx(
+                              "w-10 h-5 rounded-full relative cursor-pointer ease-in-out duration-200",
+                              {
+                                "bg-white border": !visibilityStates[mapIndex],
+                                "bg-custom-blue border border-custom-blue":
+                                  visibilityStates[mapIndex],
+                              }
+                            )}
+                          >
+                            <div
+                              className={clsx(
+                                "w-[10px] h-[10px] rounded-full ease-in-out duration-300 absolute [top:50%] [transform:translateY(-50%)]",
+                                {
+                                  "left-[5px] bg-black":
+                                    !visibilityStates[mapIndex],
+                                  "left-[23px] bg-white":
+                                    visibilityStates[mapIndex],
+                                }
+                              )}
+                            ></div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
             <div className="md:hidden w-full pb-5 pt-2 px-5 absolute bottom-0">
