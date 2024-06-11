@@ -127,11 +127,11 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
         let errorMessage = "";
 
         if (!title) {
-          errorMessage = "Please provide the title";
+          errorMessage = "Provide the title";
         } else if (!image) {
-          errorMessage = "Please provide the image";
+          errorMessage = "Provide the image";
         } else if (!destinationUrl) {
-          errorMessage = "Please provide the destination URL";
+          errorMessage = "Provide the destination URL";
         }
         setAlertMessage(errorMessage);
         setShowAlert(true);
