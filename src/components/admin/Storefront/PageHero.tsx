@@ -1,34 +1,16 @@
 "use client";
 
 import AlertMessage from "@/components/shared/AlertMessage";
-import {
-  capitalizeFirstLetter,
-  formatDate,
-  isValidRemoteImage,
-} from "@/libraries/utils";
-import { useState, useEffect, useRef } from "react";
+import { isValidRemoteImage } from "@/libraries/utils";
+import { useState, useEffect } from "react";
 import Spinner from "@/ui/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
-import { ArrowLeftIcon, ChevronDownIcon, CloseIcon } from "@/icons";
+import { ArrowLeftIcon, CloseIcon } from "@/icons";
 import clsx from "clsx";
 import Image from "next/image";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { CiImageOn } from "react-icons/ci";
-import { CreateCollectionAction } from "@/actions/collections";
 import Overlay from "@/ui/Overlay";
 import { UpdatePageHeroAction } from "@/actions/page-hero";
-
-type RequestDataType = {
-  title: string;
-  slug: string;
-  campaign_duration: {
-    start_date: string;
-    end_date: string;
-  };
-  collection_type: string;
-  image?: string;
-};
 
 type PageHeroType = {
   id: string;
@@ -43,7 +25,6 @@ export function PageHeroButton({ visibility }: { visibility: string }) {
   const VISIBLE = "VISIBLE";
 
   const { showOverlay } = useOverlayStore();
-
   const { pageName, overlayName } = useOverlayStore((state) => ({
     pageName: state.pages.storefront.name,
     overlayName: state.pages.storefront.overlays.editPageHero.name,
@@ -57,11 +38,14 @@ export function PageHeroButton({ visibility }: { visibility: string }) {
       <div className="w-full mb-4 flex items-center justify-between relative">
         <h2 className="text-left font-semibold text-sm">Page hero</h2>
         <div
-          className={clsx("w-10 h-5 rounded-full relative", {
-            "bg-white border": visibility.toUpperCase() === HIDDEN,
-            "bg-custom-blue border border-custom-blue":
-              visibility.toUpperCase() === VISIBLE,
-          })}
+          className={clsx(
+            "w-10 h-5 rounded-full relative cursor-pointer ease-in-out duration-200",
+            {
+              "bg-white border": visibility.toUpperCase() === HIDDEN,
+              "bg-custom-blue border border-custom-blue":
+                visibility.toUpperCase() === VISIBLE,
+            }
+          )}
         >
           <div
             className={clsx(
@@ -225,7 +209,7 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
               <div className="w-full h-full mt-[52px] md:mt-0 px-5 pt-5 pb-28 md:pb-10 flex flex-col gap-5 overflow-x-hidden overflow-y-visible invisible-scrollbar md:overflow-hidden">
                 <div className="flex flex-col gap-2">
                   <h2 className="font-semibold text-sm">Visibility</h2>
-                  <div className="w-max rounded-md h-9 flex gap-4 items-center justify-between px-3 bg-lightgray">
+                  <div className="w-full min-[425px]:w-max rounded-md h-9 flex gap-2 min-[425px]:gap-4 items-center justify-between px-[10px] bg-lightgray">
                     <div className="text-sm">
                       Display page hero on storefront
                     </div>
@@ -267,7 +251,7 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
                           <Image
                             src={image}
                             alt={title}
-                            width={500}
+                            width={725}
                             height={86}
                             priority={true}
                           />
