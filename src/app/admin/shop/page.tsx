@@ -25,8 +25,6 @@ export default async function Storefront() {
   const categories = await fetchData<CategoryType[]>("/api/categories");
   const settings = await fetchData<SettingType>("/api/settings");
 
-  console.log(settings);
-
   return (
     <>
       <div className="mb-10 px-5 min-[1068px]:px-0">
