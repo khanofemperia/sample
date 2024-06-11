@@ -1,3 +1,7 @@
+import {
+  CategoriesButton,
+  CategoriesOverlay,
+} from "@/components/admin/Storefront/Categories";
 import CollectionTable from "@/components/admin/Storefront/CollectionTable";
 import { NewCollectionOverlay } from "@/components/admin/Storefront/NewCollection";
 import {
@@ -18,40 +22,18 @@ type PageHeroType = {
 export default async function Storefront() {
   const collections = await fetchData<CollectionType[]>("/api/collections");
   const pageHero = await fetchData<PageHeroType>("/api/page-hero");
+  const categories = await fetchData<CategoryType[]>("/api/categories");
+  const settings = await fetchData<SettingType>("/api/settings");
+
+  console.log(settings);
+
   return (
     <>
       <div className="mb-10 px-5 min-[1068px]:px-0">
         <h2 className="font-semibold text-lg mb-5">Elements</h2>
         <div className="w-full flex flex-wrap gap-2">
           <PageHeroButton visibility={pageHero.visibility} />
-          <button className="flex flex-col items-start w-full min-[560px]:w-[calc(100%/2-4px)] min-[824px]:w-64 rounded-xl p-5 relative cursor-pointer ease-in-out duration-300 transition shadow border border-transparent bg-white active:border-[#bfc5ce] lg:hover:border-[#bfc5ce]">
-            <div className="w-full mb-4 flex items-center justify-between relative">
-              <h2 className="text-left font-semibold text-sm">Categories</h2>
-              <div
-                className={clsx(
-                  "relative w-10 h-5 rounded-full ease-in-out duration-200",
-                  {
-                    "bg-white border": false,
-                    "bg-custom-blue border border-custom-blue": true,
-                  }
-                )}
-              >
-                <div
-                  className={clsx(
-                    "w-[10px] h-[10px] rounded-full ease-in-out duration-300 absolute [top:50%] [transform:translateY(-50%)]",
-                    {
-                      "left-[5px] bg-black": false,
-                      "left-[23px] bg-white": true,
-                    }
-                  )}
-                ></div>
-              </div>
-            </div>
-            <p className="w-52 text-left text-gray text-xs leading-[18px]">
-              Group similar products so they're easy to find: Dresses, Tops,
-              Bottoms, and more.
-            </p>
-          </button>
+          <CategoriesButton categorySection={settings.category_section} />
           <button className="flex flex-col items-start w-full min-[560px]:w-[calc(100%/2-4px)] min-[824px]:w-64 rounded-xl p-5 relative cursor-pointer ease-in-out duration-300 transition shadow border border-transparent bg-white active:border-[#bfc5ce] lg:hover:border-[#bfc5ce]">
             <div className="w-full mb-4 flex items-center justify-between relative">
               <h2 className="text-left font-semibold text-sm">Shop now</h2>
@@ -88,6 +70,7 @@ export default async function Storefront() {
       <CollectionTable collections={collections} />
       <NewCollectionOverlay />
       <PageHeroOverlay pageHero={pageHero} />
+      <CategoriesOverlay categories={categories} categorySection={settings.category_section} />
     </>
   );
 }

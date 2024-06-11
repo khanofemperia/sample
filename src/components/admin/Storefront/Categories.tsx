@@ -20,7 +20,15 @@ type PageHeroType = {
   visibility: string;
 };
 
-export function PageHeroButton({ visibility }: { visibility: string }) {
+type CategorySectionType = {
+  visibility: string;
+};
+
+export function CategoriesButton({
+  categorySection,
+}: {
+  categorySection: CategorySectionType;
+}) {
   const HIDDEN = "HIDDEN";
   const VISIBLE = "VISIBLE";
 
@@ -36,14 +44,15 @@ export function PageHeroButton({ visibility }: { visibility: string }) {
       className="flex flex-col items-start w-full min-[560px]:w-[calc(100%/2-4px)] min-[824px]:w-64 rounded-xl p-5 relative cursor-pointer ease-in-out duration-300 transition shadow border border-transparent bg-white active:border-[#bfc5ce] lg:hover:border-[#bfc5ce]"
     >
       <div className="w-full mb-4 flex items-center justify-between relative">
-        <h2 className="text-left font-semibold text-sm">Page hero</h2>
+        <h2 className="text-left font-semibold text-sm">Categories</h2>
         <div
           className={clsx(
             "w-10 h-5 rounded-full relative cursor-pointer ease-in-out duration-200",
             {
-              "bg-white border": visibility === HIDDEN,
+              "bg-white border":
+                categorySection.visibility.toUpperCase() === HIDDEN,
               "bg-custom-blue border border-custom-blue":
-                visibility === VISIBLE,
+                categorySection.visibility.toUpperCase() === VISIBLE,
             }
           )}
         >
@@ -51,34 +60,42 @@ export function PageHeroButton({ visibility }: { visibility: string }) {
             className={clsx(
               "w-[10px] h-[10px] rounded-full ease-in-out duration-300 absolute [top:50%] [transform:translateY(-50%)]",
               {
-                "left-[5px] bg-black": visibility === HIDDEN,
-                "left-[23px] bg-white": visibility === VISIBLE,
+                "left-[5px] bg-black":
+                  categorySection.visibility.toUpperCase() === HIDDEN,
+                "left-[23px] bg-white":
+                  categorySection.visibility.toUpperCase() === VISIBLE,
               }
             )}
           ></div>
         </div>
       </div>
       <p className="w-52 text-left text-gray text-xs leading-[18px]">
-        The first thing visitors notice. Use visuals that make a strong first
-        impression.
+        Group similar products so they're easy to find: Dresses, Tops, Bottoms,
+        and more.
       </p>
     </button>
   );
 }
 
-export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
+export function CategoriesOverlay({
+  categories,
+  categorySection,
+}: {
+  categories: CategoryType[];
+  categorySection: CategorySectionType;
+}) {
   const HIDDEN = "HIDDEN";
   const VISIBLE = "VISIBLE";
 
   const [loading, setLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
-  const [title, setTitle] = useState<string>(pageHero.title || "");
-  const [visibility, setVisibility] = useState<string>(pageHero.visibility.toUpperCase());
-  const [destinationUrl, setDestinationUrl] = useState<string>(
-    pageHero.destination_url || ""
+  const [categorySectionVisibility, setCategorySectionVisibility] = useState(
+    categorySection.visibility.toUpperCase()
   );
-  const [image, setImage] = useState<string>(pageHero.image || "");
+  const [visibilityStates, setVisibilityStates] = useState(
+    categories.map((category) => category.visibility === VISIBLE)
+  );
 
   const { hideOverlay } = useOverlayStore();
 
@@ -104,48 +121,11 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
     };
   }, [isOverlayVisible, showAlert]);
 
-  const handleSave = async () => {
-    setLoading(true);
-
-    try {
-      if (visibility === "VISIBLE" && (!title || !image || !destinationUrl)) {
-        let errorMessage = "";
-
-        if (!title) {
-          errorMessage = "Provide the title";
-        } else if (!image) {
-          errorMessage = "Provide the image";
-        } else if (!destinationUrl) {
-          errorMessage = "Provide the destination URL";
-        }
-        setAlertMessage(errorMessage);
-        setShowAlert(true);
-      } else {
-        const message = await UpdatePageHeroAction({
-          id: pageHero.id,
-          title: title,
-          image: image,
-          destination_url: destinationUrl,
-          visibility: visibility,
-        });
-        setAlertMessage(message);
-        setShowAlert(true);
-      }
-    } catch (error) {
-      console.error(error);
-      setAlertMessage("Error updating page hero");
-      setShowAlert(true);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const handleSave = async () => {};
 
   const onHideOverlay = () => {
     setLoading(false);
     hideOverlay({ pageName, overlayName });
-    setTitle(pageHero.title || "");
-    setDestinationUrl(pageHero.destination_url || "");
-    setImage(pageHero.image || "");
   };
 
   const hideAlertMessage = () => {
@@ -161,7 +141,7 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
             <div className="w-full h-[calc(100vh-188px)] md:h-auto">
               <div className="md:hidden flex items-end justify-center pt-4 pb-2 absolute top-0 left-0 right-0 bg-white">
                 <div className="relative flex justify-center items-center w-full h-7">
-                  <h2 className="font-semibold text-lg">Edit page hero</h2>
+                  <h2 className="font-semibold text-lg">Setup categories</h2>
                   <button
                     onClick={onHideOverlay}
                     type="button"
@@ -182,7 +162,7 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
                     size={20}
                   />
                   <span className="font-semibold text-sm text-custom-blue">
-                    Edit page hero
+                    Setup categories
                   </span>
                 </button>
                 <button
@@ -211,20 +191,21 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
                   <h2 className="font-semibold text-sm">Visibility</h2>
                   <div className="w-full min-[425px]:w-max rounded-md h-9 flex gap-2 min-[425px]:gap-4 items-center justify-between px-[10px] bg-lightgray">
                     <div className="text-sm">
-                      Display page hero on storefront
+                      Display categories on storefront
                     </div>
                     <div
                       onClick={() =>
-                        setVisibility((prevVisibility) =>
-                          prevVisibility === VISIBLE ? HIDDEN : VISIBLE
+                        setCategorySectionVisibility((prevState) =>
+                          prevState === VISIBLE ? HIDDEN : VISIBLE
                         )
                       }
                       className={clsx(
                         "w-10 h-5 rounded-full relative cursor-pointer ease-in-out duration-200",
                         {
-                          "bg-white border": visibility === HIDDEN,
+                          "bg-white border":
+                            categorySectionVisibility === HIDDEN,
                           "bg-custom-blue border border-custom-blue":
-                            visibility === VISIBLE,
+                            categorySectionVisibility === VISIBLE,
                         }
                       )}
                     >
@@ -232,79 +213,17 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
                         className={clsx(
                           "w-[10px] h-[10px] rounded-full ease-in-out duration-300 absolute [top:50%] [transform:translateY(-50%)]",
                           {
-                            "left-[5px] bg-black": visibility === HIDDEN,
-                            "left-[23px] bg-white": visibility === VISIBLE,
+                            "left-[5px] bg-black":
+                              categorySectionVisibility === HIDDEN,
+                            "left-[23px] bg-white":
+                              categorySectionVisibility === VISIBLE,
                           }
                         )}
                       ></div>
                     </div>
                   </div>
                 </div>
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="image" className="font-semibold text-sm">
-                    Image
-                  </label>
-                  <div>
-                    <div className="w-full border rounded-md overflow-hidden">
-                      <div className="w-full min-h-[86px] flex items-center justify-center overflow-hidden">
-                        {image && isValidRemoteImage(image) ? (
-                          <Image
-                            src={image}
-                            alt={title}
-                            width={725}
-                            height={86}
-                            priority={true}
-                          />
-                        ) : (
-                          <CiImageOn className="fill-neutral-200" size={80} />
-                        )}
-                      </div>
-                      <div className="w-full h-9 border-t overflow-hidden">
-                        <input
-                          type="text"
-                          name="image"
-                          placeholder="Paste image URL"
-                          value={image}
-                          onChange={(e) => setImage(e.target.value)}
-                          className="h-full w-full px-3 text-gray"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="title" className="font-semibold text-sm">
-                    Title
-                  </label>
-                  <div className="w-full h-9 relative">
-                    <input
-                      type="text"
-                      name="title"
-                      placeholder="Shop Denim Skirts"
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
-                      className="w-full h-9 px-3 rounded-md border"
-                    />
-                  </div>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label
-                    htmlFor="destination_url"
-                    className="font-semibold text-sm"
-                  >
-                    Destination URL
-                  </label>
-                  <div className="w-full h-9 relative">
-                    <input
-                      type="text"
-                      name="destination_url"
-                      placeholder="https://cherlygood.com/shop/denim-skirts"
-                      value={destinationUrl}
-                      onChange={(e) => setDestinationUrl(e.target.value)}
-                      className="w-full h-9 px-3 rounded-md border"
-                    />
-                  </div>
-                </div>
+                <div className="flex flex-col gap-2">sample</div>
               </div>
             </div>
             <div className="md:hidden w-full pb-5 pt-2 px-5 absolute bottom-0">

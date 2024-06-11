@@ -181,8 +181,8 @@ export const useOverlayStore = createWithEqualityFn<OverlayStoreProps>(
             name: "toggleCollections",
             isVisible: false,
           },
-          setupProductCategories: {
-            name: "setupProductCategories",
+          categories: {
+            name: "categories",
             isVisible: false,
           },
           editPageHero: {

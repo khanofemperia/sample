@@ -54,3 +54,9 @@ type CollectionType = {
 };
 
 type ChipValueType = "draft" | "published" | "hidden";
+
+type SettingType = {
+  category_section: {
+    visibility: string;
+  };
+};
