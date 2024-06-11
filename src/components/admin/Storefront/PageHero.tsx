@@ -38,7 +38,10 @@ type PageHeroType = {
   visibility: string;
 };
 
-export function PageHeroButton() {
+export function PageHeroButton({ visibility }: { visibility: string }) {
+  const HIDDEN = "HIDDEN";
+  const VISIBLE = "VISIBLE";
+
   const { showOverlay } = useOverlayStore();
 
   const { pageName, overlayName } = useOverlayStore((state) => ({
@@ -54,20 +57,18 @@ export function PageHeroButton() {
       <div className="w-full mb-4 flex items-center justify-between relative">
         <h2 className="text-left font-semibold text-sm">Page hero</h2>
         <div
-          className={clsx(
-            "relative w-10 h-5 rounded-full ease-in-out duration-200",
-            {
-              "bg-white border": false,
-              "bg-custom-blue border border-custom-blue": true,
-            }
-          )}
+          className={clsx("w-10 h-5 rounded-full relative", {
+            "bg-white border": visibility.toLowerCase() === HIDDEN,
+            "bg-custom-blue border border-custom-blue":
+              visibility.toLowerCase() === VISIBLE,
+          })}
         >
           <div
             className={clsx(
               "w-[10px] h-[10px] rounded-full ease-in-out duration-300 absolute [top:50%] [transform:translateY(-50%)]",
               {
-                "left-[5px] bg-black": false,
-                "left-[23px] bg-white": true,
+                "left-[5px] bg-black": visibility.toLowerCase() === HIDDEN,
+                "left-[23px] bg-white": visibility.toLowerCase() === VISIBLE,
               }
             )}
           ></div>
@@ -266,8 +267,8 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
                           <Image
                             src={image}
                             alt={title}
-                            width={766}
-                            height={308}
+                            width={500}
+                            height={86}
                             priority={true}
                           />
                         ) : (

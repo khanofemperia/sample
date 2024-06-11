@@ -23,7 +23,7 @@ export default async function Storefront() {
       <div className="mb-10 px-5 min-[1068px]:px-0">
         <h2 className="font-semibold text-lg mb-5">Elements</h2>
         <div className="w-full flex flex-wrap gap-2">
-          <PageHeroButton />
+          <PageHeroButton visibility={pageHero.visibility} />
           <button className="flex flex-col items-start w-full min-[560px]:w-[calc(100%/2-4px)] min-[824px]:w-64 rounded-xl p-5 relative cursor-pointer ease-in-out duration-300 transition shadow border border-transparent bg-white active:border-[#bfc5ce] lg:hover:border-[#bfc5ce]">
             <div className="w-full mb-4 flex items-center justify-between relative">
               <h2 className="text-left font-semibold text-sm">Categories</h2>
