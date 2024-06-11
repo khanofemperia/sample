@@ -58,17 +58,17 @@ export function PageHeroButton({ visibility }: { visibility: string }) {
         <h2 className="text-left font-semibold text-sm">Page hero</h2>
         <div
           className={clsx("w-10 h-5 rounded-full relative", {
-            "bg-white border": visibility.toLowerCase() === HIDDEN,
+            "bg-white border": visibility.toUpperCase() === HIDDEN,
             "bg-custom-blue border border-custom-blue":
-              visibility.toLowerCase() === VISIBLE,
+              visibility.toUpperCase() === VISIBLE,
           })}
         >
           <div
             className={clsx(
               "w-[10px] h-[10px] rounded-full ease-in-out duration-300 absolute [top:50%] [transform:translateY(-50%)]",
               {
-                "left-[5px] bg-black": visibility.toLowerCase() === HIDDEN,
-                "left-[23px] bg-white": visibility.toLowerCase() === VISIBLE,
+                "left-[5px] bg-black": visibility.toUpperCase() === HIDDEN,
+                "left-[23px] bg-white": visibility.toUpperCase() === VISIBLE,
               }
             )}
           ></div>
