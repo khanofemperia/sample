@@ -12,6 +12,7 @@ import {
   ChangeCollectionIndexButton,
   ChangeCollectionIndexOverlay,
 } from "./ChangeCollectionIndexOverlay";
+import { NewCollectionEmptyTableButton } from "./NewCollection";
 
 export default function CollectionTable({
   collections,
@@ -399,11 +400,13 @@ export default function CollectionTable({
         </div>
       ) : (
         <div className="border-t pt-5 flex justify-center">
-          <section>
-            <h2>No collections yet</h2>
-            <p>Click the button below to create your first one.</p>
-            <button>New Collection</button>
-          </section>
+          <div className="text-center">
+            <h2 className="font-semibold text-lg mb-2">No collections yet</h2>
+            <p className="text-sm mb-4">
+              Click the button below to create your first one
+            </p>
+            <NewCollectionEmptyTableButton />
+          </div>
         </div>
       )}
       {showAlert && (

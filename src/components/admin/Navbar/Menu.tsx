@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { NewProductButton } from "../NewProduct";
 import { useNavbarMenuStore } from "@/zustand/admin/navbarMenuStore";
 import { usePathname } from "next/navigation";
-import { NewCollectionButton } from "../Storefront/NewCollection";
+import { NewCollectionMenuButton } from "../Storefront/NewCollection";
 
 export default function Menu() {
   const { navbarMenuVisible, setNavbarMenu } = useNavbarMenuStore();
@@ -64,7 +64,7 @@ export default function Menu() {
               Visit product
             </Link>
           )}
-          {isCollectionsPage && <NewCollectionButton />}
+          {isCollectionsPage && <NewCollectionMenuButton />}
           {showSeparator && (
             <div className="h-[1px] my-[5px] bg-[#e5e7eb]"></div>
           )}

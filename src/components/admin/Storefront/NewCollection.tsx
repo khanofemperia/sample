@@ -26,7 +26,7 @@ type RequestDataType = {
   image?: string;
 };
 
-export function NewCollectionButton() {
+export function NewCollectionMenuButton() {
   const { showOverlay } = useOverlayStore();
   const { setNavbarMenu } = useNavbarMenuStore();
 
@@ -44,6 +44,31 @@ export function NewCollectionButton() {
     <button
       type="button"
       className="h-9 w-[calc(100%-10px)] mx-auto px-4 rounded-md flex items-center cursor-pointer transition duration-300 ease-in-out active:bg-lightgray"
+      onClick={openOverlay}
+    >
+      New collection
+    </button>
+  );
+}
+
+export function NewCollectionEmptyTableButton() {
+  const { showOverlay } = useOverlayStore();
+  const { setNavbarMenu } = useNavbarMenuStore();
+
+  const { pageName, overlayName } = useOverlayStore((state) => ({
+    pageName: state.pages.storefront.name,
+    overlayName: state.pages.storefront.overlays.newCollection.name,
+  }));
+
+  const openOverlay = () => {
+    setNavbarMenu(false);
+    showOverlay({ pageName, overlayName });
+  };
+
+  return (
+    <button
+      type="button"
+      className="h-9 w-max px-4 rounded-full overflow-hidden transition duration-300 ease-in-out text-white bg-custom-blue active:bg-custom-blue-dimmed lg:hover:bg-custom-blue-dimmed"
       onClick={openOverlay}
     >
       New collection
