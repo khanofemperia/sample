@@ -1,25 +1,14 @@
 "use client";
 
 import AlertMessage from "@/components/shared/AlertMessage";
-import { isValidRemoteImage } from "@/libraries/utils";
 import { useState, useEffect } from "react";
 import Spinner from "@/ui/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
 import { ArrowLeftIcon, CloseIcon } from "@/icons";
 import clsx from "clsx";
 import Image from "next/image";
-import { CiImageOn } from "react-icons/ci";
 import Overlay from "@/ui/Overlay";
-import { UpdatePageHeroAction } from "@/actions/page-hero";
 import UpdateCategoriesAction from "@/actions/categories";
-
-type PageHeroType = {
-  id: string;
-  image: string | null;
-  title: string | null;
-  destination_url: string | null;
-  visibility: string;
-};
 
 type CategorySectionType = {
   visibility: string;
@@ -145,7 +134,7 @@ export function CategoriesOverlay({
       }
 
       const message = await UpdateCategoriesAction({
-        category_section_visibility: categorySectionVisibility,
+        categorySectionVisibility: categorySectionVisibility,
         categories: updatedCategories,
       });
       setAlertMessage(message);

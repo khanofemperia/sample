@@ -8,7 +8,7 @@ type CategoryType = {
 
 type SizeChartType = {
   columns: { index: number; name: string }[];
-  entry_labels: { index: number; name: string }[];
+  entryLabels: { index: number; name: string }[];
   sizes: {
     measurements: {
       [key: string]: {
@@ -32,8 +32,8 @@ type ProductType = {
   sizes: SizeChartType | null;
   description: string | null;
   visibility: string;
-  date_created: string;
-  last_updated: string;
+  dateCreated: string;
+  lastUpdated: string;
 };
 
 type CollectionType = {
@@ -41,22 +41,22 @@ type CollectionType = {
   index: number;
   title: string;
   slug: string;
-  campaign_duration: {
-    start_date: string;
-    end_date: string;
+  campaignDuration: {
+    startDate: string;
+    endDate: string;
   };
-  collection_type: string;
+  collectionType: string;
   image?: string;
   products: ProductType[];
   visibility: string;
-  date_created: string;
-  last_updated: string;
+  dateCreated: string;
+  lastUpdated: string;
 };
 
 type ChipValueType = "draft" | "published" | "hidden";
 
 type SettingType = {
-  category_section: {
+  categorySection: {
     visibility: string;
   };
 };

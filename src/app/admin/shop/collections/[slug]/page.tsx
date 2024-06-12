@@ -43,16 +43,16 @@ type CollectionDataType = {
   image: string;
   title: string;
   slug: string;
-  campaign_duration: {
-    start_date: string;
-    end_date: string;
+  campaignDuration: {
+    startDate: string;
+    endDate: string;
   };
   visibility: string;
   status: string;
-  collection_type: string;
+  collectionType: string;
   index: number;
-  last_updated: string;
-  date_created: string;
+  lastUpdated: string;
+  dateCreated: string;
   products: CollectionProductType[];
 };
 
@@ -76,8 +76,8 @@ export default async function EditCollection({
 
   const {
     id,
-    campaign_duration,
-    collection_type,
+    campaignDuration,
+    collectionType,
     title,
     slug,
     visibility,
@@ -128,8 +128,8 @@ export default async function EditCollection({
             <div className="p-5 pt-4 text-sm">
               <div className="flex items-center gap-1">
                 {getCampaignStatus(
-                  campaign_duration.start_date,
-                  campaign_duration.end_date
+                  campaignDuration.startDate,
+                  campaignDuration.endDate
                 ) === CAMPAIGN_STATUS_UPCOMING && (
                   <IoHourglassOutline
                     className="stroke-custom-gold fill-custom-gold"
@@ -137,14 +137,14 @@ export default async function EditCollection({
                   />
                 )}
                 {getCampaignStatus(
-                  campaign_duration.start_date,
-                  campaign_duration.end_date
+                  campaignDuration.startDate,
+                  campaignDuration.endDate
                 ) === CAMPAIGN_STATUS_ACTIVE && (
                   <HiOutlineClock className="stroke-custom-green" size={18} />
                 )}
                 {getCampaignStatus(
-                  campaign_duration.start_date,
-                  campaign_duration.end_date
+                  campaignDuration.startDate,
+                  campaignDuration.endDate
                 ) === CAMPAIGN_STATUS_ENDED && (
                   <HiOutlineBan className="stroke-custom-red" size={18} />
                 )}
@@ -152,24 +152,24 @@ export default async function EditCollection({
                   className={clsx("italic", {
                     "text-custom-gold":
                       getCampaignStatus(
-                        campaign_duration.start_date,
-                        campaign_duration.end_date
+                        campaignDuration.startDate,
+                        campaignDuration.endDate
                       ) === CAMPAIGN_STATUS_UPCOMING,
                     "text-custom-green":
                       getCampaignStatus(
-                        campaign_duration.start_date,
-                        campaign_duration.end_date
+                        campaignDuration.startDate,
+                        campaignDuration.endDate
                       ) === CAMPAIGN_STATUS_ACTIVE,
                     "text-custom-red":
                       getCampaignStatus(
-                        campaign_duration.start_date,
-                        campaign_duration.end_date
+                        campaignDuration.startDate,
+                        campaignDuration.endDate
                       ) === CAMPAIGN_STATUS_ENDED,
                   })}
                 >
                   {getCampaignStatus(
-                    campaign_duration.start_date,
-                    campaign_duration.end_date
+                    campaignDuration.startDate,
+                    campaignDuration.endDate
                   )}
                 </span>
               </div>
@@ -181,17 +181,17 @@ export default async function EditCollection({
                       {
                         "bg-custom-green/10 border border-custom-green/15":
                           getCampaignStatus(
-                            campaign_duration.start_date,
-                            campaign_duration.end_date
+                            campaignDuration.startDate,
+                            campaignDuration.endDate
                           ) === CAMPAIGN_STATUS_ACTIVE,
                         "bg-lightgray border border-[#6c6c6c]/15":
                           getCampaignStatus(
-                            campaign_duration.start_date,
-                            campaign_duration.end_date
+                            campaignDuration.startDate,
+                            campaignDuration.endDate
                           ) === CAMPAIGN_STATUS_ENDED ||
                           getCampaignStatus(
-                            campaign_duration.start_date,
-                            campaign_duration.end_date
+                            campaignDuration.startDate,
+                            campaignDuration.endDate
                           ) === CAMPAIGN_STATUS_UPCOMING,
                       }
                     )}
@@ -202,12 +202,12 @@ export default async function EditCollection({
                       className={clsx({
                         "text-custom-green":
                           getCampaignStatus(
-                            campaign_duration.start_date,
-                            campaign_duration.end_date
+                            campaignDuration.startDate,
+                            campaignDuration.endDate
                           ) === CAMPAIGN_STATUS_ACTIVE,
                       })}
                     >
-                      {formatDate(campaign_duration.start_date)}
+                      {formatDate(campaignDuration.startDate)}
                     </span>
                   </div>
                 </div>
@@ -218,17 +218,17 @@ export default async function EditCollection({
                       {
                         "bg-custom-red/10 border border-custom-red/15":
                           getCampaignStatus(
-                            campaign_duration.start_date,
-                            campaign_duration.end_date
+                            campaignDuration.startDate,
+                            campaignDuration.endDate
                           ) === CAMPAIGN_STATUS_ENDED,
                         "bg-lightgray border border-[#6c6c6c]/15":
                           getCampaignStatus(
-                            campaign_duration.start_date,
-                            campaign_duration.end_date
+                            campaignDuration.startDate,
+                            campaignDuration.endDate
                           ) === CAMPAIGN_STATUS_ACTIVE ||
                           getCampaignStatus(
-                            campaign_duration.start_date,
-                            campaign_duration.end_date
+                            campaignDuration.startDate,
+                            campaignDuration.endDate
                           ) === CAMPAIGN_STATUS_UPCOMING,
                       }
                     )}
@@ -239,12 +239,12 @@ export default async function EditCollection({
                       className={clsx({
                         "text-custom-red":
                           getCampaignStatus(
-                            campaign_duration.start_date,
-                            campaign_duration.end_date
+                            campaignDuration.startDate,
+                            campaignDuration.endDate
                           ) === CAMPAIGN_STATUS_ENDED,
                       })}
                     >
-                      {formatDate(campaign_duration.end_date)}
+                      {formatDate(campaignDuration.endDate)}
                     </span>
                   </div>
                 </div>
@@ -279,7 +279,7 @@ export default async function EditCollection({
               <div>
                 <h3 className="text-sm font-semibold mb-2">Type</h3>
                 <div className="w-max max-w-full h-9 px-4 rounded-full bg-lightgray flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
-                  {capitalizeFirstLetter(collection_type.toLowerCase())}
+                  {capitalizeFirstLetter(collectionType.toLowerCase())}
                 </div>
               </div>
             </div>
@@ -347,7 +347,7 @@ export default async function EditCollection({
           </div>
         </div>
       </div>
-      <CampaignDurationOverlay data={{ id, campaign_duration }} />
+      <CampaignDurationOverlay data={{ id, campaignDuration }} />
       <BasicDetailsOverlay data={{ id, title, slug }} />
       <VisibilityOverlay data={{ id, visibility }} />
       <ProductListOverlay data={{ id, products }} />

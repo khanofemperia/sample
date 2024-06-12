@@ -5,19 +5,19 @@ import { database } from "@/libraries/firebase";
 type PageHeroType = {
   image?: string | null;
   title?: string | null;
-  destination_url?: string | null;
+  destinationUrl?: string | null;
   visibility: string;
 };
 
 const defaultPageHero: PageHeroType = {
   image: null,
   title: null,
-  destination_url: null,
+  destinationUrl: null,
   visibility: "HIDDEN",
 };
 
 async function createOrUpdatePageHero() {
-  const documentRef = doc(database, "page_hero", "storefront_hero");
+  const documentRef = doc(database, "pageHero", "storefrontHero");
   const snapshot = await getDoc(documentRef);
 
   if (!snapshot.exists()) {
@@ -36,7 +36,7 @@ async function createOrUpdatePageHero() {
 export async function GET(_request: NextRequest) {
   await createOrUpdatePageHero();
 
-  const documentRef = doc(database, "page_hero", "storefront_hero");
+  const documentRef = doc(database, "pageHero", "storefrontHero");
   const snapshot = await getDoc(documentRef);
   const pageHero = snapshot.data() as PageHeroType;
 

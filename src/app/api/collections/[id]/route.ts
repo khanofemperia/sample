@@ -25,16 +25,16 @@ type CollectionDataType = {
   image: string;
   title: string;
   slug: string;
-  campaign_duration: {
-    start_date: string;
-    end_date: string;
+  campaignDuration: {
+    startDate: string;
+    endDate: string;
   };
   visibility: string;
   status: string;
-  collection_type: string;
+  collectionType: string;
   index: number;
-  last_updated: string;
-  date_created: string;
+  lastUpdated: string;
+  dateCreated: string;
   products: { id: string; index: number }[] | null;
 };
 

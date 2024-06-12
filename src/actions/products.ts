@@ -47,8 +47,8 @@ export async function CreateProductAction(data: CreateProductType) {
       images: null,
       colors: null,
       sizes: null,
-      last_updated: currentTimestamp(),
-      date_created: currentTimestamp(),
+      lastUpdated: currentTimestamp(),
+      dateCreated: currentTimestamp(),
     };
 
     await setDoc(documentRef, product);
@@ -57,7 +57,7 @@ export async function CreateProductAction(data: CreateProductType) {
     return "Product created";
   } catch (error) {
     console.error("Error creating product:", error);
-    return "Failed to create product";
+    return "Error creating product";
   }
 }
 
@@ -70,10 +70,8 @@ export async function UpdateProductAction(data: EditProduct) {
     const updatedProduct = {
       ...currentProduct,
       ...data,
-      last_updated: currentTimestamp(),
+      lastUpdated: currentTimestamp(),
     };
-
-    console.log(data);
 
     await setDoc(docRef, updatedProduct);
     revalidatePath("/admin/products/[id]", "page");
@@ -81,6 +79,6 @@ export async function UpdateProductAction(data: EditProduct) {
     return "Product updated";
   } catch (error) {
     console.error("Error updating product:", error);
-    return "Failed to update product";
+    return "Error updating product";
   }
 }

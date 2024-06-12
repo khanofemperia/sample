@@ -17,26 +17,26 @@ type DataType = {
   image: string;
   title: string;
   slug: string;
-  campaign_duration: {
-    start_date: string;
-    end_date: string;
+  campaignDuration: {
+    startDate: string;
+    endDate: string;
   };
   visibility: string;
   status: string;
-  collection_type: string;
+  collectionType: string;
   index: number;
-  last_updated: string;
-  date_created: string;
+  lastUpdated: string;
+  dateCreated: string;
   products: { id: string; index: number }[];
 };
 
 export async function CreateCollectionAction(data: {
   title: string;
   slug: string;
-  collection_type: string;
-  campaign_duration: {
-    start_date: string;
-    end_date: string;
+  collectionType: string;
+  campaignDuration: {
+    startDate: string;
+    endDate: string;
   };
 }) {
   try {
@@ -45,13 +45,13 @@ export async function CreateCollectionAction(data: {
     const newCollection = {
       title: data.title,
       slug: data.slug,
-      collection_type: data.collection_type,
-      campaign_duration: data.campaign_duration,
+      collectionType: data.collectionType,
+      campaignDuration: data.campaignDuration,
       index: 1,
       products: [],
       visibility: "DRAFT",
-      last_updated: currentTimestamp(),
-      date_created: currentTimestamp(),
+      lastUpdated: currentTimestamp(),
+      dateCreated: currentTimestamp(),
     };
 
     const existingCollections = await getDocs(
@@ -109,7 +109,7 @@ export async function ChangeCollectionIndexAction(data: {
     const collectionTwoRef = doc(database, "collections", collectionTwoId);
 
     await Promise.all([
-      updateDoc(collectionOneRef, { index, last_updated: currentTimestamp() }),
+      updateDoc(collectionOneRef, { index, lastUpdated: currentTimestamp() }),
       updateDoc(collectionTwoRef, {
         index: collectionOneBeforeUpdate.index,
       }),
@@ -126,7 +126,7 @@ export async function ChangeCollectionIndexAction(data: {
 
 export async function UpdateCollectionAction(data: {
   id: string;
-  campaign_duration?: { start_date: string; end_date: string };
+  campaignDuration?: { startDate: string; endDate: string };
   image?: string;
   title?: string;
   slug?: string;
@@ -142,8 +142,8 @@ export async function UpdateCollectionAction(data: {
 
     const updateData: Record<string, any> = {};
 
-    if (data.campaign_duration) {
-      updateData.campaign_duration = data.campaign_duration;
+    if (data.campaignDuration) {
+      updateData.campaignDuration = data.campaignDuration;
     }
 
     if (data.image) {
@@ -164,7 +164,7 @@ export async function UpdateCollectionAction(data: {
 
     await updateDoc(collectionRef, {
       ...updateData,
-      last_updated: currentTimestamp(),
+      lastUpdated: currentTimestamp(),
     });
     revalidatePath("/admin/shop/collections/[slug]", "page");
 
@@ -227,7 +227,7 @@ export async function AddProductAction(data: {
 
     await updateDoc(collectionRef, {
       products: updatedProducts,
-      last_updated: currentTimestamp(),
+      lastUpdated: currentTimestamp(),
     });
 
     revalidatePath("/admin/shop/collections/[slug]", "page");
@@ -271,7 +271,7 @@ export async function RemoveProductAction(data: {
 
     await updateDoc(collectionRef, {
       products: updatedProducts,
-      last_updated: currentTimestamp(),
+      lastUpdated: currentTimestamp(),
     });
 
     revalidatePath("/admin/shop/collections/[slug]", "page");
@@ -340,7 +340,7 @@ export async function ChangeProductIndexAction(data: {
 
       await updateDoc(collectionRef, {
         products: collectionData.products,
-        last_updated: currentTimestamp(),
+        lastUpdated: currentTimestamp(),
       });
 
       revalidatePath("/admin/shop/collections/[slug]", "page");
@@ -351,6 +351,6 @@ export async function ChangeProductIndexAction(data: {
     }
   } catch (error) {
     console.error("Error changing product index:", error);
-    return "An error occurred";
+    return "Error changing product index";
   }
 }

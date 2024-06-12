@@ -19,8 +19,8 @@ type CollectionProductType = {
   description: string | null;
   status: string;
   visibility: string;
-  date_created: string;
-  last_updated: string;
+  dateCreated: string;
+  lastUpdated: string;
   index: number;
 };
 
@@ -29,17 +29,17 @@ type CollectionType = {
   index: number;
   title: string;
   slug: string;
-  campaign_duration: {
-    start_date: string;
-    end_date: string;
+  campaignDuration: {
+    startDate: string;
+    endDate: string;
   };
-  collection_type: string;
+  collectionType: string;
   image?: string;
   products: CollectionProductType[];
   status: string;
   visibility: string;
-  date_created: string;
-  last_updated: string;
+  dateCreated: string;
+  lastUpdated: string;
 };
 
 function getCollections(): CollectionType[] {
@@ -49,11 +49,11 @@ function getCollections(): CollectionType[] {
       index: 2,
       title: 'Belle Jolie Lipstick - She "Marks" Her Man with Her Lips',
       slug: "belle-jolie-lipstick-mark-your-man",
-      campaign_duration: {
-        start_date: "2024-02-22 00:04:41",
-        end_date: "2024-04-18 00:04:41",
+      campaignDuration: {
+        startDate: "2024-02-22 00:04:41",
+        endDate: "2024-04-18 00:04:41",
       },
-      collection_type: "FEATURED_PRODUCTS",
+      collectionType: "FEATURED_PRODUCTS",
       products: [
         {
           id: "67746",
@@ -74,8 +74,8 @@ function getCollections(): CollectionType[] {
           colors: null,
           sizes: null,
           slug: "sleeveless-midi-dress",
-          date_created: "2024-04-07 09:17:42",
-          last_updated: "2024-04-07 09:29:47",
+          dateCreated: "2024-04-07 09:17:42",
+          lastUpdated: "2024-04-07 09:29:47",
           index: 1,
         },
         {
@@ -95,8 +95,8 @@ function getCollections(): CollectionType[] {
           colors: null,
           sizes: null,
           slug: "paisley-print-shirt-lapel-collar-womens-style",
-          date_created: "2024-04-07 07:35:21",
-          last_updated: "2024-04-07 08:17:15",
+          dateCreated: "2024-04-07 07:35:21",
+          lastUpdated: "2024-04-07 08:17:15",
           index: 2,
         },
         {
@@ -117,8 +117,8 @@ function getCollections(): CollectionType[] {
           colors: null,
           sizes: null,
           slug: "elegant-semi-sheer-solid-color-blouse",
-          date_created: "2024-04-07 08:21:51",
-          last_updated: "2024-04-07 08:39:08",
+          dateCreated: "2024-04-07 08:21:51",
+          lastUpdated: "2024-04-07 08:39:08",
           index: 3,
         },
         // {
@@ -139,31 +139,31 @@ function getCollections(): CollectionType[] {
         //   colors: null,
         //   sizes: null,
         //   slug: "rose-bodycon-cami-dress-cross-detail",
-        //   date_created: "2024-04-07 09:38:32",
-        //   last_updated: "2024-04-07 09:58:15",
+        //   dateCreated: "2024-04-07 09:38:32",
+        //   lastUpdated: "2024-04-07 09:58:15",
         //   index: 4,
         // },
       ],
       status: "PUBLISHED",
       visibility: "VISIBLE",
-      date_created: "2024-02-19 22:05:29",
-      last_updated: "2024-04-07 20:22:21",
+      dateCreated: "2024-02-19 22:05:29",
+      lastUpdated: "2024-04-07 20:22:21",
     },
     {
       id: "71200",
       index: 3,
       title: "The world's best fitting jeans",
       slug: "best-fitting-jeans",
-      campaign_duration: {
-        start_date: "2024-02-20 11:11:41",
-        end_date: "2024-02-27 11:11:41",
+      campaignDuration: {
+        startDate: "2024-02-20 11:11:41",
+        endDate: "2024-02-27 11:11:41",
       },
-      collection_type: "PROMOTIONAL_BANNER",
+      collectionType: "PROMOTIONAL_BANNER",
       products: [],
       status: "PUBLISHED",
       visibility: "VISIBLE",
-      date_created: "2024-02-20 09:12:50",
-      last_updated: "2024-02-20 18:46:31",
+      dateCreated: "2024-02-20 09:12:50",
+      lastUpdated: "2024-02-20 18:46:31",
       image:
         "https://firebasestorage.googleapis.com/v0/b/sample-f415e.appspot.com/o/images%2Fnew-for-you.png?alt=media&token=b43b5de6-b8b4-401e-9af2-a0bcfb8fb2de",
     },
@@ -247,13 +247,12 @@ function getRecommededProducts(): ProductType[] {
         "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/0e13ed3444786ecd783b0f63f0a10af9.jpg?imageView2/2/w/800/q/70/format/webp",
         "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/c34e9184d0aecb6fec4696f4de152005.jpg?imageView2/2/w/800/q/70/format/webp",
       ],
-      status: "PUBLISHED",
       visibility: "VISIBLE",
       colors: null,
       sizes: null,
       slug: "sleeveless-midi-dress",
-      date_created: "2024-04-07 09:17:42",
-      last_updated: "2024-04-07 09:29:47",
+      dateCreated: "2024-04-07 09:17:42",
+      lastUpdated: "2024-04-07 09:29:47",
     },
     {
       id: "52222",
@@ -272,8 +271,8 @@ function getRecommededProducts(): ProductType[] {
       colors: null,
       sizes: null,
       slug: "paisley-print-shirt-lapel-collar-womens-style",
-      date_created: "2024-04-07 07:35:21",
-      last_updated: "2024-04-07 08:17:15",
+      dateCreated: "2024-04-07 07:35:21",
+      lastUpdated: "2024-04-07 08:17:15",
     },
     {
       id: "05550",
@@ -293,8 +292,8 @@ function getRecommededProducts(): ProductType[] {
       colors: null,
       sizes: null,
       slug: "elegant-semi-sheer-solid-color-blouse",
-      date_created: "2024-04-07 08:21:51",
-      last_updated: "2024-04-07 08:39:08",
+      dateCreated: "2024-04-07 08:21:51",
+      lastUpdated: "2024-04-07 08:39:08",
     },
     {
       id: "58962",
@@ -315,8 +314,8 @@ function getRecommededProducts(): ProductType[] {
       colors: null,
       sizes: null,
       slug: "rose-bodycon-cami-dress-cross-detail",
-      date_created: "2024-04-07 09:38:32",
-      last_updated: "2024-04-07 09:58:15",
+      dateCreated: "2024-04-07 09:38:32",
+      lastUpdated: "2024-04-07 09:58:15",
     },
   ];
 }
@@ -362,7 +361,7 @@ export default function Shop() {
         <Categories categories={categories} />
         <div className="flex flex-col gap-10">
           {collections.map((collection, index) => {
-            switch (collection.collection_type) {
+            switch (collection.collectionType) {
               case "FEATURED_PRODUCTS":
                 return (
                   <div key={index}>

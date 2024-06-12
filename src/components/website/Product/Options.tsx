@@ -1,20 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import ViewCartButton from "./ViewCartButton";
-import { ChevronLeftIcon, ChevronRightIcon, CloseIcon } from "@/icons";
+import {  ChevronRightIcon, CloseIcon } from "@/icons";
 import { useOverlayStore } from "@/zustand/website/overlayStore";
 import { productInternationalSizes } from "@/libraries/utils";
 // import { AddToCartAction } from "@/actions/add-to-cart";
-import { formatThousands } from "@/libraries/utils";
 import { useAlertStore } from "@/zustand/website/alertStore";
 import { useEffect, useState, useTransition } from "react";
-import SpinnerWhite from "@/elements/Spinners/White";
-
-type ProductInfoType = {
-  colors: { name: string; image: string }[] | null;
-  sizeChart: SizeChartType | null;
-};
 
 type ColorType = {
   name: string;
@@ -80,7 +72,7 @@ function ProductSizeChart({
   return (
     <div>
       <div className="w-[285px] flex flex-wrap gap-[5px]">
-        {sizeChart.entry_labels.map((size, index) => (
+        {sizeChart.entryLabels.map((size, index) => (
           <div key={index} className="relative cursor-pointer">
             <div
               onClick={() => setSelectedSize(size.name)}
@@ -100,10 +92,10 @@ function ProductSizeChart({
           className="bg-lightgray pl-3 pr-8 py-2 mt-2 rounded-lg relative cursor-pointer"
         >
           <div>
-            {sizeChart.entry_labels.find((label) => label.name === selectedSize)
+            {sizeChart.entryLabels.find((label) => label.name === selectedSize)
               ?.index !== undefined &&
               sizeChart.sizes[
-                sizeChart.entry_labels.find(
+                sizeChart.entryLabels.find(
                   (label) => label.name === selectedSize
                 )!.index - 1
               ].measurements && (
@@ -124,7 +116,7 @@ function ProductSizeChart({
                         <span className="text-sm font-semibold">
                           {`${
                             sizeChart.sizes[
-                              sizeChart.entry_labels.find(
+                              sizeChart.entryLabels.find(
                                 (label) => label.name === selectedSize
                               )!.index - 1
                             ].measurements[column.name]?.in
@@ -284,7 +276,7 @@ export default function ProductOptions({
       {productInfo.colors &&
         productInfo.colors?.length > 0 &&
         productInfo.sizeChart &&
-        productInfo.sizeChart.entry_labels?.length > 0 && (
+        productInfo.sizeChart.entryLabels?.length > 0 && (
           <div className="flex flex-col gap-4 select-none">
             <ProductColors
               colors={productInfo.colors}
@@ -309,7 +301,7 @@ export default function ProductOptions({
         )}
       {productInfo.colors?.length === 0 &&
         productInfo.sizeChart &&
-        productInfo.sizeChart.entry_labels?.length > 0 && (
+        productInfo.sizeChart.entryLabels?.length > 0 && (
           <ProductSizeChart
             sizeChart={productInfo.sizeChart}
             selectedSize={selectedSize}

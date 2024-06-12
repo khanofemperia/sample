@@ -18,11 +18,11 @@ import Overlay from "@/ui/Overlay";
 type RequestDataType = {
   title: string;
   slug: string;
-  campaign_duration: {
-    start_date: string;
-    end_date: string;
+  campaignDuration: {
+    startDate: string;
+    endDate: string;
   };
-  collection_type: string;
+  collectionType: string;
   image?: string;
 };
 
@@ -136,16 +136,16 @@ export function NewCollectionOverlay() {
       setLoading(true);
 
       const campaignDuration = {
-        start_date: formatDate(launchDate),
-        end_date: formatDate(endDate),
+        startDate: formatDate(launchDate),
+        endDate: formatDate(endDate),
       };
 
       try {
         const requestData: RequestDataType = {
           title,
           slug,
-          campaign_duration: campaignDuration,
-          collection_type: selectedCollectionType,
+          campaignDuration: campaignDuration,
+          collectionType: selectedCollectionType,
         };
 
         if (selectedCollectionType === BANNER) {

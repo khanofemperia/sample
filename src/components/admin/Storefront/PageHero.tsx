@@ -16,7 +16,7 @@ type PageHeroType = {
   id: string;
   image: string | null;
   title: string | null;
-  destination_url: string | null;
+  destinationUrl: string | null;
   visibility: string;
 };
 
@@ -74,13 +74,13 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [title, setTitle] = useState<string>(pageHero.title || "");
+  const [image, setImage] = useState<string>(pageHero.image || "");
   const [visibility, setVisibility] = useState<string>(
     pageHero.visibility.toUpperCase()
   );
   const [destinationUrl, setDestinationUrl] = useState<string>(
-    pageHero.destination_url || ""
+    pageHero.destinationUrl || ""
   );
-  const [image, setImage] = useState<string>(pageHero.image || "");
 
   const { hideOverlay } = useOverlayStore();
 
@@ -126,7 +126,7 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
         const message = await UpdatePageHeroAction({
           title: title,
           image: image,
-          destination_url: destinationUrl,
+          destinationUrl: destinationUrl,
           visibility: visibility,
         });
         setAlertMessage(message);
@@ -145,7 +145,7 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
     setLoading(false);
     hideOverlay({ pageName, overlayName });
     setTitle(pageHero.title || "");
-    setDestinationUrl(pageHero.destination_url || "");
+    setDestinationUrl(pageHero.destinationUrl || "");
     setImage(pageHero.image || "");
   };
 
@@ -301,7 +301,7 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
                 </div>
                 <div className="flex flex-col gap-2">
                   <label
-                    htmlFor="destination_url"
+                    htmlFor="destinationUrl"
                     className="font-semibold text-sm"
                   >
                     Destination URL
@@ -309,7 +309,7 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
                   <div className="w-full h-9 relative">
                     <input
                       type="text"
-                      name="destination_url"
+                      name="destinationUrl"
                       placeholder="https://cherlygood.com/shop/denim-skirts"
                       value={destinationUrl}
                       onChange={(e) => setDestinationUrl(e.target.value)}

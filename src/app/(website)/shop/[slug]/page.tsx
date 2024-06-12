@@ -19,7 +19,6 @@ function getProduct(): ProductType {
       "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/5be9317ac12c41ae2b663a11b8ab6f9b.jpg?imageView2/2/w/800/q/70/format/webp",
       "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/4ffde039b5cf007db0ac509219dbcc67.jpg?imageView2/2/w/800/q/70/format/webp",
     ],
-    status: "PUBLISHED",
     visibility: "VISIBLE",
     colors: [
       {
@@ -202,7 +201,7 @@ function getProduct(): ProductType {
           size: "XXL",
         },
       ],
-      entry_labels: [
+      entryLabels: [
         {
           index: 1,
           name: "S",
@@ -226,8 +225,8 @@ function getProduct(): ProductType {
       ],
     },
     slug: "elegant-semi-sheer-solid-color-blouse",
-    date_created: "2024-04-07 08:21:51",
-    last_updated: "2024-04-07 08:39:08",
+    dateCreated: "2024-04-07 08:21:51",
+    lastUpdated: "2024-04-07 08:39:08",
   };
 }
 

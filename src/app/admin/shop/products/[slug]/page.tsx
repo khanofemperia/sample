@@ -188,9 +188,9 @@ export default async function EditProduct({
                     <SizeChartButton />
                   </div>
                   <div className="p-5">
-                    {sizes?.entry_labels.length ? (
+                    {sizes?.entryLabels.length ? (
                       <div className="w-full max-w-[508px] flex flex-wrap gap-2 *:h-9 *:min-w-14 *:px-4 *:rounded-full *:flex *:items-center *:justify-center *:bg-lightgray">
-                        {sizes.entry_labels.map((size, index) => (
+                        {sizes.entryLabels.map((size, index) => (
                           <span key={index}>{size.name}</span>
                         ))}
                       </div>

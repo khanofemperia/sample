@@ -10,7 +10,7 @@ type CategoryType = {
 };
 
 type DataType = {
-  category_section_visibility: string;
+  categorySectionVisibility: string;
   categories: CategoryType[];
 };
 
@@ -22,9 +22,9 @@ export default async function UpdateCategoriesAction(data: DataType) {
     });
 
     const settingsPromise = updateDoc(
-      doc(database, "settings", "default_settings"),
+      doc(database, "settings", "defaultSettings"),
       {
-        "category_section.visibility": data.category_section_visibility,
+        "categorySection.visibility": data.categorySectionVisibility,
       }
     );
 

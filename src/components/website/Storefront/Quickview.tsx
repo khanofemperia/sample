@@ -1,12 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Image from "next/image";
 import { useQuickviewStore } from "@/zustand/website/quickviewStore";
 // import ProductImages from "../ProductImages";
 // import SpecialOffer from "../SpecialOffer";
 // import ProductOptions from "../Product/ProductOptions";
-import styles from "./description.module.css";
 import { CloseIcon } from "@/icons";
 
 type ColorType = {

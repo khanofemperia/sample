@@ -36,17 +36,17 @@ export function CampaignDurationOverlay({
 }: {
   data: {
     id: string;
-    campaign_duration: { start_date: string; end_date: string };
+    campaignDuration: { startDate: string; endDate: string };
   };
 }) {
   const [loading, setLoading] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState<boolean>(false);
   const [launchDate, setLaunchDate] = useState<Date | null>(
-    new Date(data.campaign_duration.start_date)
+    new Date(data.campaignDuration.startDate)
   );
   const [endDate, setEndDate] = useState<Date | null>(
-    new Date(data.campaign_duration.end_date)
+    new Date(data.campaignDuration.endDate)
   );
 
   const { hideOverlay } = useOverlayStore();
@@ -97,14 +97,14 @@ export function CampaignDurationOverlay({
       setLoading(true);
 
       const campaignDuration = {
-        start_date: formatDate(launchDate),
-        end_date: formatDate(endDate),
+        startDate: formatDate(launchDate),
+        endDate: formatDate(endDate),
       };
 
       try {
         const message = await UpdateCollectionAction({
           id: data.id,
-          campaign_duration: campaignDuration,
+          campaignDuration: campaignDuration,
         });
         setAlertMessage(message);
         setShowAlert(true);

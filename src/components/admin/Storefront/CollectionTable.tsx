@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  ChangeIndexIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   EditIcon,
@@ -174,8 +173,8 @@ export default function CollectionTable({
                           index,
                           title,
                           slug,
-                          campaign_duration,
-                          collection_type,
+                          campaignDuration,
+                          collectionType,
                           products,
                           visibility,
                         }) => (
@@ -186,8 +185,8 @@ export default function CollectionTable({
                             <td className="relative px-3 w-max min-w-max border-r">
                               <div className="flex items-center gap-1 absolute left-3 top-2">
                                 {getCampaignStatus(
-                                  campaign_duration.start_date,
-                                  campaign_duration.end_date
+                                  campaignDuration.startDate,
+                                  campaignDuration.endDate
                                 ) === CAMPAIGN_STATUS_UPCOMING && (
                                   <IoHourglassOutline
                                     className="stroke-custom-gold fill-custom-gold"
@@ -195,8 +194,8 @@ export default function CollectionTable({
                                   />
                                 )}
                                 {getCampaignStatus(
-                                  campaign_duration.start_date,
-                                  campaign_duration.end_date
+                                  campaignDuration.startDate,
+                                  campaignDuration.endDate
                                 ) === CAMPAIGN_STATUS_ACTIVE && (
                                   <HiOutlineClock
                                     className="stroke-custom-green"
@@ -204,8 +203,8 @@ export default function CollectionTable({
                                   />
                                 )}
                                 {getCampaignStatus(
-                                  campaign_duration.start_date,
-                                  campaign_duration.end_date
+                                  campaignDuration.startDate,
+                                  campaignDuration.endDate
                                 ) === CAMPAIGN_STATUS_ENDED && (
                                   <HiOutlineBan
                                     className="stroke-custom-red"
@@ -216,24 +215,24 @@ export default function CollectionTable({
                                   className={clsx("italic", {
                                     "text-custom-gold":
                                       getCampaignStatus(
-                                        campaign_duration.start_date,
-                                        campaign_duration.end_date
+                                        campaignDuration.startDate,
+                                        campaignDuration.endDate
                                       ) === CAMPAIGN_STATUS_UPCOMING,
                                     "text-custom-green":
                                       getCampaignStatus(
-                                        campaign_duration.start_date,
-                                        campaign_duration.end_date
+                                        campaignDuration.startDate,
+                                        campaignDuration.endDate
                                       ) === CAMPAIGN_STATUS_ACTIVE,
                                     "text-custom-red":
                                       getCampaignStatus(
-                                        campaign_duration.start_date,
-                                        campaign_duration.end_date
+                                        campaignDuration.startDate,
+                                        campaignDuration.endDate
                                       ) === CAMPAIGN_STATUS_ENDED,
                                   })}
                                 >
                                   {getCampaignStatus(
-                                    campaign_duration.start_date,
-                                    campaign_duration.end_date
+                                    campaignDuration.startDate,
+                                    campaignDuration.endDate
                                   )}
                                 </span>
                               </div>
@@ -246,17 +245,17 @@ export default function CollectionTable({
                                         {
                                           "bg-custom-green/10 border border-custom-green/15":
                                             getCampaignStatus(
-                                              campaign_duration.start_date,
-                                              campaign_duration.end_date
+                                              campaignDuration.startDate,
+                                              campaignDuration.endDate
                                             ) === CAMPAIGN_STATUS_ACTIVE,
                                           "bg-lightgray border border-[#6c6c6c]/15":
                                             getCampaignStatus(
-                                              campaign_duration.start_date,
-                                              campaign_duration.end_date
+                                              campaignDuration.startDate,
+                                              campaignDuration.endDate
                                             ) === CAMPAIGN_STATUS_ENDED ||
                                             getCampaignStatus(
-                                              campaign_duration.start_date,
-                                              campaign_duration.end_date
+                                              campaignDuration.startDate,
+                                              campaignDuration.endDate
                                             ) === CAMPAIGN_STATUS_UPCOMING,
                                         }
                                       )}
@@ -272,13 +271,13 @@ export default function CollectionTable({
                                         className={clsx({
                                           "text-custom-green":
                                             getCampaignStatus(
-                                              campaign_duration.start_date,
-                                              campaign_duration.end_date
+                                              campaignDuration.startDate,
+                                              campaignDuration.endDate
                                             ) === CAMPAIGN_STATUS_ACTIVE,
                                         })}
                                       >
                                         {formatDate(
-                                          campaign_duration.start_date
+                                          campaignDuration.startDate
                                         )}
                                       </span>
                                     </div>
@@ -290,17 +289,17 @@ export default function CollectionTable({
                                         {
                                           "bg-custom-red/10 border border-custom-red/15":
                                             getCampaignStatus(
-                                              campaign_duration.start_date,
-                                              campaign_duration.end_date
+                                              campaignDuration.startDate,
+                                              campaignDuration.endDate
                                             ) === CAMPAIGN_STATUS_ENDED,
                                           "bg-lightgray border border-[#6c6c6c]/15":
                                             getCampaignStatus(
-                                              campaign_duration.start_date,
-                                              campaign_duration.end_date
+                                              campaignDuration.startDate,
+                                              campaignDuration.endDate
                                             ) === CAMPAIGN_STATUS_ACTIVE ||
                                             getCampaignStatus(
-                                              campaign_duration.start_date,
-                                              campaign_duration.end_date
+                                              campaignDuration.startDate,
+                                              campaignDuration.endDate
                                             ) === CAMPAIGN_STATUS_UPCOMING,
                                         }
                                       )}
@@ -316,12 +315,12 @@ export default function CollectionTable({
                                         className={clsx({
                                           "text-custom-red":
                                             getCampaignStatus(
-                                              campaign_duration.start_date,
-                                              campaign_duration.end_date
+                                              campaignDuration.startDate,
+                                              campaignDuration.endDate
                                             ) === CAMPAIGN_STATUS_ENDED,
                                         })}
                                       >
-                                        {formatDate(campaign_duration.end_date)}
+                                        {formatDate(campaignDuration.endDate)}
                                       </span>
                                     </div>
                                   </div>
@@ -337,7 +336,7 @@ export default function CollectionTable({
                             <td className="px-3 w-[100px] min-w-[100px] border-r">
                               <p className="font-medium w-max">
                                 {capitalizeFirstLetter(
-                                  collection_type.toLowerCase()
+                                  collectionType.toLowerCase()
                                 )}
                               </p>
                             </td>

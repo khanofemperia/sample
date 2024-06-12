@@ -3,20 +3,20 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { database } from "@/libraries/firebase";
 
 type SettingType = {
-  category_section: {
+  categorySection: {
     visibility: string;
   };
   [key: string]: any;
 };
 
 const defaultSettings: SettingType = {
-  category_section: {
+  categorySection: {
     visibility: "HIDDEN",
   },
 };
 
 async function createOrUpdateSettings() {
-  const documentRef = doc(database, "settings", "default_settings");
+  const documentRef = doc(database, "settings", "defaultSettings");
   const snapshot = await getDoc(documentRef);
 
   if (!snapshot.exists()) {
@@ -52,7 +52,7 @@ async function createOrUpdateSettings() {
 export async function GET(_request: NextRequest) {
   await createOrUpdateSettings();
 
-  const documentRef = doc(database, "settings", "default_settings");
+  const documentRef = doc(database, "settings", "defaultSettings");
   const snapshot = await getDoc(documentRef);
   const settings = snapshot.data() as SettingType;
 

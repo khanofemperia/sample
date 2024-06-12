@@ -7,7 +7,6 @@ import { useOverlayStore } from "@/zustand/admin/overlayStore";
 import { ArrowLeftIcon, CloseIcon, EditIcon } from "@/icons";
 import clsx from "clsx";
 import Overlay from "@/ui/Overlay";
-import { UpdateProductAction } from "@/actions/products";
 
 type DataType = {
   id: string;

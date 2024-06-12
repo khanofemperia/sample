@@ -55,7 +55,7 @@ export function SizeChartOverlay({ data }: { data: DataType }) {
     ? (data.chart?.columns || []).sort((a: any, b: any) => a.index - b.index)
     : [];
   const chartEntryLabels = chartExists
-    ? (data.chart?.entry_labels || []).sort(
+    ? (data.chart?.entryLabels || []).sort(
         (a: any, b: any) => a.index - b.index
       )
     : [];
@@ -121,7 +121,7 @@ export function SizeChartOverlay({ data }: { data: DataType }) {
 
     const updatedChart = {
       columns,
-      entry_labels: entryLabels,
+      entryLabels: entryLabels,
       sizes: entries,
     };
 

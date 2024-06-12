@@ -7,7 +7,7 @@ import { revalidatePath } from "next/cache";
 type PageHeroType = {
   image: string | null;
   title: string | null;
-  destination_url: string | null;
+  destinationUrl: string | null;
   visibility: string;
 };
 
@@ -15,7 +15,7 @@ export async function UpdatePageHeroAction(data: PageHeroType) {
   try {
     const { ...updatedPageHeroData } = data;
 
-    const documentRef = doc(database, "page_hero", "storefront_hero");
+    const documentRef = doc(database, "pageHero", "storefrontHero");
     await updateDoc(documentRef, updatedPageHeroData);
 
     revalidatePath("/admin/shop");

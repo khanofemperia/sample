@@ -6,7 +6,6 @@ import Spinner from "@/ui/Spinners/Gray";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
 import {
   ArrowLeftIcon,
-  ChangeIndexIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   CloseIcon,
@@ -23,7 +22,6 @@ import {
   RemoveProductButton,
   RemoveProductOverlay,
 } from "./RemoveProductOverlay";
-import { IoFolderOpenOutline } from "react-icons/io5";
 import {
   ChangeProductIndexButton,
   ChangeProductIndexOverlay,
