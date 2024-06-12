@@ -134,15 +134,15 @@ export function formatThousands(num: string | number): string {
   return formattedNumber;
 }
 
-export const statusCodes = {
-  success: { code: 200, flag: "success", message: "Operation was successful" },
-  already_exists: {
-    code: 409,
-    flag: "already_exists",
-    message: "Resource already exists",
-  },
-  not_found: { code: 404, flag: "not_found", message: "Resource not found" },
-  failed: { code: 500, flag: "failed", message: "Operation failed" },
+export function isGifImage(url: string) {
+  try {
+    const parsedUrl = new URL(url);
+    const pathname = parsedUrl.pathname.toLowerCase();
+    return pathname.endsWith(".gif");
+  } catch (error) {
+    console.error("Invalid URL:", error);
+    return false;
+  }
 };
 
 export const productInternationalSizes = {

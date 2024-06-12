@@ -5,7 +5,6 @@ import { database } from "@/libraries/firebase";
 import { revalidatePath } from "next/cache";
 
 type PageHeroType = {
-  id: string;
   image: string | null;
   title: string | null;
   destination_url: string | null;
@@ -14,9 +13,9 @@ type PageHeroType = {
 
 export async function UpdatePageHeroAction(data: PageHeroType) {
   try {
-    const { id, ...updatedPageHeroData } = data;
+    const { ...updatedPageHeroData } = data;
 
-    const documentRef = doc(database, "page_hero", id);
+    const documentRef = doc(database, "page_hero", "storefront_hero");
     await updateDoc(documentRef, updatedPageHeroData);
 
     revalidatePath("/admin/shop");

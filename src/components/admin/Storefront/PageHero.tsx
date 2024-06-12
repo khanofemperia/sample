@@ -1,7 +1,7 @@
 "use client";
 
 import AlertMessage from "@/components/shared/AlertMessage";
-import { isValidRemoteImage } from "@/libraries/utils";
+import { isGifImage, isValidRemoteImage } from "@/libraries/utils";
 import { useState, useEffect } from "react";
 import Spinner from "@/ui/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
@@ -124,7 +124,6 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
         setShowAlert(true);
       } else {
         const message = await UpdatePageHeroAction({
-          id: pageHero.id,
           title: title,
           image: image,
           destination_url: destinationUrl,
@@ -154,6 +153,12 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
     setShowAlert(false);
     setAlertMessage("");
   };
+
+  console.log(
+    isGifImage(
+      "https://firebasestorage.googleapis.com/v0/b/sample-f415e.appspot.com/o/images%2Fvalentines.gif?alt=media&token=80d6e4d3-c237-4418-9d95-a7da7fafcf61"
+    )
+  );
 
   return (
     <>
@@ -250,13 +255,24 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
                     <div className="w-full border rounded-md overflow-hidden">
                       <div className="w-full min-h-[86px] flex items-center justify-center overflow-hidden">
                         {image && isValidRemoteImage(image) ? (
-                          <Image
-                            src={image}
-                            alt={title}
-                            width={725}
-                            height={86}
-                            priority={true}
-                          />
+                          isGifImage(image) ? (
+                            <Image
+                              src={image}
+                              alt={title}
+                              width={725}
+                              height={86}
+                              priority={true}
+                              unoptimized={true}
+                            />
+                          ) : (
+                            <Image
+                              src={image}
+                              alt={title}
+                              width={725}
+                              height={86}
+                              priority={true}
+                            />
+                          )
                         ) : (
                           <CiImageOn className="fill-neutral-200" size={80} />
                         )}
