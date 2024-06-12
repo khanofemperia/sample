@@ -154,12 +154,6 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
     setAlertMessage("");
   };
 
-  console.log(
-    isGifImage(
-      "https://firebasestorage.googleapis.com/v0/b/sample-f415e.appspot.com/o/images%2Fvalentines.gif?alt=media&token=80d6e4d3-c237-4418-9d95-a7da7fafcf61"
-    )
-  );
-
   return (
     <>
       {isOverlayVisible && (
