@@ -74,7 +74,9 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [title, setTitle] = useState<string>(pageHero.title || "");
-  const [visibility, setVisibility] = useState<string>(pageHero.visibility.toUpperCase());
+  const [visibility, setVisibility] = useState<string>(
+    pageHero.visibility.toUpperCase()
+  );
   const [destinationUrl, setDestinationUrl] = useState<string>(
     pageHero.destination_url || ""
   );
@@ -209,7 +211,7 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
               <div className="w-full h-full mt-[52px] md:mt-0 px-5 pt-5 pb-28 md:pb-10 flex flex-col gap-5 overflow-x-hidden overflow-y-visible invisible-scrollbar md:overflow-hidden">
                 <div className="flex flex-col gap-2">
                   <h2 className="font-semibold text-sm">Visibility</h2>
-                  <div className="w-full min-[425px]:w-max rounded-md h-9 flex gap-2 min-[425px]:gap-4 items-center justify-between px-[10px] bg-lightgray">
+                  <div className="px-[10px] py-2 w-full min-[425px]:w-max rounded-md flex gap-4 min-[425px]:gap-4 items-start justify-between bg-lightgray">
                     <div className="text-sm">
                       Display page hero on storefront
                     </div>

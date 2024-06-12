@@ -11,6 +11,7 @@ import Image from "next/image";
 import { CiImageOn } from "react-icons/ci";
 import Overlay from "@/ui/Overlay";
 import { UpdatePageHeroAction } from "@/actions/page-hero";
+import UpdateCategoriesAction from "@/actions/categories";
 
 type PageHeroType = {
   id: string;
@@ -130,11 +131,25 @@ export function CategoriesOverlay({
         visibility: visibilityStates[index] ? VISIBLE : HIDDEN,
       }));
 
-      return console.log(updatedCategories);
+      const allCategoriesHidden = updatedCategories.every(
+        (category) => category.visibility === HIDDEN
+      );
 
-      // const result = await UpdateCategoriesAction(updatedCategories);
-      // setAlertMessage(result.status.message);
-      // setShowAlert(true);
+      if (categorySectionVisibility === VISIBLE && allCategoriesHidden) {
+        setAlertMessage(
+          "Cannot display category section on storefront, all categories are hidden."
+        );
+        setShowAlert(true);
+        setLoading(false);
+        return;
+      }
+
+      const message = await UpdateCategoriesAction({
+        category_section_visibility: categorySectionVisibility,
+        categories: updatedCategories,
+      });
+      setAlertMessage(message);
+      setShowAlert(true);
     } catch (error) {
       console.error("Error updating categories:", error);
     } finally {
@@ -216,9 +231,9 @@ export function CategoriesOverlay({
               <div className="w-full h-full mt-[52px] md:mt-0 px-5 pt-5 pb-28 md:pb-10 flex flex-col gap-5 overflow-x-hidden overflow-y-visible invisible-scrollbar md:overflow-hidden">
                 <div className="flex flex-col gap-2">
                   <h2 className="font-semibold text-sm">Visibility</h2>
-                  <div className="w-full min-[425px]:w-max rounded-md h-9 flex gap-2 min-[425px]:gap-4 items-center justify-between px-[10px] bg-lightgray">
+                  <div className="px-[10px] py-2 w-full min-[425px]:w-max rounded-md flex gap-4 min-[425px]:gap-4 items-start justify-between bg-lightgray">
                     <div className="text-sm">
-                      Display categories on storefront
+                      Display category section on storefront
                     </div>
                     <div
                       onClick={() =>
@@ -227,7 +242,7 @@ export function CategoriesOverlay({
                         )
                       }
                       className={clsx(
-                        "w-10 h-5 rounded-full relative cursor-pointer ease-in-out duration-200",
+                        "min-w-10 w-10 h-5 rounded-full relative cursor-pointer ease-in-out duration-200",
                         {
                           "bg-white border":
                             categorySectionVisibility === HIDDEN,
