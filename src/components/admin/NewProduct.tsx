@@ -12,7 +12,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import Overlay from "@/ui/Overlay";
 
-export function NewProductButton() {
+export function NewProductMenuButton() {
   const { showOverlay } = useOverlayStore();
   const { setNavbarMenu } = useNavbarMenuStore();
 
@@ -30,6 +30,31 @@ export function NewProductButton() {
     <button
       type="button"
       className="h-9 w-[calc(100%-10px)] mx-auto px-4 rounded-md flex items-center cursor-pointer transition duration-300 ease-in-out active:bg-lightgray"
+      onClick={openOverlay}
+    >
+      New product
+    </button>
+  );
+}
+
+export function NewProductEmptyGridButton() {
+  const { showOverlay } = useOverlayStore();
+  const { setNavbarMenu } = useNavbarMenuStore();
+
+  const { pageName, overlayName } = useOverlayStore((state) => ({
+    pageName: state.pages.products.name,
+    overlayName: state.pages.products.overlays.newProduct.name,
+  }));
+
+  const openOverlay = () => {
+    setNavbarMenu(false);
+    showOverlay({ pageName, overlayName });
+  };
+
+  return (
+    <button
+      type="button"
+      className="h-9 w-max px-4 rounded-full overflow-hidden transition duration-300 ease-in-out text-white bg-custom-blue active:bg-custom-blue-dimmed lg:hover:bg-custom-blue-dimmed"
       onClick={openOverlay}
     >
       New product

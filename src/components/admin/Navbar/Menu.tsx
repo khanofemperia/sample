@@ -4,7 +4,7 @@ import { HamburgerMenuIcon } from "@/icons";
 import clsx from "clsx";
 import Link from "next/link";
 import { useEffect } from "react";
-import { NewProductButton } from "../NewProduct";
+import { NewProductMenuButton } from "../NewProduct";
 import { useNavbarMenuStore } from "@/zustand/admin/navbarMenuStore";
 import { usePathname } from "next/navigation";
 import { NewCollectionMenuButton } from "../Storefront/NewCollection";
@@ -55,7 +55,7 @@ export default function Menu() {
         })}
       >
         <div className="overflow-hidden h-full w-full py-[5px] flex flex-col gap-0 rounded-xl shadow-thick-bottom bg-white">
-          {isProductsPage && <NewProductButton />}
+          {isProductsPage && <NewProductMenuButton />}
           {isProductEditingPage && (
             <Link
               href={`/shop/${productSlug}`}
