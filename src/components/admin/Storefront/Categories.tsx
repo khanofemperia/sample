@@ -149,6 +149,10 @@ export function CategoriesOverlay({
   const onHideOverlay = () => {
     setLoading(false);
     hideOverlay({ pageName, overlayName });
+    setCategorySectionVisibility(categorySection.visibility.toUpperCase());
+    setVisibilityStates(
+      categories.map((category) => category.visibility === VISIBLE)
+    );
   };
 
   const hideAlertMessage = () => {
