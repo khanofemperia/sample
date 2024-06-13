@@ -34,9 +34,6 @@ export default function Menu() {
   const isProductEditingPage =
     /^\/admin\/shop\/products\/[a-z0-9-]+-\d{5}$/.test(pathname);
   const isUpsellsPage = pathname === "/admin/shop/upsells";
-  const isUpsellEditingPage = /^\/admin\/shop\/upsells\/[a-z0-9-]+-\d{5}$/.test(
-    pathname
-  );
   const isCollectionsPage = pathname === "/admin/shop";
 
   const showSeparator =
