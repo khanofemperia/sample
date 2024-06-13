@@ -19,8 +19,8 @@ type CollectionProductType = {
   description: string | null;
   status: string;
   visibility: string;
-  dateCreated: string;
-  lastUpdated: string;
+  createdAt: string;
+  updatedAt: string;
   index: number;
 };
 
@@ -38,8 +38,8 @@ type CollectionType = {
   products: CollectionProductType[];
   status: string;
   visibility: string;
-  dateCreated: string;
-  lastUpdated: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 function getCollections(): CollectionType[] {
@@ -74,8 +74,8 @@ function getCollections(): CollectionType[] {
           colors: null,
           sizes: null,
           slug: "sleeveless-midi-dress",
-          dateCreated: "2024-04-07 09:17:42",
-          lastUpdated: "2024-04-07 09:29:47",
+          createdAt: "2024-04-07 09:17:42",
+          updatedAt: "2024-04-07 09:29:47",
           index: 1,
         },
         {
@@ -95,8 +95,8 @@ function getCollections(): CollectionType[] {
           colors: null,
           sizes: null,
           slug: "paisley-print-shirt-lapel-collar-womens-style",
-          dateCreated: "2024-04-07 07:35:21",
-          lastUpdated: "2024-04-07 08:17:15",
+          createdAt: "2024-04-07 07:35:21",
+          updatedAt: "2024-04-07 08:17:15",
           index: 2,
         },
         {
@@ -117,8 +117,8 @@ function getCollections(): CollectionType[] {
           colors: null,
           sizes: null,
           slug: "elegant-semi-sheer-solid-color-blouse",
-          dateCreated: "2024-04-07 08:21:51",
-          lastUpdated: "2024-04-07 08:39:08",
+          createdAt: "2024-04-07 08:21:51",
+          updatedAt: "2024-04-07 08:39:08",
           index: 3,
         },
         // {
@@ -139,15 +139,15 @@ function getCollections(): CollectionType[] {
         //   colors: null,
         //   sizes: null,
         //   slug: "rose-bodycon-cami-dress-cross-detail",
-        //   dateCreated: "2024-04-07 09:38:32",
-        //   lastUpdated: "2024-04-07 09:58:15",
+        //   createdAt: "2024-04-07 09:38:32",
+        //   updatedAt: "2024-04-07 09:58:15",
         //   index: 4,
         // },
       ],
       status: "PUBLISHED",
       visibility: "VISIBLE",
-      dateCreated: "2024-02-19 22:05:29",
-      lastUpdated: "2024-04-07 20:22:21",
+      createdAt: "2024-02-19 22:05:29",
+      updatedAt: "2024-04-07 20:22:21",
     },
     {
       id: "71200",
@@ -162,8 +162,8 @@ function getCollections(): CollectionType[] {
       products: [],
       status: "PUBLISHED",
       visibility: "VISIBLE",
-      dateCreated: "2024-02-20 09:12:50",
-      lastUpdated: "2024-02-20 18:46:31",
+      createdAt: "2024-02-20 09:12:50",
+      updatedAt: "2024-02-20 18:46:31",
       image:
         "https://firebasestorage.googleapis.com/v0/b/sample-f415e.appspot.com/o/images%2Fnew-for-you.png?alt=media&token=b43b5de6-b8b4-401e-9af2-a0bcfb8fb2de",
     },
@@ -251,8 +251,8 @@ function getRecommededProducts(): ProductType[] {
       colors: null,
       sizes: null,
       slug: "sleeveless-midi-dress",
-      dateCreated: "2024-04-07 09:17:42",
-      lastUpdated: "2024-04-07 09:29:47",
+      createdAt: "2024-04-07 09:17:42",
+      updatedAt: "2024-04-07 09:29:47",
     },
     {
       id: "52222",
@@ -271,8 +271,8 @@ function getRecommededProducts(): ProductType[] {
       colors: null,
       sizes: null,
       slug: "paisley-print-shirt-lapel-collar-womens-style",
-      dateCreated: "2024-04-07 07:35:21",
-      lastUpdated: "2024-04-07 08:17:15",
+      createdAt: "2024-04-07 07:35:21",
+      updatedAt: "2024-04-07 08:17:15",
     },
     {
       id: "05550",
@@ -292,8 +292,8 @@ function getRecommededProducts(): ProductType[] {
       colors: null,
       sizes: null,
       slug: "elegant-semi-sheer-solid-color-blouse",
-      dateCreated: "2024-04-07 08:21:51",
-      lastUpdated: "2024-04-07 08:39:08",
+      createdAt: "2024-04-07 08:21:51",
+      updatedAt: "2024-04-07 08:39:08",
     },
     {
       id: "58962",
@@ -314,8 +314,8 @@ function getRecommededProducts(): ProductType[] {
       colors: null,
       sizes: null,
       slug: "rose-bodycon-cami-dress-cross-detail",
-      dateCreated: "2024-04-07 09:38:32",
-      lastUpdated: "2024-04-07 09:58:15",
+      createdAt: "2024-04-07 09:38:32",
+      updatedAt: "2024-04-07 09:58:15",
     },
   ];
 }

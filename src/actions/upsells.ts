@@ -28,8 +28,8 @@ export async function CreateUpsellAction(data: CreateUpsellType) {
       salePrice: data.salePrice,
       poster: data.poster,
       visibility: "DRAFT",
-      lastUpdated: currentTimestamp(),
-      dateCreated: currentTimestamp(),
+      updatedAt: currentTimestamp(),
+      createdAt: currentTimestamp(),
     };
 
     console.log(upsell);
@@ -53,7 +53,7 @@ export async function UpdateUpsellAction(data: EditUpsell) {
     const updatedUpsell = {
       ...currentUpsell,
       ...data,
-      lastUpdated: currentTimestamp(),
+      updatedAt: currentTimestamp(),
     };
 
     await setDoc(docRef, updatedUpsell);

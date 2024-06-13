@@ -24,8 +24,8 @@ type DataType = {
   visibility: string;
   collectionType: string;
   index: number;
-  lastUpdated: string;
-  dateCreated: string;
+  updatedAt: string;
+  createdAt: string;
   products: { id: string; index: number }[];
 };
 
@@ -49,8 +49,8 @@ export async function CreateCollectionAction(data: {
       index: 1,
       products: [],
       visibility: "DRAFT",
-      lastUpdated: currentTimestamp(),
-      dateCreated: currentTimestamp(),
+      updatedAt: currentTimestamp(),
+      createdAt: currentTimestamp(),
     };
 
     const existingCollections = await getDocs(
@@ -108,7 +108,7 @@ export async function ChangeCollectionIndexAction(data: {
     const collectionTwoRef = doc(database, "collections", collectionTwoId);
 
     await Promise.all([
-      updateDoc(collectionOneRef, { index, lastUpdated: currentTimestamp() }),
+      updateDoc(collectionOneRef, { index, updatedAt: currentTimestamp() }),
       updateDoc(collectionTwoRef, {
         index: collectionOneBeforeUpdate.index,
       }),
@@ -163,7 +163,7 @@ export async function UpdateCollectionAction(data: {
 
     await updateDoc(collectionRef, {
       ...updateData,
-      lastUpdated: currentTimestamp(),
+      updatedAt: currentTimestamp(),
     });
     revalidatePath("/admin/shop/collections/[slug]", "page");
 
@@ -226,7 +226,7 @@ export async function AddProductAction(data: {
 
     await updateDoc(collectionRef, {
       products: updatedProducts,
-      lastUpdated: currentTimestamp(),
+      updatedAt: currentTimestamp(),
     });
 
     revalidatePath("/admin/shop/collections/[slug]", "page");
@@ -270,7 +270,7 @@ export async function RemoveProductAction(data: {
 
     await updateDoc(collectionRef, {
       products: updatedProducts,
-      lastUpdated: currentTimestamp(),
+      updatedAt: currentTimestamp(),
     });
 
     revalidatePath("/admin/shop/collections/[slug]", "page");
@@ -339,7 +339,7 @@ export async function ChangeProductIndexAction(data: {
 
       await updateDoc(collectionRef, {
         products: collectionData.products,
-        lastUpdated: currentTimestamp(),
+        updatedAt: currentTimestamp(),
       });
 
       revalidatePath("/admin/shop/collections/[slug]", "page");

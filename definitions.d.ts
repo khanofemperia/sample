@@ -32,8 +32,8 @@ type ProductType = {
   sizes: SizeChartType | null;
   description: string | null;
   visibility: string;
-  dateCreated: string;
-  lastUpdated: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 type CollectionType = {
@@ -49,8 +49,8 @@ type CollectionType = {
   image?: string;
   products: ProductType[];
   visibility: string;
-  dateCreated: string;
-  lastUpdated: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 type ChipValueType = "draft" | "published" | "hidden";
@@ -67,6 +67,6 @@ type UpsellType = {
   salePrice: string;
   poster: string;
   visibility: string;
-  dateCreated: string;
-  lastUpdated: string;
+  createdAt: string;
+  updatedAt: string;
 };

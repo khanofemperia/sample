@@ -33,18 +33,18 @@ export async function GET(request: NextRequest) {
     return {
       id: doc.id,
       ...selectedFields,
-      lastUpdated: data["lastUpdated"],
+      updatedAt: data["updatedAt"],
     };
   });
 
   return NextResponse.json(
-    sortProducts(products).map(({ lastUpdated, ...rest }) => rest)
+    sortProducts(products).map(({ updatedAt, ...rest }) => rest)
   );
 }
 
-function sortProducts<T extends { lastUpdated: string }>(products: T[]): T[] {
+function sortProducts<T extends { updatedAt: string }>(products: T[]): T[] {
   return products.sort(
     (a, b) =>
-      new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime()
+      new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
   );
 }

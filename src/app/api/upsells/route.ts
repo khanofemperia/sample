@@ -15,9 +15,9 @@ export async function GET(_request: NextRequest) {
   return NextResponse.json(sorted);
 }
 
-function sortData<T extends { lastUpdated: string }>(data: T[]): T[] {
+function sortData<T extends { updatedAt: string }>(data: T[]): T[] {
   return data.sort(
     (a, b) =>
-      new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime()
+      new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
   );
 }

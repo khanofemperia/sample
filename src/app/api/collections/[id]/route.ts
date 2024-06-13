@@ -33,8 +33,8 @@ type CollectionDataType = {
   status: string;
   collectionType: string;
   index: number;
-  lastUpdated: string;
-  dateCreated: string;
+  updatedAt: string;
+  createdAt: string;
   products: { id: string; index: number }[] | null;
 };
 

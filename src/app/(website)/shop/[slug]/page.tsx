@@ -225,8 +225,8 @@ function getProduct(): ProductType {
       ],
     },
     slug: "elegant-semi-sheer-solid-color-blouse",
-    dateCreated: "2024-04-07 08:21:51",
-    lastUpdated: "2024-04-07 08:39:08",
+    createdAt: "2024-04-07 08:21:51",
+    updatedAt: "2024-04-07 08:39:08",
   };
 }
 

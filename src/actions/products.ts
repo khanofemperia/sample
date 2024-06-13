@@ -46,8 +46,8 @@ export async function CreateProductAction(data: CreateProductType) {
       images: null,
       colors: null,
       sizes: null,
-      lastUpdated: currentTimestamp(),
-      dateCreated: currentTimestamp(),
+      updatedAt: currentTimestamp(),
+      createdAt: currentTimestamp(),
     };
 
     await setDoc(documentRef, product);
@@ -69,7 +69,7 @@ export async function UpdateProductAction(data: EditProduct) {
     const updatedProduct = {
       ...currentProduct,
       ...data,
-      lastUpdated: currentTimestamp(),
+      updatedAt: currentTimestamp(),
     };
 
     await setDoc(docRef, updatedProduct);

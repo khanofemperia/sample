@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
     return {
       id: doc.id,
       ...selectedFields,
-      lastUpdated: data["lastUpdated"],
+      updatedAt: data["updatedAt"],
       index: data["index"],
     };
   });
