@@ -1,6 +1,4 @@
-import {
-  BasicDetailsButton,
-} from "@/components/admin/EditProduct/BasicDetailsOverlay";
+import { BasicDetailsButton } from "@/components/admin/EditProduct/BasicDetailsOverlay";
 import DataChip from "@/ui/DataChip";
 import {
   fetchData,
@@ -9,9 +7,7 @@ import {
 } from "@/libraries/utils";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import {
-  PosterButton,
-} from "@/components/admin/EditProduct/PosterOverlay";
+import { PosterButton } from "@/components/admin/EditProduct/PosterOverlay";
 import {
   VisibilityButton,
   VisibilityOverlay,
@@ -28,13 +24,7 @@ export default async function EditUpsell({
     notFound();
   }
 
-  const {
-    id,
-    price,
-    salePrice,
-    poster,
-    visibility,
-  } = data;
+  const { id, price, salePrice, poster, visibility } = data;
 
   return (
     <>
@@ -53,15 +43,26 @@ export default async function EditUpsell({
             </div>
             <div className="flex flex-col gap-5 p-5 pt-4">
               <div>
-                <h3 className="text-sm font-semibold mb-2">Sale price</h3>
-                <div className="w-max max-w-full h-9 px-4 rounded-full bg-lightgray flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
-                  ${formatThousands(salePrice)}
+                <h3 className="text-sm font-semibold mb-2">Pricing</h3>
+                <div className="w-max max-w-full h-9 px-4 rounded-full bg-lightgray flex gap-[6px] items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
+                  <span className="font-bold">
+                    ${formatThousands(salePrice)}
+                  </span>
+                  <span className="text-gray line-through">
+                    ${formatThousands(price)}
+                  </span>
                 </div>
               </div>
               <div>
-                <h3 className="text-sm font-semibold mb-2">Price</h3>
-                <div className="text-gray w-max max-w-full h-9 px-4 rounded-full bg-lightgray flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
-                  ${formatThousands(price)}
+                <h3 className="text-sm font-semibold mb-2">Poster</h3>
+                <div className="w-full max-w-[280px] rounded-xl aspect-square flex items-center justify-center overflow-hidden">
+                  <Image
+                    src={poster}
+                    alt="Upsell"
+                    width={280}
+                    height={280}
+                    priority
+                  />
                 </div>
               </div>
             </div>
@@ -69,43 +70,8 @@ export default async function EditUpsell({
         </div>
         <div>
           <p className="text-sm mb-4 md:max-w-[85%]">
-            Images that show off your product, helping people see its features
-            and quality. They grab attention and let customers imagine owning
-            it.
-          </p>
-          <div className="w-full shadow rounded-xl bg-white">
-            <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
-              <h2 className="font-semibold text-xl">Visuals</h2>
-            </div>
-            <div className="flex flex-col gap-5 p-5">
-              <div className="border rounded-xl">
-                <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
-                  <h3 className="text-sm font-semibold">Poster</h3>
-                  <PosterButton />
-                </div>
-                <div className="p-5">
-                  {!poster || !isValidRemoteImage(poster) ? (
-                    <p className="italic text-gray">Nothing yet</p>
-                  ) : (
-                    <div className="w-full max-w-[280px] rounded-xl aspect-square flex items-center justify-center overflow-hidden">
-                      <Image
-                        src={poster}
-                        alt="Upsell"
-                        width={280}
-                        height={280}
-                        priority
-                      />
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div>
-          <p className="text-sm mb-4 md:max-w-[85%]">
-            Choose whether the product is a work-in-progress (draft) or ready
-            to be seen (published), and decide if you want shoppers to see it or
+            Choose whether the product is a work-in-progress (draft) or ready to
+            be seen (published), and decide if you want shoppers to see it or
             keep it private (hidden).
           </p>
           <div className="w-full max-w-[400px] shadow rounded-xl bg-white">
