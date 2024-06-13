@@ -1,17 +1,15 @@
-import { BasicDetailsButton } from "@/components/admin/EditProduct/BasicDetailsOverlay";
+import { BasicDetailsButton, BasicDetailsOverlay } from "@/components/admin/EditUpsell/BasicDetailsOverlay";
 import DataChip from "@/ui/DataChip";
 import {
   fetchData,
   formatThousands,
-  isValidRemoteImage,
 } from "@/libraries/utils";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { PosterButton } from "@/components/admin/EditProduct/PosterOverlay";
 import {
   VisibilityButton,
   VisibilityOverlay,
-} from "@/components/admin/EditProduct/VisibilityOverlay";
+} from "@/components/admin/EditUpsell/VisibilityOverlay";
 
 export default async function EditUpsell({
   params,
@@ -85,8 +83,7 @@ export default async function EditUpsell({
           </div>
         </div>
       </div>
-      {/* <BasicDetailsOverlay data={{ id, category, name, slug, price }} />
-      <PosterOverlay data={{ id, poster }} /> */}
+      <BasicDetailsOverlay data={{ id, price, salePrice, poster }} />
       <VisibilityOverlay data={{ id, visibility }} />
     </>
   );

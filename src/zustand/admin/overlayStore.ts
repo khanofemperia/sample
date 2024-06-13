@@ -141,6 +141,19 @@ export const useOverlayStore = createWithEqualityFn<OverlayStoreProps>(
           },
         },
       },
+      editUpsell: {
+        name: "editUpsell",
+        overlays: {
+          basicDetails: {
+            name: "basicDetails",
+            isVisible: false,
+          },
+          visibility: {
+            name: "visibility",
+            isVisible: false,
+          },
+        },
+      },
       storefront: {
         name: "storefront",
         overlays: {
