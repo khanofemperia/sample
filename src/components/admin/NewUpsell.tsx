@@ -63,38 +63,14 @@ export function NewUpsellEmptyGridButton() {
 }
 
 export function NewUpsellOverlay() {
-  const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState("Select");
-  const [categories, setCategories] = useState<CategoryType[]>([]);
   const [formData, setFormData] = useState({
-    category: "",
-    name: "",
-    slug: "",
     price: "",
+    salePrice: "",
     poster: "",
   });
-
-  const categoryRef = useRef(null);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch("/api/categories");
-        if (!response.ok) {
-          throw new Error("Failed to fetch categories");
-        }
-        const data = await response.json();
-        setCategories(data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-
-    fetchCategories();
-  }, []);
 
   const { hideOverlay } = useOverlayStore();
 
@@ -120,36 +96,6 @@ export function NewUpsellOverlay() {
     };
   }, [isOverlayVisible, showAlert]);
 
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (!categoryRef.current || !(event.target instanceof Node)) {
-        return;
-      }
-
-      const targetNode = categoryRef.current as Node;
-
-      if (!targetNode.contains(event.target)) {
-        setIsCategoryDropdownOpen(false);
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  const handleCategorySelect = (category: string) => {
-    setSelectedCategory(category);
-    setIsCategoryDropdownOpen(false);
-
-    setFormData((prevData) => ({
-      ...prevData,
-      category: capitalizeFirstLetter(category),
-    }));
-  };
-
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({
@@ -165,44 +111,14 @@ export function NewUpsellOverlay() {
     }
   };
 
-  const handleSave = async () => {
-    if (!formData.category || formData.category.toLowerCase() === "select") {
-      setAlertMessage("Select a category");
-      setShowAlert(true);
-      return;
-    } else if (!isValidRemoteImage(formData.poster)) {
-      setAlertMessage(
-        "Invalid poster URL. Try an image from Pinterest or your Firebase Storage."
-      );
-      setShowAlert(true);
-      return;
-    }
-
-    setLoading(true);
-
-    try {
-      const message = await CreateUpsellAction(formData);
-      setAlertMessage(message);
-      setShowAlert(true);
-    } catch (error) {
-      console.error(error);
-      setAlertMessage("Error creating upsell");
-      setShowAlert(true);
-    } finally {
-      setLoading(false);
-      onHideOverlay();
-    }
-  };
+  const handleSave = async () => {};
 
   const onHideOverlay = () => {
     setLoading(false);
     hideOverlay({ pageName, overlayName });
-    setSelectedCategory("Select");
     setFormData({
-      category: "",
-      name: "",
-      slug: "",
       price: "",
+      salePrice: "",
       poster: "",
     });
   };
@@ -220,7 +136,7 @@ export function NewUpsellOverlay() {
             <div className="w-full h-[calc(100vh-188px)] md:h-auto">
               <div className="md:hidden flex items-end justify-center pt-4 pb-2 absolute top-0 left-0 right-0 bg-white">
                 <div className="relative flex justify-center items-center w-full h-7">
-                  <h2 className="font-semibold text-lg">New product</h2>
+                  <h2 className="font-semibold text-lg">New upsell</h2>
                   <button
                     onClick={onHideOverlay}
                     type="button"
@@ -241,7 +157,7 @@ export function NewUpsellOverlay() {
                     size={20}
                   />
                   <span className="font-semibold text-sm text-custom-blue">
-                    New product
+                    New upsell
                   </span>
                 </button>
                 <button
@@ -267,80 +183,6 @@ export function NewUpsellOverlay() {
               </div>
               <div className="w-full h-full mt-[52px] md:mt-0 px-5 pt-5 pb-28 md:pb-10 flex flex-col gap-5 overflow-x-hidden overflow-y-visible invisible-scrollbar md:overflow-hidden">
                 <div className="flex flex-col gap-2">
-                  <h2 className="font-semibold text-sm">Category</h2>
-                  <div ref={categoryRef} className="w-full h-9 relative">
-                    <button
-                      onClick={() =>
-                        setIsCategoryDropdownOpen((prevState) => !prevState)
-                      }
-                      type="button"
-                      className="h-9 w-full px-3 rounded-md flex items-center justify-between transition duration-300 ease-in-out bg-lightgray active:bg-lightgray-dimmed"
-                    >
-                      <span
-                        className={clsx({
-                          "text-gray": selectedCategory === "Select",
-                        })}
-                      >
-                        {selectedCategory}
-                      </span>
-                      <ChevronDownIcon
-                        className="-mr-[4px] stroke-gray"
-                        size={20}
-                      />
-                    </button>
-                    <div
-                      className={clsx("w-full absolute top-10 z-10", {
-                        hidden: !isCategoryDropdownOpen,
-                        block: isCategoryDropdownOpen,
-                      })}
-                    >
-                      <div className="overflow-hidden h-full w-full py-[6px] flex flex-col gap-0 rounded-md shadow-dropdown bg-white">
-                        {categories.map((category, index) => (
-                          <div
-                            key={index}
-                            className="w-full h-9 flex items-center px-[12px] cursor-context-menu transition duration-300 ease-in-out hover:bg-lightgray"
-                            onClick={() => handleCategorySelect(category.name)}
-                          >
-                            {category.name}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="name" className="font-semibold text-sm">
-                    Name
-                  </label>
-                  <div className="w-full h-9 relative">
-                    <input
-                      type="text"
-                      name="name"
-                      placeholder="Denim Mini Skirt"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      className="w-full h-9 px-3 rounded-md transition duration-300 ease-in-out border focus:border-custom-blue"
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="slug" className="font-semibold text-sm">
-                    Slug
-                  </label>
-                  <div className="w-full h-9 relative">
-                    <input
-                      type="text"
-                      name="slug"
-                      placeholder="denim-mini-skirt"
-                      value={formData.slug}
-                      onChange={handleInputChange}
-                      className="w-full h-9 px-3 rounded-md transition duration-300 ease-in-out border focus:border-custom-blue"
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="flex flex-col gap-2">
                   <label htmlFor="price" className="font-semibold text-sm">
                     Price
                   </label>
@@ -348,6 +190,22 @@ export function NewUpsellOverlay() {
                     <input
                       type="text"
                       name="price"
+                      placeholder="34.99"
+                      value={formData.price}
+                      onChange={handleInputChange}
+                      className="w-full h-9 px-3 rounded-md transition duration-300 ease-in-out border focus:border-custom-blue"
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="salePrice" className="font-semibold text-sm">
+                    Sale price
+                  </label>
+                  <div className="w-full h-9 relative">
+                    <input
+                      type="text"
+                      name="salePrice"
                       placeholder="34.99"
                       value={formData.price}
                       onChange={handleInputChange}
@@ -367,7 +225,7 @@ export function NewUpsellOverlay() {
                           isValidRemoteImage(formData.poster) && (
                             <Image
                               src={formData.poster}
-                              alt={formData.name || "Poster"}
+                              alt="Upsell poster"
                               width={383}
                               height={383}
                               priority
