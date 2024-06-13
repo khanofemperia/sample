@@ -60,3 +60,13 @@ type SettingType = {
     visibility: string;
   };
 };
+
+type UpsellType = {
+  id: string;
+  price: string;
+  salePrice: string;
+  poster: string;
+  visibility: string;
+  dateCreated: string;
+  lastUpdated: string;
+};

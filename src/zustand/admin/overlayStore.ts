@@ -132,28 +132,11 @@ export const useOverlayStore = createWithEqualityFn<OverlayStoreProps>(
           },
         },
       },
-      offers: {
-        name: "offers",
+      upsells: {
+        name: "upsells",
         overlays: {
-          newOffer: {
-            name: "newOffer",
-            isVisible: false,
-          },
-        },
-      },
-      editOffer: {
-        name: "editOffer",
-        overlays: {
-          offerProducts: {
-            name: "offerProducts",
-            isVisible: false,
-          },
-          removeProduct: {
-            name: "removeProduct",
-            isVisible: false,
-          },
-          changeProductIndex: {
-            name: "changeProductIndex",
+          newUpsell: {
+            name: "newUpsell",
             isVisible: false,
           },
         },

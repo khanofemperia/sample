@@ -28,7 +28,6 @@ type EditProduct = {
   images?: string[] | null;
   sizes?: SizeChartType | null;
   colors?: ColorType[] | null;
-  status?: string;
   visibility?: string;
 };
 
@@ -52,7 +51,7 @@ export async function CreateProductAction(data: CreateProductType) {
     };
 
     await setDoc(documentRef, product);
-    revalidatePath("/admin/products");
+    revalidatePath("/admin/shop/products");
 
     return "Product created";
   } catch (error) {
@@ -74,7 +73,7 @@ export async function UpdateProductAction(data: EditProduct) {
     };
 
     await setDoc(docRef, updatedProduct);
-    revalidatePath("/admin/products/[id]", "page");
+    revalidatePath("/admin/shop/products/[slug]", "page");
 
     return "Product updated";
   } catch (error) {

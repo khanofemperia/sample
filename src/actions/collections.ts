@@ -22,7 +22,6 @@ type DataType = {
     endDate: string;
   };
   visibility: string;
-  status: string;
   collectionType: string;
   index: number;
   lastUpdated: string;
