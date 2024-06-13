@@ -156,13 +156,6 @@ export function NewProductOverlay() {
       ...prevData,
       [name]: value,
     }));
-
-    if (name === "poster") {
-      setFormData((prevData) => ({
-        ...prevData,
-        poster: value,
-      }));
-    }
   };
 
   const handleSave = async () => {

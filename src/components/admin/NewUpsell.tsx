@@ -98,17 +98,18 @@ export function NewUpsellOverlay() {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
+
+    if (
+      (name === "price" || name === "salePrice") &&
+      !/^\d*\.?\d*$/.test(value)
+    ) {
+      return;
+    }
+
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-
-    if (name === "poster") {
-      setFormData((prevData) => ({
-        ...prevData,
-        poster: value,
-      }));
-    }
   };
 
   const handleSave = async () => {};
