@@ -8,6 +8,7 @@ import { NewProductMenuButton } from "../NewProduct";
 import { useNavbarMenuStore } from "@/zustand/admin/navbarMenuStore";
 import { usePathname } from "next/navigation";
 import { NewCollectionMenuButton } from "../Storefront/NewCollection";
+import { NewUpsellMenuButton } from "../NewUpsell";
 
 export default function Menu() {
   const { navbarMenuVisible, setNavbarMenu } = useNavbarMenuStore();
@@ -32,6 +33,10 @@ export default function Menu() {
   const isProductsPage = pathname === "/admin/shop/products";
   const isProductEditingPage =
     /^\/admin\/shop\/products\/[a-z0-9-]+-\d{5}$/.test(pathname);
+  const isUpsellsPage = pathname === "/admin/shop/upsells";
+  const isUpsellEditingPage = /^\/admin\/shop\/upsells\/[a-z0-9-]+-\d{5}$/.test(
+    pathname
+  );
   const isCollectionsPage = pathname === "/admin/shop";
 
   const showSeparator =
@@ -56,6 +61,7 @@ export default function Menu() {
       >
         <div className="overflow-hidden h-full w-full py-[5px] flex flex-col gap-0 rounded-xl shadow-thick-bottom bg-white">
           {isProductsPage && <NewProductMenuButton />}
+          {isUpsellsPage && <NewUpsellMenuButton />}
           {isProductEditingPage && (
             <Link
               href={`/shop/${productSlug}`}
