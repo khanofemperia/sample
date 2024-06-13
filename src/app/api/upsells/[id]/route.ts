@@ -3,10 +3,10 @@ import { doc, getDoc } from "firebase/firestore";
 import { database } from "@/libraries/firebase";
 
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const documentRef = doc(database, "products", params.id);
+  const documentRef = doc(database, "upsells", params.id);
   const snapshot = await getDoc(documentRef);
 
   if (!snapshot.exists()) {
@@ -14,24 +14,11 @@ export async function GET(
   }
 
   const data = snapshot.data();
-  const query = request.nextUrl.searchParams.get("fields");
 
-  let selectedFields: Partial<ProductType> = {};
-  if (query) {
-    const fields = query.split(",");
-    fields.forEach((field) => {
-      if (data.hasOwnProperty(field)) {
-        selectedFields[field as keyof ProductType] = data[field];
-      }
-    });
-  } else {
-    selectedFields = data as Omit<ProductType, "id">;
-  }
-
-  const product = {
+  const upsell = {
     id: snapshot.id,
-    ...selectedFields,
+    ...data,
   };
 
-  return NextResponse.json(product);
+  return NextResponse.json(upsell);
 }
