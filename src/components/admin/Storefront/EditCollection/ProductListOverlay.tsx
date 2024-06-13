@@ -515,8 +515,8 @@ export function ProductListOverlay({
                     )}
                   </div>
                 ) : (
-                  <div className="w-full flex flex-col gap-5 items-center mt-[52px] md:mt-0 px-5 pt-5 pb-28 md:pb-[90px]">
-                    <div className="flex flex-col gap-[2px] items-center">
+                  <div className="w-full flex flex-col gap-4 items-center mt-[52px] md:mt-0 px-5 pt-5 pb-28 md:pb-[90px]">
+                    <div className="flex flex-col gap-2 items-center">
                       <h2 className="font-semibold text-lg">
                         Collection is empty
                       </h2>
