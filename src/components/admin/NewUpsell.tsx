@@ -2,12 +2,12 @@
 
 import { CreateUpsellAction } from "@/actions/upsells";
 import AlertMessage from "@/components/shared/AlertMessage";
-import { capitalizeFirstLetter, isValidRemoteImage } from "@/libraries/utils";
-import { useState, useEffect, useRef } from "react";
+import { isValidRemoteImage } from "@/libraries/utils";
+import { useState, useEffect } from "react";
 import Spinner from "@/ui/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
 import { useNavbarMenuStore } from "@/zustand/admin/navbarMenuStore";
-import { ArrowLeftIcon, ChevronDownIcon, CloseIcon } from "@/icons";
+import { ArrowLeftIcon, CloseIcon } from "@/icons";
 import clsx from "clsx";
 import Image from "next/image";
 import Overlay from "@/ui/Overlay";
@@ -32,7 +32,7 @@ export function NewUpsellMenuButton() {
       className="h-9 w-[calc(100%-10px)] mx-auto px-4 rounded-md flex items-center cursor-pointer transition duration-300 ease-in-out active:bg-lightgray"
       onClick={openOverlay}
     >
-      New product
+      New upsell
     </button>
   );
 }
@@ -57,7 +57,7 @@ export function NewUpsellEmptyGridButton() {
       className="h-9 w-max px-4 rounded-full overflow-hidden transition duration-300 ease-in-out text-white bg-custom-blue active:bg-custom-blue-dimmed lg:hover:bg-custom-blue-dimmed"
       onClick={openOverlay}
     >
-      New product
+      New upsell
     </button>
   );
 }
@@ -112,7 +112,22 @@ export function NewUpsellOverlay() {
     }));
   };
 
-  const handleSave = async () => {};
+  const handleSave = async () => {
+    setLoading(true);
+
+    try {
+      const message = await CreateUpsellAction(formData);
+      setAlertMessage(message);
+      setShowAlert(true);
+    } catch (error) {
+      console.error(error);
+      setAlertMessage("Error creating upsell");
+      setShowAlert(true);
+    } finally {
+      setLoading(false);
+      onHideOverlay();
+    }
+  };
 
   const onHideOverlay = () => {
     setLoading(false);
@@ -191,7 +206,7 @@ export function NewUpsellOverlay() {
                     <input
                       type="text"
                       name="price"
-                      placeholder="34.99"
+                      placeholder="137.99"
                       value={formData.price}
                       onChange={handleInputChange}
                       className="w-full h-9 px-3 rounded-md transition duration-300 ease-in-out border focus:border-custom-blue"
@@ -207,8 +222,8 @@ export function NewUpsellOverlay() {
                     <input
                       type="text"
                       name="salePrice"
-                      placeholder="34.99"
-                      value={formData.price}
+                      placeholder="55.99"
+                      value={formData.salePrice}
                       onChange={handleInputChange}
                       className="w-full h-9 px-3 rounded-md transition duration-300 ease-in-out border focus:border-custom-blue"
                       required
@@ -226,7 +241,7 @@ export function NewUpsellOverlay() {
                           isValidRemoteImage(formData.poster) && (
                             <Image
                               src={formData.poster}
-                              alt="Upsell poster"
+                              alt="Upsell"
                               width={383}
                               height={383}
                               priority

@@ -31,7 +31,9 @@ export async function CreateUpsellAction(data: CreateUpsellType) {
       lastUpdated: currentTimestamp(),
       dateCreated: currentTimestamp(),
     };
-p
+
+    console.log(upsell);
+
     await setDoc(documentRef, upsell);
     revalidatePath("/admin/shop/upsells");
 

@@ -1,4 +1,7 @@
-import { NewUpsellEmptyGridButton, NewUpsellOverlay } from "@/components/admin/NewUpsell";
+import {
+  NewUpsellEmptyGridButton,
+  NewUpsellOverlay,
+} from "@/components/admin/NewUpsell";
 import { fetchData, formatThousands } from "@/libraries/utils";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,7 +13,7 @@ export default async function Upsells() {
     <>
       <div className="mx-auto flex flex-wrap justify-start px-5 md:px-0 md:w-[762px] lg:w-[1016px]">
         {upsells.length > 0 ? (
-          upsells.map(({ id, price, poster }, index) => (
+          upsells.map(({ id, price, salePrice, poster }, index) => (
             <Link
               key={index}
               href={`/admin/shop/upsells/${id}`}
@@ -28,8 +31,13 @@ export default async function Upsells() {
                     />
                   )}
                 </div>
-                <div className="flex items-center justify-center absolute bottom-0 text-sm w-full">
-                  <span>${formatThousands(price)}</span>
+                <div className="flex items-center justify-center absolute bottom-0 w-full">
+                  <div className="flex gap-[6px] items-center justify-center text-sm w-max">
+                    <span className="font-bold">${formatThousands(salePrice)}</span>
+                    <span className="text-gray line-through">
+                      ${formatThousands(price)}
+                    </span>
+                  </div>
                 </div>
               </div>
             </Link>

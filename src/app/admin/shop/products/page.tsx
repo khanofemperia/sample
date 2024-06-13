@@ -35,7 +35,7 @@ export default async function Products() {
                   )}
                 </div>
                 <div className="flex items-center justify-center absolute bottom-0 text-sm w-full">
-                  <span>${formatThousands(price)}</span>
+                  <span className="font-bold">${formatThousands(price)}</span>
                 </div>
               </div>
             </Link>
