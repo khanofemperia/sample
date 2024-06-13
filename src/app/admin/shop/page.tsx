@@ -40,8 +40,8 @@ export default async function Storefront() {
                   className={clsx(
                     "relative w-10 h-5 rounded-full ease-in-out duration-200",
                     {
-                      "bg-white border": false,
-                      "bg-custom-blue border border-custom-blue": true,
+                      "bg-white border": true,
+                      "bg-custom-blue border border-custom-blue": false,
                     }
                   )}
                 >
@@ -49,8 +49,8 @@ export default async function Storefront() {
                     className={clsx(
                       "w-[10px] h-[10px] rounded-full ease-in-out duration-300 absolute [top:50%] [transform:translateY(-50%)]",
                       {
-                        "left-[5px] bg-black": false,
-                        "left-[23px] bg-white": true,
+                        "left-[5px] bg-black": true,
+                        "left-[23px] bg-white": false,
                       }
                     )}
                   ></div>
