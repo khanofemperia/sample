@@ -13,7 +13,7 @@ function getProduct(): ProductType {
     price: "58.99",
     description:
       "<p><strong>Feeling Stressed? Overwhelmed?**</strong></p><p><br></p><p>Are you a busy woman juggling a million things? Feeling like life's one big to-do list?  <strong>We've all been there!</strong></p><p><br></p><p>But what if there was a way to find <strong>inner peace, heal your relationships,</strong> and even <strong>get fit,</strong> all in one amazing class? Introducing <strong>Therapeutic Yoga</strong> with yours truly, Tara!</p><p><br></p><p><strong>It's More Than Just Stretching!**</strong></p><p><br></p><p>Forget boring old gym routines! <strong>Therapeutic Yoga</strong> is a journey for your mind, body, and spirit. You'll <strong>de-stress, boost your energy levels,</strong> and <strong>improve your flexibility.</strong> Plus, you'll learn powerful breathing techniques that will help you navigate life's challenges with calm clarity. </p><p><br></p><p> And the best part? <strong>No experience is necessary!</strong> Whether you're a seasoned yogi or a complete beginner, <strong>Therapeutic Yoga</strong> is designed for <strong>every woman.</strong></p><p><br></p><p><strong>Find Your Inner Zen Today!**</strong></p><p><br></p><p>So, ditch the stress and embrace the <strong>peace within.</strong> Enroll in my <strong>Therapeutic Yoga</strong> class today!</p><p><br></p><p><strong>Because a happier, healthier you is just a downward-facing dog away!</strong><br></p>",
-    poster:
+    mainImage:
       "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/fbf522c1b1d84378bd9bda770affaa9a.jpg?imageView2/2/w/800/q/70/format/webp",
     images: [
       "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/5be9317ac12c41ae2b663a11b8ab6f9b.jpg?imageView2/2/w/800/q/70/format/webp",
@@ -246,7 +246,7 @@ export default function ProductDetails({
 
   const product = getProduct();
   const { id, name, price, description, colors, sizes } = product;
-  const images = [product.poster, ...(product.images ?? [])];
+  const images = [product.mainImage, ...(product.images ?? [])];
 
   return (
     <>

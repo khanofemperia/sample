@@ -26,7 +26,7 @@ type ProductType = {
   name: string;
   slug: string;
   price: string;
-  poster: string;
+  mainImage: string;
   images: string[] | null;
   colors: { name: string; image: string }[] | null;
   sizes: SizeChartType | null;
@@ -65,7 +65,7 @@ type UpsellType = {
   id: string;
   price: string;
   salePrice: string;
-  poster: string;
+  mainImage: string;
   visibility: string;
   createdAt: string;
   updatedAt: string;

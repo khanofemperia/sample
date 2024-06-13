@@ -32,7 +32,7 @@ type CollectionProductType = {
   name: string;
   index: number;
   price: string;
-  poster: string;
+  mainImage: string;
   slug: string;
   visibility: string;
 };
@@ -388,7 +388,7 @@ export function ProductListOverlay({
                               <thead className="border-y bg-neutral-100">
                                 <tr className="h-10 *:font-semibold *:text-gray">
                                   <td className="text-center border-r">#</td>
-                                  <td className="pl-3 border-r">Poster</td>
+                                  <td className="pl-3 border-r">Main image</td>
                                   <td className="pl-3 border-r">Name</td>
                                   <td className="pl-3 border-r">Price</td>
                                   <td className="pl-3 border-r">Visibility</td>
@@ -401,7 +401,7 @@ export function ProductListOverlay({
                                     id,
                                     index,
                                     slug,
-                                    poster,
+                                    mainImage,
                                     name,
                                     price,
                                     visibility,
@@ -416,7 +416,7 @@ export function ProductListOverlay({
                                       <td className="p-3 max-w-[120px] min-w-[120px] border-r">
                                         <div className="aspect-square w-full overflow-hidden flex items-center justify-center bg-white">
                                           <Image
-                                            src={poster}
+                                            src={mainImage}
                                             alt={name}
                                             width={216}
                                             height={216}

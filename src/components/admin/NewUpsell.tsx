@@ -69,7 +69,7 @@ export function NewUpsellOverlay() {
   const [formData, setFormData] = useState({
     price: "",
     salePrice: "",
-    poster: "",
+    mainImage: "",
   });
 
   const { hideOverlay } = useOverlayStore();
@@ -135,7 +135,7 @@ export function NewUpsellOverlay() {
     setFormData({
       price: "",
       salePrice: "",
-      poster: "",
+      mainImage: "",
     });
   };
 
@@ -231,16 +231,16 @@ export function NewUpsellOverlay() {
                   </div>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="poster" className="font-semibold text-sm">
-                    Poster
+                  <label htmlFor="mainImage" className="font-semibold text-sm">
+                    Main image
                   </label>
                   <div>
                     <div className="w-full max-w-[383px] border rounded-md overflow-hidden">
                       <div className="w-full aspect-square flex items-center justify-center overflow-hidden">
-                        {formData.poster &&
-                          isValidRemoteImage(formData.poster) && (
+                        {formData.mainImage &&
+                          isValidRemoteImage(formData.mainImage) && (
                             <Image
-                              src={formData.poster}
+                              src={formData.mainImage}
                               alt="Upsell"
                               width={383}
                               height={383}
@@ -251,9 +251,9 @@ export function NewUpsellOverlay() {
                       <div className="w-full h-9 border-t overflow-hidden">
                         <input
                           type="text"
-                          name="poster"
+                          name="mainImage"
                           placeholder="Paste image URL"
-                          value={formData.poster}
+                          value={formData.mainImage}
                           onChange={handleInputChange}
                           className="h-full w-full px-3 text-gray"
                         />

@@ -13,15 +13,15 @@ import { UpdateProductAction } from "@/actions/products";
 
 type DataType = {
   id: string;
-  poster: string;
+  mainImage: string;
 };
 
-export function PosterButton() {
+export function MainImageButton() {
   const { showOverlay } = useOverlayStore();
 
   const { pageName, overlayName } = useOverlayStore((state) => ({
     pageName: state.pages.editProduct.name,
-    overlayName: state.pages.editProduct.overlays.poster.name,
+    overlayName: state.pages.editProduct.overlays.mainImage.name,
   }));
 
   return (
@@ -35,19 +35,19 @@ export function PosterButton() {
   );
 }
 
-export function PosterOverlay({ data }: { data: DataType }) {
+export function MainImageOverlay({ data }: { data: DataType }) {
   const [loading, setLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
-  const [poster, setPoster] = useState(data.poster);
+  const [mainImage, setMainImage] = useState(data.mainImage);
   
   const { hideOverlay } = useOverlayStore();
 
   const { pageName, isOverlayVisible, overlayName } = useOverlayStore(
     (state) => ({
       pageName: state.pages.editProduct.name,
-      overlayName: state.pages.editProduct.overlays.poster.name,
-      isOverlayVisible: state.pages.editProduct.overlays.poster.isVisible,
+      overlayName: state.pages.editProduct.overlays.mainImage.name,
+      isOverlayVisible: state.pages.editProduct.overlays.mainImage.isVisible,
     })
   );
 
@@ -81,7 +81,7 @@ export function PosterOverlay({ data }: { data: DataType }) {
     setLoading(true);
 
     try {
-      const message = await UpdateProductAction({ id: data.id, poster });
+      const message = await UpdateProductAction({ id: data.id, mainImage });
       setAlertMessage(message);
       setShowAlert(true);
     } catch (error) {
@@ -95,7 +95,7 @@ export function PosterOverlay({ data }: { data: DataType }) {
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPoster(event.target.value);
+    setMainImage(event.target.value);
   };
 
   return (
@@ -107,11 +107,11 @@ export function PosterOverlay({ data }: { data: DataType }) {
               <div className="w-full h-[calc(100vh-188px)] md:h-auto">
                 <div className="md:hidden flex items-end justify-center pt-4 pb-2 absolute top-0 left-0 right-0 bg-white">
                   <div className="relative flex justify-center items-center w-full h-7">
-                    <h2 className="font-semibold text-lg">Poster</h2>
+                    <h2 className="font-semibold text-lg">Main image</h2>
                     <button
                       onClick={() => {
                         hideOverlay({ pageName, overlayName });
-                        setPoster(data.poster);
+                        setMainImage(data.mainImage);
                       }}
                       type="button"
                       className="w-7 h-7 rounded-full flex items-center justify-center absolute right-4 transition duration-300 ease-in-out bg-lightgray active:bg-lightgray-dimmed"
@@ -124,14 +124,14 @@ export function PosterOverlay({ data }: { data: DataType }) {
                   <button
                     onClick={() => {
                       hideOverlay({ pageName, overlayName });
-                      setPoster(data.poster);
+                      setMainImage(data.mainImage);
                     }}
                     type="button"
                     className="h-9 px-3 rounded-full flex items-center gap-1 transition duration-300 ease-in-out active:bg-lightgray"
                   >
                     <ArrowLeftIcon className="fill-custom-blue -ml-[2px]" size={20} />
                     <span className="font-semibold text-sm text-custom-blue">
-                      Poster
+                      Main image
                     </span>
                   </button>
                   <button
@@ -159,10 +159,10 @@ export function PosterOverlay({ data }: { data: DataType }) {
                   <div>
                     <div className="w-full max-w-[383px] mx-auto border rounded-md overflow-hidden">
                       <div className="w-full aspect-square flex items-center justify-center overflow-hidden">
-                        {poster && isValidRemoteImage(poster) && (
+                        {mainImage && isValidRemoteImage(mainImage) && (
                           <Image
-                            src={poster}
-                            alt="Poster"
+                            src={mainImage}
+                            alt="mainImage"
                             width={383}
                             height={383}
                             priority
@@ -172,9 +172,9 @@ export function PosterOverlay({ data }: { data: DataType }) {
                       <div className="w-full h-9 border-t overflow-hidden">
                         <input
                           type="text"
-                          name="poster"
+                          name="mainImage"
                           placeholder="Paste image URL"
-                          value={poster}
+                          value={mainImage}
                           onChange={handleInputChange}
                           className="h-full w-full px-3 text-gray"
                         />

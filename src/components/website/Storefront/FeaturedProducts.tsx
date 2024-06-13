@@ -30,7 +30,7 @@ export default function FeaturedProducts({
               {
                 id,
                 name,
-                poster,
+                mainImage,
                 price,
                 slug,
                 images,
@@ -50,7 +50,7 @@ export default function FeaturedProducts({
                   className="w-[224px] h-[224px] md:w-[calc(33.33vw-30px)] md:h-[calc(33.33vw-30px)] max-w-[292px] max-h-[292px] cursor-pointer aspect-square z-[1] absolute top-[10px] left-[10px] right-[10px] bg-gray rounded-xl flex items-center justify-center overflow-hidden"
                 >
                   <Image
-                    src={poster}
+                    src={mainImage}
                     alt={name}
                     width={1000}
                     height={1000}
@@ -63,7 +63,7 @@ export default function FeaturedProducts({
                     id,
                     name,
                     price,
-                    poster,
+                    mainImage,
                     images,
                     description,
                     colors,

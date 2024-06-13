@@ -72,8 +72,8 @@ export const useOverlayStore = createWithEqualityFn<OverlayStoreProps>(
             name: "basicDetails",
             isVisible: false,
           },
-          poster: {
-            name: "poster",
+          mainImage: {
+            name: "mainImage",
             isVisible: false,
           },
           images: {
@@ -105,8 +105,8 @@ export const useOverlayStore = createWithEqualityFn<OverlayStoreProps>(
             name: "basicDetails",
             isVisible: false,
           },
-          poster: {
-            name: "poster",
+          mainImage: {
+            name: "mainImage",
             isVisible: false,
           },
           images: {

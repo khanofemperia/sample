@@ -6,7 +6,7 @@ import Link from "next/link";
 export default async function Products() {
   const products = await fetchData<ProductType[]>("/api/products", [
     "id",
-    "poster",
+    "mainImage",
     "name",
     "price",
     "slug",
@@ -16,7 +16,7 @@ export default async function Products() {
     <>
       <div className="mx-auto flex flex-wrap justify-start px-5 md:px-0 md:w-[762px] lg:w-[1016px]">
         {products.length > 0 ? (
-          products.map(({ id, name, price, poster, slug }, index) => (
+          products.map(({ id, name, price, mainImage, slug }, index) => (
             <Link
               key={index}
               href={`/admin/shop/products/${slug}-${id}`}
@@ -24,9 +24,9 @@ export default async function Products() {
             >
               <div className="relative w-full h-full">
                 <div className="aspect-square w-full overflow-hidden flex items-center justify-center shadow-[2px_2px_4px_#9E9E9E] bg-white">
-                  {poster && (
+                  {mainImage && (
                     <Image
-                      src={poster}
+                      src={mainImage}
                       alt={name}
                       width={216}
                       height={216}

@@ -12,7 +12,7 @@ type CollectionProductType = {
   category: string;
   slug: string;
   price: string;
-  poster: string;
+  mainImage: string;
   images: string[] | null;
   colors: { name: string; image: string }[] | null;
   sizes: SizeChartType | null;
@@ -61,7 +61,7 @@ function getCollections(): CollectionType[] {
           name: "Women's Sleeveless Midi Dress: Summer Vacation Ball Gown Hem, Solid Elegant Casual Style, Easy-Care & Fitted",
           price: "56.63",
           description: null,
-          poster:
+          mainImage:
             "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/4e883a3cc6cdb959438b4598f2406f44.jpg?imageView2/2/w/800/q/70/format/webp",
           images: [
             "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/fc01d03bd81794d9f421e92013b7073c.jpg?imageView2/2/w/800/q/70/format/webp",
@@ -84,7 +84,7 @@ function getCollections(): CollectionType[] {
           name: "Elegant Paisley Print Shirt - Sophisticated Lapel Collar, Woven Durability, Versatile Women's Styling for All Seasons",
           price: "9.99",
           description: null,
-          poster:
+          mainImage:
             "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/dd4368fffa7a62a7f859e7b92338025a.jpg?imageView2/2/w/800/q/70/format/webp",
           images: [
             "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/9ba9be8afe9a97da152d8cc9e520148b.jpg?imageView2/2/w/800/q/70/format/webp",
@@ -106,7 +106,7 @@ function getCollections(): CollectionType[] {
           price: "58.99",
           description:
             "<p><strong>Feeling Stressed? Overwhelmed?**</strong></p><p><br></p><p>Are you a busy woman juggling a million things? Feeling like life's one big to-do list?  <strong>We've all been there!</strong></p><p><br></p><p>But what if there was a way to find <strong>inner peace, heal your relationships,</strong> and even <strong>get fit,</strong> all in one amazing class? Introducing <strong>Therapeutic Yoga</strong> with yours truly, Tara!</p><p><br></p><p><strong>It's More Than Just Stretching!**</strong></p><p><br></p><p>Forget boring old gym routines! <strong>Therapeutic Yoga</strong> is a journey for your mind, body, and spirit. You'll <strong>de-stress, boost your energy levels,</strong> and <strong>improve your flexibility.</strong> Plus, you'll learn powerful breathing techniques that will help you navigate life's challenges with calm clarity. </p><p><br></p><p> And the best part? <strong>No experience is necessary!</strong> Whether you're a seasoned yogi or a complete beginner, <strong>Therapeutic Yoga</strong> is designed for <strong>every woman.</strong></p><p><br></p><p><strong>Find Your Inner Zen Today!**</strong></p><p><br></p><p>So, ditch the stress and embrace the <strong>peace within.</strong> Enroll in my <strong>Therapeutic Yoga</strong> class today!</p><p><br></p><p><strong>Because a happier, healthier you is just a downward-facing dog away!</strong><br></p>",
-          poster:
+          mainImage:
             "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/fbf522c1b1d84378bd9bda770affaa9a.jpg?imageView2/2/w/800/q/70/format/webp",
           images: [
             "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/5be9317ac12c41ae2b663a11b8ab6f9b.jpg?imageView2/2/w/800/q/70/format/webp",
@@ -126,7 +126,7 @@ function getCollections(): CollectionType[] {
         //   name: "Versatile V-Neck Bodycon Cami Dress - Solid Color with Cross Detail, High Elasticity, Easy Care for All Seasons",
         //   price: "66.98",
         //   description: null,
-        //   poster:
+        //   mainImage:
         //     "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/11efe65c6b3e6407bb1ce4da21e2c8f8.jpg?imageView2/2/w/800/q/70/format/webp",
         //   images: [
         //     "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/d8d0fc85141cc282436215f379407f95.jpg?imageView2/2/w/800/q/70/format/webp",
@@ -239,7 +239,7 @@ function getRecommededProducts(): ProductType[] {
       name: "Women's Sleeveless Midi Dress: Summer Vacation Ball Gown Hem, Solid Elegant Casual Style, Easy-Care & Fitted",
       price: "56.63",
       description: null,
-      poster:
+      mainImage:
         "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/4e883a3cc6cdb959438b4598f2406f44.jpg?imageView2/2/w/800/q/70/format/webp",
       images: [
         "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/fc01d03bd81794d9f421e92013b7073c.jpg?imageView2/2/w/800/q/70/format/webp",
@@ -260,13 +260,12 @@ function getRecommededProducts(): ProductType[] {
       name: "Elegant Paisley Print Shirt - Sophisticated Lapel Collar, Woven Durability, Versatile Women's Styling for All Seasons",
       price: "9.99",
       description: null,
-      poster:
+      mainImage:
         "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/dd4368fffa7a62a7f859e7b92338025a.jpg?imageView2/2/w/800/q/70/format/webp",
       images: [
         "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/9ba9be8afe9a97da152d8cc9e520148b.jpg?imageView2/2/w/800/q/70/format/webp",
         "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/fa3d2e65e2840c0dffda4c798c0010fe.jpg?imageView2/2/w/800/q/70/format/webp",
       ],
-      status: "PUBLISHED",
       visibility: "VISIBLE",
       colors: null,
       sizes: null,
@@ -281,13 +280,12 @@ function getRecommededProducts(): ProductType[] {
       price: "58.99",
       description:
         "<p><strong>Feeling Stressed? Overwhelmed?**</strong></p><p><br></p><p>Are you a busy woman juggling a million things? Feeling like life's one big to-do list?  <strong>We've all been there!</strong></p><p><br></p><p>But what if there was a way to find <strong>inner peace, heal your relationships,</strong> and even <strong>get fit,</strong> all in one amazing class? Introducing <strong>Therapeutic Yoga</strong> with yours truly, Tara!</p><p><br></p><p><strong>It's More Than Just Stretching!**</strong></p><p><br></p><p>Forget boring old gym routines! <strong>Therapeutic Yoga</strong> is a journey for your mind, body, and spirit. You'll <strong>de-stress, boost your energy levels,</strong> and <strong>improve your flexibility.</strong> Plus, you'll learn powerful breathing techniques that will help you navigate life's challenges with calm clarity. </p><p><br></p><p> And the best part? <strong>No experience is necessary!</strong> Whether you're a seasoned yogi or a complete beginner, <strong>Therapeutic Yoga</strong> is designed for <strong>every woman.</strong></p><p><br></p><p><strong>Find Your Inner Zen Today!**</strong></p><p><br></p><p>So, ditch the stress and embrace the <strong>peace within.</strong> Enroll in my <strong>Therapeutic Yoga</strong> class today!</p><p><br></p><p><strong>Because a happier, healthier you is just a downward-facing dog away!</strong><br></p>",
-      poster:
+      mainImage:
         "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/fbf522c1b1d84378bd9bda770affaa9a.jpg?imageView2/2/w/800/q/70/format/webp",
       images: [
         "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/5be9317ac12c41ae2b663a11b8ab6f9b.jpg?imageView2/2/w/800/q/70/format/webp",
         "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/4ffde039b5cf007db0ac509219dbcc67.jpg?imageView2/2/w/800/q/70/format/webp",
       ],
-      status: "PUBLISHED",
       visibility: "VISIBLE",
       colors: null,
       sizes: null,
@@ -301,7 +299,7 @@ function getRecommededProducts(): ProductType[] {
       name: "Versatile V-Neck Bodycon Cami Dress - Solid Color with Cross Detail, High Elasticity, Easy Care for All Seasons",
       price: "66.98",
       description: null,
-      poster:
+      mainImage:
         "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/11efe65c6b3e6407bb1ce4da21e2c8f8.jpg?imageView2/2/w/800/q/70/format/webp",
       images: [
         "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/d8d0fc85141cc282436215f379407f95.jpg?imageView2/2/w/800/q/70/format/webp",
@@ -309,7 +307,6 @@ function getRecommededProducts(): ProductType[] {
         "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/e943ba065f07377e97a42b6509aaf72a.jpg?imageView2/2/w/800/q/70/format/webp",
         "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/06d0334848894ef775162c1037052c30.jpg?imageView2/2/w/800/q/70/format/webp",
       ],
-      status: "PUBLISHED",
       visibility: "VISIBLE",
       colors: null,
       sizes: null,
@@ -390,7 +387,7 @@ export default function Shop() {
                   {
                     id,
                     name,
-                    poster,
+                    mainImage,
                     price,
                     slug,
                     images,
@@ -410,7 +407,7 @@ export default function Shop() {
                       className="w-[calc(50vw-34px)] h-[calc(50vw-34px)] min-[516px]:w-[calc(33.33vw-30px)] min-[516px]:h-[calc(33.33vw-30px)] max-w-[292px] max-h-[292px] cursor-pointer aspect-square z-[1] absolute top-[10px] left-[10px] right-[10px] bg-gray rounded-xl flex items-center justify-center overflow-hidden"
                     >
                       <Image
-                        src={poster}
+                        src={mainImage}
                         alt={name}
                         width={1000}
                         height={1000}
@@ -423,7 +420,7 @@ export default function Shop() {
                         id,
                         name,
                         price,
-                        poster,
+                        mainImage,
                         images,
                         description,
                         colors,

@@ -6,7 +6,7 @@ type CollectionProductType = {
   id: string;
   name: string;
   price: string;
-  poster: string;
+  mainImage: string;
   slug: string;
   visibility: string;
 };
@@ -16,7 +16,7 @@ type UpdatedProductType = {
   name: string;
   index: number;
   price: string;
-  poster: string;
+  mainImage: string;
   slug: string;
   visibility: string;
 };
@@ -65,7 +65,7 @@ export async function GET(
         return {
           id: productDocSnap.id,
           index: product.index,
-          poster: productData.poster,
+          mainImage: productData.mainImage,
           name: productData.name,
           price: productData.price,
           slug: productData.slug,

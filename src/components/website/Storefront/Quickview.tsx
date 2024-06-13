@@ -18,7 +18,7 @@ type QuickviewButtonType = {
     id: string;
     name: string;
     price: string;
-    poster: string;
+    mainImage: string;
     images: string[] | null;
     description: string | null;
     colors: ColorType[] | null;
@@ -98,7 +98,7 @@ export default function Quickview() {
             <div className="w-[582px]">
               <ProductImages
                 images={selectedProduct.images}
-                poster={selectedProduct.poster}
+                mainImage={selectedProduct.mainImage}
                 name={selectedProduct.name}
               />
               {selectedProduct.description && (

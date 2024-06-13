@@ -10,7 +10,7 @@ type ProductType = {
   id: string;
   name: string;
   price: string;
-  poster: string;
+  mainImage: string;
   images: string[] | null;
   description: string | null;
   colors: ColorType[] | null;

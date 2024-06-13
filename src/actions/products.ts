@@ -10,7 +10,7 @@ type CreateProductType = {
   name: string;
   slug: string;
   price: string;
-  poster: string;
+  mainImage: string;
 };
 
 type ColorType = {
@@ -24,7 +24,7 @@ type EditProduct = {
   price?: string;
   slug?: string;
   description?: string;
-  poster?: string | null;
+  mainImage?: string | null;
   images?: string[] | null;
   sizes?: SizeChartType | null;
   colors?: ColorType[] | null;
@@ -40,7 +40,7 @@ export async function CreateProductAction(data: CreateProductType) {
       name: data.name,
       slug: data.slug,
       price: data.price,
-      poster: data.poster,
+      mainImage: data.mainImage,
       visibility: "DRAFT",
       description: null,
       images: null,

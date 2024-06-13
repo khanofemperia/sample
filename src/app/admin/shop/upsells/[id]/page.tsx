@@ -22,7 +22,7 @@ export default async function EditUpsell({
     notFound();
   }
 
-  const { id, price, salePrice, poster, visibility } = data;
+  const { id, price, salePrice, mainImage, visibility } = data;
 
   return (
     <>
@@ -52,10 +52,10 @@ export default async function EditUpsell({
                 </div>
               </div>
               <div>
-                <h3 className="text-sm font-semibold mb-2">Poster</h3>
+                <h3 className="text-sm font-semibold mb-2">Main image</h3>
                 <div className="w-full max-w-[280px] rounded-xl aspect-square flex items-center justify-center overflow-hidden">
                   <Image
-                    src={poster}
+                    src={mainImage}
                     alt="Upsell"
                     width={280}
                     height={280}
@@ -83,7 +83,7 @@ export default async function EditUpsell({
           </div>
         </div>
       </div>
-      <BasicDetailsOverlay data={{ id, price, salePrice, poster }} />
+      <BasicDetailsOverlay data={{ id, price, salePrice, mainImage }} />
       <VisibilityOverlay data={{ id, visibility }} />
     </>
   );

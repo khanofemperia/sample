@@ -74,7 +74,7 @@ export function NewProductOverlay() {
     name: "",
     slug: "",
     price: "",
-    poster: "",
+    mainImage: "",
   });
 
   const categoryRef = useRef(null);
@@ -163,9 +163,9 @@ export function NewProductOverlay() {
       setAlertMessage("Select a category");
       setShowAlert(true);
       return;
-    } else if (!isValidRemoteImage(formData.poster)) {
+    } else if (!isValidRemoteImage(formData.mainImage)) {
       setAlertMessage(
-        "Invalid poster URL. Try an image from Pinterest or your Firebase Storage."
+        "Invalid main image URL. Try an image from Pinterest or your Firebase Storage."
       );
       setShowAlert(true);
       return;
@@ -196,7 +196,7 @@ export function NewProductOverlay() {
       name: "",
       slug: "",
       price: "",
-      poster: "",
+      mainImage: "",
     });
   };
 
@@ -350,17 +350,17 @@ export function NewProductOverlay() {
                   </div>
                 </div>
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="poster" className="font-semibold text-sm">
-                    Poster
+                  <label htmlFor="mainImage" className="font-semibold text-sm">
+                    Main image
                   </label>
                   <div>
                     <div className="w-full max-w-[383px] border rounded-md overflow-hidden">
                       <div className="w-full aspect-square flex items-center justify-center overflow-hidden">
-                        {formData.poster &&
-                          isValidRemoteImage(formData.poster) && (
+                        {formData.mainImage &&
+                          isValidRemoteImage(formData.mainImage) && (
                             <Image
-                              src={formData.poster}
-                              alt={formData.name || "Poster"}
+                              src={formData.mainImage}
+                              alt={formData.name || "mainImage"}
                               width={383}
                               height={383}
                               priority
@@ -370,9 +370,9 @@ export function NewProductOverlay() {
                       <div className="w-full h-9 border-t overflow-hidden">
                         <input
                           type="text"
-                          name="poster"
+                          name="mainImage"
                           placeholder="Paste image URL"
-                          value={formData.poster}
+                          value={formData.mainImage}
                           onChange={handleInputChange}
                           className="h-full w-full px-3 text-gray"
                         />

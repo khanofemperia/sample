@@ -16,7 +16,7 @@ type DataType = {
   id: string;
   price: string;
   salePrice: string;
-  poster: string;
+  mainImage: string;
 };
 
 export function BasicDetailsButton() {
@@ -46,7 +46,7 @@ export function BasicDetailsOverlay({ data }: { data: DataType }) {
     id: data.id,
     price: data.price,
     salePrice: data.salePrice,
-    poster: data.poster,
+    mainImage: data.mainImage,
   });
 
   const { hideOverlay } = useOverlayStore();
@@ -201,16 +201,16 @@ export function BasicDetailsOverlay({ data }: { data: DataType }) {
                     </div>
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label htmlFor="poster" className="font-semibold text-sm">
-                      Poster
+                    <label htmlFor="mainImage" className="font-semibold text-sm">
+                      Main image
                     </label>
                     <div>
                       <div className="w-full max-w-[383px] border rounded-md overflow-hidden">
                         <div className="w-full aspect-square flex items-center justify-center overflow-hidden">
-                          {formData.poster &&
-                            isValidRemoteImage(formData.poster) && (
+                          {formData.mainImage &&
+                            isValidRemoteImage(formData.mainImage) && (
                               <Image
-                                src={formData.poster}
+                                src={formData.mainImage}
                                 alt="Upsell"
                                 width={383}
                                 height={383}
@@ -221,9 +221,9 @@ export function BasicDetailsOverlay({ data }: { data: DataType }) {
                         <div className="w-full h-9 border-t overflow-hidden">
                           <input
                             type="text"
-                            name="poster"
+                            name="mainImage"
                             placeholder="Paste image URL"
-                            value={formData.poster}
+                            value={formData.mainImage}
                             onChange={handleInputChange}
                             className="h-full w-full px-3 text-gray"
                           />

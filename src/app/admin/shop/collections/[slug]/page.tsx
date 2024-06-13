@@ -33,7 +33,7 @@ type CollectionProductType = {
   name: string;
   index: number;
   price: string;
-  poster: string;
+  mainImage: string;
   slug: string;
   visibility: string;
 };
@@ -318,7 +318,7 @@ export default async function EditCollection({
               {products.length > 0 ? (
                 products
                   .slice(0, 3)
-                  .map(({ id, index, slug, poster, name, price }) => (
+                  .map(({ id, index, slug, mainImage, name, price }) => (
                     <Link
                       key={index}
                       href={`/admin/shop/products/${slug}-${id}`}
@@ -327,7 +327,7 @@ export default async function EditCollection({
                       <div className="relative w-full h-full">
                         <div className="aspect-square w-full overflow-hidden flex items-center justify-center shadow-[2px_2px_4px_#9E9E9E] bg-white">
                           <Image
-                            src={poster}
+                            src={mainImage}
                             alt={name}
                             width={216}
                             height={216}

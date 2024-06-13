@@ -8,14 +8,14 @@ import { revalidatePath } from "next/cache";
 type CreateUpsellType = {
   price: string;
   salePrice: string;
-  poster: string;
+  mainImage: string;
 };
 
 type EditUpsell = {
   id: string;
   price?: string;
   salePrice?: string;
-  poster?: string;
+  mainImage?: string;
   visibility?: string;
 };
 
@@ -26,7 +26,7 @@ export async function CreateUpsellAction(data: CreateUpsellType) {
     const upsell = {
       price: data.price,
       salePrice: data.salePrice,
-      poster: data.poster,
+      mainImage: data.mainImage,
       visibility: "DRAFT",
       updatedAt: currentTimestamp(),
       createdAt: currentTimestamp(),

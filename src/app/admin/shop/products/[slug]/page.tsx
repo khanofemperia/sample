@@ -12,9 +12,9 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import styles from "./styles.module.css";
 import {
-  PosterButton,
-  PosterOverlay,
-} from "@/components/admin/EditProduct/PosterOverlay";
+  MainImageButton,
+  MainImageOverlay,
+} from "@/components/admin/EditProduct/MainImageOverlay";
 import {
   ImagesButton,
   ImagesOverlay,
@@ -54,7 +54,7 @@ export default async function EditProduct({
     name,
     slug,
     price,
-    poster,
+    mainImage,
     images,
     sizes,
     colors,
@@ -118,16 +118,16 @@ export default async function EditProduct({
             <div className="flex flex-col gap-5 p-5">
               <div className="border rounded-xl">
                 <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
-                  <h3 className="text-sm font-semibold">Poster</h3>
-                  <PosterButton />
+                  <h3 className="text-sm font-semibold">Main image</h3>
+                  <MainImageButton />
                 </div>
                 <div className="p-5">
-                  {!poster || !isValidRemoteImage(poster) ? (
+                  {!mainImage || !isValidRemoteImage(mainImage) ? (
                     <p className="italic text-gray">Nothing yet</p>
                   ) : (
                     <div className="w-full max-w-[280px] rounded-xl aspect-square flex items-center justify-center overflow-hidden">
                       <Image
-                        src={poster}
+                        src={mainImage}
                         alt={name}
                         width={280}
                         height={280}
@@ -284,7 +284,7 @@ export default async function EditProduct({
         </div>
       </div>
       <BasicDetailsOverlay data={{ id, category, name, slug, price }} />
-      <PosterOverlay data={{ id, poster }} />
+      <MainImageOverlay data={{ id, mainImage }} />
       <ImagesOverlay data={{ id, images }} />
       <ColorsOverlay data={{ id, colors }} />
       <SizeChartOverlay data={{ id, chart: sizes }} />
