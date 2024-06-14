@@ -48,11 +48,6 @@ export function BasicDetailsOverlay({
   const [title, setTitle] = useState<string>(data.title);
   const [slug, setSlug] = useState<string>(data.slug);
   const [bannerImage, setBannerImage] = useState<string>(data.image);
-  const [selectedCollectionType, setSelectedCollectionType] = useState(
-    data.collectionType
-  );
-
-  console.log(data)
 
   const { hideOverlay } = useOverlayStore();
 
@@ -92,23 +87,28 @@ export function BasicDetailsOverlay({
   };
 
   const handleSave = async () => {
-    setLoading(true);
-
-    try {
-      const message = await UpdateCollectionAction({
-        id: data.id,
-        title,
-        slug,
-      });
-      setAlertMessage(message);
+    if (data.collectionType === "BANNER" && !bannerImage) {
+      setAlertMessage("Provide banner image");
       setShowAlert(true);
-    } catch (error) {
-      console.error(error);
-      setAlertMessage("Failed to update collection");
-      setShowAlert(true);
-    } finally {
-      setLoading(false);
-      onHideOverlay();
+    } else {
+      setLoading(true);
+      try {
+        const message = await UpdateCollectionAction({
+          id: data.id,
+          title,
+          slug,
+          ...(bannerImage && { image: bannerImage }),
+        });
+        setAlertMessage(message);
+        setShowAlert(true);
+      } catch (error) {
+        console.error(error);
+        setAlertMessage("Error updating collection");
+        setShowAlert(true);
+      } finally {
+        setLoading(false);
+        onHideOverlay();
+      }
     }
   };
 
@@ -166,7 +166,7 @@ export function BasicDetailsOverlay({
                 </button>
               </div>
               <div className="w-full h-full mt-[52px] md:mt-0 px-5 pt-5 pb-28 md:pb-10 flex flex-col gap-5 overflow-x-hidden overflow-y-visible invisible-scrollbar md:overflow-hidden">
-                {selectedCollectionType === "BANNER" && (
+                {data.collectionType === "BANNER" && (
                   <div className="flex flex-col gap-2">
                     <label
                       htmlFor="bannnerImage"
