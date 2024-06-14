@@ -160,7 +160,7 @@ export function VisibilityOverlay({ data }: { data: DataType }) {
                   )}
                 </button>
               </div>
-              <div className="w-max md:w-full mx-auto mt-[52px] md:m-0 p-5">
+              <div className="w-max mx-auto mt-[52px] md:mt-0 p-5">
                 <div className="w-44 flex flex-col rounded-xl border overflow-hidden">
                   <div className="p-2">
                     <button
