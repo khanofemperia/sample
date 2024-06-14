@@ -35,10 +35,13 @@ export function VisibilityButton() {
 }
 
 export function VisibilityOverlay({ data }: { data: DataType }) {
-  const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
-  const [isVisibilityDropdownOpen, setIsVisibilityDropdownOpen] =
-    useState(false);
-  const [selectedVisibility, setSelectedVisibility] = useState(data.visibility);
+  const DRAFT = "DRAFT";
+  const PUBLISHED = "PUBLISHED";
+  const HIDDEN = "HIDDEN";
+
+  const [selectedVisibility, setSelectedVisibility] = useState(
+    data.visibility.toUpperCase()
+  );
   const [loading, setLoading] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState<boolean>(false);
@@ -67,31 +70,11 @@ export function VisibilityOverlay({ data }: { data: DataType }) {
     };
   }, [isOverlayVisible, showAlert]);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as Element;
-
-      if (isStatusDropdownOpen && !target.closest(".status")) {
-        setIsStatusDropdownOpen(false);
-      }
-
-      if (isVisibilityDropdownOpen && !target.closest(".visibility")) {
-        setIsVisibilityDropdownOpen(false);
-      }
-    };
-
-    document.addEventListener("click", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, [isStatusDropdownOpen, isVisibilityDropdownOpen]);
-
   const hideAlertMessage = () => {
     setShowAlert(false);
     setAlertMessage("");
   };
-  
+
   const onHideOverlay = () => {
     setLoading(false);
     hideOverlay({ pageName, overlayName });
@@ -109,23 +92,12 @@ export function VisibilityOverlay({ data }: { data: DataType }) {
       setShowAlert(true);
     } catch (error) {
       console.error(error);
-      setAlertMessage("Failed to update product");
+      setAlertMessage("Error updating product");
       setShowAlert(true);
     } finally {
       setLoading(false);
       onHideOverlay();
     }
-  };
-
-  const toggleVisibilityDropdown = () => {
-    setIsStatusDropdownOpen(false);
-    setIsVisibilityDropdownOpen((prevState) => !prevState);
-  };
-
-
-  const handleVisibilitySelect = (visibility: string) => {
-    setSelectedVisibility(visibility);
-    setIsVisibilityDropdownOpen(false);
   };
 
   return (
@@ -140,7 +112,7 @@ export function VisibilityOverlay({ data }: { data: DataType }) {
                   <button
                     onClick={() => {
                       hideOverlay({ pageName, overlayName });
-                      setSelectedVisibility(data.visibility);
+                      setSelectedVisibility(data.visibility.toUpperCase());
                     }}
                     type="button"
                     className="w-7 h-7 rounded-full flex items-center justify-center absolute right-4 transition duration-300 ease-in-out bg-lightgray active:bg-lightgray-dimmed"
@@ -153,12 +125,15 @@ export function VisibilityOverlay({ data }: { data: DataType }) {
                 <button
                   onClick={() => {
                     hideOverlay({ pageName, overlayName });
-                    setSelectedVisibility(data.visibility);
+                    setSelectedVisibility(data.visibility.toUpperCase());
                   }}
                   type="button"
                   className="h-9 px-3 rounded-full flex items-center gap-1 transition duration-300 ease-in-out active:bg-lightgray"
                 >
-                  <ArrowLeftIcon className="fill-custom-blue -ml-[2px]" size={20} />
+                  <ArrowLeftIcon
+                    className="fill-custom-blue -ml-[2px]"
+                    size={20}
+                  />
                   <span className="font-semibold text-sm text-custom-blue">
                     Visibility
                   </span>
@@ -185,47 +160,70 @@ export function VisibilityOverlay({ data }: { data: DataType }) {
                   )}
                 </button>
               </div>
-              <div className="w-full max-w-[425px] mx-auto h-full mt-[52px] md:m-0 p-5 pb-28 md:pb-10">
-                <div className="flex flex-col gap-2">
-                  <div className="visibility w-full md:w-max h-9 relative">
+              <div className="p-5">
+                <div className="w-44 flex flex-col rounded-xl border overflow-hidden">
+                  <div className="p-2">
                     <button
-                      onClick={toggleVisibilityDropdown}
-                      type="button"
-                      className="h-9 w-full md:w-max px-3 md:px-4 rounded-md md:rounded-full flex md:gap-2 items-center justify-between transition duration-300 ease-in-out bg-lightgray active:bg-lightgray-dimmed"
+                      onClick={() => setSelectedVisibility(DRAFT)}
+                      className={clsx(
+                        "h-9 w-full px-4 rounded-md flex items-center justify-between ease-out duration-300 transition active:bg-lightgray lg:hover:bg-lightgray",
+                        { "bg-lightgray": selectedVisibility === DRAFT }
+                      )}
                     >
-                      <span>{capitalizeFirstLetter(selectedVisibility)}</span>
-                      <ChevronDownIcon
-                        className="-mr-[4px] stroke-gray"
-                        size={20}
-                      />
+                      <span>Draft</span>
+                      <div
+                        className={clsx(
+                          "w-5 h-5 rounded-full bg-white",
+                          { border: selectedVisibility !== DRAFT },
+                          {
+                            "border-4 border-custom-blue":
+                              selectedVisibility === DRAFT,
+                          }
+                        )}
+                      ></div>
                     </button>
-                    <div
-                      className={clsx("w-full md:w-36 absolute top-10 z-10", {
-                        hidden: !isVisibilityDropdownOpen,
-                        block: isVisibilityDropdownOpen,
-                      })}
+                  </div>
+                  <div className="border-t p-2">
+                    <button
+                      onClick={() => setSelectedVisibility(PUBLISHED)}
+                      className={clsx(
+                        "h-9 w-full px-4 rounded-md flex items-center justify-between ease-out duration-300 transition active:bg-lightgray lg:hover:bg-lightgray",
+                        { "bg-lightgray": selectedVisibility === PUBLISHED }
+                      )}
                     >
-                      <div className="overflow-hidden h-full max-h-[228px] overflow-x-hidden overflow-y-visible custom-scrollbar w-full py-[6px] flex flex-col gap-0 rounded-md shadow-dropdown bg-white">
-                        <div
-                          onClick={() => handleVisibilitySelect("Draft")}
-                          className="w-full min-h-9 h-9 flex items-center px-[12px] cursor-context-menu transition duration-300 ease-in-out hover:bg-lightgray"
-                        >
-                          Draft
-                        </div>
-                        <div
-                          onClick={() => handleVisibilitySelect("Published")}
-                          className="w-full min-h-9 h-9 flex items-center px-[12px] cursor-context-menu transition duration-300 ease-in-out hover:bg-lightgray"
-                        >
-                          Published
-                        </div>
-                        <div
-                          onClick={() => handleVisibilitySelect("Hidden")}
-                          className="w-full min-h-9 h-9 flex items-center px-[12px] cursor-context-menu transition duration-300 ease-in-out hover:bg-lightgray"
-                        >
-                          Hidden
-                        </div>
-                      </div>
-                    </div>
+                      <span>Published</span>
+                      <div
+                        className={clsx(
+                          "w-5 h-5 rounded-full bg-white",
+                          { border: selectedVisibility !== PUBLISHED },
+                          {
+                            "border-4 border-custom-blue":
+                              selectedVisibility === PUBLISHED,
+                          }
+                        )}
+                      ></div>
+                    </button>
+                  </div>
+                  <div className="border-t p-2">
+                    <button
+                      onClick={() => setSelectedVisibility(HIDDEN)}
+                      className={clsx(
+                        "h-9 w-full px-4 rounded-md flex items-center justify-between ease-out duration-300 transition active:bg-lightgray lg:hover:bg-lightgray",
+                        { "bg-lightgray": selectedVisibility === HIDDEN }
+                      )}
+                    >
+                      <span>Hidden</span>
+                      <div
+                        className={clsx(
+                          "w-5 h-5 rounded-full bg-white",
+                          { border: selectedVisibility !== HIDDEN },
+                          {
+                            "border-4 border-custom-blue":
+                              selectedVisibility === HIDDEN,
+                          }
+                        )}
+                      ></div>
+                    </button>
                   </div>
                 </div>
               </div>
