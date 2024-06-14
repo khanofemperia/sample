@@ -68,7 +68,7 @@ export default async function EditUpsell({
         </div>
         <div>
           <p className="text-sm mb-4 md:max-w-[85%]">
-            Choose whether the product is a work-in-progress (draft) or ready to
+            Choose whether the upsell is a work-in-progress (draft) or ready to
             be seen (published), and decide if you want shoppers to see it or
             keep it private (hidden).
           </p>
