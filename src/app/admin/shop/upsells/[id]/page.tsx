@@ -1,9 +1,9 @@
-import { BasicDetailsButton, BasicDetailsOverlay } from "@/components/admin/EditUpsell/BasicDetailsOverlay";
-import DataChip from "@/ui/DataChip";
 import {
-  fetchData,
-  formatThousands,
-} from "@/libraries/utils";
+  BasicDetailsButton,
+  BasicDetailsOverlay,
+} from "@/components/admin/EditUpsell/BasicDetailsOverlay";
+import DataChip from "@/ui/DataChip";
+import { fetchData, formatThousands } from "@/libraries/utils";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import {
@@ -29,10 +29,10 @@ export default async function EditUpsell({
       <div className="max-w-[768px] flex flex-col gap-10 px-5">
         <div>
           <p className="text-sm mb-4 md:max-w-[85%]">
-            Important for SEO: a name that includes target keywords in the first
-            four words, a short URL with three or four keywords, and prices that
-            help your business grow while making customers feel they're getting
-            a good deal.
+            Show customers how stuff goes together, and they'll buy more. It's
+            that simple. They want a shirt? Display the full outfit - pants,
+            shoes, accessories. Soon, we're seeing 2-4 item purchases per sale.
+            It's upselling, with a friendly touch.
           </p>
           <div className="w-full shadow rounded-xl bg-white">
             <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
