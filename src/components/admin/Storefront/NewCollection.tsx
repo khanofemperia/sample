@@ -1,7 +1,11 @@
 "use client";
 
 import AlertMessage from "@/components/shared/AlertMessage";
-import { capitalizeFirstLetter, formatDate } from "@/libraries/utils";
+import {
+  capitalizeFirstLetter,
+  formatDate,
+  isValidRemoteImage,
+} from "@/libraries/utils";
 import { useState, useEffect, useRef } from "react";
 import Spinner from "@/ui/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
@@ -151,7 +155,8 @@ export function NewCollectionOverlay() {
   const isValidDateRange =
     launchDate &&
     endDate &&
-    launchDate.toISOString().split("T")[0] < endDate.toISOString().split("T")[0];
+    launchDate.toISOString().split("T")[0] <
+      endDate.toISOString().split("T")[0];
 
   const handleSave = async () => {
     if (!isValidDateRange) {
@@ -166,18 +171,28 @@ export function NewCollectionOverlay() {
       };
 
       try {
-        const requestData: RequestDataType = {
-          title,
-          slug,
-          campaignDuration: campaignDuration,
-          collectionType: selectedCollectionType,
-        };
+        const requestData: Omit<RequestDataType, "image"> & { image?: string } =
+          {
+            title,
+            slug,
+            campaignDuration: campaignDuration,
+            collectionType: selectedCollectionType,
+          };
 
         if (selectedCollectionType === BANNER) {
           requestData.image = bannerImage;
         }
 
-        const message = await CreateCollectionAction(requestData);
+        const message = await CreateCollectionAction(
+          requestData as {
+            title: string;
+            slug: string;
+            image: string;
+            collectionType: string;
+            campaignDuration: { startDate: string; endDate: string };
+          }
+        );
+
         setAlertMessage(message);
         setShowAlert(true);
       } catch (error) {
@@ -313,7 +328,7 @@ export function NewCollectionOverlay() {
                     <div>
                       <div className="w-full border rounded-md overflow-hidden">
                         <div className="w-full min-h-[86px] flex items-center justify-center overflow-hidden">
-                          {!bannerImage ? (
+                          {!bannerImage || !isValidRemoteImage(bannerImage) ? (
                             <CiImageOn className="fill-neutral-200" size={80} />
                           ) : (
                             <Image

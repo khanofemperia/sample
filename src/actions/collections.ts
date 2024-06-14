@@ -32,6 +32,7 @@ type DataType = {
 export async function CreateCollectionAction(data: {
   title: string;
   slug: string;
+  image: string;
   collectionType: string;
   campaignDuration: {
     startDate: string;
@@ -44,6 +45,7 @@ export async function CreateCollectionAction(data: {
     const newCollection = {
       title: data.title,
       slug: data.slug,
+      image: data.image,
       collectionType: data.collectionType,
       campaignDuration: data.campaignDuration,
       index: 1,

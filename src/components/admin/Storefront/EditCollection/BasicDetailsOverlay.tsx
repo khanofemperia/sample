@@ -8,6 +8,9 @@ import { ArrowLeftIcon, CloseIcon, EditIcon } from "@/icons";
 import clsx from "clsx";
 import Overlay from "@/ui/Overlay";
 import { UpdateCollectionAction } from "@/actions/collections";
+import Image from "next/image";
+import { CiImageOn } from "react-icons/ci";
+import { isValidRemoteImage } from "@/libraries/utils";
 
 export function BasicDetailsButton() {
   const { showOverlay } = useOverlayStore();
@@ -35,6 +38,8 @@ export function BasicDetailsOverlay({
     id: string;
     title: string;
     slug: string;
+    image: string;
+    collectionType: string;
   };
 }) {
   const [loading, setLoading] = useState<boolean>(false);
@@ -42,6 +47,12 @@ export function BasicDetailsOverlay({
   const [showAlert, setShowAlert] = useState<boolean>(false);
   const [title, setTitle] = useState<string>(data.title);
   const [slug, setSlug] = useState<string>(data.slug);
+  const [bannerImage, setBannerImage] = useState<string>(data.image);
+  const [selectedCollectionType, setSelectedCollectionType] = useState(
+    data.collectionType
+  );
+
+  console.log(data)
 
   const { hideOverlay } = useOverlayStore();
 
@@ -155,6 +166,43 @@ export function BasicDetailsOverlay({
                 </button>
               </div>
               <div className="w-full h-full mt-[52px] md:mt-0 px-5 pt-5 pb-28 md:pb-10 flex flex-col gap-5 overflow-x-hidden overflow-y-visible invisible-scrollbar md:overflow-hidden">
+                {selectedCollectionType === "BANNER" && (
+                  <div className="flex flex-col gap-2">
+                    <label
+                      htmlFor="bannnerImage"
+                      className="font-semibold text-sm"
+                    >
+                      Image
+                    </label>
+                    <div>
+                      <div className="w-full border rounded-md overflow-hidden">
+                        <div className="w-full min-h-[86px] flex items-center justify-center overflow-hidden">
+                          {!bannerImage || !isValidRemoteImage(bannerImage) ? (
+                            <CiImageOn className="fill-neutral-200" size={80} />
+                          ) : (
+                            <Image
+                              src={bannerImage}
+                              alt={title}
+                              width={766}
+                              height={308}
+                              priority={true}
+                            />
+                          )}
+                        </div>
+                        <div className="w-full h-9 border-t overflow-hidden">
+                          <input
+                            type="text"
+                            name="bannerImage"
+                            placeholder="Paste image URL"
+                            value={bannerImage}
+                            onChange={(e) => setBannerImage(e.target.value)}
+                            className="h-full w-full px-3 text-gray"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 <div className="flex flex-col gap-2">
                   <label htmlFor="title" className="font-semibold text-sm">
                     Title
