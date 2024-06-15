@@ -35,6 +35,7 @@ import {
   DescriptionButton,
   DescriptionOverlay,
 } from "@/components/admin/EditProduct/DescriptionOverlay";
+import IDCopyButton from "@/components/shared/IDCopyButton";
 
 export default async function EditProduct({
   params,
@@ -78,6 +79,7 @@ export default async function EditProduct({
               <BasicDetailsButton />
             </div>
             <div className="flex flex-col gap-5 p-5 pt-4">
+              <IDCopyButton id={id} />
               <div>
                 <h3 className="text-sm font-semibold mb-2">Category</h3>
                 <div className="w-max max-w-full h-9 px-4 rounded-full bg-lightgray flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
@@ -268,8 +270,8 @@ export default async function EditProduct({
         </div>
         <div>
           <p className="text-sm mb-4 md:max-w-[85%]">
-            Choose whether the product is a work-in-progress (draft) or ready
-            to be seen (published), and decide if you want shoppers to see it or
+            Choose whether the product is a work-in-progress (draft) or ready to
+            be seen (published), and decide if you want shoppers to see it or
             keep it private (hidden).
           </p>
           <div className="w-full max-w-[400px] shadow rounded-xl bg-white">

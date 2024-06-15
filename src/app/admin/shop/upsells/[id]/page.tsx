@@ -10,6 +10,7 @@ import {
   VisibilityButton,
   VisibilityOverlay,
 } from "@/components/admin/EditUpsell/VisibilityOverlay";
+import IDCopyButton from "@/components/shared/IDCopyButton";
 
 export default async function EditUpsell({
   params,
@@ -40,6 +41,7 @@ export default async function EditUpsell({
               <BasicDetailsButton />
             </div>
             <div className="flex flex-col gap-5 p-5 pt-4">
+              <IDCopyButton id={id} />
               <div>
                 <h3 className="text-sm font-semibold mb-2">Pricing</h3>
                 <div className="w-max max-w-full h-9 px-4 rounded-full bg-lightgray flex gap-[6px] items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
