@@ -31,7 +31,7 @@ export default function IDCopyButton({ id }: { id: string }) {
 
   return (
     <button
-      className="flex gap-2 items-center justify-between px-4 w-max h-9 rounded-full cursor-pointer bg-[#fefaca] shadow-[-0.6px_0.6px_1.5px_#EAB30880] ease-in-out transition duration-300 hover:bg-[#fef8b6]"
+      className="flex gap-2 items-center justify-between px-4 w-max h-9 rounded-full cursor-pointer bg-[#fefaca] shadow-[0px_0.2px_1.6px_#EAB308] ease-in-out transition duration-300 active:bg-[#fef8b6] lg:hover:bg-[#fef8b6]"
       type="button"
       onClick={() => handleCopyId(id)}
     >
