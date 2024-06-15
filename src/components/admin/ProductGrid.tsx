@@ -151,10 +151,10 @@ export default function ProductGrid({ products }: { products: ProductType[] }) {
         <>
           <div className="flex flex-col gap-3">
             <div className="w-full px-5 flex flex-col min-[588px]:flex-row gap-2 items-center justify-between">
-              <div className="max-w-full flex flex-nowrap rounded-full bg-[#ededed] overflow-x-visible overflow-y-hidden invisible-scrollbar *:min-w-max *:h-9 *:rounded-full *:flex *:items-center *:justify-center *:font-semibold *:text-sm *:ease-in-out *:duration-300 *:transition">
+              <div className="max-w-full flex flex-nowrap rounded-full bg-[#efefef] overflow-x-visible overflow-y-hidden invisible-scrollbar *:min-w-max *:h-9 *:rounded-full *:flex *:items-center *:justify-center *:font-semibold *:text-sm *:ease-in-out *:duration-300 *:transition">
                 <button
                   onClick={() => handleFilterChange(ALL)}
-                  className={`px-3 pl-[14px] h-9 hover:bg-[#e2e2e2] rounded-full ${
+                  className={`px-3 pl-[14px] h-9 hover:bg-[#e4e4e4] rounded-full ${
                     filter === ALL
                       ? "text-custom-blue"
                       : "text-gray hover:text-black"
@@ -164,7 +164,7 @@ export default function ProductGrid({ products }: { products: ProductType[] }) {
                 </button>
                 <button
                   onClick={() => handleFilterChange(PUBLISHED)}
-                  className={`px-3 h-9 hover:bg-[#e2e2e2] rounded-full ${
+                  className={`px-3 h-9 hover:bg-[#e4e4e4] rounded-full ${
                     filter === PUBLISHED
                       ? "text-custom-blue"
                       : "text-gray hover:text-black"
@@ -181,7 +181,7 @@ export default function ProductGrid({ products }: { products: ProductType[] }) {
                 </button>
                 <button
                   onClick={() => handleFilterChange(INACTIVE)}
-                  className={`px-3 pr-[14px] h-9 hover:bg-[#e2e2e2] rounded-full ${
+                  className={`px-3 pr-[14px] h-9 hover:bg-[#e4e4e4] rounded-full ${
                     filter === INACTIVE
                       ? "text-custom-blue"
                       : "text-gray hover:text-black"
