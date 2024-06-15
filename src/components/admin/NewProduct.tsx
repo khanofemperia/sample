@@ -152,9 +152,15 @@ export function NewProductOverlay() {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
+    let sanitizedValue = value;
+
+    if (name === "slug") {
+      sanitizedValue = value.replace(/[^a-zA-Z0-9-]/g, "");
+    }
+
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: sanitizedValue,
     }));
   };
 

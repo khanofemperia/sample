@@ -421,7 +421,13 @@ export function NewCollectionOverlay() {
                       name="slug"
                       placeholder="belle-jolie-lipstick-mark-your-man"
                       value={slug}
-                      onChange={(e) => setSlug(e.target.value)}
+                      onChange={(e) => {
+                        const sanitizedValue = e.target.value.replace(
+                          /[^a-zA-Z0-9-]/g,
+                          ""
+                        );
+                        setSlug(sanitizedValue);
+                      }}
                       className="w-full h-9 px-3 rounded-md transition duration-300 ease-in-out border focus:border-custom-blue"
                       required
                     />
