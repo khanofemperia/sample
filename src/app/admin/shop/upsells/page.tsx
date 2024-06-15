@@ -1,11 +1,6 @@
-import {
-  NewUpsellEmptyGridButton,
-  NewUpsellOverlay,
-} from "@/components/admin/NewUpsell";
+import { NewUpsellOverlay } from "@/components/admin/NewUpsell";
 import UpsellGrid from "@/components/admin/UpsellGrid";
-import { fetchData, formatThousands } from "@/libraries/utils";
-import Image from "next/image";
-import Link from "next/link";
+import { fetchData } from "@/libraries/utils";
 
 export default async function Upsells() {
   const upsells = await fetchData<UpsellType[]>("/api/upsells");
