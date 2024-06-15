@@ -159,7 +159,7 @@ export function BasicDetailsOverlay({ data }: { data: DataType }) {
     let sanitizedValue = value;
 
     if (name === "slug") {
-      sanitizedValue = value.replace(/[^a-zA-Z0-9-]/g, "");
+      sanitizedValue = value.replace(/[^a-zA-Z0-9-]/g, "").toLowerCase();
     }
 
     setFormData((prevData) => ({
