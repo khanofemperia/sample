@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { database } from "@/libraries/firebase";
 
 export async function GET(request: NextRequest) {
@@ -9,9 +9,22 @@ export async function GET(request: NextRequest) {
 
   const validVisibilityFlags = ["DRAFT", "PUBLISHED", "HIDDEN"];
   const collectionRef = collection(database, "products");
+
+  let firestoreQuery = query(collectionRef);
+
+  if (
+    visibilityQueryParam &&
+    validVisibilityFlags.includes(visibilityQueryParam)
+  ) {
+    firestoreQuery = query(
+      collectionRef,
+      where("visibility", "==", visibilityQueryParam)
+    );
+  }
+
   const snapshot = await getDocs(collectionRef);
 
-  if (!fieldsQueryParam && !visibilityQueryParam) {
+  if (!fieldsQueryParam) {
     const products: ProductType[] = snapshot.docs.map((doc) => ({
       id: doc.id,
       ...(doc.data() as Omit<ProductType, "id">),
@@ -40,16 +53,8 @@ export async function GET(request: NextRequest) {
     };
   });
 
-  const filteredProducts = visibilityQueryParam
-    ? products.filter((product) =>
-        validVisibilityFlags.includes(product.visibility?.toUpperCase())
-          ? product.visibility?.toUpperCase() === visibilityQueryParam
-          : false
-      )
-    : products;
-
   return NextResponse.json(
-    sortProducts(filteredProducts).map(({ updatedAt, ...rest }) => rest)
+    sortProducts(products).map(({ updatedAt, ...rest }) => rest)
   );
 }
 

@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { database } from "@/libraries/firebase";
 
 export async function GET(request: NextRequest) {
@@ -9,9 +9,22 @@ export async function GET(request: NextRequest) {
 
   const validVisibilityFlags = ["DRAFT", "PUBLISHED", "HIDDEN"];
   const firestoreCollectionRef = collection(database, "collections");
-  const snapshot = await getDocs(firestoreCollectionRef);
 
-  if (!fieldsQueryParam && !visibilityQueryParam) {
+  let firestoreQuery = query(firestoreCollectionRef);
+
+  if (
+    visibilityQueryParam &&
+    validVisibilityFlags.includes(visibilityQueryParam)
+  ) {
+    firestoreQuery = query(
+      firestoreCollectionRef,
+      where("visibility", "==", visibilityQueryParam)
+    );
+  }
+
+  const snapshot = await getDocs(firestoreQuery);
+
+  if (!fieldsQueryParam) {
     const collections: CollectionType[] = snapshot.docs.map((doc) => ({
       id: doc.id,
       ...(doc.data() as Omit<CollectionType, "id">),
@@ -41,15 +54,7 @@ export async function GET(request: NextRequest) {
     };
   });
 
-  const filteredCollections = visibilityQueryParam
-    ? collections.filter((collection) =>
-        validVisibilityFlags.includes(collection.visibility?.toUpperCase())
-          ? collection.visibility?.toUpperCase() === visibilityQueryParam
-          : false
-      )
-    : collections;
-
-  return NextResponse.json(sortCollections(filteredCollections));
+  return NextResponse.json(sortCollections(collections));
 }
 
 function sortCollections<T extends { index: number }>(collections: T[]): T[] {
