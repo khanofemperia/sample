@@ -264,20 +264,20 @@ export default async function Shop() {
         <div className="flex flex-col gap-10">
           {collections.map((collection, index) => {
             switch (collection.collectionType) {
-              case "FEATURED_PRODUCTS":
+              case "FEATURED":
                 return (
                   <div key={index}>
                     <FeaturedProducts collection={collection} />
                   </div>
                 );
-              // case "PROMOTIONAL_BANNER":
-              //   return (
-              //     <div key={index}>
-              //       <PromotionalBanner collection={collection} />
-              //     </div>
-              //   );
+              case "BANNER":
+                return (
+                  <div key={index}>
+                    <PromotionalBanner collection={collection} />
+                  </div>
+                );
               default:
-                return <></>;
+                return null;
             }
           })}
         </div>
