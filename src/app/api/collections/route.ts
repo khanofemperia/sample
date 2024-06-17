@@ -51,6 +51,7 @@ export async function GET(request: NextRequest) {
       updatedAt: data["updatedAt"],
       index: data["index"],
       visibility: data["visibility"],
+      collectionType: data["collectionType"],
     };
   });
 

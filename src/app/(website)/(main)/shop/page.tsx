@@ -218,9 +218,8 @@ export default async function Shop() {
   const collections = await fetchData<CollectionType[]>({
     path: "/api/collections",
     visibility: "PUBLISHED",
+    fields: ["id", "slug", "title", "products"],
   });
-
-  console.log(collections);
 
   // const pageHero = await fetchData<PageHeroType>("/api/page-hero");
   // const categoriesDemo = await fetchData<CategoryType[]>("/api/categories");
@@ -271,18 +270,18 @@ export default async function Shop() {
                     <FeaturedProducts collection={collection} />
                   </div>
                 );
-              case "PROMOTIONAL_BANNER":
-                return (
-                  <div key={index}>
-                    <PromotionalBanner collection={collection} />
-                  </div>
-                );
+              // case "PROMOTIONAL_BANNER":
+              //   return (
+              //     <div key={index}>
+              //       <PromotionalBanner collection={collection} />
+              //     </div>
+              //   );
               default:
                 return <></>;
             }
           })}
         </div>
-        <div className="mt-10 w-full max-w-[968px] mx-auto">
+        {/* <div className="mt-10 w-full max-w-[968px] mx-auto">
           <h2 className="font-semibold line-clamp-3 md:text-2xl mb-2 pl-[26px] pr-[22px]">
             Shop now
           </h2>
@@ -345,7 +344,7 @@ export default async function Shop() {
               See more
             </a>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );
