@@ -70,3 +70,11 @@ type UpsellType = {
   createdAt: string;
   updatedAt: string;
 };
+
+type PageHeroType = {
+  id: string;
+  image: string | null;
+  title: string;
+  destinationUrl: string;
+  visibility: string;
+};

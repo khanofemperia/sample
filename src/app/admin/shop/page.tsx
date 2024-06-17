@@ -11,19 +11,15 @@ import {
 import { fetchData } from "@/libraries/utils";
 import clsx from "clsx";
 
-type PageHeroType = {
-  id: string;
-  image: string | null;
-  title: string | null;
-  destinationUrl: string | null;
-  visibility: string;
-};
-
 export default async function Storefront() {
-  const collections = await fetchData<CollectionType[]>("/api/collections");
-  const pageHero = await fetchData<PageHeroType>("/api/page-hero");
-  const categories = await fetchData<CategoryType[]>("/api/categories");
-  const settings = await fetchData<SettingType>("/api/settings");
+  const collections = await fetchData<CollectionType[]>({
+    path: "/api/collections",
+  });
+  const categories = await fetchData<CategoryType[]>({
+    path: "/api/categories",
+  });
+  const pageHero = await fetchData<PageHeroType>({ path: "/api/page-hero" });
+  const settings = await fetchData<SettingType>({ path: "/api/settings" });
 
   return (
     <>

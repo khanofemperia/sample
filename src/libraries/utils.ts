@@ -1,35 +1,76 @@
 import { customAlphabet } from "nanoid";
 import { REMOTE_PATTERNS } from "./config";
 
+type FetchDataOptions = {
+  path: string;
+  fields?: string[];
+  visibility?: string;
+};
+
 /**
  * Fetches data from a specified API endpoint.
  *
  * @template DataType - The type of data expected from the API response.
- * @param {string} path - The path to the API endpoint (e.g., '/api/products', 'api/articles/123').
- * @param {string[]} [fields] - An optional array of field names to be included in the API response.
+ * @param {FetchDataOptions} options - The options for fetching data, including path, fields, and visibility.
  *
  * @example
  * // Fetch products with specific fields
- * const products = await fetchData<ProductType[]>('/api/products', ['id', 'name', 'price']);
+ * const products = await fetchData<ProductType[]>({
+ *   path: '/api/products',
+ *   fields: ['id', 'name', 'price']
+ * });
  * console.log(products);
  *
  * @example
  * // Fetch an article with all fields
- * const article = await fetchData<ArticleType>('api/articles/123');
+ * const article = await fetchData<ArticleType>({
+ *   path: 'api/articles/123'
+ * });
  * console.log(article);
+ *
+ * @example
+ * // Fetch published collections
+ * const collections = await fetchData<CollectionType[]>({
+ *   path: '/api/collections',
+ *   visibility: 'PUBLISHED'
+ * });
+ * console.log(collections);
  */
-export async function fetchData<DataType>(path: string, fields?: string[]): Promise<DataType> {
-  const baseUrl = 'http://localhost:3000';
-  const cleanedPath = path.replace(/^\/+|\/+$/g, ''); 
+export async function fetchData<DataType>(
+  options: FetchDataOptions
+): Promise<DataType> {
+  const { path, fields, visibility } = options;
+  const baseUrl = "http://localhost:3000";
 
-  if (!cleanedPath) {
-    throw new Error('Path cannot be empty');
+  if (typeof path !== "string" || !path.trim()) {
+    throw new Error("Path must be a non-empty string");
   }
 
-  const normalizedPath = cleanedPath.startsWith('/') ? cleanedPath.slice(1) : `/${cleanedPath}`;
-  const url = fields
-    ? `${baseUrl}/${normalizedPath}?fields=${fields.join(",")}`
-    : `${baseUrl}/${normalizedPath}`;
+  const cleanedPath = path.replace(/^\/+|\/+$/g, "");
+  const normalizedPath = cleanedPath.startsWith("/")
+    ? cleanedPath.slice(1)
+    : `/${cleanedPath}`;
+  let url = `${baseUrl}/${normalizedPath}`;
+
+  const queryParams: string[] = [];
+
+  if (Array.isArray(fields) && fields.length > 0) {
+    const validFields = fields.filter(
+      (field) => typeof field === "string" && field.trim()
+    );
+    if (validFields.length > 0) {
+      queryParams.push(`fields=${validFields.join(",")}`);
+    }
+  }
+
+  const validVisibilityFlags = ["DRAFT", "PUBLISHED", "HIDDEN"];
+  if (visibility && validVisibilityFlags.includes(visibility.toUpperCase())) {
+    queryParams.push(`visibility=${visibility.toUpperCase()}`);
+  }
+
+  if (queryParams.length > 0) {
+    url += `?${queryParams.join("&")}`;
+  }
 
   const response = await fetch(url, {
     cache: "no-store",
@@ -143,7 +184,7 @@ export function isGifImage(url: string) {
     console.error("Invalid URL:", error);
     return false;
   }
-};
+}
 
 export const productInternationalSizes = {
   Size: ["S", "M", "L", "XL", "XXL"],

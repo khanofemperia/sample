@@ -67,9 +67,9 @@ export default async function EditCollection({
   const CAMPAIGN_STATUS_ACTIVE = "Active";
 
   const collectionId = params.slug.split("-").pop();
-  const data = await fetchData<CollectionDataType | null>(
-    `api/collections/${collectionId}`
-  );
+  const data = await fetchData<CollectionDataType | null>({
+    path: `api/collections/${collectionId}`,
+  });
 
   if (!data) {
     notFound();

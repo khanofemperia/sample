@@ -5,6 +5,7 @@ import FeaturedProducts from "@/components/website/Storefront/FeaturedProducts";
 import PromotionalBanner from "@/components/website/Storefront/PromotionalBanner";
 import ProductCard from "@/components/website/Storefront/ProductCard";
 import { QuickviewButton } from "@/components/website/Storefront/Quickview";
+import { fetchData } from "@/libraries/utils";
 
 type CollectionProductType = {
   id: string;
@@ -42,133 +43,29 @@ type CollectionType = {
   updatedAt: string;
 };
 
-function getCollections(): CollectionType[] {
-  return [
-    {
-      id: "30813",
-      index: 2,
-      title: 'Belle Jolie Lipstick - She "Marks" Her Man with Her Lips',
-      slug: "belle-jolie-lipstick-mark-your-man",
-      campaignDuration: {
-        startDate: "2024-02-22 00:04:41",
-        endDate: "2024-04-18 00:04:41",
-      },
-      collectionType: "FEATURED_PRODUCTS",
-      products: [
-        {
-          id: "67746",
-          category: "Bottoms",
-          name: "Women's Sleeveless Midi Dress: Summer Vacation Ball Gown Hem, Solid Elegant Casual Style, Easy-Care & Fitted",
-          price: "56.63",
-          description: null,
-          mainImage:
-            "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/4e883a3cc6cdb959438b4598f2406f44.jpg?imageView2/2/w/800/q/70/format/webp",
-          images: [
-            "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/fc01d03bd81794d9f421e92013b7073c.jpg?imageView2/2/w/800/q/70/format/webp",
-            "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/3a05731dc4427c8d94c9f24789869521.jpg?imageView2/2/w/800/q/70/format/webp",
-            "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/0e13ed3444786ecd783b0f63f0a10af9.jpg?imageView2/2/w/800/q/70/format/webp",
-            "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/c34e9184d0aecb6fec4696f4de152005.jpg?imageView2/2/w/800/q/70/format/webp",
-          ],
-          status: "PUBLISHED",
-          visibility: "VISIBLE",
-          colors: null,
-          sizes: null,
-          slug: "sleeveless-midi-dress",
-          createdAt: "2024-04-07 09:17:42",
-          updatedAt: "2024-04-07 09:29:47",
-          index: 1,
-        },
-        {
-          id: "52222",
-          category: "Bottoms",
-          name: "Elegant Paisley Print Shirt - Sophisticated Lapel Collar, Woven Durability, Versatile Women's Styling for All Seasons",
-          price: "9.99",
-          description: null,
-          mainImage:
-            "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/dd4368fffa7a62a7f859e7b92338025a.jpg?imageView2/2/w/800/q/70/format/webp",
-          images: [
-            "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/9ba9be8afe9a97da152d8cc9e520148b.jpg?imageView2/2/w/800/q/70/format/webp",
-            "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/fa3d2e65e2840c0dffda4c798c0010fe.jpg?imageView2/2/w/800/q/70/format/webp",
-          ],
-          status: "PUBLISHED",
-          visibility: "VISIBLE",
-          colors: null,
-          sizes: null,
-          slug: "paisley-print-shirt-lapel-collar-womens-style",
-          createdAt: "2024-04-07 07:35:21",
-          updatedAt: "2024-04-07 08:17:15",
-          index: 2,
-        },
-        {
-          id: "05550",
-          category: "Bottoms",
-          name: "Elegant Semi-Sheer Solid Color Blouse - Durable, Easy-Care, & Versatile for All Seasons",
-          price: "58.99",
-          description:
-            "<p><strong>Feeling Stressed? Overwhelmed?**</strong></p><p><br></p><p>Are you a busy woman juggling a million things? Feeling like life's one big to-do list?  <strong>We've all been there!</strong></p><p><br></p><p>But what if there was a way to find <strong>inner peace, heal your relationships,</strong> and even <strong>get fit,</strong> all in one amazing class? Introducing <strong>Therapeutic Yoga</strong> with yours truly, Tara!</p><p><br></p><p><strong>It's More Than Just Stretching!**</strong></p><p><br></p><p>Forget boring old gym routines! <strong>Therapeutic Yoga</strong> is a journey for your mind, body, and spirit. You'll <strong>de-stress, boost your energy levels,</strong> and <strong>improve your flexibility.</strong> Plus, you'll learn powerful breathing techniques that will help you navigate life's challenges with calm clarity. </p><p><br></p><p> And the best part? <strong>No experience is necessary!</strong> Whether you're a seasoned yogi or a complete beginner, <strong>Therapeutic Yoga</strong> is designed for <strong>every woman.</strong></p><p><br></p><p><strong>Find Your Inner Zen Today!**</strong></p><p><br></p><p>So, ditch the stress and embrace the <strong>peace within.</strong> Enroll in my <strong>Therapeutic Yoga</strong> class today!</p><p><br></p><p><strong>Because a happier, healthier you is just a downward-facing dog away!</strong><br></p>",
-          mainImage:
-            "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/fbf522c1b1d84378bd9bda770affaa9a.jpg?imageView2/2/w/800/q/70/format/webp",
-          images: [
-            "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/5be9317ac12c41ae2b663a11b8ab6f9b.jpg?imageView2/2/w/800/q/70/format/webp",
-            "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/4ffde039b5cf007db0ac509219dbcc67.jpg?imageView2/2/w/800/q/70/format/webp",
-          ],
-          status: "PUBLISHED",
-          visibility: "VISIBLE",
-          colors: null,
-          sizes: null,
-          slug: "elegant-semi-sheer-solid-color-blouse",
-          createdAt: "2024-04-07 08:21:51",
-          updatedAt: "2024-04-07 08:39:08",
-          index: 3,
-        },
-        // {
-        //   id: "58962",
-        //   name: "Versatile V-Neck Bodycon Cami Dress - Solid Color with Cross Detail, High Elasticity, Easy Care for All Seasons",
-        //   price: "66.98",
-        //   description: null,
-        //   mainImage:
-        //     "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/11efe65c6b3e6407bb1ce4da21e2c8f8.jpg?imageView2/2/w/800/q/70/format/webp",
-        //   images: [
-        //     "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/d8d0fc85141cc282436215f379407f95.jpg?imageView2/2/w/800/q/70/format/webp",
-        //     "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/8d78c24e6873ad971b3c6b3c1552648e.jpg?imageView2/2/w/800/q/70/format/webp",
-        //     "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/e943ba065f07377e97a42b6509aaf72a.jpg?imageView2/2/w/800/q/70/format/webp",
-        //     "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/06d0334848894ef775162c1037052c30.jpg?imageView2/2/w/800/q/70/format/webp",
-        //   ],
-        //   status: "PUBLISHED",
-        //   visibility: "VISIBLE",
-        //   colors: null,
-        //   sizes: null,
-        //   slug: "rose-bodycon-cami-dress-cross-detail",
-        //   createdAt: "2024-04-07 09:38:32",
-        //   updatedAt: "2024-04-07 09:58:15",
-        //   index: 4,
-        // },
-      ],
-      status: "PUBLISHED",
-      visibility: "VISIBLE",
-      createdAt: "2024-02-19 22:05:29",
-      updatedAt: "2024-04-07 20:22:21",
+/*
+
+const collections = [
+  {
+    id: "65598",
+    title: 'Belle Jolie Lipstick - She "Marks" Her Man with Her Lips',
+    slug: "belle-jolie-lipstick-mark-your-man",
+    updatedAt: "2024-06-15 06:43:56",
+    campaignDuration: {
+      startDate: "2024-06-15 22:48:12",
+      endDate: "2024-06-20 22:48:12",
     },
-    {
-      id: "71200",
-      index: 3,
-      title: "The world's best fitting jeans",
-      slug: "best-fitting-jeans",
-      campaignDuration: {
-        startDate: "2024-02-20 11:11:41",
-        endDate: "2024-02-27 11:11:41",
-      },
-      collectionType: "PROMOTIONAL_BANNER",
-      products: [],
-      status: "PUBLISHED",
-      visibility: "VISIBLE",
-      createdAt: "2024-02-20 09:12:50",
-      updatedAt: "2024-02-20 18:46:31",
-      image:
-        "https://firebasestorage.googleapis.com/v0/b/sample-f415e.appspot.com/o/images%2Fnew-for-you.png?alt=media&token=b43b5de6-b8b4-401e-9af2-a0bcfb8fb2de",
-    },
-  ];
-}
+    collectionType: "BANNER",
+    index: 1,
+    visibility: "DRAFT",
+    createdAt: "2024-06-14 20:49:11",
+    products: [[Object]],
+    image:
+      "https://firebasestorage.googleapis.com/v0/b/sample-f415e.appspot.com/o/images%2Fget-psyched.png?alt=media&token=161f1696-5edd-4430-97ba-10f4afe0ec7a",
+  },
+];
+
+*/
 
 function getCategories(): CategoryType[] {
   return [
@@ -317,9 +214,18 @@ function getRecommededProducts(): ProductType[] {
   ];
 }
 
-export default function Shop() {
+export default async function Shop() {
+  const collections = await fetchData<CollectionType[]>({
+    path: "/api/collections",
+    visibility: "PUBLISHED",
+  });
+
+  console.log(collections);
+
+  // const pageHero = await fetchData<PageHeroType>("/api/page-hero");
+  // const categoriesDemo = await fetchData<CategoryType[]>("/api/categories");
+
   const categories = getCategories();
-  const collections = getCollections();
   const recommendedProducts = getRecommededProducts();
 
   return (

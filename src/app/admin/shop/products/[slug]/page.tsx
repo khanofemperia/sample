@@ -43,7 +43,7 @@ export default async function EditProduct({
   params: { slug: string };
 }) {
   const productId = params.slug.split("-").pop();
-  const data = await fetchData<ProductType | null>(`api/products/${productId}`);
+  const data = await fetchData<ProductType | null>({path: `api/products/${productId}`});
 
   if (!data) {
     notFound();

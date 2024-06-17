@@ -4,12 +4,14 @@ import { database } from "@/libraries/firebase";
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
-  const query = searchParams.get("fields");
+  const fieldsQueryParam = searchParams.get("fields");
+  const visibilityQueryParam = searchParams.get("visibility")?.toUpperCase();
 
+  const validVisibilityFlags = ["DRAFT", "PUBLISHED", "HIDDEN"];
   const firestoreCollectionRef = collection(database, "collections");
   const snapshot = await getDocs(firestoreCollectionRef);
 
-  if (!query) {
+  if (!fieldsQueryParam && !visibilityQueryParam) {
     const collections: CollectionType[] = snapshot.docs.map((doc) => ({
       id: doc.id,
       ...(doc.data() as Omit<CollectionType, "id">),
@@ -19,14 +21,14 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(sortedCollections);
   }
 
-  const fields = query.split(",");
+  const fields = fieldsQueryParam ? fieldsQueryParam.split(",") : [];
   const collections = snapshot.docs.map((doc) => {
     const data = doc.data();
-    const selectedFields: Partial<ProductType> = {};
+    const selectedFields: Partial<CollectionType> = {};
 
     fields.forEach((field) => {
       if (data.hasOwnProperty(field)) {
-        selectedFields[field as keyof ProductType] = data[field];
+        selectedFields[field as keyof CollectionType] = data[field];
       }
     });
 
@@ -35,12 +37,19 @@ export async function GET(request: NextRequest) {
       ...selectedFields,
       updatedAt: data["updatedAt"],
       index: data["index"],
+      visibility: data["visibility"],
     };
   });
 
-  return NextResponse.json(
-    sortCollections(collections)
-  );
+  const filteredCollections = visibilityQueryParam
+    ? collections.filter((collection) =>
+        validVisibilityFlags.includes(collection.visibility?.toUpperCase())
+          ? collection.visibility?.toUpperCase() === visibilityQueryParam
+          : false
+      )
+    : collections;
+
+  return NextResponse.json(sortCollections(filteredCollections));
 }
 
 function sortCollections<T extends { index: number }>(collections: T[]): T[] {
