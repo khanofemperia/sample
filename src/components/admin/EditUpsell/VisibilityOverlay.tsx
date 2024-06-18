@@ -1,11 +1,10 @@
 "use client";
 
 import AlertMessage from "@/components/shared/AlertMessage";
-import { capitalizeFirstLetter } from "@/libraries/utils";
 import { useState, useEffect } from "react";
 import Spinner from "@/ui/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
-import { ArrowLeftIcon, ChevronDownIcon, CloseIcon, EditIcon } from "@/icons";
+import { ArrowLeftIcon, CloseIcon, EditIcon } from "@/icons";
 import clsx from "clsx";
 import Overlay from "@/ui/Overlay";
 import { UpdateUpsellAction } from "@/actions/upsells";
@@ -45,6 +44,9 @@ export function VisibilityOverlay({ data }: { data: DataType }) {
   const [loading, setLoading] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState<boolean>(false);
+  const [alertMessageType, setAlertMessageType] = useState<AlertMessageType>(
+    AlertMessageType.NEUTRAL
+  );
 
   const { hideOverlay } = useOverlayStore();
 
@@ -73,6 +75,7 @@ export function VisibilityOverlay({ data }: { data: DataType }) {
   const hideAlertMessage = () => {
     setShowAlert(false);
     setAlertMessage("");
+    setAlertMessageType(AlertMessageType.NEUTRAL);
   };
 
   const onHideOverlay = () => {
@@ -84,14 +87,16 @@ export function VisibilityOverlay({ data }: { data: DataType }) {
     setLoading(true);
 
     try {
-      const message = await UpdateUpsellAction({
+      const result = await UpdateUpsellAction({
         id: data.id,
         visibility: selectedVisibility,
       });
-      setAlertMessage(message);
+      setAlertMessageType(result.type);
+      setAlertMessage(result.message);
       setShowAlert(true);
     } catch (error) {
       console.error(error);
+      setAlertMessageType(AlertMessageType.ERROR);
       setAlertMessage("Error updating upsell");
       setShowAlert(true);
     } finally {
@@ -258,6 +263,7 @@ export function VisibilityOverlay({ data }: { data: DataType }) {
         <AlertMessage
           message={alertMessage}
           hideAlertMessage={hideAlertMessage}
+          type={alertMessageType}
         />
       )}
     </>

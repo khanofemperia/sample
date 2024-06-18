@@ -72,6 +72,9 @@ export function SizeChartOverlay({ data }: { data: DataType }) {
   const [loading, setLoading] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState<boolean>(false);
+  const [alertMessageType, setAlertMessageType] = useState<AlertMessageType>(
+    AlertMessageType.NEUTRAL
+  );
 
   const { hideOverlay } = useOverlayStore();
 
@@ -105,6 +108,7 @@ export function SizeChartOverlay({ data }: { data: DataType }) {
   const hideAlertMessage = () => {
     setShowAlert(false);
     setAlertMessage("");
+    setAlertMessageType(AlertMessageType.NEUTRAL);
   };
 
   const handleSave = async () => {
@@ -112,6 +116,7 @@ export function SizeChartOverlay({ data }: { data: DataType }) {
       (columns.length > 0 || entryLabels.length > 0) &&
       entries.length === 0
     ) {
+      setAlertMessageType(AlertMessageType.ERROR);
       setAlertMessage("Click 'Create Size Chart' before saving");
       setShowAlert(true);
       return;
@@ -126,7 +131,7 @@ export function SizeChartOverlay({ data }: { data: DataType }) {
     };
 
     try {
-      const message = await UpdateProductAction({
+      const result = await UpdateProductAction({
         id: data.id,
         sizes: columns.length && entryLabels.length ? updatedChart : null,
       });
@@ -137,11 +142,13 @@ export function SizeChartOverlay({ data }: { data: DataType }) {
         setEntries([]);
       }
 
-      setAlertMessage(message);
+      setAlertMessageType(result.type);
+      setAlertMessage(result.message);
       setShowAlert(true);
     } catch (error) {
       console.error(error);
-      setAlertMessage("Failed to update product");
+      setAlertMessageType(AlertMessageType.ERROR);
+      setAlertMessage("Error updating product");
       setShowAlert(true);
     } finally {
       setLoading(false);
@@ -201,9 +208,11 @@ export function SizeChartOverlay({ data }: { data: DataType }) {
 
   const createSizeChart = () => {
     if (columns.length === 0) {
+      setAlertMessageType(AlertMessageType.ERROR);
       setAlertMessage("Provide column names");
       setShowAlert(true);
     } else if (entryLabels.length === 0) {
+      setAlertMessageType(AlertMessageType.ERROR);
       setAlertMessage("Input entry labels");
       setShowAlert(true);
     } else {
@@ -315,7 +324,10 @@ export function SizeChartOverlay({ data }: { data: DataType }) {
                   type="button"
                   className="h-9 px-3 rounded-full flex items-center gap-1 transition duration-300 ease-in-out active:bg-lightgray"
                 >
-                  <ArrowLeftIcon className="fill-custom-blue -ml-[2px]" size={20} />
+                  <ArrowLeftIcon
+                    className="fill-custom-blue -ml-[2px]"
+                    size={20}
+                  />
                   <span className="font-semibold text-sm text-custom-blue">
                     Sizes
                   </span>
@@ -570,6 +582,7 @@ export function SizeChartOverlay({ data }: { data: DataType }) {
         <AlertMessage
           message={alertMessage}
           hideAlertMessage={hideAlertMessage}
+          type={alertMessageType}
         />
       )}
     </>

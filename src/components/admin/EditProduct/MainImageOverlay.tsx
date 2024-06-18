@@ -39,6 +39,9 @@ export function MainImageOverlay({ data }: { data: DataType }) {
   const [loading, setLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
+  const [alertMessageType, setAlertMessageType] = useState<AlertMessageType>(
+    AlertMessageType.NEUTRAL
+  );
   const [mainImage, setMainImage] = useState(data.mainImage);
   
   const { hideOverlay } = useOverlayStore();
@@ -73,6 +76,7 @@ export function MainImageOverlay({ data }: { data: DataType }) {
   const hideAlertMessage = () => {
     setShowAlert(false);
     setAlertMessage("");
+    setAlertMessageType(AlertMessageType.NEUTRAL);
   };
 
   const handleSave = async (event: FormEvent) => {
@@ -81,12 +85,14 @@ export function MainImageOverlay({ data }: { data: DataType }) {
     setLoading(true);
 
     try {
-      const message = await UpdateProductAction({ id: data.id, mainImage });
-      setAlertMessage(message);
+      const result = await UpdateProductAction({ id: data.id, mainImage });
+      setAlertMessageType(result.type);
+      setAlertMessage(result.message);
       setShowAlert(true);
     } catch (error) {
       console.error(error);
-      setAlertMessage("Failed to update product");
+      setAlertMessageType(AlertMessageType.ERROR);
+      setAlertMessage("Error updating product");
       setShowAlert(true);
     } finally {
       setLoading(false);
@@ -213,6 +219,7 @@ export function MainImageOverlay({ data }: { data: DataType }) {
         <AlertMessage
           message={alertMessage}
           hideAlertMessage={hideAlertMessage}
+          type={alertMessageType}
         />
       )}
     </>

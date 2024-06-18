@@ -42,6 +42,9 @@ export function BasicDetailsOverlay({ data }: { data: DataType }) {
   const [loading, setLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
+  const [alertMessageType, setAlertMessageType] = useState<AlertMessageType>(
+    AlertMessageType.NEUTRAL
+  );
   const [formData, setFormData] = useState({
     id: data.id,
     price: data.price,
@@ -81,6 +84,7 @@ export function BasicDetailsOverlay({ data }: { data: DataType }) {
   const hideAlertMessage = () => {
     setShowAlert(false);
     setAlertMessage("");
+    setAlertMessageType(AlertMessageType.NEUTRAL);
   };
 
   const handleSave = async (event: FormEvent) => {
@@ -89,11 +93,13 @@ export function BasicDetailsOverlay({ data }: { data: DataType }) {
     setLoading(true);
 
     try {
-      const message = await UpdateUpsellAction(formData);
-      setAlertMessage(message);
+      const result = await UpdateUpsellAction(formData);
+      setAlertMessageType(result.type);
+      setAlertMessage(result.message);
       setShowAlert(true);
     } catch (error) {
       console.error(error);
+      setAlertMessageType(AlertMessageType.ERROR);
       setAlertMessage("Error updating upsell");
       setShowAlert(true);
     } finally {
@@ -263,6 +269,7 @@ export function BasicDetailsOverlay({ data }: { data: DataType }) {
         <AlertMessage
           message={alertMessage}
           hideAlertMessage={hideAlertMessage}
+          type={alertMessageType}
         />
       )}
     </>

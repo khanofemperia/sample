@@ -50,6 +50,9 @@ export function ColorsOverlay({ data }: { data: DataType }) {
   const [loading, setLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
+  const [alertMessageType, setAlertMessageType] = useState<AlertMessageType>(
+    AlertMessageType.NEUTRAL
+  );
   const [colors, setColors] = useState<ColorProps[]>([...(data.colors || [])]);
   const [newColor, setNewColor] = useState<ColorProps>({ name: "", image: "" });
 
@@ -77,9 +80,6 @@ export function ColorsOverlay({ data }: { data: DataType }) {
     };
   }, [isOverlayVisible, showAlert]);
 
-  // https://i.pinimg.com/564x/34/fe/a4/34fea4694b9a5b4a112316ce66a62d32.jpg
-  // https://i.pinimg.com/736x/e5/93/ed/e593ed7abfc547e9818c303510246ebb.jpg
-
   const onHideOverlay = () => {
     setLoading(false);
     hideOverlay({ pageName, overlayName });
@@ -88,6 +88,7 @@ export function ColorsOverlay({ data }: { data: DataType }) {
   const hideAlertMessage = () => {
     setShowAlert(false);
     setAlertMessage("");
+    setAlertMessageType(AlertMessageType.NEUTRAL);
   };
 
   const handleSave = async () => {
@@ -98,12 +99,14 @@ export function ColorsOverlay({ data }: { data: DataType }) {
 
     colors.forEach(({ name, image }) => {
       if (!name || !image) {
+        setAlertMessageType(AlertMessageType.ERROR);
         setAlertMessage(
           "Make sure existing colors are provided names & image URLs"
         );
         setShowAlert(true);
         hasMissingInfo = true;
       } else if (!isValidRemoteImage(image)) {
+        setAlertMessageType(AlertMessageType.ERROR);
         setAlertMessage(
           "Invalid image URL found. Try an image from Pinterest or your Firebase Storage."
         );
@@ -118,15 +121,17 @@ export function ColorsOverlay({ data }: { data: DataType }) {
     }
 
     try {
-      const message = await UpdateProductAction({
+      const result = await UpdateProductAction({
         id: data.id,
         colors: colors.filter(({ name, image }) => name && image),
       });
-      setAlertMessage(message);
+      setAlertMessageType(result.type);
+      setAlertMessage(result.message);
       setShowAlert(true);
     } catch (error) {
       console.error(error);
-      setAlertMessage("Failed to update product");
+      setAlertMessageType(AlertMessageType.ERROR);
+      setAlertMessage("Error updating product");
       setShowAlert(true);
     } finally {
       setLoading(false);
@@ -146,6 +151,7 @@ export function ColorsOverlay({ data }: { data: DataType }) {
         ? "Make sure existing colors are provided names & image URLs"
         : "Invalid image URL found. Try an image from Pinterest or your Firebase Storage.";
 
+      setAlertMessageType(AlertMessageType.ERROR);
       setAlertMessage(message);
       setShowAlert(true);
       return;
@@ -315,6 +321,7 @@ export function ColorsOverlay({ data }: { data: DataType }) {
         <AlertMessage
           message={alertMessage}
           hideAlertMessage={hideAlertMessage}
+          type={alertMessageType}
         />
       )}
     </>

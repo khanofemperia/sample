@@ -39,6 +39,9 @@ export function DescriptionOverlay({ data }: { data: DataType }) {
   const [loading, setLoading] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState<boolean>(false);
+  const [alertMessageType, setAlertMessageType] = useState<AlertMessageType>(
+    AlertMessageType.NEUTRAL
+  );
 
   const { hideOverlay } = useOverlayStore();
 
@@ -67,6 +70,7 @@ export function DescriptionOverlay({ data }: { data: DataType }) {
   const hideAlertMessage = () => {
     setShowAlert(false);
     setAlertMessage("");
+    setAlertMessageType(AlertMessageType.NEUTRAL);
   };
 
   const onHideOverlay = () => {
@@ -106,7 +110,10 @@ export function DescriptionOverlay({ data }: { data: DataType }) {
                   type="button"
                   className="h-9 px-3 rounded-full flex items-center gap-1 transition duration-300 ease-in-out active:bg-lightgray"
                 >
-                  <ArrowLeftIcon className="fill-custom-blue -ml-[2px]" size={20} />
+                  <ArrowLeftIcon
+                    className="fill-custom-blue -ml-[2px]"
+                    size={20}
+                  />
                   <span className="font-semibold text-sm text-custom-blue">
                     Product description
                   </span>
@@ -165,6 +172,7 @@ export function DescriptionOverlay({ data }: { data: DataType }) {
         <AlertMessage
           message={alertMessage}
           hideAlertMessage={hideAlertMessage}
+          type={alertMessageType}
         />
       )}
     </>

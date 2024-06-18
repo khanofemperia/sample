@@ -40,6 +40,9 @@ export function ImagesOverlay({ data }: { data: DataType }) {
   const [loading, setLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
+  const [alertMessageType, setAlertMessageType] = useState<AlertMessageType>(
+    AlertMessageType.NEUTRAL
+  );
   const [images, setImages] = useState(data?.images ?? []);
 
   const { hideOverlay } = useOverlayStore();
@@ -74,6 +77,7 @@ export function ImagesOverlay({ data }: { data: DataType }) {
   const hideAlertMessage = () => {
     setShowAlert(false);
     setAlertMessage("");
+    setAlertMessageType(AlertMessageType.NEUTRAL);
   };
 
   const handleSave = async () => {
@@ -82,21 +86,24 @@ export function ImagesOverlay({ data }: { data: DataType }) {
       const filteredImages = images.filter((image) => image !== "");
 
       if (filteredImages.length === 0) {
+        setAlertMessageType(AlertMessageType.ERROR);
         setAlertMessage("No images added");
         setShowAlert(true);
         setImages(data?.images ?? []);
       } else {
-        const message = await UpdateProductAction({
+        const result = await UpdateProductAction({
           id: data.id,
           images: filteredImages,
         });
-        setAlertMessage(message);
+        setAlertMessageType(result.type);
+        setAlertMessage(result.message);
         setShowAlert(true);
         setImages(filteredImages);
       }
     } catch (error) {
       console.error(error);
-      setAlertMessage("Failed to update product");
+      setAlertMessageType(AlertMessageType.ERROR);
+      setAlertMessage("Error updating product");
       setShowAlert(true);
     } finally {
       setLoading(false);
@@ -264,6 +271,7 @@ export function ImagesOverlay({ data }: { data: DataType }) {
         <AlertMessage
           message={alertMessage}
           hideAlertMessage={hideAlertMessage}
+          type={alertMessageType}
         />
       )}
     </>
