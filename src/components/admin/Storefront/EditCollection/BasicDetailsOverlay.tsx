@@ -45,6 +45,9 @@ export function BasicDetailsOverlay({
   const [loading, setLoading] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState<boolean>(false);
+  const [alertMessageType, setAlertMessageType] = useState<AlertMessageType>(
+    AlertMessageType.NEUTRAL
+  );
   const [title, setTitle] = useState<string>(data.title);
   const [slug, setSlug] = useState<string>(data.slug);
   const [bannerImage, setBannerImage] = useState<string>(data.image);
@@ -77,6 +80,7 @@ export function BasicDetailsOverlay({
   const hideAlertMessage = () => {
     setShowAlert(false);
     setAlertMessage("");
+    setAlertMessageType(AlertMessageType.NEUTRAL);
   };
 
   const onHideOverlay = () => {
@@ -88,21 +92,24 @@ export function BasicDetailsOverlay({
 
   const handleSave = async () => {
     if (data.collectionType === "BANNER" && !bannerImage) {
+      setAlertMessageType(AlertMessageType.ERROR);
       setAlertMessage("Provide banner image");
       setShowAlert(true);
     } else {
       setLoading(true);
       try {
-        const message = await UpdateCollectionAction({
+        const result = await UpdateCollectionAction({
           id: data.id,
           title,
           slug,
           ...(bannerImage && { image: bannerImage }),
         });
-        setAlertMessage(message);
+        setAlertMessageType(result.type);
+        setAlertMessage(result.message);
         setShowAlert(true);
       } catch (error) {
         console.error(error);
+        setAlertMessageType(AlertMessageType.ERROR);
         setAlertMessage("Error updating collection");
         setShowAlert(true);
       } finally {
@@ -271,6 +278,7 @@ export function BasicDetailsOverlay({
         <AlertMessage
           message={alertMessage}
           hideAlertMessage={hideAlertMessage}
+          type={alertMessageType}
         />
       )}
     </>

@@ -53,7 +53,8 @@ export async function CreateCollectionAction(data: {
       visibility: "DRAFT",
       updatedAt: currentTime,
       createdAt: currentTime,
-      ...(data.image && { image: data.image }),
+      image: data.image,
+      // ...(data.image && { image: data.image }),
     };
 
     const existingCollections = await getDocs(
@@ -80,10 +81,13 @@ export async function CreateCollectionAction(data: {
 
     revalidatePath("/admin/shop");
 
-    return "Collection created";
+    return { type: AlertMessageType.SUCCESS, message: "Collection created" };
   } catch (error) {
     console.error("Error creating collection:", error);
-    return "Error creating collection";
+    return {
+      type: AlertMessageType.ERROR,
+      message: "Error creating collection",
+    };
   }
 }
 
@@ -106,9 +110,12 @@ export async function ChangeCollectionIndexAction(data: {
       index < 1 ||
       index > existingCollections.size
     ) {
-      return !collectionOneSnapshot.exists()
-        ? "Collection not found"
-        : "Index is invalid or out of range";
+      return {
+        type: AlertMessageType.NEUTRAL,
+        message: !collectionOneSnapshot.exists()
+          ? "Collection not found"
+          : "Index is invalid or out of range",
+      };
     }
 
     const collectionTwoId = existingCollections.docs.find(
@@ -116,7 +123,10 @@ export async function ChangeCollectionIndexAction(data: {
     )?.id;
 
     if (!collectionTwoId) {
-      return "No collection to switch indexes with";
+      return {
+        type: AlertMessageType.NEUTRAL,
+        message: "No collection to switch indexes with",
+      };
     }
 
     const collectionOneBeforeUpdate = collectionOneSnapshot.data();
@@ -131,10 +141,16 @@ export async function ChangeCollectionIndexAction(data: {
 
     revalidatePath("/admin/shop");
 
-    return "Collection index changed";
+    return {
+      type: AlertMessageType.SUCCESS,
+      message: "Collection index changed",
+    };
   } catch (error) {
     console.error("Error changing collection index:", error);
-    return "Error, reload and try again";
+    return {
+      type: AlertMessageType.ERROR,
+      message: "Error changing collection index",
+    };
   }
 }
 
@@ -151,7 +167,10 @@ export async function UpdateCollectionAction(data: {
     const collectionSnapshot = await getDoc(collectionRef);
 
     if (!collectionSnapshot.exists()) {
-      return "Collection not found";
+      return {
+        type: AlertMessageType.NEUTRAL,
+        message: "Collection not found",
+      };
     }
 
     const updateData: Record<string, any> = {};
@@ -182,10 +201,13 @@ export async function UpdateCollectionAction(data: {
     });
     revalidatePath("/admin/shop/collections/[slug]", "page");
 
-    return "Collection updated";
+    return { type: AlertMessageType.SUCCESS, message: "Collection updated" };
   } catch (error) {
     console.error("Error updating collection:", error);
-    return "Failed to update collection";
+    return {
+      type: AlertMessageType.ERROR,
+      message: "Error updating collection",
+    };
   }
 }
 
@@ -199,14 +221,17 @@ export async function AddProductAction(data: {
     const productSnapshot = await getDoc(productRef);
 
     if (!productSnapshot.exists()) {
-      return "Product not found";
+      return { type: AlertMessageType.NEUTRAL, message: "Product not found" };
     }
 
     const collectionRef = doc(database, "collections", collectionId);
     const collectionSnapshot = await getDoc(collectionRef);
 
     if (!collectionSnapshot.exists()) {
-      return "Collection not found";
+      return {
+        type: AlertMessageType.NEUTRAL,
+        message: "Collection not found",
+      };
     }
 
     const newProduct = {
@@ -225,7 +250,10 @@ export async function AddProductAction(data: {
     );
 
     if (productAlreadyExists) {
-      return "Product already in the collection";
+      return {
+        type: AlertMessageType.NEUTRAL,
+        message: "Product already in the collection",
+      };
     }
 
     collectionProducts.sort((a, b) => a.index - b.index);
@@ -246,10 +274,16 @@ export async function AddProductAction(data: {
 
     revalidatePath("/admin/shop/collections/[slug]", "page");
 
-    return "Product added to collection";
+    return {
+      type: AlertMessageType.SUCCESS,
+      message: "Product added to collection",
+    };
   } catch (error) {
     console.error("Error adding product to collection:", error);
-    return "Failed to add product to collection";
+    return {
+      type: AlertMessageType.ERROR,
+      message: "Error adding product to collection",
+    };
   }
 }
 
@@ -263,14 +297,17 @@ export async function RemoveProductAction(data: {
     const productSnapshot = await getDoc(productRef);
 
     if (!productSnapshot.exists()) {
-      return "Product not found";
+      return { type: AlertMessageType.NEUTRAL, message: "Product not found" };
     }
 
     const collectionRef = doc(database, "collections", collectionId);
     const collectionSnapshot = await getDoc(collectionRef);
 
     if (!collectionSnapshot.exists()) {
-      return "Collection not found";
+      return {
+        type: AlertMessageType.NEUTRAL,
+        message: "Collection not found",
+      };
     }
 
     const collectionData = collectionSnapshot.data() as DataType;
@@ -290,10 +327,16 @@ export async function RemoveProductAction(data: {
 
     revalidatePath("/admin/shop/collections/[slug]", "page");
 
-    return "Product removed from collection";
+    return {
+      type: AlertMessageType.SUCCESS,
+      message: "Product removed from collection",
+    };
   } catch (error) {
     console.error("Error removing product from collection:", error);
-    return "Failed to remove product from collection";
+    return {
+      type: AlertMessageType.ERROR,
+      message: "Error removing product from collection",
+    };
   }
 }
 
@@ -314,14 +357,17 @@ export async function ChangeProductIndexAction(data: {
     const productOneChangesSnapshot = await getDoc(productOneChangesRef);
 
     if (!productOneChangesSnapshot.exists()) {
-      return "Product not found";
+      return { type: AlertMessageType.NEUTRAL, message: "Product not found" };
     }
 
     const collectionRef = doc(database, "collections", collectionId);
     const collectionSnapshot = await getDoc(collectionRef);
 
     if (!collectionSnapshot.exists()) {
-      return "Collection not found";
+      return {
+        type: AlertMessageType.NEUTRAL,
+        message: "Collection not found",
+      };
     }
 
     const collectionData = collectionSnapshot.data() as DataType;
@@ -331,7 +377,10 @@ export async function ChangeProductIndexAction(data: {
       productOneChanges.index < 1 ||
       productOneChanges.index > collectionData.products.length
     ) {
-      return "Index is invalid or out of range";
+      return {
+        type: AlertMessageType.NEUTRAL,
+        message: "Index is invalid or out of range",
+      };
     }
 
     const productOne = collectionData.products.find(
@@ -345,7 +394,10 @@ export async function ChangeProductIndexAction(data: {
     );
 
     if (!productTwo) {
-      return "There's no product to switch indexes with";
+      return {
+        type: AlertMessageType.NEUTRAL,
+        message: "There's no product to switch indexes with",
+      };
     }
 
     if (productOne !== undefined && productOneIndexBeforeSwap !== undefined) {
@@ -359,12 +411,21 @@ export async function ChangeProductIndexAction(data: {
 
       revalidatePath("/admin/shop/collections/[slug]", "page");
 
-      return "Product index changed";
+      return {
+        type: AlertMessageType.SUCCESS,
+        message: "Product index changed",
+      };
     } else {
-      return "Failed to change product index";
+      return {
+        type: AlertMessageType.ERROR,
+        message: "Error changing product index",
+      };
     }
   } catch (error) {
     console.error("Error changing product index:", error);
-    return "Error changing product index";
+    return {
+      type: AlertMessageType.ERROR,
+      message: "Error changing product index",
+    };
   }
 }

@@ -36,10 +36,10 @@ export async function CreateUpsellAction(data: CreateUpsellType) {
     await setDoc(documentRef, upsell);
     revalidatePath("/admin/shop/upsells");
 
-    return "Upsell created";
+    return { type: AlertMessageType.SUCCESS, message: "Upsell created" };
   } catch (error) {
     console.error("Error creating upsell:", error);
-    return "Error creating upsell";
+    return { type: AlertMessageType.ERROR, message: "Error creating upsell" };
   }
 }
 
@@ -58,9 +58,9 @@ export async function UpdateUpsellAction(data: EditUpsell) {
     await setDoc(docRef, updatedUpsell);
     revalidatePath("/admin/shop/upsells/[id]", "page");
 
-    return "Upsell updated";
+    return { type: AlertMessageType.SUCCESS, message: "Upsell updated" };
   } catch (error) {
     console.error("Error updating upsell:", error);
-    return "Error updating upsell";
+    return { type: AlertMessageType.ERROR, message: "Error updating upsell" };
   }
 }

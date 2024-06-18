@@ -6,8 +6,7 @@ import clsx from "clsx";
 import Link from "next/link";
 import { useState } from "react";
 import { HiOutlineBan, HiOutlineClock } from "react-icons/hi";
-import { IoFolderOpenOutline, IoHourglassOutline } from "react-icons/io5";
-import AlertMessage from "@/components/shared/AlertMessage";
+import { IoHourglassOutline } from "react-icons/io5";
 import {
   ChangeCollectionIndexButton,
   ChangeCollectionIndexOverlay,
@@ -26,8 +25,6 @@ export default function CollectionTable({
   const [currentPage, setCurrentPage] = useState(1);
   const [pageJumpValue, setPageJumpValue] = useState("1");
   const [isPageInRange, setIsPageInRange] = useState(true);
-  const [alertMessage, setAlertMessage] = useState("");
-  const [showAlert, setShowAlert] = useState<boolean>(false);
 
   const pagination = (
     data: CollectionType[],
@@ -127,11 +124,6 @@ export default function CollectionTable({
     } else {
       return CAMPAIGN_STATUS_ACTIVE;
     }
-  };
-
-  const hideAlertMessage = () => {
-    setShowAlert(false);
-    setAlertMessage("");
   };
 
   return (
@@ -408,12 +400,6 @@ export default function CollectionTable({
             <NewCollectionEmptyTableButton />
           </div>
         </div>
-      )}
-      {showAlert && (
-        <AlertMessage
-          message={alertMessage}
-          hideAlertMessage={hideAlertMessage}
-        />
       )}
       <ChangeCollectionIndexOverlay />
     </>

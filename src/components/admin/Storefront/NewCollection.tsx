@@ -89,6 +89,9 @@ export function NewCollectionOverlay() {
   const [isCategoryDropdownOpen, setIsCollectionTypeDropdownOpen] =
     useState(false);
   const [loading, setLoading] = useState(false);
+  const [alertMessageType, setAlertMessageType] = useState<AlertMessageType>(
+    AlertMessageType.NEUTRAL
+  );
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [selectedCollectionType, setSelectedCollectionType] =
@@ -160,6 +163,7 @@ export function NewCollectionOverlay() {
 
   const handleSave = async () => {
     if (!isValidDateRange) {
+      setAlertMessageType(AlertMessageType.ERROR);
       setAlertMessage("Start date must be before end date");
       setShowAlert(true);
     } else {
@@ -183,7 +187,7 @@ export function NewCollectionOverlay() {
           requestData.image = bannerImage;
         }
 
-        const message = await CreateCollectionAction(
+        const result = await CreateCollectionAction(
           requestData as {
             title: string;
             slug: string;
@@ -193,10 +197,14 @@ export function NewCollectionOverlay() {
           }
         );
 
-        setAlertMessage(message);
+        setAlertMessageType(result.type);
+        setAlertMessage(result.message);
         setShowAlert(true);
       } catch (error) {
         console.error(error);
+        setAlertMessageType(AlertMessageType.ERROR);
+        setAlertMessage("Error creating collection");
+        setShowAlert(true);
       } finally {
         onHideOverlay();
       }
@@ -217,8 +225,9 @@ export function NewCollectionOverlay() {
   };
 
   const hideAlertMessage = () => {
-    setShowAlert(false);
     setAlertMessage("");
+    setAlertMessageType(AlertMessageType.NEUTRAL);
+    setShowAlert(false);
   };
 
   return (
@@ -463,6 +472,7 @@ export function NewCollectionOverlay() {
         <AlertMessage
           message={alertMessage}
           hideAlertMessage={hideAlertMessage}
+          type={alertMessageType}
         />
       )}
     </>

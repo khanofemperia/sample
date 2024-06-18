@@ -64,6 +64,9 @@ export function NewUpsellEmptyGridButton() {
 
 export function NewUpsellOverlay() {
   const [loading, setLoading] = useState(false);
+  const [alertMessageType, setAlertMessageType] = useState<AlertMessageType>(
+    AlertMessageType.NEUTRAL
+  );
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [formData, setFormData] = useState({
@@ -116,12 +119,14 @@ export function NewUpsellOverlay() {
     setLoading(true);
 
     try {
-      const message = await CreateUpsellAction(formData);
-      setAlertMessage(message);
+      const result = await CreateUpsellAction(formData);
+      setAlertMessageType(result.type);
+      setAlertMessage(result.message);
       setShowAlert(true);
     } catch (error) {
       console.error(error);
-      setAlertMessage("Error creating upsell");
+      setAlertMessageType(AlertMessageType.ERROR);
+      setAlertMessage("Error creating collection");
       setShowAlert(true);
     } finally {
       setLoading(false);
@@ -142,6 +147,7 @@ export function NewUpsellOverlay() {
   const hideAlertMessage = () => {
     setShowAlert(false);
     setAlertMessage("");
+    setAlertMessageType(AlertMessageType.NEUTRAL);
   };
 
   return (
@@ -292,6 +298,7 @@ export function NewUpsellOverlay() {
         <AlertMessage
           message={alertMessage}
           hideAlertMessage={hideAlertMessage}
+          type={alertMessageType}
         />
       )}
     </>

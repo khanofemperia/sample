@@ -70,6 +70,9 @@ export function ProductListOverlay({
   const [loading, setLoading] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState<boolean>(false);
+  const [alertMessageType, setAlertMessageType] = useState<AlertMessageType>(
+    AlertMessageType.NEUTRAL
+  );
   const [productId, setProductId] = useState("");
   const [filter, setFilter] = useState<string>(ALL);
   const [currentPage, setCurrentPage] = useState(1);
@@ -114,14 +117,17 @@ export function ProductListOverlay({
   const hideAlertMessage = () => {
     setShowAlert(false);
     setAlertMessage("");
+    setAlertMessageType(AlertMessageType.NEUTRAL);
   };
 
   const addProduct = async () => {
     if (!productId.trim()) {
+      setAlertMessageType(AlertMessageType.ERROR);
       setAlertMessage("Product ID cannot be empty");
       setShowAlert(true);
       return;
     } else if (!/^\d{5}$/.test(productId.trim())) {
+      setAlertMessageType(AlertMessageType.ERROR);
       setAlertMessage("Product ID must be a 5-digit number");
       setShowAlert(true);
       return;
@@ -130,16 +136,18 @@ export function ProductListOverlay({
     setLoading(true);
 
     try {
-      const message = await AddProductAction({
+      const result = await AddProductAction({
         collectionId: data.id,
         productId,
       });
-      setAlertMessage(message);
+      setAlertMessageType(result.type);
+      setAlertMessage(result.message);
       setShowAlert(true);
       setProductId("");
     } catch (error) {
       console.error("Error adding product:", error);
-      setAlertMessage("Failed to add product to the collection");
+      setAlertMessageType(AlertMessageType.ERROR);
+      setAlertMessage("Error adding product");
       setShowAlert(true);
     } finally {
       setLoading(false);
@@ -183,6 +191,7 @@ export function ProductListOverlay({
     const newFilteredProducts = getFilteredProducts(newFilter);
 
     if (newFilteredProducts.length === 0) {
+      setAlertMessageType(AlertMessageType.NEUTRAL);
       setAlertMessage(
         `${capitalizeFirstLetter(
           newFilter.toLowerCase()
@@ -560,6 +569,7 @@ export function ProductListOverlay({
         <AlertMessage
           message={alertMessage}
           hideAlertMessage={hideAlertMessage}
+          type={alertMessageType}
         />
       )}
       <RemoveProductOverlay collectionId={data.id} />

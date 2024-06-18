@@ -6,9 +6,7 @@ import Spinner from "@/ui/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
 import clsx from "clsx";
 import Overlay from "@/ui/Overlay";
-import {
-  RemoveProductAction,
-} from "@/actions/collections";
+import { RemoveProductAction } from "@/actions/collections";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { useItemSelectorStore } from "@/zustand/admin/itemSelectorStore";
 
@@ -46,6 +44,9 @@ export function RemoveProductOverlay({
   const [loading, setLoading] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState<boolean>(false);
+  const [alertMessageType, setAlertMessageType] = useState<AlertMessageType>(
+    AlertMessageType.NEUTRAL
+  );
 
   const { hideOverlay } = useOverlayStore();
   const { selectedItem } = useItemSelectorStore((state) => ({
@@ -64,20 +65,23 @@ export function RemoveProductOverlay({
   const hideAlertMessage = () => {
     setShowAlert(false);
     setAlertMessage("");
+    setAlertMessageType(AlertMessageType.NEUTRAL);
   };
 
   const handleSave = async () => {
     setLoading(true);
 
     try {
-      const message = await RemoveProductAction({
+      const result = await RemoveProductAction({
         collectionId,
         productId: selectedItem.id,
-      });
-      setAlertMessage(message);
+      })
+      setAlertMessageType(result.type);
+      setAlertMessage(result.message);
       setShowAlert(true);
     } catch (error) {
       console.error("Error adding product to collection:", error);
+      setAlertMessageType(AlertMessageType.ERROR);
       setAlertMessage("Error adding product to collection");
       setShowAlert(true);
     } finally {
@@ -133,6 +137,7 @@ export function RemoveProductOverlay({
         <AlertMessage
           message={alertMessage}
           hideAlertMessage={hideAlertMessage}
+          type={alertMessageType}
         />
       )}
     </>

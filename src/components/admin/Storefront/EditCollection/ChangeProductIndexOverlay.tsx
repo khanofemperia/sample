@@ -4,11 +4,7 @@ import AlertMessage from "@/components/shared/AlertMessage";
 import { useState } from "react";
 import Spinner from "@/ui/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
-import {
-  ArrowLeftIcon,
-  ChangeIndexIcon,
-  CloseIcon,
-} from "@/icons";
+import { ArrowLeftIcon, ChangeIndexIcon, CloseIcon } from "@/icons";
 import clsx from "clsx";
 import Overlay from "@/ui/Overlay";
 import { ChangeProductIndexAction } from "@/actions/collections";
@@ -61,6 +57,9 @@ export function ChangeProductIndexOverlay() {
   const [loading, setLoading] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState<boolean>(false);
+  const [alertMessageType, setAlertMessageType] = useState<AlertMessageType>(
+    AlertMessageType.NEUTRAL
+  );
 
   const { hideOverlay } = useOverlayStore();
 
@@ -88,22 +87,25 @@ export function ChangeProductIndexOverlay() {
   const hideAlertMessage = () => {
     setShowAlert(false);
     setAlertMessage("");
+    setAlertMessageType(AlertMessageType.NEUTRAL);
   };
 
   const handleSave = async () => {
     setLoading(true);
     try {
-      const message = await ChangeProductIndexAction({
+      const result = await ChangeProductIndexAction({
         collectionId: selectedProduct.collectionId,
         product: {
           id: selectedProduct.id,
           index: Number(selectedProduct.index),
         },
       });
-      setAlertMessage(message);
+      setAlertMessageType(result.type);
+      setAlertMessage(result.message);
       setShowAlert(true);
     } catch (error) {
       console.error(error);
+      setAlertMessageType(AlertMessageType.ERROR);
       setAlertMessage("Error changing product index");
       setShowAlert(true);
     } finally {
@@ -225,6 +227,7 @@ export function ChangeProductIndexOverlay() {
         <AlertMessage
           message={alertMessage}
           hideAlertMessage={hideAlertMessage}
+          type={alertMessageType}
         />
       )}
     </>

@@ -42,6 +42,9 @@ export function CampaignDurationOverlay({
   const [loading, setLoading] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState<boolean>(false);
+  const [alertMessageType, setAlertMessageType] = useState<AlertMessageType>(
+    AlertMessageType.NEUTRAL
+  );
   const [launchDate, setLaunchDate] = useState<Date | null>(
     new Date(data.campaignDuration.startDate)
   );
@@ -77,6 +80,7 @@ export function CampaignDurationOverlay({
   const hideAlertMessage = () => {
     setShowAlert(false);
     setAlertMessage("");
+    setAlertMessageType(AlertMessageType.NEUTRAL);
   };
 
   const onHideOverlay = () => {
@@ -91,6 +95,7 @@ export function CampaignDurationOverlay({
 
   const handleSave = async () => {
     if (!isValidDateRange) {
+      setAlertMessageType(AlertMessageType.ERROR);
       setAlertMessage("Start date must be before end date");
       setShowAlert(true);
     } else {
@@ -102,14 +107,18 @@ export function CampaignDurationOverlay({
       };
 
       try {
-        const message = await UpdateCollectionAction({
+        const result = await UpdateCollectionAction({
           id: data.id,
           campaignDuration: campaignDuration,
         });
-        setAlertMessage(message);
+        setAlertMessageType(result.type);
+        setAlertMessage(result.message);
         setShowAlert(true);
       } catch (error) {
         console.error(error);
+        setAlertMessageType(AlertMessageType.ERROR);
+        setAlertMessage("Error updating collection");
+        setShowAlert(true);
       } finally {
         onHideOverlay();
       }
@@ -229,6 +238,7 @@ export function CampaignDurationOverlay({
         <AlertMessage
           message={alertMessage}
           hideAlertMessage={hideAlertMessage}
+          type={alertMessageType}
         />
       )}
     </>

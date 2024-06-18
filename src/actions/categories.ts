@@ -32,9 +32,12 @@ export default async function UpdateCategoriesAction(data: DataType) {
 
     revalidatePath("/admin/shop");
 
-    return "Categories updated";
+    return { type: AlertMessageType.SUCCESS, message: "Categories updated" };
   } catch (error) {
     console.error("Error updating categories and settings:", error);
-    return "Error updating categories and settings";
+    return {
+      type: AlertMessageType.ERROR,
+      message: "Error updating categories",
+    };
   }
 }

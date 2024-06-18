@@ -20,9 +20,12 @@ export async function UpdatePageHeroAction(data: PageHeroType) {
 
     revalidatePath("/admin/shop");
 
-    return "Page hero updated";
+    return { type: AlertMessageType.SUCCESS, message: "Page hero updated" };
   } catch (error) {
     console.error("Error updating page hero:", error);
-    return "Error updating page hero";
+    return {
+      type: AlertMessageType.ERROR,
+      message: "Error updating page hero",
+    };
   }
 }

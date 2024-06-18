@@ -79,6 +79,9 @@ export function CategoriesOverlay({
 
   const [loading, setLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
+  const [alertMessageType, setAlertMessageType] = useState<AlertMessageType>(
+    AlertMessageType.NEUTRAL
+  );
   const [showAlert, setShowAlert] = useState(false);
   const [categorySectionVisibility, setCategorySectionVisibility] = useState(
     categorySection.visibility.toUpperCase()
@@ -125,6 +128,7 @@ export function CategoriesOverlay({
       );
 
       if (categorySectionVisibility === VISIBLE && allCategoriesHidden) {
+        setAlertMessageType(AlertMessageType.ERROR);
         setAlertMessage(
           "Cannot display category section on storefront, all categories are hidden."
         );
@@ -133,14 +137,18 @@ export function CategoriesOverlay({
         return;
       }
 
-      const message = await UpdateCategoriesAction({
+      const result = await UpdateCategoriesAction({
         categorySectionVisibility: categorySectionVisibility,
         categories: updatedCategories,
       });
-      setAlertMessage(message);
+      setAlertMessageType(result.type);
+      setAlertMessage(result.message);
       setShowAlert(true);
     } catch (error) {
       console.error("Error updating categories:", error);
+      setAlertMessageType(AlertMessageType.ERROR);
+      setAlertMessage("Error updating categories");
+      setShowAlert(true);
     } finally {
       setLoading(false);
     }
@@ -158,6 +166,7 @@ export function CategoriesOverlay({
   const hideAlertMessage = () => {
     setShowAlert(false);
     setAlertMessage("");
+    setAlertMessageType(AlertMessageType.NEUTRAL);
   };
 
   const toggleVisibility = (index: number) => {
@@ -339,6 +348,7 @@ export function CategoriesOverlay({
         <AlertMessage
           message={alertMessage}
           hideAlertMessage={hideAlertMessage}
+          type={alertMessageType}
         />
       )}
     </>

@@ -65,6 +65,9 @@ export function NewProductEmptyGridButton() {
 export function NewProductOverlay() {
   const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [alertMessageType, setAlertMessageType] = useState<AlertMessageType>(
+    AlertMessageType.NEUTRAL
+  );
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("Select");
@@ -166,10 +169,12 @@ export function NewProductOverlay() {
 
   const handleSave = async () => {
     if (!formData.category || formData.category.toLowerCase() === "select") {
+      setAlertMessageType(AlertMessageType.ERROR);
       setAlertMessage("Select a category");
       setShowAlert(true);
       return;
     } else if (!isValidRemoteImage(formData.mainImage)) {
+      setAlertMessageType(AlertMessageType.ERROR);
       setAlertMessage(
         "Invalid main image URL. Try an image from Pinterest or your Firebase Storage."
       );
@@ -180,12 +185,14 @@ export function NewProductOverlay() {
     setLoading(true);
 
     try {
-      const message = await CreateProductAction(formData);
-      setAlertMessage(message);
+      const result = await CreateProductAction(formData);
+      setAlertMessageType(result.type);
+      setAlertMessage(result.message);
       setShowAlert(true);
     } catch (error) {
       console.error(error);
-      setAlertMessage("Failed to create product");
+      setAlertMessageType(AlertMessageType.ERROR);
+      setAlertMessage("Error creating product");
       setShowAlert(true);
     } finally {
       setLoading(false);
@@ -209,6 +216,7 @@ export function NewProductOverlay() {
   const hideAlertMessage = () => {
     setShowAlert(false);
     setAlertMessage("");
+    setAlertMessageType(AlertMessageType.NEUTRAL);
   };
 
   return (
@@ -417,6 +425,7 @@ export function NewProductOverlay() {
         <AlertMessage
           message={alertMessage}
           hideAlertMessage={hideAlertMessage}
+          type={alertMessageType}
         />
       )}
     </>

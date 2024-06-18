@@ -4,11 +4,7 @@ import AlertMessage from "@/components/shared/AlertMessage";
 import { useState, useEffect } from "react";
 import Spinner from "@/ui/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
-import {
-  ArrowLeftIcon,
-  ChangeIndexIcon,
-  CloseIcon,
-} from "@/icons";
+import { ArrowLeftIcon, ChangeIndexIcon, CloseIcon } from "@/icons";
 import clsx from "clsx";
 import Overlay from "@/ui/Overlay";
 import { ChangeCollectionIndexAction } from "@/actions/collections";
@@ -56,14 +52,16 @@ export function ChangeCollectionIndexOverlay() {
   const [loading, setLoading] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState<boolean>(false);
+  const [alertMessageType, setAlertMessageType] = useState<AlertMessageType>(
+    AlertMessageType.NEUTRAL
+  );
 
   const { hideOverlay, showOverlay } = useOverlayStore();
 
-  const { selectedItem, setSelectedItem } =
-    useItemSelectorStore((state) => ({
-      selectedItem: state.selectedItem,
-      setSelectedItem: state.setSelectedItem,
-    }));
+  const { selectedItem, setSelectedItem } = useItemSelectorStore((state) => ({
+    selectedItem: state.selectedItem,
+    setSelectedItem: state.setSelectedItem,
+  }));
 
   const { pageName, isOverlayVisible, overlayName } = useOverlayStore(
     (state) => ({
@@ -96,19 +94,22 @@ export function ChangeCollectionIndexOverlay() {
   const hideAlertMessage = () => {
     setShowAlert(false);
     setAlertMessage("");
+    setAlertMessageType(AlertMessageType.NEUTRAL);
   };
 
   const handleSave = async () => {
     setLoading(true);
     try {
-      const message = await ChangeCollectionIndexAction({
+      const result = await ChangeCollectionIndexAction({
         id: selectedItem.id,
         index: Number(selectedItem.index),
       });
-      setAlertMessage(message);
+      setAlertMessageType(result.type);
+      setAlertMessage(result.message);
       setShowAlert(true);
     } catch (error) {
       console.error(error);
+      setAlertMessageType(AlertMessageType.ERROR);
       setAlertMessage("Error changing collection index");
       setShowAlert(true);
     } finally {
@@ -229,6 +230,7 @@ export function ChangeCollectionIndexOverlay() {
         <AlertMessage
           message={alertMessage}
           hideAlertMessage={hideAlertMessage}
+          type={alertMessageType}
         />
       )}
     </>

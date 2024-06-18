@@ -1,11 +1,10 @@
 "use client";
 
 import AlertMessage from "@/components/shared/AlertMessage";
-import { capitalizeFirstLetter } from "@/libraries/utils";
 import { useState, useEffect } from "react";
 import Spinner from "@/ui/Spinners/White";
 import { useOverlayStore } from "@/zustand/admin/overlayStore";
-import { ArrowLeftIcon, ChevronDownIcon, CloseIcon, EditIcon } from "@/icons";
+import { ArrowLeftIcon, CloseIcon, EditIcon } from "@/icons";
 import clsx from "clsx";
 import Overlay from "@/ui/Overlay";
 import { UpdateCollectionAction } from "@/actions/collections";
@@ -45,6 +44,9 @@ export function VisibilityOverlay({
   const [loading, setLoading] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState<boolean>(false);
+  const [alertMessageType, setAlertMessageType] = useState<AlertMessageType>(
+    AlertMessageType.NEUTRAL
+  );
 
   const { hideOverlay } = useOverlayStore();
 
@@ -74,6 +76,7 @@ export function VisibilityOverlay({
   const hideAlertMessage = () => {
     setShowAlert(false);
     setAlertMessage("");
+    setAlertMessageType(AlertMessageType.NEUTRAL);
   };
 
   const onHideOverlay = () => {
@@ -85,14 +88,16 @@ export function VisibilityOverlay({
     setLoading(true);
 
     try {
-      const message = await UpdateCollectionAction({
+      const result = await UpdateCollectionAction({
         id: data.id,
         visibility: selectedVisibility,
       });
-      setAlertMessage(message);
+      setAlertMessageType(result.type);
+      setAlertMessage(result.message);
       setShowAlert(true);
     } catch (error) {
       console.error(error);
+      setAlertMessageType(AlertMessageType.ERROR);
       setAlertMessage("Error updating collection");
       setShowAlert(true);
     } finally {
@@ -259,6 +264,7 @@ export function VisibilityOverlay({
         <AlertMessage
           message={alertMessage}
           hideAlertMessage={hideAlertMessage}
+          type={alertMessageType}
         />
       )}
     </>

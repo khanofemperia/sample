@@ -72,6 +72,9 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
 
   const [loading, setLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
+  const [alertMessageType, setAlertMessageType] = useState<AlertMessageType>(
+    AlertMessageType.NEUTRAL
+  );
   const [showAlert, setShowAlert] = useState(false);
   const [title, setTitle] = useState<string>(pageHero.title || "");
   const [image, setImage] = useState<string>(pageHero.image || "");
@@ -120,20 +123,23 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
         } else if (!destinationUrl) {
           errorMessage = "Provide the destination URL";
         }
+        setAlertMessageType(AlertMessageType.ERROR);
         setAlertMessage(errorMessage);
         setShowAlert(true);
       } else {
-        const message = await UpdatePageHeroAction({
+        const result = await UpdatePageHeroAction({
           title: title,
           image: image,
           destinationUrl: destinationUrl,
           visibility: visibility,
         });
-        setAlertMessage(message);
+        setAlertMessageType(result.type);
+        setAlertMessage(result.message);
         setShowAlert(true);
       }
     } catch (error) {
       console.error(error);
+      setAlertMessageType(AlertMessageType.ERROR);
       setAlertMessage("Error updating page hero");
       setShowAlert(true);
     } finally {
@@ -152,6 +158,7 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
   const hideAlertMessage = () => {
     setShowAlert(false);
     setAlertMessage("");
+    setAlertMessageType(AlertMessageType.NEUTRAL);
   };
 
   return (
@@ -348,6 +355,7 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
         <AlertMessage
           message={alertMessage}
           hideAlertMessage={hideAlertMessage}
+          type={alertMessageType}
         />
       )}
     </>
