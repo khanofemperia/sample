@@ -265,11 +265,14 @@ export default async function Shop() {
           {collections.map((collection, index) => {
             switch (collection.collectionType) {
               case "FEATURED":
-                return (
-                  <div key={index}>
-                    <FeaturedProducts collection={collection} />
-                  </div>
-                );
+                if (collection.products && collection.products.length >= 3) {
+                  return (
+                    <div key={index}>
+                      <FeaturedProducts collection={collection} />
+                    </div>
+                  );
+                }
+                return null;
               case "BANNER":
                 return (
                   <div key={index}>

@@ -8,7 +8,6 @@ export default function FeaturedProducts({
 }: {
   collection: CollectionType;
 }) {
-  console.log(collection)
   return (
     <>
       <div className="w-full max-w-[968px] mx-auto mb-2 md:mb-4 pl-[26px] pr-[22px] flex items-center justify-between md:justify-normal gap-4">
@@ -23,9 +22,7 @@ export default function FeaturedProducts({
         </Link>
       </div>
       <div className="relative mx-auto w-full max-w-[968px]">
-        <div
-          className="invisible-scrollbar scroll-px-4 snap-x snap-mandatory w-full max-w-full pb-2 overflow-x-scroll md:overflow-hidden flex gap-[2px] py-[1px] px-4"
-        >
+        <div className="invisible-scrollbar scroll-px-4 snap-x snap-mandatory w-full max-w-full pb-2 overflow-x-scroll md:overflow-hidden flex gap-[2px] py-[1px] px-4">
           {collection.products.map(
             (
               {
