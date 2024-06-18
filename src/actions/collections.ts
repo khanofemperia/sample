@@ -32,7 +32,7 @@ type DataType = {
 export async function CreateCollectionAction(data: {
   title: string;
   slug: string;
-  image: string;
+  image?: string;
   collectionType: string;
   campaignDuration: {
     startDate: string;
@@ -45,7 +45,6 @@ export async function CreateCollectionAction(data: {
     const newCollection = {
       title: data.title,
       slug: data.slug,
-      image: data.image,
       collectionType: data.collectionType,
       campaignDuration: data.campaignDuration,
       index: 1,
@@ -53,6 +52,7 @@ export async function CreateCollectionAction(data: {
       visibility: "DRAFT",
       updatedAt: currentTimestamp(),
       createdAt: currentTimestamp(),
+      ...(data.image && { image: data.image }),
     };
 
     const existingCollections = await getDocs(
@@ -70,7 +70,7 @@ export async function CreateCollectionAction(data: {
     return "Collection created";
   } catch (error) {
     console.error("Error creating collection:", error);
-    return "Failed to create collection";
+    return "Error creating collection";
   }
 }
 

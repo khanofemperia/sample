@@ -8,6 +8,7 @@ export default function FeaturedProducts({
 }: {
   collection: CollectionType;
 }) {
+  console.log(collection)
   return (
     <>
       <div className="w-full max-w-[968px] mx-auto mb-2 md:mb-4 pl-[26px] pr-[22px] flex items-center justify-between md:justify-normal gap-4">
