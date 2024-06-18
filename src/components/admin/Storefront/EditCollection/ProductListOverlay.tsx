@@ -26,6 +26,7 @@ import {
   ChangeProductIndexButton,
   ChangeProductIndexOverlay,
 } from "./ChangeProductIndexOverlay";
+import { AlertMessageType } from "@/libraries/sharedTypes";
 
 type CollectionProductType = {
   id: string;

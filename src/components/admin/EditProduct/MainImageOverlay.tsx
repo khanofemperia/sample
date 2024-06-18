@@ -10,6 +10,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import Overlay from "@/ui/Overlay";
 import { UpdateProductAction } from "@/actions/products";
+import { AlertMessageType } from "@/libraries/sharedTypes";
 
 type DataType = {
   id: string;

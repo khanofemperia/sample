@@ -18,6 +18,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { CiImageOn } from "react-icons/ci";
 import { CreateCollectionAction } from "@/actions/collections";
 import Overlay from "@/ui/Overlay";
+import { AlertMessageType } from "@/libraries/sharedTypes";
 
 type RequestDataType = {
   title: string;

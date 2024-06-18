@@ -11,6 +11,7 @@ import { ArrowLeftIcon, ChevronDownIcon, CloseIcon } from "@/icons";
 import clsx from "clsx";
 import Image from "next/image";
 import Overlay from "@/ui/Overlay";
+import { AlertMessageType } from "@/libraries/sharedTypes";
 
 export function NewProductMenuButton() {
   const { showOverlay } = useOverlayStore();

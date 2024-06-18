@@ -8,6 +8,7 @@ import { ArrowLeftIcon, CloseIcon, EditIcon } from "@/icons";
 import clsx from "clsx";
 import Overlay from "@/ui/Overlay";
 import { UpdateUpsellAction } from "@/actions/upsells";
+import { AlertMessageType } from "@/libraries/sharedTypes";
 
 type DataType = {
   id: string;

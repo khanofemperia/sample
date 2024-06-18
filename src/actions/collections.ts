@@ -12,6 +12,7 @@ import {
 import { generateId } from "@/libraries/utils";
 import { currentTimestamp } from "@/libraries/utils";
 import { revalidatePath } from "next/cache";
+import { AlertMessageType } from "@/libraries/sharedTypes";
 
 type DataType = {
   image: string;

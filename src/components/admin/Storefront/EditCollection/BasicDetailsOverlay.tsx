@@ -11,6 +11,7 @@ import { UpdateCollectionAction } from "@/actions/collections";
 import Image from "next/image";
 import { CiImageOn } from "react-icons/ci";
 import { isValidRemoteImage } from "@/libraries/utils";
+import { AlertMessageType } from "@/libraries/sharedTypes";
 
 export function BasicDetailsButton() {
   const { showOverlay } = useOverlayStore();

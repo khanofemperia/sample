@@ -11,6 +11,7 @@ import Image from "next/image";
 import Overlay from "@/ui/Overlay";
 import { HiOutlinePlus } from "react-icons/hi2";
 import { UpdateProductAction } from "@/actions/products";
+import { AlertMessageType } from "@/libraries/sharedTypes";
 
 type DataType = {
   id: string;

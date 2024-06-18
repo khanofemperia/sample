@@ -9,6 +9,7 @@ import Overlay from "@/ui/Overlay";
 import { RemoveProductAction } from "@/actions/collections";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { useItemSelectorStore } from "@/zustand/admin/itemSelectorStore";
+import { AlertMessageType } from "@/libraries/sharedTypes";
 
 export function RemoveProductButton({ id }: { id: string }) {
   const { showOverlay } = useOverlayStore();

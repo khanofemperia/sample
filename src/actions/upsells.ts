@@ -4,6 +4,7 @@ import { database } from "@/libraries/firebase";
 import { setDoc, doc, getDoc } from "firebase/firestore";
 import { generateId, currentTimestamp } from "@/libraries/utils";
 import { revalidatePath } from "next/cache";
+import { AlertMessageType } from "@/libraries/sharedTypes";
 
 type CreateUpsellType = {
   price: string;

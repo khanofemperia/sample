@@ -78,9 +78,3 @@ type PageHeroType = {
   destinationUrl: string;
   visibility: string;
 };
-
-enum AlertMessageType {
-  SUCCESS = "SUCCESS",
-  ERROR = "ERROR",
-  NEUTRAL = "NEUTRAL",
-}

@@ -9,6 +9,7 @@ import clsx from "clsx";
 import Overlay from "@/ui/Overlay";
 import { ChangeProductIndexAction } from "@/actions/collections";
 import { useChangeProductIndexStore } from "@/zustand/admin/collections/changeProductIndexStore";
+import { AlertMessageType } from "@/libraries/sharedTypes";
 
 export function ChangeProductIndexButton({
   collectionId,

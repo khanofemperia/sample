@@ -3,6 +3,7 @@
 import { doc, updateDoc } from "firebase/firestore";
 import { database } from "@/libraries/firebase";
 import { revalidatePath } from "next/cache";
+import { AlertMessageType } from "@/libraries/sharedTypes";
 
 type CategoryType = {
   id: string;

@@ -11,6 +11,7 @@ import Image from "next/image";
 import { CiImageOn } from "react-icons/ci";
 import Overlay from "@/ui/Overlay";
 import { UpdatePageHeroAction } from "@/actions/page-hero";
+import { AlertMessageType } from "@/libraries/sharedTypes";
 
 type PageHeroType = {
   id: string;

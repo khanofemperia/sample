@@ -11,6 +11,7 @@ import Overlay from "@/ui/Overlay";
 import { UpdateProductAction } from "@/actions/products";
 import { UpdateUpsellAction } from "@/actions/upsells";
 import Image from "next/image";
+import { AlertMessageType } from "@/libraries/sharedTypes";
 
 type DataType = {
   id: string;

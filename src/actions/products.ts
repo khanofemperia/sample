@@ -11,6 +11,7 @@ import {
 } from "firebase/firestore";
 import { generateId, currentTimestamp } from "@/libraries/utils";
 import { revalidatePath } from "next/cache";
+import { AlertMessageType } from "@/libraries/sharedTypes";
 
 type CreateProductType = {
   category: string;
