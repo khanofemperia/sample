@@ -22,17 +22,16 @@ type EditUpsell = {
 export async function CreateUpsellAction(data: CreateUpsellType) {
   try {
     const documentRef = doc(database, "upsells", generateId());
+    const currentTime = currentTimestamp();
 
     const upsell = {
       price: data.price,
       salePrice: data.salePrice,
       mainImage: data.mainImage,
       visibility: "DRAFT",
-      updatedAt: currentTimestamp(),
-      createdAt: currentTimestamp(),
+      updatedAt: currentTime,
+      createdAt: currentTime,
     };
-
-    console.log(upsell);
 
     await setDoc(documentRef, upsell);
     revalidatePath("/admin/shop/upsells");

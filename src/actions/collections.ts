@@ -41,6 +41,7 @@ export async function CreateCollectionAction(data: {
 }) {
   try {
     const documentRef = doc(database, "collections", generateId());
+    const currentTime = currentTimestamp();
 
     const newCollection = {
       title: data.title,
@@ -50,8 +51,8 @@ export async function CreateCollectionAction(data: {
       index: 1,
       products: [],
       visibility: "DRAFT",
-      updatedAt: currentTimestamp(),
-      createdAt: currentTimestamp(),
+      updatedAt: currentTime,
+      createdAt: currentTime,
       ...(data.image && { image: data.image }),
     };
 
@@ -59,12 +60,24 @@ export async function CreateCollectionAction(data: {
       collection(database, "collections")
     );
 
-    for (const collectionDoc of existingCollections.docs) {
-      const collectionRef = doc(database, "collections", collectionDoc.id);
-      await updateDoc(collectionRef, { index: collectionDoc.data().index + 1 });
-    }
+    type CollectionData = {
+      id: string;
+      index: number;
+    };
+
+    const sortedCollections: CollectionData[] = existingCollections.docs
+      .map((doc) => ({ id: doc.id, ...(doc.data() as { index: number }) }))
+      .sort((a, b) => a.index - b.index);
+
+    const updatePromises = sortedCollections.map((collection, index) => {
+      const collectionRef = doc(database, "collections", collection.id);
+      return updateDoc(collectionRef, { index: index + 2 });
+    });
 
     await setDoc(documentRef, newCollection);
+
+    await Promise.all(updatePromises);
+
     revalidatePath("/admin/shop");
 
     return "Collection created";

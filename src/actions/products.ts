@@ -1,7 +1,14 @@
 "use server";
 
 import { database } from "@/libraries/firebase";
-import { setDoc, doc, getDoc } from "firebase/firestore";
+import {
+  setDoc,
+  doc,
+  getDoc,
+  collection,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
 import { generateId, currentTimestamp } from "@/libraries/utils";
 import { revalidatePath } from "next/cache";
 
@@ -34,6 +41,7 @@ type EditProduct = {
 export async function CreateProductAction(data: CreateProductType) {
   try {
     const documentRef = doc(database, "products", generateId());
+    const currentTime = currentTimestamp();
 
     const product = {
       category: data.category,
@@ -46,11 +54,31 @@ export async function CreateProductAction(data: CreateProductType) {
       images: null,
       colors: null,
       sizes: null,
-      updatedAt: currentTimestamp(),
-      createdAt: currentTimestamp(),
+      updatedAt: currentTime,
+      createdAt: currentTime,
+      index: 1,
     };
 
+    const existingProducts = await getDocs(collection(database, "products"));
+
+    type ProductData = {
+      id: string;
+      index: number;
+    };
+
+    const sortedProducts: ProductData[] = existingProducts.docs
+      .map((doc) => ({ id: doc.id, ...(doc.data() as { index: number }) }))
+      .sort((a, b) => a.index - b.index);
+
+    const updatePromises = sortedProducts.map((product, index) => {
+      const productRef = doc(database, "products", product.id);
+      return updateDoc(productRef, { index: index + 2 });
+    });
+
     await setDoc(documentRef, product);
+
+    await Promise.all(updatePromises);
+
     revalidatePath("/admin/shop/products");
 
     return "Product created";
