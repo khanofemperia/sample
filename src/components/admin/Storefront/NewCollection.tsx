@@ -201,9 +201,9 @@ export function NewCollectionOverlay() {
         setAlertMessage(result.message);
         setShowAlert(true);
       } catch (error) {
-        console.error(error);
+        console.error("Error creating collection:", error);
         setAlertMessageType(AlertMessageType.ERROR);
-        setAlertMessage("Error creating collection");
+        setAlertMessage("Failed to create collection");
         setShowAlert(true);
       } finally {
         onHideOverlay();

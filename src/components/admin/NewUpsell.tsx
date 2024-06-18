@@ -124,9 +124,9 @@ export function NewUpsellOverlay() {
       setAlertMessage(result.message);
       setShowAlert(true);
     } catch (error) {
-      console.error(error);
+      console.error("Error creating upsell:", error);
       setAlertMessageType(AlertMessageType.ERROR);
-      setAlertMessage("Error creating collection");
+      setAlertMessage("Failed to create upsell");
       setShowAlert(true);
     } finally {
       setLoading(false);

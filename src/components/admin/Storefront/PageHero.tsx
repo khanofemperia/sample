@@ -138,9 +138,9 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
         setShowAlert(true);
       }
     } catch (error) {
-      console.error(error);
+      console.error("Error updating page hero:", error);
       setAlertMessageType(AlertMessageType.ERROR);
-      setAlertMessage("Error updating page hero");
+      setAlertMessage("Failed to update page hero");
       setShowAlert(true);
     } finally {
       setLoading(false);

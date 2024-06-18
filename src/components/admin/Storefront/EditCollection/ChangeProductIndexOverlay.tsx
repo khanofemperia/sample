@@ -104,9 +104,9 @@ export function ChangeProductIndexOverlay() {
       setAlertMessage(result.message);
       setShowAlert(true);
     } catch (error) {
-      console.error(error);
+      console.error("Error updating product index:", error);
       setAlertMessageType(AlertMessageType.ERROR);
-      setAlertMessage("Error changing product index");
+      setAlertMessage("Failed to update product index");
       setShowAlert(true);
     } finally {
       setLoading(false);

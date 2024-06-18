@@ -81,10 +81,10 @@ export async function CreateProductAction(data: CreateProductType) {
 
     revalidatePath("/admin/shop/products");
 
-    return { type: AlertMessageType.SUCCESS, message: "Product created" };
+    return { type: AlertMessageType.SUCCESS, message: "Product created successfully" };
   } catch (error) {
     console.error("Error creating product:", error);
-    return { type: AlertMessageType.ERROR, message: "Error creating product" };
+    return { type: AlertMessageType.ERROR, message: "Failed to create product" };
   }
 }
 
@@ -103,9 +103,9 @@ export async function UpdateProductAction(data: EditProduct) {
     await setDoc(docRef, updatedProduct);
     revalidatePath("/admin/shop/products/[slug]", "page");
 
-    return { type: AlertMessageType.SUCCESS, message: "Product updated" };
+    return { type: AlertMessageType.SUCCESS, message: "Product updated successfully" };
   } catch (error) {
     console.error("Error updating product:", error);
-    return { type: AlertMessageType.ERROR, message: "Error updating product" };
+    return { type: AlertMessageType.ERROR, message: "Failed to update product" };
   }
 }

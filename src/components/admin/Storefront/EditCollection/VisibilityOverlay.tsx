@@ -96,9 +96,9 @@ export function VisibilityOverlay({
       setAlertMessage(result.message);
       setShowAlert(true);
     } catch (error) {
-      console.error(error);
+      console.error("Error updating collection:", error);
       setAlertMessageType(AlertMessageType.ERROR);
-      setAlertMessage("Error updating collection");
+      setAlertMessage("Failed to update collection");
       setShowAlert(true);
     } finally {
       setLoading(false);

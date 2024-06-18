@@ -95,9 +95,9 @@ export function VisibilityOverlay({ data }: { data: DataType }) {
       setAlertMessage(result.message);
       setShowAlert(true);
     } catch (error) {
-      console.error(error);
+      console.error("Error updating upsell:", error);
       setAlertMessageType(AlertMessageType.ERROR);
-      setAlertMessage("Error updating upsell");
+      setAlertMessage("Failed to update upsell");
       setShowAlert(true);
     } finally {
       setLoading(false);

@@ -147,7 +147,7 @@ export function ProductListOverlay({
     } catch (error) {
       console.error("Error adding product:", error);
       setAlertMessageType(AlertMessageType.ERROR);
-      setAlertMessage("Error adding product");
+      setAlertMessage("Failed to add product");
       setShowAlert(true);
     } finally {
       setLoading(false);

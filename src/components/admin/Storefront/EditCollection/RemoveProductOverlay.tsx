@@ -80,9 +80,9 @@ export function RemoveProductOverlay({
       setAlertMessage(result.message);
       setShowAlert(true);
     } catch (error) {
-      console.error("Error adding product to collection:", error);
+      console.error("Error removing product from collection:", error);
       setAlertMessageType(AlertMessageType.ERROR);
-      setAlertMessage("Error adding product to collection");
+      setAlertMessage("Failed to remove product from collection");
       setShowAlert(true);
     } finally {
       setLoading(false);

@@ -20,14 +20,12 @@ async function createOrUpdateSettings() {
   const snapshot = await getDoc(documentRef);
 
   if (!snapshot.exists()) {
-    // If the document doesn't exist, set default settings
     return await setDoc(documentRef, defaultSettings);
   }
 
   const currentSettings = snapshot.data() as SettingType;
   let needsUpdate = false;
 
-  // Check if any field is missing in current settings and add it
   for (const key of Object.keys(defaultSettings)) {
     if (!(key in currentSettings)) {
       currentSettings[key] = defaultSettings[key];
@@ -35,7 +33,6 @@ async function createOrUpdateSettings() {
     }
   }
 
-  // Check if there are extra fields in current settings and remove them
   for (const key of Object.keys(currentSettings)) {
     if (!(key in defaultSettings)) {
       delete currentSettings[key];
@@ -43,7 +40,6 @@ async function createOrUpdateSettings() {
     }
   }
 
-  // Update settings in the database if necessary
   if (needsUpdate) {
     await setDoc(documentRef, currentSettings);
   }

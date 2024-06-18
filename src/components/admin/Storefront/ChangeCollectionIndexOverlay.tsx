@@ -108,9 +108,9 @@ export function ChangeCollectionIndexOverlay() {
       setAlertMessage(result.message);
       setShowAlert(true);
     } catch (error) {
-      console.error(error);
+      console.error("Error updating product index:", error);
       setAlertMessageType(AlertMessageType.ERROR);
-      setAlertMessage("Error changing collection index");
+      setAlertMessage("Failed to change product index");
       setShowAlert(true);
     } finally {
       onHideOverlay();

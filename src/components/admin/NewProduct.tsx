@@ -190,9 +190,9 @@ export function NewProductOverlay() {
       setAlertMessage(result.message);
       setShowAlert(true);
     } catch (error) {
-      console.error(error);
+      console.error("Error creating product:", error);
       setAlertMessageType(AlertMessageType.ERROR);
-      setAlertMessage("Error creating product");
+      setAlertMessage("Failed to create product");
       setShowAlert(true);
     } finally {
       setLoading(false);

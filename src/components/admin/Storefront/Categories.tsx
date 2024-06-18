@@ -147,7 +147,7 @@ export function CategoriesOverlay({
     } catch (error) {
       console.error("Error updating categories:", error);
       setAlertMessageType(AlertMessageType.ERROR);
-      setAlertMessage("Error updating categories");
+      setAlertMessage("Failed to update categories");
       setShowAlert(true);
     } finally {
       setLoading(false);

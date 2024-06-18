@@ -129,9 +129,9 @@ export function ColorsOverlay({ data }: { data: DataType }) {
       setAlertMessage(result.message);
       setShowAlert(true);
     } catch (error) {
-      console.error(error);
+      console.error("Error updating product:", error);
       setAlertMessageType(AlertMessageType.ERROR);
-      setAlertMessage("Error updating product");
+      setAlertMessage("Failed to update product");
       setShowAlert(true);
     } finally {
       setLoading(false);

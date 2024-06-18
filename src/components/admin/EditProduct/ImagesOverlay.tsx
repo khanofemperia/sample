@@ -101,9 +101,9 @@ export function ImagesOverlay({ data }: { data: DataType }) {
         setImages(filteredImages);
       }
     } catch (error) {
-      console.error(error);
+      console.error("Error updating product", error);
       setAlertMessageType(AlertMessageType.ERROR);
-      setAlertMessage("Error updating product");
+      setAlertMessage("Failed to update product");
       setShowAlert(true);
     } finally {
       setLoading(false);
