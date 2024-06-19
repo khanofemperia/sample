@@ -21,7 +21,7 @@ export function CategoriesButton({
   categorySection: CategorySectionType;
 }) {
   const HIDDEN = "HIDDEN";
-  const VISIBLE = "VISIBLE";
+  const PUBLISHED = "PUBLISHED";
 
   const { showOverlay } = useOverlayStore();
   const { pageName, overlayName } = useOverlayStore((state) => ({
@@ -43,7 +43,7 @@ export function CategoriesButton({
               "bg-white border":
                 categorySection.visibility.toUpperCase() === HIDDEN,
               "bg-custom-blue border border-custom-blue":
-                categorySection.visibility.toUpperCase() === VISIBLE,
+                categorySection.visibility.toUpperCase() === PUBLISHED,
             }
           )}
         >
@@ -54,7 +54,7 @@ export function CategoriesButton({
                 "left-[5px] bg-black":
                   categorySection.visibility.toUpperCase() === HIDDEN,
                 "left-[23px] bg-white":
-                  categorySection.visibility.toUpperCase() === VISIBLE,
+                  categorySection.visibility.toUpperCase() === PUBLISHED,
               }
             )}
           ></div>
@@ -76,7 +76,7 @@ export function CategoriesOverlay({
   categorySection: CategorySectionType;
 }) {
   const HIDDEN = "HIDDEN";
-  const VISIBLE = "VISIBLE";
+  const PUBLISHED = "PUBLISHED";
 
   const [loading, setLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
@@ -88,7 +88,7 @@ export function CategoriesOverlay({
     categorySection.visibility.toUpperCase()
   );
   const [visibilityStates, setVisibilityStates] = useState(
-    categories.map((category) => category.visibility === VISIBLE)
+    categories.map((category) => category.visibility === PUBLISHED)
   );
 
   const { hideOverlay } = useOverlayStore();
@@ -121,14 +121,14 @@ export function CategoriesOverlay({
     try {
       const updatedCategories = categories.map((category, index) => ({
         id: category.id,
-        visibility: visibilityStates[index] ? VISIBLE : HIDDEN,
+        visibility: visibilityStates[index] ? PUBLISHED : HIDDEN,
       }));
 
       const allCategoriesHidden = updatedCategories.every(
         (category) => category.visibility === HIDDEN
       );
 
-      if (categorySectionVisibility === VISIBLE && allCategoriesHidden) {
+      if (categorySectionVisibility === PUBLISHED && allCategoriesHidden) {
         setAlertMessageType(AlertMessageType.ERROR);
         setAlertMessage(
           "Cannot display category section on storefront, all categories are hidden."
@@ -160,7 +160,7 @@ export function CategoriesOverlay({
     hideOverlay({ pageName, overlayName });
     setCategorySectionVisibility(categorySection.visibility.toUpperCase());
     setVisibilityStates(
-      categories.map((category) => category.visibility === VISIBLE)
+      categories.map((category) => category.visibility === PUBLISHED)
     );
   };
 
@@ -241,7 +241,7 @@ export function CategoriesOverlay({
                     <div
                       onClick={() =>
                         setCategorySectionVisibility((prevState) =>
-                          prevState === VISIBLE ? HIDDEN : VISIBLE
+                          prevState === PUBLISHED ? HIDDEN : PUBLISHED
                         )
                       }
                       className={clsx(
@@ -250,7 +250,7 @@ export function CategoriesOverlay({
                           "bg-white border":
                             categorySectionVisibility === HIDDEN,
                           "bg-custom-blue border border-custom-blue":
-                            categorySectionVisibility === VISIBLE,
+                            categorySectionVisibility === PUBLISHED,
                         }
                       )}
                     >
@@ -261,7 +261,7 @@ export function CategoriesOverlay({
                             "left-[5px] bg-black":
                               categorySectionVisibility === HIDDEN,
                             "left-[23px] bg-white":
-                              categorySectionVisibility === VISIBLE,
+                              categorySectionVisibility === PUBLISHED,
                           }
                         )}
                       ></div>

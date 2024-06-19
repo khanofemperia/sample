@@ -31,7 +31,6 @@ const defaultCategories = [
 
 async function createOrUpdateCategories() {
   const snapshot = await getDocs(collection(database, "categories"));
-
   const existingCategories: { [key: string]: CategoryType } =
     snapshot.docs.reduce((acc, doc) => {
       acc[doc.data().name] = {
@@ -43,24 +42,22 @@ async function createOrUpdateCategories() {
 
   for (const defaultCategory of defaultCategories) {
     const existingCategory = existingCategories[defaultCategory.name];
-
     if (!existingCategory) {
       // Category does not exist, create a new one
       const newCategory = { ...defaultCategory, id: generateId() };
       await setDoc(doc(database, "categories", newCategory.id), newCategory);
     } else {
-      // Category exists, update it if necessary
-      const isComplete =
-        existingCategory.index === defaultCategory.index &&
-        existingCategory.image === defaultCategory.image &&
-        existingCategory.visibility === defaultCategory.visibility;
+      // Category exists, update index and image if necessary
+      const shouldUpdate =
+        existingCategory.index !== defaultCategory.index ||
+        existingCategory.image !== defaultCategory.image;
 
-      if (!isComplete) {
+      if (shouldUpdate) {
         await setDoc(doc(database, "categories", existingCategory.id), {
           index: defaultCategory.index,
           name: defaultCategory.name,
           image: defaultCategory.image,
-          visibility: defaultCategory.visibility,
+          visibility: existingCategory.visibility, // Keep the existing visibility
         });
       }
     }

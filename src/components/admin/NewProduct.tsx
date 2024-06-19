@@ -91,7 +91,10 @@ export function NewProductOverlay() {
           throw new Error("Failed to fetch categories");
         }
         const data = await response.json();
-        setCategories(data);
+        const publishedCategories = data.filter(
+          (category: CategoryType) => category.visibility === "PUBLISHED"
+        );
+        setCategories(publishedCategories);
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
@@ -220,6 +223,18 @@ export function NewProductOverlay() {
     setAlertMessageType(AlertMessageType.NEUTRAL);
   };
 
+  const handleCategoryDropdownClick = () => {
+    if (categories.length === 0) {
+      setAlertMessageType(AlertMessageType.ERROR);
+      setAlertMessage(
+        "No published categories found. Edit categories in the storefront tab."
+      );
+      setShowAlert(true);
+    } else {
+      setIsCategoryDropdownOpen((prevState) => !prevState);
+    }
+  };
+
   return (
     <>
       {isOverlayVisible && (
@@ -278,9 +293,7 @@ export function NewProductOverlay() {
                   <h2 className="font-semibold text-sm">Category</h2>
                   <div ref={categoryRef} className="w-full h-9 relative">
                     <button
-                      onClick={() =>
-                        setIsCategoryDropdownOpen((prevState) => !prevState)
-                      }
+                      onClick={handleCategoryDropdownClick}
                       type="button"
                       className="h-9 w-full px-3 rounded-md flex items-center justify-between transition duration-300 ease-in-out bg-lightgray active:bg-lightgray-dimmed"
                     >
