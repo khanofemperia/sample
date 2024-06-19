@@ -4,83 +4,66 @@ import { database } from "@/libraries/firebase";
 import { generateId } from "@/libraries/utils";
 
 const defaultCategories = [
-  { index: 1, name: "Dresses", image: "dresses.png", visibility: "VISIBLE" },
-  { index: 2, name: "Tops", image: "tops.png", visibility: "VISIBLE" },
-  {
-    index: 3,
-    name: "Bottoms",
-    image: "bottoms.png",
-    visibility: "VISIBLE",
-  },
+  { index: 1, name: "Dresses", image: "dresses.png", visibility: "HIDDEN" },
+  { index: 2, name: "Tops", image: "tops.png", visibility: "HIDDEN" },
+  { index: 3, name: "Bottoms", image: "bottoms.png", visibility: "HIDDEN" },
   {
     index: 4,
     name: "Outerwear",
     image: "outerwear.png",
-    visibility: "VISIBLE",
+    visibility: "HIDDEN",
   },
-  { index: 5, name: "Shoes", image: "shoes.png", visibility: "VISIBLE" },
+  { index: 5, name: "Shoes", image: "shoes.png", visibility: "HIDDEN" },
   {
     index: 6,
     name: "Accessories",
     image: "accessories.png",
-    visibility: "VISIBLE",
+    visibility: "HIDDEN",
   },
-  {
-    index: 7,
-    name: "Men",
-    image: "men.png",
-    visibility: "VISIBLE",
-  },
+  { index: 7, name: "Men", image: "men.png", visibility: "HIDDEN" },
   {
     index: 8,
     name: "Catch-All",
     image: "catch-all.png",
-    visibility: "VISIBLE",
+    visibility: "HIDDEN",
   },
 ];
 
 async function createOrUpdateCategories() {
   const snapshot = await getDocs(collection(database, "categories"));
 
-  const existingCategories: CategoryType[] = snapshot.docs.map(
-    (doc) => ({
-      id: doc.id,
-      ...(doc.data() as Omit<CategoryType, "id">),
-    })
-  );
-
-  const categoriesToAddOrUpdate: CategoryType[] = [];
+  const existingCategories: { [key: string]: CategoryType } =
+    snapshot.docs.reduce((acc, doc) => {
+      acc[doc.data().name] = {
+        id: doc.id,
+        ...(doc.data() as Omit<CategoryType, "id">),
+      };
+      return acc;
+    }, {} as { [key: string]: CategoryType });
 
   for (const defaultCategory of defaultCategories) {
-    const existingCategory = existingCategories.find(
-      (cat) => cat.name === defaultCategory.name
-    );
+    const existingCategory = existingCategories[defaultCategory.name];
 
     if (!existingCategory) {
-      categoriesToAddOrUpdate.push({ ...defaultCategory, id: generateId() });
+      // Category does not exist, create a new one
+      const newCategory = { ...defaultCategory, id: generateId() };
+      await setDoc(doc(database, "categories", newCategory.id), newCategory);
     } else {
+      // Category exists, update it if necessary
       const isComplete =
         existingCategory.index === defaultCategory.index &&
-        existingCategory.image === defaultCategory.image;
+        existingCategory.image === defaultCategory.image &&
+        existingCategory.visibility === defaultCategory.visibility;
 
       if (!isComplete) {
-        categoriesToAddOrUpdate.push({
-          ...existingCategory,
+        await setDoc(doc(database, "categories", existingCategory.id), {
           index: defaultCategory.index,
+          name: defaultCategory.name,
           image: defaultCategory.image,
+          visibility: defaultCategory.visibility,
         });
       }
     }
-  }
-
-  for (const category of categoriesToAddOrUpdate) {
-    const documentRef = doc(database, "categories", category.id);
-    await setDoc(documentRef, {
-      index: category.index,
-      name: category.name,
-      image: category.image,
-      visibility: category.visibility,
-    });
   }
 }
 
