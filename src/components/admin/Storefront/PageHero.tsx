@@ -81,8 +81,12 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
   );
   const [showAlert, setShowAlert] = useState(false);
   const [title, setTitle] = useState<string>(pageHero.title || "");
-  const [desktopImage, setDesktopImage] = useState<string>(pageHero.images.desktopImage || "");
-  const [mobileImage, setMobileImage] = useState<string>(pageHero.images.mobileImage || "");
+  const [desktopImage, setDesktopImage] = useState<string>(
+    pageHero.images.desktopImage || ""
+  );
+  const [mobileImage, setMobileImage] = useState<string>(
+    pageHero.images.mobileImage || ""
+  );
   const [visibility, setVisibility] = useState<string>(
     pageHero.visibility.toUpperCase()
   );
