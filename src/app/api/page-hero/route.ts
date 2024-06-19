@@ -3,14 +3,20 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { database } from "@/libraries/firebase";
 
 type PageHeroType = {
-  image?: string | null;
   title?: string | null;
   destinationUrl?: string | null;
   visibility: string;
+  images: {
+    desktopImage?: string | null;
+    mobileImage?: string | null;
+  };
 };
 
 const defaultPageHero: PageHeroType = {
-  image: null,
+  images: {
+    desktopImage: null,
+    mobileImage: null,
+  },
   title: null,
   destinationUrl: null,
   visibility: "HIDDEN",

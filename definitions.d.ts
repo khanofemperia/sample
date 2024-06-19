@@ -73,7 +73,10 @@ type UpsellType = {
 
 type PageHeroType = {
   id: string;
-  image: string | null;
+  images: {
+    desktopImage: string;
+    mobileImage: string;
+  };
   title: string;
   destinationUrl: string;
   visibility: string;

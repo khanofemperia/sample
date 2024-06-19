@@ -15,7 +15,10 @@ import { AlertMessageType } from "@/libraries/sharedTypes";
 
 type PageHeroType = {
   id: string;
-  image: string | null;
+  images: {
+    desktopImage: string | null;
+    mobileImage: string | null;
+  };
   title: string | null;
   destinationUrl: string | null;
   visibility: string;
@@ -23,7 +26,7 @@ type PageHeroType = {
 
 export function PageHeroButton({ visibility }: { visibility: string }) {
   const HIDDEN = "HIDDEN";
-  const VISIBLE = "VISIBLE";
+  const PUBLISHED = "PUBLISHED";
 
   const { showOverlay } = useOverlayStore();
   const { pageName, overlayName } = useOverlayStore((state) => ({
@@ -44,7 +47,7 @@ export function PageHeroButton({ visibility }: { visibility: string }) {
             {
               "bg-white border": visibility === HIDDEN,
               "bg-custom-blue border border-custom-blue":
-                visibility === VISIBLE,
+                visibility === PUBLISHED,
             }
           )}
         >
@@ -53,7 +56,7 @@ export function PageHeroButton({ visibility }: { visibility: string }) {
               "w-[10px] h-[10px] rounded-full ease-in-out duration-300 absolute [top:50%] [transform:translateY(-50%)]",
               {
                 "left-[5px] bg-black": visibility === HIDDEN,
-                "left-[23px] bg-white": visibility === VISIBLE,
+                "left-[23px] bg-white": visibility === PUBLISHED,
               }
             )}
           ></div>
@@ -69,7 +72,7 @@ export function PageHeroButton({ visibility }: { visibility: string }) {
 
 export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
   const HIDDEN = "HIDDEN";
-  const VISIBLE = "VISIBLE";
+  const PUBLISHED = "PUBLISHED";
 
   const [loading, setLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
@@ -78,7 +81,8 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
   );
   const [showAlert, setShowAlert] = useState(false);
   const [title, setTitle] = useState<string>(pageHero.title || "");
-  const [image, setImage] = useState<string>(pageHero.image || "");
+  const [desktopImage, setDesktopImage] = useState<string>(pageHero.images.desktopImage || "");
+  const [mobileImage, setMobileImage] = useState<string>(pageHero.images.mobileImage || "");
   const [visibility, setVisibility] = useState<string>(
     pageHero.visibility.toUpperCase()
   );
@@ -114,23 +118,32 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
     setLoading(true);
 
     try {
-      if (visibility === "VISIBLE" && (!title || !image || !destinationUrl)) {
+      if (
+        visibility === "PUBLISHED" &&
+        (!title || !desktopImage || !mobileImage || !destinationUrl)
+      ) {
         let errorMessage = "";
 
         if (!title) {
-          errorMessage = "Provide the title";
-        } else if (!image) {
-          errorMessage = "Provide the image";
+          errorMessage = "Please enter a title";
+        } else if (!desktopImage) {
+          errorMessage = "Please provide the desktop image";
+        } else if (!mobileImage) {
+          errorMessage = "Please provide the mobile image";
         } else if (!destinationUrl) {
-          errorMessage = "Provide the destination URL";
+          errorMessage = "Please enter a destination URL";
         }
+
         setAlertMessageType(AlertMessageType.ERROR);
         setAlertMessage(errorMessage);
         setShowAlert(true);
       } else {
         const result = await UpdatePageHeroAction({
           title: title,
-          image: image,
+          images: {
+            desktopImage: desktopImage,
+            mobileImage: mobileImage,
+          },
           destinationUrl: destinationUrl,
           visibility: visibility,
         });
@@ -153,7 +166,8 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
     hideOverlay({ pageName, overlayName });
     setTitle(pageHero.title || "");
     setDestinationUrl(pageHero.destinationUrl || "");
-    setImage(pageHero.image || "");
+    setDesktopImage(pageHero.images.desktopImage || "");
+    setMobileImage(pageHero.images.mobileImage || "");
   };
 
   const hideAlertMessage = () => {
@@ -225,7 +239,7 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
                     <div
                       onClick={() =>
                         setVisibility((prevVisibility) =>
-                          prevVisibility === VISIBLE ? HIDDEN : VISIBLE
+                          prevVisibility === PUBLISHED ? HIDDEN : PUBLISHED
                         )
                       }
                       className={clsx(
@@ -233,7 +247,7 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
                         {
                           "bg-white border": visibility === HIDDEN,
                           "bg-custom-blue border border-custom-blue":
-                            visibility === VISIBLE,
+                            visibility === PUBLISHED,
                         }
                       )}
                     >
@@ -242,53 +256,10 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
                           "w-[10px] h-[10px] rounded-full ease-in-out duration-300 absolute [top:50%] [transform:translateY(-50%)]",
                           {
                             "left-[5px] bg-black": visibility === HIDDEN,
-                            "left-[23px] bg-white": visibility === VISIBLE,
+                            "left-[23px] bg-white": visibility === PUBLISHED,
                           }
                         )}
                       ></div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="image" className="font-semibold text-sm">
-                    Image
-                  </label>
-                  <div>
-                    <div className="w-full border rounded-md overflow-hidden">
-                      <div className="w-full min-h-[86px] flex items-center justify-center overflow-hidden">
-                        {image && isValidRemoteImage(image) ? (
-                          isGifImage(image) ? (
-                            <Image
-                              src={image}
-                              alt={title}
-                              width={725}
-                              height={86}
-                              priority={true}
-                              unoptimized={true}
-                            />
-                          ) : (
-                            <Image
-                              src={image}
-                              alt={title}
-                              width={725}
-                              height={86}
-                              priority={true}
-                            />
-                          )
-                        ) : (
-                          <CiImageOn className="fill-neutral-200" size={80} />
-                        )}
-                      </div>
-                      <div className="w-full h-9 border-t overflow-hidden">
-                        <input
-                          type="text"
-                          name="image"
-                          placeholder="Paste image URL"
-                          value={image}
-                          onChange={(e) => setImage(e.target.value)}
-                          className="h-full w-full px-3 text-gray"
-                        />
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -323,6 +294,93 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
                       onChange={(e) => setDestinationUrl(e.target.value)}
                       className="w-full h-9 px-3 rounded-md border"
                     />
+                  </div>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <h2 className="font-semibold text-sm">Images</h2>
+                  <div className="p-5 rounded-md border flex flex-col gap-5">
+                    <div className="flex flex-col gap-2">
+                      <h2 className="font-semibold text-sm text-gray">
+                        Desktop (1348x400 px)
+                      </h2>
+                      <div className="w-full border rounded-md overflow-hidden">
+                        <div className="w-full min-h-[124px] flex items-center justify-center overflow-hidden">
+                          {desktopImage && isValidRemoteImage(desktopImage) ? (
+                            isGifImage(desktopImage) ? (
+                              <Image
+                                src={desktopImage}
+                                alt={title}
+                                width={725}
+                                height={86}
+                                priority={true}
+                                unoptimized={true}
+                              />
+                            ) : (
+                              <Image
+                                src={desktopImage}
+                                alt={title}
+                                width={725}
+                                height={86}
+                                priority={true}
+                              />
+                            )
+                          ) : (
+                            <CiImageOn className="fill-neutral-200" size={80} />
+                          )}
+                        </div>
+                        <div className="w-full h-9 border-t overflow-hidden">
+                          <input
+                            type="text"
+                            name="desktopImage"
+                            placeholder="Paste image URL"
+                            value={desktopImage}
+                            onChange={(e) => setDesktopImage(e.target.value)}
+                            className="h-full w-full px-3 text-gray"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <h2 className="font-semibold text-sm text-gray">
+                        Mobile (1050x1400 px)
+                      </h2>
+                      <div className="w-full border rounded-md overflow-hidden">
+                        <div className="w-full min-h-[86px] flex items-center justify-center overflow-hidden">
+                          {mobileImage && isValidRemoteImage(mobileImage) ? (
+                            isGifImage(mobileImage) ? (
+                              <Image
+                                src={mobileImage}
+                                alt={title}
+                                width={725}
+                                height={86}
+                                priority={true}
+                                unoptimized={true}
+                              />
+                            ) : (
+                              <Image
+                                src={mobileImage}
+                                alt={title}
+                                width={725}
+                                height={86}
+                                priority={true}
+                              />
+                            )
+                          ) : (
+                            <CiImageOn className="fill-neutral-200" size={80} />
+                          )}
+                        </div>
+                        <div className="w-full h-9 border-t overflow-hidden">
+                          <input
+                            type="text"
+                            name="mobileImage"
+                            placeholder="Paste image URL"
+                            value={mobileImage}
+                            onChange={(e) => setMobileImage(e.target.value)}
+                            className="h-full w-full px-3 text-gray"
+                          />
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
