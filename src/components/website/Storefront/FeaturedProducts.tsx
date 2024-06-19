@@ -8,24 +8,6 @@ export default function FeaturedProducts({
 }: {
   collection: CollectionType;
 }) {
-/*
-
-{
-  id: '63606',
-  slug: 'belle-jolie-lipstick-mark-your-man',
-  title: 'Belle Jolie Lipstick - She "Marks" Her Man with Her Lips',
-  products: [
-    { index: 1, id: '08733' },
-    { id: '22350', index: 2 },
-    { id: '41013', index: 3 }
-  ],
-  updatedAt: '2024-06-18 23:17:04',
-  index: 1,
-  visibility: 'PUBLISHED',
-  collectionType: 'FEATURED'
-}
-
-*/
 
   return (
     <>
@@ -41,7 +23,7 @@ export default function FeaturedProducts({
         </Link>
       </div>
       <div className="relative mx-auto w-full max-w-[968px]">
-        {/* <div className="invisible-scrollbar scroll-px-4 snap-x snap-mandatory w-full max-w-full pb-2 overflow-x-scroll md:overflow-hidden flex gap-[2px] py-[1px] px-4">
+        <div className="invisible-scrollbar scroll-px-4 snap-x snap-mandatory w-full max-w-full pb-2 overflow-x-scroll md:overflow-hidden flex gap-[2px] py-[1px] px-4">
           {collection.products.map(
             (
               {
@@ -91,7 +73,7 @@ export default function FeaturedProducts({
               </div>
             )
           )}
-        </div> */}
+        </div>
       </div>
     </>
   );
