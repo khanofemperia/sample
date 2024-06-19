@@ -78,11 +78,11 @@ export default function Categories({
   };
 
   return (
-    <div className="relative mb-10 w-full max-w-[884px] lg:max-w-[938px] mx-auto">
+    <div className="relative mb-10 w-full max-w-[888px] lg:max-w-[942px] mx-auto">
       <div className="overflow-hidden">
         <div
           style={{ transform: `translateX(${distance}px)` }}
-          className="w-max flex gap-4 p-[1px] pb-[4px] transition duration-500 ease-in-out"
+          className="w-max flex gap-4 p-1 transition duration-500 ease-in-out"
         >
           {categories
             .filter((category) => category.visibility === "VISIBLE")
@@ -90,7 +90,7 @@ export default function Categories({
               <Link
                 key={index}
                 href="#"
-                className="first:ml-4 lg:first:ml-0 flex flex-col gap-2 items-center rounded-xl p-[10px] relative before:content-[''] before:absolute before:top-0 before:bottom-0 before:left-0 before:right-0 before:rounded-xl before:transition before:duration-300 before:ease-in-out active:before:shadow-thick-bottom lg:hover:before:shadow-thick-bottom"
+                className="first:ml-4 lg:first:ml-0 flex flex-col gap-2 items-center rounded-xl p-[10px] ease-in-out duration-300 transition hover:shadow-[0px_0px_4px_rgba(0,0,0,0.35)]"
               >
                 <div className="lg:hidden w-[90px] h-[90px] rounded-full shadow-[rgba(0,0,0,0.2)_0px_1px_3px_0px,_rgba(27,31,35,0.15)_0px_0px_0px_1px]">
                   <div className="w-full h-full rounded-full overflow-hidden flex items-center justify-center z-10">
