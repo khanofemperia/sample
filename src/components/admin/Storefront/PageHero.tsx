@@ -300,7 +300,7 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
                   <h2 className="font-semibold text-sm">Images</h2>
                   <div className="p-5 rounded-md border flex flex-col gap-5">
                     <div className="flex flex-col gap-2">
-                      <h2 className="font-semibold text-sm text-gray">
+                      <h2 className="font-semibold text-sm">
                         Desktop (1348x400 px)
                       </h2>
                       <div className="w-full border rounded-md overflow-hidden">
@@ -341,11 +341,11 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
                       </div>
                     </div>
                     <div className="flex flex-col gap-2">
-                      <h2 className="font-semibold text-sm text-gray">
+                      <h2 className="font-semibold text-sm">
                         Mobile (1050x1400 px)
                       </h2>
                       <div className="w-full border rounded-md overflow-hidden">
-                        <div className="w-full min-h-[86px] flex items-center justify-center overflow-hidden">
+                        <div className="w-full max-w-[416px] h-[555px] flex items-center justify-center overflow-hidden">
                           {mobileImage && isValidRemoteImage(mobileImage) ? (
                             isGifImage(mobileImage) ? (
                               <Image
