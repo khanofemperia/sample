@@ -348,8 +348,8 @@ export function PageHeroOverlay({ pageHero }: { pageHero: PageHeroType }) {
                       <h2 className="font-semibold text-sm">
                         Mobile (1050x1400 px)
                       </h2>
-                      <div className="w-full border rounded-md overflow-hidden">
-                        <div className="w-full max-w-[416px] h-[555px] flex items-center justify-center overflow-hidden">
+                      <div className="w-full max-w-[416px] border rounded-md overflow-hidden">
+                        <div className="w-full h-[552px] flex items-center justify-center overflow-hidden">
                           {mobileImage && isValidRemoteImage(mobileImage) ? (
                             isGifImage(mobileImage) ? (
                               <Image
