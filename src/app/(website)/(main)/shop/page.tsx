@@ -274,11 +274,14 @@ export default async function Shop() {
                 }
                 return null;
               case "BANNER":
-                return (
-                  <div key={index}>
-                    <PromotionalBanner collection={collection} />
-                  </div>
-                );
+                if (collection.products && collection.products.length > 0) {
+                  return (
+                    <div key={index}>
+                      <PromotionalBanner collection={collection} />
+                    </div>
+                  );
+                }
+                return null;
               default:
                 return null;
             }
