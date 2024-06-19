@@ -1,5 +1,12 @@
 import { NextResponse, NextRequest } from "next/server";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import { database } from "@/libraries/firebase";
 
 export async function GET(request: NextRequest) {
@@ -35,25 +42,44 @@ export async function GET(request: NextRequest) {
   }
 
   const fields = fieldsQueryParam ? fieldsQueryParam.split(",") : [];
-  const collections = snapshot.docs.map((doc) => {
-    const data = doc.data();
-    const selectedFields: Partial<CollectionType> = {};
+  const collections = await Promise.all(
+    snapshot.docs.map(async (document) => {
+      const data = document.data();
+      const selectedFields: Partial<CollectionType> = {};
 
-    fields.forEach((field) => {
-      if (data.hasOwnProperty(field)) {
-        selectedFields[field as keyof CollectionType] = data[field];
+      fields.forEach((field) => {
+        if (data.hasOwnProperty(field)) {
+          selectedFields[field as keyof CollectionType] = data[field];
+        }
+      });
+
+      if (fields.includes("products")) {
+        selectedFields.products = await Promise.all(
+          (data.products || []).map(
+            async (product: { id: string; index: number }) => {
+              const productDoc = await getDoc(
+                doc(database, "products", product.id)
+              );
+              return {
+                ...productDoc.data(),
+                id: product.id,
+                index: product.index,
+              };
+            }
+          )
+        );
       }
-    });
 
-    return {
-      id: doc.id,
-      ...selectedFields,
-      updatedAt: data["updatedAt"],
-      index: data["index"],
-      visibility: data["visibility"],
-      collectionType: data["collectionType"],
-    };
-  });
+      return {
+        id: document.id,
+        ...selectedFields,
+        updatedAt: data["updatedAt"],
+        index: data["index"],
+        visibility: data["visibility"],
+        collectionType: data["collectionType"],
+      };
+    })
+  );
 
   return NextResponse.json(sortCollections(collections));
 }

@@ -8,6 +8,25 @@ export default function FeaturedProducts({
 }: {
   collection: CollectionType;
 }) {
+/*
+
+{
+  id: '63606',
+  slug: 'belle-jolie-lipstick-mark-your-man',
+  title: 'Belle Jolie Lipstick - She "Marks" Her Man with Her Lips',
+  products: [
+    { index: 1, id: '08733' },
+    { id: '22350', index: 2 },
+    { id: '41013', index: 3 }
+  ],
+  updatedAt: '2024-06-18 23:17:04',
+  index: 1,
+  visibility: 'PUBLISHED',
+  collectionType: 'FEATURED'
+}
+
+*/
+
   return (
     <>
       <div className="w-full max-w-[968px] mx-auto mb-2 md:mb-4 pl-[26px] pr-[22px] flex items-center justify-between md:justify-normal gap-4">
@@ -22,7 +41,7 @@ export default function FeaturedProducts({
         </Link>
       </div>
       <div className="relative mx-auto w-full max-w-[968px]">
-        <div className="invisible-scrollbar scroll-px-4 snap-x snap-mandatory w-full max-w-full pb-2 overflow-x-scroll md:overflow-hidden flex gap-[2px] py-[1px] px-4">
+        {/* <div className="invisible-scrollbar scroll-px-4 snap-x snap-mandatory w-full max-w-full pb-2 overflow-x-scroll md:overflow-hidden flex gap-[2px] py-[1px] px-4">
           {collection.products.map(
             (
               {
@@ -43,7 +62,7 @@ export default function FeaturedProducts({
                 className="min-w-[244px] w-[244px] h-[308px] max-h-[376px] md:min-w-[33.333333%] md:w-[33.333333%] md:h-[calc(33.33vw+54px)] snap-always snap-center rounded-2xl select-none relative before:content-[''] before:absolute before:top-0 before:bottom-0 before:left-0 before:right-0 before:rounded-2xl before:transition before:duration-300 before:ease-in-out active:before:shadow-thick-bottom lg:hover:before:shadow-thick-bottom"
               >
                 <Link
-                  href={`/shop/${slug}-${id}`}
+                  href="#"
                   target="_blank"
                   className="w-[224px] h-[224px] md:w-[calc(33.33vw-30px)] md:h-[calc(33.33vw-30px)] max-w-[292px] max-h-[292px] cursor-pointer aspect-square z-[1] absolute top-[10px] left-[10px] right-[10px] bg-gray rounded-xl flex items-center justify-center overflow-hidden"
                 >
@@ -72,7 +91,7 @@ export default function FeaturedProducts({
               </div>
             )
           )}
-        </div>
+        </div> */}
       </div>
     </>
   );

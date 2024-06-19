@@ -266,20 +266,22 @@ export default async function EditCollection({
               <BasicDetailsButton />
             </div>
             <div className="flex flex-col gap-5 p-5 pt-4">
-              <div>
-                <h3 className="text-sm font-semibold mb-2">Image</h3>
-                <div className="w-full rounded-xl flex items-center justify-center overflow-hidden">
-                  {image && isValidRemoteImage(image) && (
-                    <Image
-                      src={image}
-                      alt={title}
-                      width={766}
-                      height={308}
-                      priority={true}
-                    />
-                  )}
+              {image && (
+                <div>
+                  <h3 className="text-sm font-semibold mb-2">Image</h3>
+                  <div className="w-full rounded-xl flex items-center justify-center overflow-hidden">
+                    {isValidRemoteImage(image) && (
+                      <Image
+                        src={image}
+                        alt={title}
+                        width={766}
+                        height={308}
+                        priority={true}
+                      />
+                    )}
+                  </div>
                 </div>
-              </div>
+              )}
               <div>
                 <h3 className="text-sm font-semibold mb-2">Title</h3>
                 <div className="w-max max-w-full h-9 px-4 rounded-full bg-lightgray flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
