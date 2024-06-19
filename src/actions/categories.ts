@@ -16,7 +16,6 @@ type DataType = {
 };
 
 export default async function UpdateCategoriesAction(data: DataType) {
-  console.log(data);
   try {
     const updatePromises = data.categories.map(async ({ id, visibility }) => {
       const documentRef = doc(database, "categories", id);

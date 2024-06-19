@@ -319,7 +319,7 @@ export function NewProductOverlay() {
                         {categories.map((category, index) => (
                           <div
                             key={index}
-                            className="w-full h-9 flex items-center px-[12px] cursor-context-menu transition duration-300 ease-in-out hover:bg-lightgray"
+                            className="w-full h-9 flex items-center px-[12px] cursor-pointer transition duration-300 ease-in-out hover:bg-lightgray"
                             onClick={() => handleCategorySelect(category.name)}
                           >
                             {category.name}
