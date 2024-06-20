@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Categories from "@/components/website/Storefront/Categories";
 import FeaturedProducts from "@/components/website/Storefront/FeaturedProducts";
-import PromotionalBanner from "@/components/website/Storefront/PromotionalBanner";
+import Banner from "@/components/website/Storefront/Banner";
 import ProductCard from "@/components/website/Storefront/ProductCard";
 import { QuickviewButton } from "@/components/website/Storefront/Quickview";
 import { fetchData } from "@/libraries/utils";
@@ -218,7 +218,7 @@ export default async function Shop() {
   const collections = await fetchData<CollectionType[]>({
     path: "/api/collections",
     visibility: "PUBLISHED",
-    fields: ["id", "slug", "title", "products"],
+    fields: ["id", "slug", "title", "image", "products"],
   });
 
   // const pageHero = await fetchData<PageHeroType>("/api/page-hero");
@@ -246,7 +246,8 @@ export default async function Shop() {
         </div>
         <div className="hidden md:block">
           <Image
-            src="/images/testing/sale-desktop.png"
+            // src="/images/testing/sale-desktop.png"
+            src="https://firebasestorage.googleapis.com/v0/b/project-2456.appspot.com/o/test.png?alt=media&token=7c14ac76-3afb-4696-9693-179ed1113772"
             alt="Hero image"
             sizes="100vw"
             style={{
@@ -277,7 +278,7 @@ export default async function Shop() {
                 if (collection.products && collection.products.length > 0) {
                   return (
                     <div key={index}>
-                      <PromotionalBanner collection={collection} />
+                      <Banner collection={collection} />
                     </div>
                   );
                 }
