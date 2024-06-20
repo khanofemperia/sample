@@ -46,7 +46,10 @@ type CollectionType = {
     endDate: string;
   };
   collectionType: string;
-  image?: string;
+  images?: {
+    desktopImage: string;
+    mobileImage: string;
+  };
   products: ProductType[];
   visibility: string;
   createdAt: string;

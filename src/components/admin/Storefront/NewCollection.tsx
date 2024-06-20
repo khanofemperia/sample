@@ -4,6 +4,7 @@ import AlertMessage from "@/components/shared/AlertMessage";
 import {
   capitalizeFirstLetter,
   formatDate,
+  isGifImage,
   isValidRemoteImage,
 } from "@/libraries/utils";
 import { useState, useEffect, useRef } from "react";
@@ -20,6 +21,11 @@ import { CreateCollectionAction } from "@/actions/collections";
 import Overlay from "@/ui/Overlay";
 import { AlertMessageType } from "@/libraries/sharedTypes";
 
+type BannerImageType = {
+  desktopImage: string;
+  mobileImage: string;
+};
+
 type RequestDataType = {
   title: string;
   slug: string;
@@ -28,7 +34,7 @@ type RequestDataType = {
     endDate: string;
   };
   collectionType: string;
-  image?: string;
+  images?: BannerImageType;
 };
 
 export function NewCollectionMenuButton() {
@@ -99,7 +105,8 @@ export function NewCollectionOverlay() {
     useState(FEATURED);
   const [title, setTitle] = useState<string>("");
   const [slug, setSlug] = useState<string>("");
-  const [bannerImage, setBannerImage] = useState<string>("");
+  const [bannerDesktopImage, setBannerDesktopImage] = useState<string>("");
+  const [bannerMobileImage, setBannerMobileImage] = useState<string>("");
   const [launchDate, setLaunchDate] = useState<Date | null>(today);
   const [endDate, setEndDate] = useState<Date | null>(
     new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000) // 7 days from today
@@ -176,16 +183,20 @@ export function NewCollectionOverlay() {
       };
 
       try {
-        const requestData: Omit<RequestDataType, "image"> & { image?: string } =
-          {
-            title,
-            slug,
-            campaignDuration: campaignDuration,
-            collectionType: selectedCollectionType,
-          };
+        const requestData: Omit<RequestDataType, "images"> & {
+          images?: BannerImageType;
+        } = {
+          title,
+          slug,
+          campaignDuration: campaignDuration,
+          collectionType: selectedCollectionType,
+        };
 
         if (selectedCollectionType === BANNER) {
-          requestData.image = bannerImage;
+          requestData.images = {
+            desktopImage: bannerDesktopImage,
+            mobileImage: bannerMobileImage,
+          };
         }
 
         const result = await CreateCollectionAction(
@@ -218,7 +229,8 @@ export function NewCollectionOverlay() {
     setSelectedCollectionType(FEATURED);
     setTitle("");
     setSlug("");
-    setBannerImage("");
+    setBannerDesktopImage("");
+    setBannerMobileImage("");
     setLaunchDate(today);
     setEndDate(
       new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000) // 7 days from today
@@ -330,40 +342,6 @@ export function NewCollectionOverlay() {
                     </div>
                   </div>
                 </div>
-                {selectedCollectionType === BANNER && (
-                  <div className="flex flex-col gap-2">
-                    <label htmlFor="image" className="font-semibold text-sm">
-                      Image
-                    </label>
-                    <div>
-                      <div className="w-full border rounded-md overflow-hidden">
-                        <div className="w-full min-h-[86px] flex items-center justify-center overflow-hidden">
-                          {!bannerImage || !isValidRemoteImage(bannerImage) ? (
-                            <CiImageOn className="fill-neutral-200" size={80} />
-                          ) : (
-                            <Image
-                              src={bannerImage}
-                              alt={title}
-                              width={766}
-                              height={308}
-                              priority={true}
-                            />
-                          )}
-                        </div>
-                        <div className="w-full h-9 border-t overflow-hidden">
-                          <input
-                            type="text"
-                            name="image"
-                            placeholder="Paste image URL"
-                            value={bannerImage}
-                            onChange={(e) => setBannerImage(e.target.value)}
-                            className="h-full w-full px-3 text-gray"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
                 <div>
                   <h2 className="font-semibold text-sm">Campaign duration</h2>
                   <div className="flex flex-col min-[478px]:flex-row items-start gap-3 mt-4">
@@ -442,6 +420,107 @@ export function NewCollectionOverlay() {
                     />
                   </div>
                 </div>
+                {selectedCollectionType === BANNER && (
+                  <div className="flex flex-col gap-2">
+                    <h2 className="font-semibold text-sm">Images</h2>
+                    <div className="p-5 rounded-md border flex flex-col gap-5">
+                      <div className="flex flex-col gap-2">
+                        <h2 className="font-medium text-sm text-gray">
+                          Desktop (1440x360 px)
+                        </h2>
+                        <div className="w-full border rounded-md overflow-hidden">
+                          <div className="w-full min-h-[104px] flex items-center justify-center overflow-hidden">
+                            {bannerDesktopImage &&
+                            isValidRemoteImage(bannerDesktopImage) ? (
+                              isGifImage(bannerDesktopImage) ? (
+                                <Image
+                                  src={bannerDesktopImage}
+                                  alt={title}
+                                  width={725}
+                                  height={86}
+                                  priority={true}
+                                  unoptimized={true}
+                                />
+                              ) : (
+                                <Image
+                                  src={bannerDesktopImage}
+                                  alt={title}
+                                  width={725}
+                                  height={86}
+                                  priority={true}
+                                />
+                              )
+                            ) : (
+                              <CiImageOn
+                                className="fill-neutral-200"
+                                size={80}
+                              />
+                            )}
+                          </div>
+                          <div className="w-full h-9 border-t overflow-hidden">
+                            <input
+                              type="text"
+                              name="bannerDesktopImage"
+                              placeholder="Paste image URL"
+                              value={bannerDesktopImage}
+                              onChange={(e) =>
+                                setBannerDesktopImage(e.target.value)
+                              }
+                              className="h-full w-full px-3 text-gray"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        <h2 className="font-medium text-sm text-gray">
+                          Mobile (960x1280 px)
+                        </h2>
+                        <div className="w-full max-w-[416px] border rounded-md overflow-hidden">
+                          <div className="w-full h-[552px] flex items-center justify-center overflow-hidden">
+                            {bannerMobileImage &&
+                            isValidRemoteImage(bannerMobileImage) ? (
+                              isGifImage(bannerMobileImage) ? (
+                                <Image
+                                  src={bannerMobileImage}
+                                  alt={title}
+                                  width={725}
+                                  height={86}
+                                  priority={true}
+                                  unoptimized={true}
+                                />
+                              ) : (
+                                <Image
+                                  src={bannerMobileImage}
+                                  alt={title}
+                                  width={725}
+                                  height={86}
+                                  priority={true}
+                                />
+                              )
+                            ) : (
+                              <CiImageOn
+                                className="fill-neutral-200"
+                                size={80}
+                              />
+                            )}
+                          </div>
+                          <div className="w-full h-9 border-t overflow-hidden">
+                            <input
+                              type="text"
+                              name="bannerMobileImage"
+                              placeholder="Paste image URL"
+                              value={bannerMobileImage}
+                              onChange={(e) =>
+                                setBannerMobileImage(e.target.value)
+                              }
+                              className="h-full w-full px-3 text-gray"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
             <div className="md:hidden w-full pb-5 pt-2 px-5 absolute bottom-0">

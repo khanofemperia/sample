@@ -221,41 +221,42 @@ export default async function Shop() {
     fields: ["id", "slug", "title", "image", "products"],
   });
 
-  // const pageHero = await fetchData<PageHeroType>("/api/page-hero");
+  const pageHero = await fetchData<PageHeroType>({ path: "/api/page-hero" });
   // const categoriesDemo = await fetchData<CategoryType[]>("/api/categories");
 
   const categories = getCategories();
   const recommendedProducts = getRecommededProducts();
+
+  console.log(pageHero);
 
   return (
     <>
       <Link href="#" className="w-full">
         <div className="block md:hidden">
           <Image
-            src="/images/testing/sale-mobile.png"
-            alt="Hero image"
+            src={pageHero.images.mobileImage}
+            alt={pageHero.title}
             sizes="100vw"
             style={{
               width: "100%",
               height: "auto",
             }}
-            width={1050}
-            height={1400}
+            width={2000}
+            height={2000}
             priority
           />
         </div>
         <div className="hidden md:block">
           <Image
-            // src="/images/testing/sale-desktop.png"
-            src="https://firebasestorage.googleapis.com/v0/b/project-2456.appspot.com/o/test.png?alt=media&token=7c14ac76-3afb-4696-9693-179ed1113772"
-            alt="Hero image"
+            src={pageHero.images.desktopImage}
+            alt={pageHero.title}
             sizes="100vw"
             style={{
               width: "100%",
               height: "auto",
             }}
-            width={1050}
-            height={1400}
+            width={1440}
+            height={360}
             priority
           />
         </div>
