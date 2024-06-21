@@ -9,16 +9,16 @@ import { useEffect, useRef, useState } from "react";
 
 const INITIAL_CATEGORY_WIDTH = 110;
 const LARGE_SCREEN_CATEGORY_WIDTH = 120;
-const GAP_BETWEEN_CATEGORIES = 16;
+const GAP_BETWEEN_CATEGORIES = 20;
 const MINIMUM_CATEGORIES_FOR_NAVIGATION = 2;
 const SCREEN_WIDTH_LARGE = 1024;
-const SCREEN_WIDTH_THRESHOLD = 808;
+const SCREEN_WIDTH_THRESHOLD = 828;
 const CATEGORIES_THRESHOLD = 6;
 const SLICE_SIZE_INITIAL = 3;
-const SLICE_SIZE_MAX = 10;
+const SLICE_SIZE_MAX = 8;
 const WIDTH_THRESHOLD_INITIAL = 398;
 const WIDTH_THRESHOLD_INCREMENT = 126;
-const EXTRA_GAP_FOR_WHITE_SPACE = GAP_BETWEEN_CATEGORIES * 3;
+const EXTRA_GAP_FOR_WHITE_SPACE = GAP_BETWEEN_CATEGORIES * 2;
 
 export default function Categories({
   categories,
@@ -42,7 +42,7 @@ export default function Categories({
     let isNextHidden = true;
     if (categories.length > MINIMUM_CATEGORIES_FOR_NAVIGATION) {
       let sliceSize = SLICE_SIZE_INITIAL;
-      let widthThreshold = WIDTH_THRESHOLD_INITIAL;
+      let widthThreshold = WIDTH_THRESHOLD_INITIAL + EXTRA_GAP_FOR_WHITE_SPACE;
 
       while (sliceSize <= SLICE_SIZE_MAX) {
         if (
@@ -107,7 +107,7 @@ export default function Categories({
     // Initial check on page load
     const screenWidth = window.innerWidth;
     resetCarousel(screenWidth);
-  }, []); 
+  }, []);
 
   const handleNext = () => {
     setShouldTransition(true);
@@ -128,19 +128,19 @@ export default function Categories({
   };
 
   return (
-    <div className="relative mb-10 w-full max-w-[808px] lg:max-w-[808px] mx-auto">
+    <div className="relative mb-10 w-full max-w-[828px] mx-auto flex justify-center">
       <div className="overflow-hidden" ref={carouselRef}>
         <div
           style={{ transform: `translateX(${distance}px)` }}
-          className={clsx("w-max flex gap-4 p-1", {
+          className={clsx("w-max flex gap-5 p-1", {
             "ease-in-out duration-300 transition": shouldTransition,
           })}
         >
           {categories.map(({ index, name, image }) => (
             <Link
               key={index}
-              href="#"
-              className="first:ml-4 lg:first:ml-0 flex flex-col gap-2 items-center rounded-xl p-[10px] ease-in-out duration-300 transition hover:shadow-[0px_0px_4px_rgba(0,0,0,0.35)]"
+              href={`/shop/categories/${name}`}
+              className="first:ml-3 min-[398px]:first:ml-0 flex flex-col gap-2 items-center rounded-xl p-[10px] ease-in-out duration-300 transition hover:shadow-[0px_0px_4px_rgba(0,0,0,0.35)]"
             >
               <div className="lg:hidden w-[90px] h-[90px] rounded-full shadow-[rgba(0,0,0,0.2)_0px_1px_3px_0px,_rgba(27,31,35,0.15)_0px_0px_0px_1px]">
                 <div className="w-full h-full rounded-full overflow-hidden flex items-center justify-center z-10">

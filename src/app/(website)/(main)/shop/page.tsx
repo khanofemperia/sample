@@ -55,7 +55,7 @@ export default async function Shop() {
 
   return (
     <>
-      <Link href="#" className="w-full">
+      <Link href={pageHero.destinationUrl} className="w-full">
         <div className="block md:hidden">
           <Image
             src={pageHero.images.mobileImage}
