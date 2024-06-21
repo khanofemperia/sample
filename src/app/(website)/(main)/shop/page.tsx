@@ -45,7 +45,7 @@ type CollectionType = {
 
 export default async function Shop() {
   const collections = await fetchData<CollectionType[]>({
-    path: "/api/collections",
+    path: "/api/shop/collections",
     visibility: "PUBLISHED",
     fields: ["id", "slug", "title", "bannerImages", "products"],
   });
