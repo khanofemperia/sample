@@ -12,8 +12,8 @@ export default function PromotionalBanner({
         <div className="w-full rounded-2xl p-[10px] ease-in-out duration-300 transition hover:shadow-[0px_0px_4px_rgba(0,0,0,0.35)]">
           <div className="w-full max-h-[340px] flex items-center justify-center rounded-xl overflow-hidden">
             <div className="block md:hidden">
-              {collection.images?.mobileImage && <Image
-                src={collection.images.mobileImage}
+              {collection.bannerImages?.mobileImage && <Image
+                src={collection.bannerImages.mobileImage}
                 alt={collection.title}
                 width={1000}
                 height={1000}
@@ -21,9 +21,9 @@ export default function PromotionalBanner({
               />}
             </div>
             <div className="hidden md:block">
-              {collection.images?.desktopImage && (
+              {collection.bannerImages?.desktopImage && (
                 <Image
-                  src={collection.images.desktopImage}
+                  src={collection.bannerImages.desktopImage}
                   alt={collection.title}
                   width={920}
                   height={340}

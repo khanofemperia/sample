@@ -22,7 +22,10 @@ type UpdatedProductType = {
 };
 
 type CollectionDataType = {
-  image: string;
+  bannerImages: {
+    desktopImage: string;
+    mobileImage: string;
+  };
   title: string;
   slug: string;
   campaignDuration: {
@@ -77,7 +80,9 @@ export async function GET(
     })
   );
 
-  const filteredProducts = promises.filter((product) => product !== null) as UpdatedProductType[];
+  const filteredProducts = promises.filter(
+    (product) => product !== null
+  ) as UpdatedProductType[];
   filteredProducts.sort((a, b) => (a.index ?? 0) - (b.index ?? 0));
 
   const updatedProducts = filteredProducts.map((product, index) => ({
