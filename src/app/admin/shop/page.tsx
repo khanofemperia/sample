@@ -13,13 +13,13 @@ import clsx from "clsx";
 
 export default async function Storefront() {
   const collections = await fetchData<CollectionType[]>({
-    path: "/api/collections",
+    path: "/api/admin/collections",
   });
   const categories = await fetchData<CategoryType[]>({
-    path: "/api/categories",
+    path: "/api/admin/categories",
   });
-  const pageHero = await fetchData<PageHeroType>({ path: "/api/page-hero" });
-  const settings = await fetchData<SettingType>({ path: "/api/settings" });
+  const pageHero = await fetchData<PageHeroType>({ path: "/api/admin/page-hero" });
+  const settings = await fetchData<SettingType>({ path: "/api/admin/settings" });
 
   return (
     <>

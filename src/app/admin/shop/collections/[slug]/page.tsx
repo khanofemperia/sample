@@ -72,7 +72,7 @@ export default async function EditCollection({
 
   const collectionId = params.slug.split("-").pop();
   const data = await fetchData<CollectionDataType | null>({
-    path: `api/collections/${collectionId}`,
+    path: `api/admin/collections/${collectionId}`,
   });
 
   if (!data) {

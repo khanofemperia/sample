@@ -85,7 +85,7 @@ export default function Categories({
           className="w-max flex gap-4 p-1 transition duration-500 ease-in-out"
         >
           {categories
-            .filter((category) => category.visibility === "VISIBLE")
+            .filter((category) => category.visibility === "PUBLISHED")
             .map(({ index, name, image }) => (
               <Link
                 key={index}

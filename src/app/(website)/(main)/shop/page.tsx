@@ -50,8 +50,8 @@ export default async function Shop() {
     fields: ["id", "slug", "title", "bannerImages", "products"],
   });
 
-  const pageHero = await fetchData<PageHeroType>({ path: "/api/page-hero" });
-  const categories = await fetchData<CategoryType[]>({path: "/api/categories"});
+  const pageHero = await fetchData<PageHeroType>({ path: "/api/shop/page-hero" });
+  const categories = await fetchData<CategoryType[]>({path: "/api/shop/categories"});
 
   return (
     <>

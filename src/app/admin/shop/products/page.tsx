@@ -4,7 +4,7 @@ import { fetchData } from "@/libraries/utils";
 
 export default async function Products() {
   const products = await fetchData<ProductType[]>({
-    path: "/api/products",
+    path: "/api/admin/products",
     fields: ["id", "mainImage", "name", "price", "slug", "visibility"],
   });
 

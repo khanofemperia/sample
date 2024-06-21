@@ -17,7 +17,7 @@ export default async function EditUpsell({
 }: {
   params: { id: string };
 }) {
-  const data = await fetchData<UpsellType | null>({path: `api/upsells/${params.id}`});
+  const data = await fetchData<UpsellType | null>({path: `api/admin/upsells/${params.id}`});
 
   if (!data) {
     notFound();
