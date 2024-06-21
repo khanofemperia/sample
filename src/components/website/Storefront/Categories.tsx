@@ -131,10 +131,10 @@ export default function Categories({
 
   return (
     <div className="relative mb-10 w-full max-w-[808px] lg:max-w-[808px] mx-auto">
-      <div className="overflow-hidden bg-red-300" ref={carouselRef}>
+      <div className="overflow-hidden" ref={carouselRef}>
         <div
           style={{ transform: `translateX(${distance}px)` }}
-          className={clsx("w-max flex gap-4 p-1 bg-lime-300", {
+          className={clsx("w-max flex gap-4 p-1", {
             "ease-in-out duration-300 transition": shouldTransition,
           })}
         >
