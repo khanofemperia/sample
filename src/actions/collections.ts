@@ -59,7 +59,7 @@ export async function CreateCollectionAction(data: {
       visibility: "DRAFT",
       updatedAt: currentTime,
       createdAt: currentTime,
-      ...(data.bannerImages && { images: data.bannerImages }),
+      ...(data.bannerImages && { bannerImages: data.bannerImages }),
     };
 
     const existingCollections = await getDocs(
