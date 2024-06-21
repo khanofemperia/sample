@@ -46,7 +46,7 @@ type CollectionType = {
     endDate: string;
   };
   collectionType: string;
-  images?: {
+  bannerImages?: {
     desktopImage: string;
     mobileImage: string;
   };
