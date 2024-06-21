@@ -157,24 +157,8 @@ export const useOverlayStore = createWithEqualityFn<OverlayStoreProps>(
       storefront: {
         name: "storefront",
         overlays: {
-          pageHero: {
-            name: "pageHero",
-            isVisible: false,
-          },
           newCollection: {
             name: "newCollection",
-            isVisible: false,
-          },
-          featuredCollections: {
-            name: "featuredCollections",
-            isVisible: false,
-          },
-          promotionalBanners: {
-            name: "promotionalBanners",
-            isVisible: false,
-          },
-          toggleCollections: {
-            name: "toggleCollections",
             isVisible: false,
           },
           categories: {
@@ -204,10 +188,6 @@ export const useOverlayStore = createWithEqualityFn<OverlayStoreProps>(
         overlays: {
           basicDetails: {
             name: "basicDetails",
-            isVisible: false,
-          },
-          heroImage: {
-            name: "heroImage",
             isVisible: false,
           },
           bannerImages: {

@@ -28,7 +28,7 @@ import {
   ProductListButton,
   ProductListOverlay,
 } from "@/components/admin/Storefront/EditCollection/ProductListOverlay";
-import { BannerImagesOverlay } from "@/components/admin/Storefront/EditCollection/BannerImagesOverlay";
+import { BannerImagesButton, BannerImagesOverlay } from "@/components/admin/Storefront/EditCollection/BannerImagesOverlay";
 
 type CollectionProductType = {
   id: string;
@@ -298,7 +298,7 @@ export default async function EditCollection({
           <div className="w-full shadow rounded-xl bg-white">
             <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
               <h2 className="font-semibold text-xl">Images</h2>
-              <BasicDetailsButton />
+              <BannerImagesButton />
             </div>
             <div className="flex flex-col gap-5 p-5 pt-4">
               {bannerImages?.desktopImage && (
