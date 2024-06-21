@@ -18,6 +18,7 @@ const SLICE_SIZE_INITIAL = 3;
 const SLICE_SIZE_MAX = 10;
 const WIDTH_THRESHOLD_INITIAL = 398;
 const WIDTH_THRESHOLD_INCREMENT = 126;
+const EXTRA_GAP_FOR_WHITE_SPACE = GAP_BETWEEN_CATEGORIES * 3;
 
 export default function Categories({
   categories,
@@ -38,9 +39,8 @@ export default function Categories({
     setDistance(0);
     setIsPrevButtonHidden(true);
 
-    if (categories.length <= MINIMUM_CATEGORIES_FOR_NAVIGATION) {
-      setIsNextButtonHidden(true);
-    } else {
+    let isNextHidden = true;
+    if (categories.length > MINIMUM_CATEGORIES_FOR_NAVIGATION) {
       let sliceSize = SLICE_SIZE_INITIAL;
       let widthThreshold = WIDTH_THRESHOLD_INITIAL;
 
@@ -49,19 +49,15 @@ export default function Categories({
           categories.slice(0, sliceSize).length >= sliceSize &&
           screenWidth < widthThreshold
         ) {
-          setIsNextButtonHidden(false);
+          isNextHidden = false;
           break;
         }
         sliceSize++;
         widthThreshold += WIDTH_THRESHOLD_INCREMENT;
       }
-
-      if (sliceSize > SLICE_SIZE_MAX) {
-        setIsNextButtonHidden(true);
-      }
     }
+    setIsNextButtonHidden(isNextHidden);
 
-    // Reset category width based on screen size
     if (screenWidth >= SCREEN_WIDTH_LARGE) {
       setCategoryWidth(LARGE_SCREEN_CATEGORY_WIDTH);
     } else {
@@ -99,7 +95,8 @@ export default function Categories({
       setIsNextButtonHidden(distance <= -totalRemainingDistance);
     } else {
       const visibleWidth =
-        categories.length * (categoryWidth + GAP_BETWEEN_CATEGORIES);
+        categories.length * (categoryWidth + GAP_BETWEEN_CATEGORIES) +
+        EXTRA_GAP_FOR_WHITE_SPACE;
       setIsNextButtonHidden(visibleWidth + distance <= screenWidth);
     }
 
@@ -110,7 +107,7 @@ export default function Categories({
     // Initial check on page load
     const screenWidth = window.innerWidth;
     resetCarousel(screenWidth);
-  }, []);
+  }, []); 
 
   const handleNext = () => {
     setShouldTransition(true);
