@@ -35,13 +35,9 @@ export default function Categories({
   const resetCarousel = (screenWidth: number) => {
     setShouldTransition(false);
 
-    // Reset distance
     setDistance(0);
-
-    // Reset button visibility
     setIsPrevButtonHidden(true);
 
-    // Determine if next button should be hidden based on categories and screen width
     if (categories.length <= MINIMUM_CATEGORIES_FOR_NAVIGATION) {
       setIsNextButtonHidden(true);
     } else {
@@ -60,7 +56,6 @@ export default function Categories({
         widthThreshold += WIDTH_THRESHOLD_INCREMENT;
       }
 
-      // If we've gone through all slice sizes and haven't set isNextButtonHidden to false
       if (sliceSize > SLICE_SIZE_MAX) {
         setIsNextButtonHidden(true);
       }
@@ -111,6 +106,12 @@ export default function Categories({
     setIsPrevButtonHidden(distance === 0);
   }, [distance, categories.length, categoryWidth]);
 
+  useEffect(() => {
+    // Initial check on page load
+    const screenWidth = window.innerWidth;
+    resetCarousel(screenWidth);
+  }, []);
+
   const handleNext = () => {
     setShouldTransition(true);
 
@@ -142,7 +143,7 @@ export default function Categories({
             <Link
               key={index}
               href="#"
-              className="first:ml-4 lg:first:ml-0 flex flex-col gap-2 items-center rounded-xl p-[10px] ease-in-out duration-300 transition hover: shadow-[0px_0px_4px_rgba(0,0,0,0.35)]"
+              className="first:ml-4 lg:first:ml-0 flex flex-col gap-2 items-center rounded-xl p-[10px] ease-in-out duration-300 transition hover:shadow-[0px_0px_4px_rgba(0,0,0,0.35)]"
             >
               <div className="lg:hidden w-[90px] h-[90px] rounded-full shadow-[rgba(0,0,0,0.2)_0px_1px_3px_0px,_rgba(27,31,35,0.15)_0px_0px_0px_1px]">
                 <div className="w-full h-full rounded-full overflow-hidden flex items-center justify-center z-10">
