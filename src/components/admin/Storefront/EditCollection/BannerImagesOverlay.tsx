@@ -10,15 +10,15 @@ import Overlay from "@/ui/Overlay";
 import { UpdateCollectionAction } from "@/actions/collections";
 import Image from "next/image";
 import { CiImageOn } from "react-icons/ci";
-import { isValidRemoteImage } from "@/libraries/utils";
+import { isGifImage, isValidRemoteImage } from "@/libraries/utils";
 import { AlertMessageType } from "@/libraries/sharedTypes";
 
-export function BasicDetailsButton() {
+export function BannerImagesButton() {
   const { showOverlay } = useOverlayStore();
 
   const { pageName, overlayName } = useOverlayStore((state) => ({
     pageName: state.pages.editCollection.name,
-    overlayName: state.pages.editCollection.overlays.basicDetails.name,
+    overlayName: state.pages.editCollection.overlays.bannerImages.name,
   }));
 
   return (
@@ -32,14 +32,15 @@ export function BasicDetailsButton() {
   );
 }
 
-export function BasicDetailsOverlay({
+export function BannerImagesOverlay({
   data,
 }: {
   data: {
     id: string;
-    title: string;
-    slug: string;
-    collectionType: string;
+    bannerImages: {
+      desktopImage: string;
+      mobileImage: string;
+    };
   };
 }) {
   const [loading, setLoading] = useState<boolean>(false);
@@ -48,8 +49,12 @@ export function BasicDetailsOverlay({
   const [alertMessageType, setAlertMessageType] = useState<AlertMessageType>(
     AlertMessageType.NEUTRAL
   );
-  const [title, setTitle] = useState<string>(data.title);
-  const [slug, setSlug] = useState<string>(data.slug);
+  const [bannerDesktopImage, setBannerDesktopImage] = useState<string>(
+    data.bannerImages.desktopImage
+  );
+  const [bannerMobileImage, setBannerMobileImage] = useState<string>(
+    data.bannerImages.mobileImage
+  );
 
   const { hideOverlay } = useOverlayStore();
 
@@ -85,17 +90,28 @@ export function BasicDetailsOverlay({
   const onHideOverlay = () => {
     setLoading(false);
     hideOverlay({ pageName, overlayName });
-    setTitle(data.title);
-    setSlug(data.slug);
+    setBannerDesktopImage(data.bannerImages.desktopImage);
+    setBannerMobileImage(data.bannerImages.mobileImage);
   };
 
   const handleSave = async () => {
+    if (!bannerDesktopImage || !bannerMobileImage) {
+      setAlertMessageType(AlertMessageType.ERROR);
+      setAlertMessage(
+        `Please provide the ${!bannerDesktopImage ? "desktop" : "mobile"} image`
+      );
+      setShowAlert(true);
+      return;
+    }
+
     setLoading(true);
     try {
       const result = await UpdateCollectionAction({
         id: data.id,
-        title,
-        slug,
+        bannerImages: {
+          desktopImage: bannerDesktopImage,
+          mobileImage: bannerMobileImage,
+        },
       });
       setAlertMessageType(result.type);
       setAlertMessage(result.message);
@@ -166,40 +182,96 @@ export function BasicDetailsOverlay({
               </div>
               <div className="w-full h-full mt-[52px] md:mt-0 px-5 pt-5 pb-28 md:pb-10 flex flex-col gap-5 overflow-x-hidden overflow-y-visible invisible-scrollbar md:overflow-hidden">
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="title" className="font-semibold text-sm">
-                    Title
-                  </label>
-                  <div className="w-full h-9 relative">
-                    <input
-                      type="text"
-                      name="title"
-                      placeholder={`Belle Jolie Lipstick - She "Marks" Her Man with Her Lips`}
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
-                      className="w-full h-9 px-3 rounded-md transition duration-300 ease-in-out border focus:border-custom-blue"
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="slug" className="font-semibold text-sm">
-                    Slug
-                  </label>
-                  <div className="w-full h-9 relative">
-                    <input
-                      type="text"
-                      name="slug"
-                      placeholder="belle-jolie-lipstick-mark-your-man"
-                      value={slug}
-                      onChange={(e) => {
-                        const sanitizedValue = e.target.value
-                          .replace(/[^a-zA-Z0-9-]/g, "")
-                          .toLowerCase();
-                        setSlug(sanitizedValue);
-                      }}
-                      className="w-full h-9 px-3 rounded-md transition duration-300 ease-in-out border focus:border-custom-blue"
-                      required
-                    />
+                  <h2 className="font-semibold text-sm">Images</h2>
+                  <div className="p-5 rounded-md border flex flex-col gap-5">
+                    <div className="flex flex-col gap-2">
+                      <h2 className="font-medium text-sm text-gray">
+                        Desktop (1440x360 px)
+                      </h2>
+                      <div className="w-full border rounded-md overflow-hidden">
+                        <div className="w-full min-h-[104px] flex items-center justify-center overflow-hidden">
+                          {bannerDesktopImage &&
+                          isValidRemoteImage(bannerDesktopImage) ? (
+                            isGifImage(bannerDesktopImage) ? (
+                              <Image
+                                src={bannerDesktopImage}
+                                alt="Desktop size image"
+                                width={725}
+                                height={86}
+                                priority={true}
+                                unoptimized={true}
+                              />
+                            ) : (
+                              <Image
+                                src={bannerDesktopImage}
+                                alt="Desktop size image"
+                                width={725}
+                                height={86}
+                                priority={true}
+                              />
+                            )
+                          ) : (
+                            <CiImageOn className="fill-neutral-200" size={80} />
+                          )}
+                        </div>
+                        <div className="w-full h-9 border-t overflow-hidden">
+                          <input
+                            type="text"
+                            name="bannerDesktopImage"
+                            placeholder="Paste image URL"
+                            value={bannerDesktopImage}
+                            onChange={(e) =>
+                              setBannerDesktopImage(e.target.value)
+                            }
+                            className="h-full w-full px-3 text-gray"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <h2 className="font-medium text-sm text-gray">
+                        Mobile (960x1280 px)
+                      </h2>
+                      <div className="w-full max-w-[416px] border rounded-md overflow-hidden">
+                        <div className="w-full h-[552px] flex items-center justify-center overflow-hidden">
+                          {bannerMobileImage &&
+                          isValidRemoteImage(bannerMobileImage) ? (
+                            isGifImage(bannerMobileImage) ? (
+                              <Image
+                                src={bannerMobileImage}
+                                alt="Mobile size image"
+                                width={725}
+                                height={86}
+                                priority={true}
+                                unoptimized={true}
+                              />
+                            ) : (
+                              <Image
+                                src={bannerMobileImage}
+                                alt="Mobile size image"
+                                width={725}
+                                height={86}
+                                priority={true}
+                              />
+                            )
+                          ) : (
+                            <CiImageOn className="fill-neutral-200" size={80} />
+                          )}
+                        </div>
+                        <div className="w-full h-9 border-t overflow-hidden">
+                          <input
+                            type="text"
+                            name="bannerMobileImage"
+                            placeholder="Paste image URL"
+                            value={bannerMobileImage}
+                            onChange={(e) =>
+                              setBannerMobileImage(e.target.value)
+                            }
+                            className="h-full w-full px-3 text-gray"
+                          />
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

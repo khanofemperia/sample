@@ -21,7 +21,7 @@ import { CreateCollectionAction } from "@/actions/collections";
 import Overlay from "@/ui/Overlay";
 import { AlertMessageType } from "@/libraries/sharedTypes";
 
-type BannerImageType = {
+type BannerImagesType = {
   desktopImage: string;
   mobileImage: string;
 };
@@ -34,7 +34,7 @@ type RequestDataType = {
     endDate: string;
   };
   collectionType: string;
-  images?: BannerImageType;
+  bannerImages?: BannerImagesType;
 };
 
 export function NewCollectionMenuButton() {
@@ -183,8 +183,8 @@ export function NewCollectionOverlay() {
       };
 
       try {
-        const requestData: Omit<RequestDataType, "images"> & {
-          images?: BannerImageType;
+        const requestData: Omit<RequestDataType, "bannerImages"> & {
+          bannerImages?: BannerImagesType;
         } = {
           title,
           slug,
@@ -193,20 +193,14 @@ export function NewCollectionOverlay() {
         };
 
         if (selectedCollectionType === BANNER) {
-          requestData.images = {
+          requestData.bannerImages = {
             desktopImage: bannerDesktopImage,
             mobileImage: bannerMobileImage,
           };
         }
 
         const result = await CreateCollectionAction(
-          requestData as {
-            title: string;
-            slug: string;
-            image: string;
-            collectionType: string;
-            campaignDuration: { startDate: string; endDate: string };
-          }
+          requestData as RequestDataType
         );
 
         setAlertMessageType(result.type);

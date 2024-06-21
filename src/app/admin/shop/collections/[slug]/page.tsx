@@ -28,6 +28,7 @@ import {
   ProductListButton,
   ProductListOverlay,
 } from "@/components/admin/Storefront/EditCollection/ProductListOverlay";
+import { BannerImagesOverlay } from "@/components/admin/Storefront/EditCollection/BannerImagesOverlay";
 
 type CollectionProductType = {
   id: string;
@@ -41,7 +42,10 @@ type CollectionProductType = {
 
 type CollectionDataType = {
   id: string;
-  image: string;
+  bannerImages?: {
+    desktopImage: string;
+    mobileImage: string;
+  };
   title: string;
   slug: string;
   campaignDuration: {
@@ -81,7 +85,7 @@ export default async function EditCollection({
     collectionType,
     title,
     slug,
-    image,
+    bannerImages,
     visibility,
     products,
   } = data;
@@ -266,22 +270,6 @@ export default async function EditCollection({
               <BasicDetailsButton />
             </div>
             <div className="flex flex-col gap-5 p-5 pt-4">
-              {image && (
-                <div>
-                  <h3 className="text-sm font-semibold mb-2">Image</h3>
-                  <div className="w-full rounded-xl flex items-center justify-center overflow-hidden">
-                    {isValidRemoteImage(image) && (
-                      <Image
-                        src={image}
-                        alt={title}
-                        width={766}
-                        height={308}
-                        priority={true}
-                      />
-                    )}
-                  </div>
-                </div>
-              )}
               <div>
                 <h3 className="text-sm font-semibold mb-2">Title</h3>
                 <div className="w-max max-w-full h-9 px-4 rounded-full bg-lightgray flex items-center text-nowrap overflow-x-visible overflow-y-hidden invisible-scrollbar">
@@ -300,6 +288,55 @@ export default async function EditCollection({
                   {capitalizeFirstLetter(collectionType.toLowerCase())}
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <p className="text-sm mb-4 md:max-w-[85%]">
+            description goes here...
+          </p>
+          <div className="w-full shadow rounded-xl bg-white">
+            <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
+              <h2 className="font-semibold text-xl">Images</h2>
+              <BasicDetailsButton />
+            </div>
+            <div className="flex flex-col gap-5 p-5 pt-4">
+              {bannerImages?.desktopImage && (
+                <div>
+                  <h3 className="mb-2 font-medium text-sm text-gray">
+                    Desktop (1440x360 px)
+                  </h3>
+                  <div className="w-full rounded-xl flex items-center justify-center overflow-hidden">
+                    {isValidRemoteImage(bannerImages?.desktopImage) && (
+                      <Image
+                        src={bannerImages?.desktopImage}
+                        alt={title}
+                        width={766}
+                        height={308}
+                        priority={true}
+                      />
+                    )}
+                  </div>
+                </div>
+              )}
+              {bannerImages?.mobileImage && (
+                <div>
+                  <h3 className="mb-2 font-medium text-sm text-gray">
+                    Mobile (960x1280 px)
+                  </h3>
+                  <div className="w-full max-w-[416px] rounded-xl flex items-center justify-center overflow-hidden">
+                    {isValidRemoteImage(bannerImages?.mobileImage) && (
+                      <Image
+                        src={bannerImages?.mobileImage}
+                        alt={title}
+                        width={766}
+                        height={308}
+                        priority={true}
+                      />
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -368,7 +405,8 @@ export default async function EditCollection({
         </div>
       </div>
       <CampaignDurationOverlay data={{ id, campaignDuration }} />
-      <BasicDetailsOverlay data={{ id, title, slug, image, collectionType }} />
+      <BasicDetailsOverlay data={{ id, title, slug, collectionType }} />
+      {bannerImages && <BannerImagesOverlay data={{ id, bannerImages }} />}
       <VisibilityOverlay data={{ id, visibility }} />
       <ProductListOverlay data={{ id, products }} />
     </>

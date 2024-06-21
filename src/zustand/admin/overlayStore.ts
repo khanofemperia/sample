@@ -210,8 +210,8 @@ export const useOverlayStore = createWithEqualityFn<OverlayStoreProps>(
             name: "heroImage",
             isVisible: false,
           },
-          bannerImage: {
-            name: "bannerImage",
+          bannerImages: {
+            name: "bannerImages",
             isVisible: false,
           },
           campaignDuration: {

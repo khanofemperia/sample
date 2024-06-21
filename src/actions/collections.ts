@@ -30,10 +30,15 @@ type DataType = {
   products: { id: string; index: number }[];
 };
 
+type BannerImagesType = {
+  desktopImage: string;
+  mobileImage: string;
+};
+
 export async function CreateCollectionAction(data: {
   title: string;
   slug: string;
-  image?: string;
+  bannerImages?: BannerImagesType;
   collectionType: string;
   campaignDuration: {
     startDate: string;
@@ -54,7 +59,7 @@ export async function CreateCollectionAction(data: {
       visibility: "DRAFT",
       updatedAt: currentTime,
       createdAt: currentTime,
-      ...(data.image && { image: data.image }),
+      ...(data.bannerImages && { images: data.bannerImages }),
     };
 
     const existingCollections = await getDocs(
@@ -160,7 +165,7 @@ export async function ChangeCollectionIndexAction(data: {
 export async function UpdateCollectionAction(data: {
   id: string;
   campaignDuration?: { startDate: string; endDate: string };
-  image?: string;
+  bannerImages?: BannerImagesType;
   title?: string;
   slug?: string;
   visibility?: string;
@@ -182,8 +187,8 @@ export async function UpdateCollectionAction(data: {
       updateData.campaignDuration = data.campaignDuration;
     }
 
-    if (data.image) {
-      updateData.image = data.image;
+    if (data.bannerImages) {
+      updateData.bannerImages = data.bannerImages;
     }
 
     if (data.title) {
