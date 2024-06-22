@@ -16,7 +16,7 @@ export default function FeaturedProducts({
           {title}
         </h2>
         <Link
-          href={`/shop/collections/${slug}-${id}`}
+          href={`/shop/collections/${slug.toLowerCase()}-${id}`}
           className="text-sm rounded-full px-3 h-8 text-nowrap flex items-center justify-center transition duration-300 ease-in-out bg-lightgray active:bg-lightgray-dimmed lg:hover:bg-lightgray-dimmed"
         >
           See more
@@ -46,7 +46,7 @@ export default function FeaturedProducts({
                   className="min-w-[244px] w-[244px] h-[308px] max-h-[376px] md:min-w-[33.333333%] md:w-[33.333333%] md:h-[calc(33.33vw+54px)] snap-always snap-center rounded-2xl select-none relative ease-in-out duration-300 transition hover:shadow-[0px_0px_4px_rgba(0,0,0,0.35)]"
                 >
                   <Link
-                    href={`/shop/${slug}-${id}`}
+                    href={`/shop/${slug.toLowerCase()}-${id}`}
                     className="w-[224px] h-[224px] md:w-[calc(33.33vw-30px)] md:h-[calc(33.33vw-30px)] max-w-[292px] max-h-[292px] cursor-pointer aspect-square z-[1] absolute top-[10px] left-[10px] right-[10px] bg-gray rounded-xl flex items-center justify-center overflow-hidden"
                   >
                     <Image

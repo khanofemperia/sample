@@ -33,51 +33,51 @@ export default function Categories({
 
   const carouselRef = useRef(null);
 
-  const resetCarousel = (screenWidth: number) => {
-    setShouldTransition(false);
+const resetCarousel = (screenWidth: number) => {
+  setShouldTransition(false);
+  setDistance(0);
+  setIsPrevButtonHidden(true);
 
-    setDistance(0);
-    setIsPrevButtonHidden(true);
+  let isNextHidden = true;
+  if (categories.length > MINIMUM_CATEGORIES_FOR_NAVIGATION) {
+    let sliceSize = SLICE_SIZE_INITIAL;
+    let widthThreshold = WIDTH_THRESHOLD_INITIAL;
 
-    let isNextHidden = true;
-    if (categories.length > MINIMUM_CATEGORIES_FOR_NAVIGATION) {
-      let sliceSize = SLICE_SIZE_INITIAL;
-      let widthThreshold = WIDTH_THRESHOLD_INITIAL + EXTRA_GAP_FOR_WHITE_SPACE;
-
-      while (sliceSize <= SLICE_SIZE_MAX) {
-        if (
-          categories.slice(0, sliceSize).length >= sliceSize &&
-          screenWidth < widthThreshold
-        ) {
-          isNextHidden = false;
-          break;
-        }
-        sliceSize++;
-        widthThreshold += WIDTH_THRESHOLD_INCREMENT;
+    while (sliceSize <= SLICE_SIZE_MAX) {
+      if (
+        categories.slice(0, sliceSize).length >= sliceSize &&
+        screenWidth < sliceSize * widthThreshold
+      ) {
+        isNextHidden = false;
+        break;
       }
+      sliceSize++;
+      widthThreshold += WIDTH_THRESHOLD_INCREMENT;
     }
-    setIsNextButtonHidden(isNextHidden);
+  }
+  setIsNextButtonHidden(isNextHidden);
 
-    if (screenWidth >= SCREEN_WIDTH_LARGE) {
-      setCategoryWidth(LARGE_SCREEN_CATEGORY_WIDTH);
-    } else {
-      setCategoryWidth(INITIAL_CATEGORY_WIDTH);
-    }
+  if (screenWidth >= SCREEN_WIDTH_LARGE) {
+    setCategoryWidth(LARGE_SCREEN_CATEGORY_WIDTH);
+  } else {
+    setCategoryWidth(INITIAL_CATEGORY_WIDTH);
+  }
+};
+
+useEffect(() => {
+  const handleResize = () => {
+    const screenWidth = window.innerWidth;
+    resetCarousel(screenWidth);
   };
 
-  useEffect(() => {
-    const handleResize = () => {
-      const screenWidth = window.innerWidth;
-      resetCarousel(screenWidth);
-    };
+  handleResize();
 
-    handleResize();
+  window.addEventListener("resize", handleResize);
+  return () => {
+    window.removeEventListener("resize", handleResize);
+  };
+}, [categories]);
 
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [categories]);
 
   useEffect(() => {
     const maxDistance =
@@ -139,8 +139,8 @@ export default function Categories({
           {categories.map(({ index, name, image }) => (
             <Link
               key={index}
-              href={`/shop/categories/${name}`}
-              className="first:ml-3 min-[398px]:first:ml-0 flex flex-col gap-2 items-center rounded-xl p-[10px] ease-in-out duration-300 transition hover:shadow-[0px_0px_4px_rgba(0,0,0,0.35)]"
+              href={`/shop/categories/${name.toLowerCase()}`}
+              className="first:ml-3 lg:first:ml-0 flex flex-col gap-2 items-center rounded-xl p-[10px] ease-in-out duration-300 transition hover:shadow-[0px_0px_4px_rgba(0,0,0,0.35)]"
             >
               <div className="lg:hidden w-[90px] h-[90px] rounded-full shadow-[rgba(0,0,0,0.2)_0px_1px_3px_0px,_rgba(27,31,35,0.15)_0px_0px_0px_1px]">
                 <div className="w-full h-full rounded-full overflow-hidden flex items-center justify-center z-10">
