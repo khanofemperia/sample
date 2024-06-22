@@ -86,7 +86,7 @@ export default async function Shop() {
         </div>
       </Link>
       <div className="w-full pt-8">
-        <Categories categories={categories.slice(0,6)} />
+        <Categories categories={categories.slice(0,8)} />
         <div className="flex flex-col gap-10">
           {collections.map((collection, index) => {
             switch (collection.collectionType) {
