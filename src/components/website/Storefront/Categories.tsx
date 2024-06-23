@@ -90,22 +90,16 @@ export default function Categories({
 
   const handleNext = () => {
     setShouldTransition(true);
-
-    const newDistance = distance - (categoryWidth + GAP_BETWEEN_CATEGORIES);
-
-    setDistance(newDistance);
+    setDistance(distance - (categoryWidth + GAP_BETWEEN_CATEGORIES));
   };
 
   const handlePrev = () => {
     setShouldTransition(true);
-
-    const newDistance = distance + (categoryWidth + GAP_BETWEEN_CATEGORIES);
-
-    setDistance(newDistance);
+    setDistance(distance + (categoryWidth + GAP_BETWEEN_CATEGORIES));
   };
 
   return (
-    <div className="bg-yellow-200 relative mb-10 w-full max-w-[768px] lg:max-w-[828px] mx-auto flex justify-center">
+    <div className="relative mb-10 w-full max-w-[768px] lg:max-w-[828px] mx-auto flex justify-center">
       <div className="overflow-hidden" ref={carouselRef}>
         <div
           style={{ transform: `translateX(${distance}px)` }}
@@ -117,7 +111,7 @@ export default function Categories({
             <Link
               key={index}
               href={`/shop/categories/${name.toLowerCase()}`}
-              className="flex flex-col gap-2 items-center rounded-xl p-[10px] ease-in-out duration-300 transition hover: shadow-[0px_0px_4px_rgba(0,0,0,0.35)]"
+              className="flex flex-col gap-2 items-center rounded-xl p-[10px] ease-in-out duration-300 transition hover:shadow-[0px_0px_4px_rgba(0,0,0,0.35)]"
             >
               <div className="lg:hidden w-[90px] h-[90px] rounded-full shadow-[rgba(0,0,0,0.2)_0px_1px_3px_0px,_rgba(27,31,35,0.15)_0px_0px_0px_1px]">
                 <div className="w-full h-full rounded-full overflow-hidden flex items-center justify-center z-10">
