@@ -42,11 +42,7 @@ export default function Categories({
   };
 
   useEffect(() => {
-    const handleResize = () => {
-      const screenWidth = window.innerWidth;
-      resetCarousel(screenWidth);
-    };
-
+    const handleResize = () => resetCarousel(window.innerWidth);
     handleResize();
 
     window.addEventListener("resize", handleResize);
@@ -60,9 +56,16 @@ export default function Categories({
       categories.length * (categoryWidth + GAP_BETWEEN_CATEGORIES) -
       PADDING_AND_GAP_ADJUSTMENT;
 
-    setIsNextButtonHidden(
-      distance <= -(totalCategoriesWidth - CAROUSEL_MAX_WIDTH)
-    );
+    const screenWidth = window.innerWidth;
+
+    if (screenWidth >= CAROUSEL_MAX_WIDTH) {
+      setIsNextButtonHidden(
+        distance <= -(totalCategoriesWidth - CAROUSEL_MAX_WIDTH)
+      );
+    } else {
+      setIsNextButtonHidden(distance <= -(totalCategoriesWidth - screenWidth));
+    }
+
     setIsPrevButtonHidden(distance === 0);
   }, [distance, categories.length, categoryWidth]);
 
@@ -73,13 +76,17 @@ export default function Categories({
   const handleNext = () => {
     setShouldTransition(true);
 
-    const RANDOM_ADJUSTMENT_LIKELY_PADDING_OR_MARGIN = 10;
+    let paddingOrMarginAdjustment = 0;
+
+    const screenWidth = window.innerWidth;
+
+    if (screenWidth >= CAROUSEL_MAX_WIDTH) {
+      paddingOrMarginAdjustment = 10;
+    }
 
     const newDistance =
       distance -
-      (categoryWidth +
-        GAP_BETWEEN_CATEGORIES +
-        RANDOM_ADJUSTMENT_LIKELY_PADDING_OR_MARGIN);
+      (categoryWidth + GAP_BETWEEN_CATEGORIES + paddingOrMarginAdjustment);
 
     setDistance(newDistance);
   };
@@ -87,13 +94,17 @@ export default function Categories({
   const handlePrev = () => {
     setShouldTransition(true);
 
-    const RANDOM_ADJUSTMENT_LIKELY_PADDING_OR_MARGIN = 10;
+    let paddingOrMarginAdjustment = 0;
+
+    const screenWidth = window.innerWidth;
+
+    if (screenWidth >= CAROUSEL_MAX_WIDTH) {
+      paddingOrMarginAdjustment = 10;
+    }
 
     const newDistance =
       distance +
-      (categoryWidth +
-        GAP_BETWEEN_CATEGORIES +
-        RANDOM_ADJUSTMENT_LIKELY_PADDING_OR_MARGIN);
+      (categoryWidth + GAP_BETWEEN_CATEGORIES + paddingOrMarginAdjustment);
 
     setDistance(newDistance);
   };
