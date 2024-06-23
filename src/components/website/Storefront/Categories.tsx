@@ -8,9 +8,12 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 const INITIAL_CATEGORY_WIDTH = 110;
+const DESKTOP_CATEGORY_WIDTH = 120;
 const GAP_BETWEEN_CATEGORIES = 20;
 const PADDING_AND_GAP_ADJUSTMENT = 12;
-const CAROUSEL_MAX_WIDTH = 768;
+const DESKTOP_CAROUSEL_MAX_WIDTH = 828;
+const MOBILE_CAROUSEL_MAX_WIDTH = 768;
+const DESKTOP_SCREEN_WIDTH = 1024;
 
 export default function Categories({
   categories,
@@ -34,10 +37,16 @@ export default function Categories({
       categories.length * (categoryWidth + GAP_BETWEEN_CATEGORIES) -
       PADDING_AND_GAP_ADJUSTMENT;
 
-    if (screenWidth >= CAROUSEL_MAX_WIDTH) {
-      setIsNextButtonHidden(totalCategoriesWidth <= CAROUSEL_MAX_WIDTH);
+    if (screenWidth >= MOBILE_CAROUSEL_MAX_WIDTH) {
+      setIsNextButtonHidden(totalCategoriesWidth <= MOBILE_CAROUSEL_MAX_WIDTH);
     } else {
       setIsNextButtonHidden(totalCategoriesWidth <= screenWidth);
+    }
+
+    if (screenWidth >= DESKTOP_SCREEN_WIDTH) {
+      setCategoryWidth(DESKTOP_CATEGORY_WIDTH);
+    } else {
+      setCategoryWidth(INITIAL_CATEGORY_WIDTH);
     }
   };
 
@@ -58,10 +67,16 @@ export default function Categories({
 
     const screenWidth = window.innerWidth;
 
-    if (screenWidth >= CAROUSEL_MAX_WIDTH) {
-      setIsNextButtonHidden(
-        distance <= -(totalCategoriesWidth - CAROUSEL_MAX_WIDTH)
-      );
+    if (screenWidth >= MOBILE_CAROUSEL_MAX_WIDTH) {
+      if (screenWidth >= DESKTOP_SCREEN_WIDTH) {
+        setIsNextButtonHidden(
+          distance <= -(totalCategoriesWidth - DESKTOP_CAROUSEL_MAX_WIDTH)
+        );
+      } else {
+        setIsNextButtonHidden(
+          distance <= -(totalCategoriesWidth - MOBILE_CAROUSEL_MAX_WIDTH)
+        );
+      }
     } else {
       setIsNextButtonHidden(distance <= -(totalCategoriesWidth - screenWidth));
     }
@@ -76,17 +91,7 @@ export default function Categories({
   const handleNext = () => {
     setShouldTransition(true);
 
-    let paddingOrMarginAdjustment = 0;
-
-    const screenWidth = window.innerWidth;
-
-    if (screenWidth >= CAROUSEL_MAX_WIDTH) {
-      paddingOrMarginAdjustment = 10;
-    }
-
-    const newDistance =
-      distance -
-      (categoryWidth + GAP_BETWEEN_CATEGORIES + paddingOrMarginAdjustment);
+    const newDistance = distance - (categoryWidth + GAP_BETWEEN_CATEGORIES);
 
     setDistance(newDistance);
   };
@@ -94,17 +99,7 @@ export default function Categories({
   const handlePrev = () => {
     setShouldTransition(true);
 
-    let paddingOrMarginAdjustment = 0;
-
-    const screenWidth = window.innerWidth;
-
-    if (screenWidth >= CAROUSEL_MAX_WIDTH) {
-      paddingOrMarginAdjustment = 10;
-    }
-
-    const newDistance =
-      distance +
-      (categoryWidth + GAP_BETWEEN_CATEGORIES + paddingOrMarginAdjustment);
+    const newDistance = distance + (categoryWidth + GAP_BETWEEN_CATEGORIES);
 
     setDistance(newDistance);
   };
