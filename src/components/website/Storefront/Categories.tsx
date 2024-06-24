@@ -99,7 +99,7 @@ export default function Categories({
   };
 
   return (
-    <div className="relative mb-10 w-full max-w-[768px] lg:max-w-[828px] mx-auto flex justify-center">
+    <div className="relative mb-5 w-full max-w-[768px] lg:max-w-[828px] mx-auto flex justify-center">
       <div className="overflow-hidden" ref={carouselRef}>
         <div
           style={{ transform: `translateX(${distance}px)` }}
