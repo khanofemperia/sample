@@ -467,10 +467,10 @@ export function NewCollectionOverlay() {
                       </div>
                       <div className="flex flex-col gap-2">
                         <h2 className="font-medium text-sm text-gray">
-                          Mobile (960x1280 px)
+                          Mobile (1080x1080 px)
                         </h2>
                         <div className="w-full max-w-[416px] border rounded-md overflow-hidden">
-                          <div className="w-full h-[552px] flex items-center justify-center overflow-hidden">
+                          <div className="w-full aspect-square flex items-center justify-center overflow-hidden">
                             {bannerMobileImage &&
                             isValidRemoteImage(bannerMobileImage) ? (
                               isGifImage(bannerMobileImage) ? (

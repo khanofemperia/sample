@@ -322,9 +322,9 @@ export default async function EditCollection({
               {bannerImages?.mobileImage && (
                 <div>
                   <h3 className="mb-2 font-medium text-sm text-gray">
-                    Mobile (960x1280 px)
+                    Mobile (1080x1080 px)
                   </h3>
-                  <div className="w-full max-w-[416px] rounded-xl flex items-center justify-center overflow-hidden">
+                  <div className="w-full max-w-[416px] aspect-square rounded-xl flex items-center justify-center overflow-hidden">
                     {isValidRemoteImage(bannerImages?.mobileImage) && (
                       <Image
                         src={bannerImages?.mobileImage}
