@@ -28,7 +28,10 @@ import {
   ProductListButton,
   ProductListOverlay,
 } from "@/components/admin/Storefront/EditCollection/ProductListOverlay";
-import { BannerImagesButton, BannerImagesOverlay } from "@/components/admin/Storefront/EditCollection/BannerImagesOverlay";
+import {
+  BannerImagesButton,
+  BannerImagesOverlay,
+} from "@/components/admin/Storefront/EditCollection/BannerImagesOverlay";
 
 type CollectionProductType = {
   id: string;
@@ -291,55 +294,55 @@ export default async function EditCollection({
             </div>
           </div>
         </div>
-        <div>
-          <p className="text-sm mb-4 md:max-w-[85%]">
-            description goes here...
-          </p>
-          <div className="w-full shadow rounded-xl bg-white">
-            <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
-              <h2 className="font-semibold text-xl">Images</h2>
-              <BannerImagesButton />
-            </div>
-            <div className="flex flex-col gap-5 p-5 pt-4">
-              {bannerImages?.desktopImage && (
-                <div>
-                  <h3 className="mb-2 font-medium text-sm text-gray">
-                    Desktop (1440x360 px)
-                  </h3>
-                  <div className="w-full rounded-xl flex items-center justify-center overflow-hidden">
-                    {isValidRemoteImage(bannerImages?.desktopImage) && (
-                      <Image
-                        src={bannerImages?.desktopImage}
-                        alt={title}
-                        width={766}
-                        height={308}
-                        priority={true}
-                      />
-                    )}
+        {bannerImages &&
+          bannerImages.desktopImage &&
+          bannerImages.mobileImage && (
+            <div>
+              <p className="text-sm mb-4 md:max-w-[85%]">
+                description goes here...
+              </p>
+              <div className="w-full shadow rounded-xl bg-white">
+                <div className="w-full h-14 border-b flex items-center justify-between pl-5 pr-[10px]">
+                  <h2 className="font-semibold text-xl">Images</h2>
+                  <BannerImagesButton />
+                </div>
+                <div className="flex flex-col gap-5 p-5 pt-4">
+                  <div>
+                    <h3 className="mb-2 font-medium text-sm text-gray">
+                      Desktop (1440x360 px)
+                    </h3>
+                    <div className="w-full rounded-xl flex items-center justify-center overflow-hidden">
+                      {isValidRemoteImage(bannerImages?.desktopImage) && (
+                        <Image
+                          src={bannerImages?.desktopImage}
+                          alt={title}
+                          width={766}
+                          height={308}
+                          priority={true}
+                        />
+                      )}
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="mb-2 font-medium text-sm text-gray">
+                      Mobile (1080x1080 px)
+                    </h3>
+                    <div className="w-full max-w-[416px] aspect-square rounded-xl flex items-center justify-center overflow-hidden">
+                      {isValidRemoteImage(bannerImages?.mobileImage) && (
+                        <Image
+                          src={bannerImages?.mobileImage}
+                          alt={title}
+                          width={766}
+                          height={308}
+                          priority={true}
+                        />
+                      )}
+                    </div>
                   </div>
                 </div>
-              )}
-              {bannerImages?.mobileImage && (
-                <div>
-                  <h3 className="mb-2 font-medium text-sm text-gray">
-                    Mobile (1080x1080 px)
-                  </h3>
-                  <div className="w-full max-w-[416px] aspect-square rounded-xl flex items-center justify-center overflow-hidden">
-                    {isValidRemoteImage(bannerImages?.mobileImage) && (
-                      <Image
-                        src={bannerImages?.mobileImage}
-                        alt={title}
-                        width={766}
-                        height={308}
-                        priority={true}
-                      />
-                    )}
-                  </div>
-                </div>
-              )}
+              </div>
             </div>
-          </div>
-        </div>
+          )}
         <div>
           <p className="text-sm mb-4 md:max-w-[85%]">
             Choose whether the collection is a work-in-progress (draft) or ready
