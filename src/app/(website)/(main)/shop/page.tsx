@@ -50,12 +50,16 @@ export default async function Shop() {
     fields: ["id", "slug", "title", "bannerImages", "products"],
   });
 
-  const pageHero = await fetchData<PageHeroType>({ path: "/api/shop/page-hero" });
-  const categories = await fetchData<CategoryType[]>({path: "/api/shop/categories"});
+  const pageHero = await fetchData<PageHeroType>({
+    path: "/api/shop/page-hero",
+  });
+  const categories = await fetchData<CategoryType[]>({
+    path: "/api/shop/categories",
+  });
 
   return (
     <>
-      <Link href={pageHero.destinationUrl} className="w-full">
+      <Link href={pageHero.destinationUrl} target="_blank" className="w-full">
         <div className="block md:hidden">
           <Image
             src={pageHero.images.mobileImage}
