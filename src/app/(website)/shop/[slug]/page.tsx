@@ -49,7 +49,7 @@ export default function ProductDetails({
 
   return (
     <>
-      <main className="w-[1080px] min-h-screen mx-auto py-16">
+      <main className="w-[1080px] mx-auto py-16">
         <div className="flex gap-5">
           <div className="flex">
             <div
@@ -156,19 +156,19 @@ export default function ProductDetails({
                 <div className="w-full h-full rounded-md absolute top-0 bottom-0 left-0 right-0 ease-in-out hover:bg-blue hover:bg-opacity-40 hover:duration-300 hover:ease-out"></div>
               </div>
             </div>
-            <div className="w-[560px] h-full flex flex-col gap-5">
+            <div className="w-[580px] h-full flex flex-col gap-5">
               <div className="w-full aspect-square relative flex items-center justify-center bg-lightgray overflow-hidden rounded-3xl [box-shadow:0px_1.6px_3.6px_rgb(0,_0,_0,_0.4),_0px_0px_2.9px_rgb(0,_0,_0,_0.1)]">
                 <Image
                   src="https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/fbf522c1b1d84378bd9bda770affaa9a.jpg?imageView2/2/w/800/q/70/format/webp"
                   alt="High Waisted Running Shorts"
-                  width={560}
-                  height={560}
+                  width={580}
+                  height={580}
                   priority={true}
                 />
               </div>
             </div>
           </div>
-          <div className="w-[400px] h-[200px] pt-5">
+          <div className="w-[400px] pt-5">
             <p className="mt-[-6px] text-sm text-gray">
               High Waisted Running Shorts
             </p>
@@ -232,13 +232,41 @@ export default function ProductDetails({
                   </li>
                 </ul>
               </div>
-              <div className="mb-8">
-                <button className="h-8 border px-4 rounded-full flex items-center justify-center gap-1">
+              <div>
+                <button className="h-8 border px-4 rounded-full flex items-center justify-center gap-[2px] bg-white">
                   <span className="text-sm font-medium">
                     Select Color & Size
                   </span>
                   <ChevronRightIcon className="-mr-[7px]" size={20} />
                 </button>
+              </div>
+            </div>
+            <div
+              className={`${styles.custom_border} mt-6 py-4 px-6 w-max rounded-md bg-white`}
+            >
+              <div className="w-full">
+                <div>
+                  <h2 className="font-black text-center text-[21px] text-custom-red leading-6 [letter-spacing:-1px] [word-spacing:2px] [text-shadow:#707070_0px_1px_0px] w-[248px] mx-auto">
+                    UPGRADE MY ORDER
+                  </h2>
+                  <div className="mt-1 text-center font-medium text-gray">
+                    <span className="font-bold text-[#008a00]">$137.99</span>{" "}
+                    (Save 58% - was{" "}
+                    <span className="line-through font-medium text-gray">
+                      $189.99
+                    </span>
+                    )
+                  </div>
+                </div>
+                <div className="mt-2 h-[210px] aspect-square mx-auto overflow-hidden">
+                  <Image
+                    src="https://i.pinimg.com/564x/ab/d7/1b/abd71b557fc77916f1570da50c0325a8.jpg"
+                    alt="Upgrade my order"
+                    width={240}
+                    height={240}
+                    priority
+                  />
+                </div>
               </div>
             </div>
           </div>
