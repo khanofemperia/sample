@@ -9,6 +9,8 @@ import {
   HiArrowLeft,
   HiArrowRight,
   HiPlus,
+  HiOutlineStar,
+  HiCheck,
 } from "react-icons/hi";
 import { HiArrowUpRight } from "react-icons/hi2";
 
@@ -18,6 +20,8 @@ export const SearchIcon = HiOutlineSearch;
 export const ChevronLeftIcon = TbChevronLeft;
 export const ChevronRightIcon = TbChevronRight;
 export const ChevronDownIcon = TbChevronDown;
+export const CheckmarkIcon = HiCheck;
+export const StarIcon = HiOutlineStar;
 export const HamburgerMenuIcon = HiOutlineMenu;
 export const ArrowLeftIcon = HiArrowLeft;
 export const ArrowRightIcon = HiArrowRight;
@@ -26,4 +30,3 @@ export const MinusIcon = FaMinus;
 export const PlusIcon = HiPlus;
 export const VisitPageIcon = HiArrowUpRight;
 export const ChangeIndexIcon = PiArrowsClockwiseBold;
-
