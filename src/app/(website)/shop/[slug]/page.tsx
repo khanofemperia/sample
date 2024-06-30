@@ -168,7 +168,7 @@ export default function ProductDetails({
               </div>
             </div>
           </div>
-          <div className="w-[400px] pt-5">
+          <div className="w-[410px] pt-5">
             <p className="mt-[-6px] text-sm text-gray">
               High Waisted Running Shorts
             </p>
@@ -246,7 +246,7 @@ export default function ProductDetails({
             >
               <div className="w-full">
                 <div>
-                  <h2 className="font-black text-center text-[21px] text-custom-red leading-6 [letter-spacing:-1px] [word-spacing:2px] [text-shadow:#707070_0px_1px_0px] w-[248px] mx-auto">
+                  <h2 className="font-black text-center text-[21px] text-custom-red leading-6 [letter-spacing:-1px] [word-spacing:2px] [text-shadow:_1px_1px_1px_rgba(0,0,0,0.15)] w-[248px] mx-auto">
                     UPGRADE MY ORDER
                   </h2>
                   <div className="mt-1 text-center font-medium text-gray">
@@ -268,6 +268,12 @@ export default function ProductDetails({
                   />
                 </div>
               </div>
+            </div>
+            <div className="mt-6 flex gap-3">
+              <button className="w-full h-12 rounded-full border border-[rgb(150,150,150)] font-semibold">Add to Cart</button>
+              <button className="inline-block text-center align-middle h-12 w-full border border-[rgba(0,0,0,0.1)_rgba(0,0,0,0.1)_rgba(0,0,0,0.25)] rounded-full ease-in-out duration-300 transition bg-custom-blue hover:bg-custom-blue-dimmed active:shadow-[inset_0_3px_8px_rgba(0,0,0,0.2)] font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_1px_2px_rgba(0,0,0,0.05)]">
+                Yes, Let's Upgrade
+              </button>
             </div>
           </div>
         </div>
