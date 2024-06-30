@@ -173,26 +173,26 @@ export default function ProductDetails({
               High Waisted Running Shorts
             </p>
             <div className="mt-2 flex items-center gap-1">
-              <div className="flex gap-[1px]">
+              <div className="flex gap-[2px]">
                 <StarIcon
-                  className="stroke-[#fbbe1f] fill-yellow-400"
-                  size={20}
+                  className="stroke-custom-amber fill-custom-amber"
+                  size={17}
                 />
                 <StarIcon
-                  className="stroke-[#fbbe1f] fill-yellow-400"
-                  size={20}
+                  className="stroke-custom-amber fill-custom-amber"
+                  size={17}
                 />
                 <StarIcon
-                  className="stroke-[#fbbe1f] fill-yellow-400"
-                  size={20}
+                  className="stroke-custom-amber fill-custom-amber"
+                  size={17}
                 />
                 <StarIcon
-                  className="stroke-[#fbbe1f] fill-yellow-400"
-                  size={20}
+                  className="stroke-custom-amber fill-custom-amber"
+                  size={17}
                 />
                 <StarIcon
-                  className="stroke-[#fbbe1f] fill-yellow-400"
-                  size={20}
+                  className="stroke-custom-amber fill-custom-amber"
+                  size={17}
                 />
               </div>
               <div className="text-[#008a00] font-medium">
@@ -232,8 +232,9 @@ export default function ProductDetails({
                   </li>
                 </ul>
               </div>
-              <div>
-                <button className="h-8 border px-4 rounded-full flex items-center justify-center gap-[2px] bg-white">
+              <div className="flex flex-col gap-5">
+                <div className="font-bold">$49.99</div>
+                <button className="h-8 w-max px-4 rounded-full flex items-center justify-center gap-[2px] bg-lightgray">
                   <span className="text-sm font-medium">
                     Select Color & Size
                   </span>
@@ -242,7 +243,7 @@ export default function ProductDetails({
               </div>
             </div>
             <div
-              className={`${styles.custom_border} mt-6 py-4 px-6 w-max rounded-md bg-white`}
+              className={`${styles.custom_border} mt-7 py-4 px-6 w-max rounded-md bg-white`}
             >
               <div className="w-full">
                 <div>
@@ -269,9 +270,11 @@ export default function ProductDetails({
                 </div>
               </div>
             </div>
-            <div className="mt-6 flex gap-3">
-              <button className="w-full h-12 rounded-full border border-[rgb(150,150,150)] font-semibold">Add to Cart</button>
-              <button className="inline-block text-center align-middle h-12 w-full border border-[rgba(0,0,0,0.1)_rgba(0,0,0,0.1)_rgba(0,0,0,0.25)] rounded-full ease-in-out duration-300 transition bg-custom-blue hover:bg-custom-blue-dimmed active:shadow-[inset_0_3px_8px_rgba(0,0,0,0.2)] font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_1px_2px_rgba(0,0,0,0.05)]">
+            <div className="mt-7 flex gap-3">
+              <button className="w-full h-12 rounded-full border border-[rgb(150,150,150)] font-semibold">
+                Add to Cart
+              </button>
+              <button className="inline-block text-center align-middle h-12 w-full border border-[rgba(0,0,0,0.1)_rgba(0,0,0,0.1)_rgba(0,0,0,0.25)] rounded-full ease-in-out duration-300 transition bg-custom-amber hover:bg-custom-amber-dimmed active:shadow-[inset_0_3px_8px_rgba(0,0,0,0.2)] font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_1px_2px_rgba(0,0,0,0.05)]">
                 Yes, Let's Upgrade
               </button>
             </div>

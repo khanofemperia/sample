@@ -19,6 +19,8 @@ const config: Config = {
       },
       colors: {
         "custom-gold": "#af8100",
+        "custom-amber": "#e89300",
+        "custom-amber-dimmed": "#d38600",
         "custom-red": "#ee3b3b",
         "custom-red-dimmed": "#ec2323",
         "custom-green": "#009e00",
