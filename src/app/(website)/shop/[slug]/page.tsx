@@ -327,7 +327,7 @@ export default function ProductDetails({
             </div>
           </div>
         </div>
-        <div className="w-full h-[500px]">
+        <div className="w-full">
           <div className="w-max mx-auto mb-10 flex items-center gap-1">
             <div className="flex gap-[2px]">
               <StarIcon
@@ -355,15 +355,449 @@ export default function ProductDetails({
               18,640+ Happy Customers
             </div>
           </div>
-          <div className="flex flex-wrap justify-center gap-5 *:w-[calc(25%-15px)] *:h-48 *:rounded-xl *:bg-lightgray">
-            <div className=""></div>
-            <div className=""></div>
-            <div className=""></div>
-            <div className=""></div>
-            <div className=""></div>
-            <div className=""></div>
-            <div className=""></div>
-            <div className=""></div>
+          <div className="columns-3 gap-x-5 *:break-inside-avoid *:relative *:p-5 *:mb-5 *:rounded-xl *:bg-lightgray">
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-2">
+                <p className="text-xs text-gray">Lisa Anthony</p>
+                <div className="flex gap-[2px]">
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col gap-2">
+                <h2 className="font-semibold leading-[23px]">
+                  Husband loved it, mom approved!
+                </h2>
+                <p className="text-sm">
+                  Even my conservative mom said I looked beautiful. Perfect fit
+                  for my body shape.
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-2">
+                <p className="text-xs text-gray">Margaret Johnson</p>
+                <div className="flex gap-[2px]">
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col gap-2">
+                <h2 className="font-semibold leading-[23px]">
+                  Great for petites
+                </h2>
+                <p className="text-sm">
+                  I'm short and this dress fits me perfectly without any
+                  alterations. The length is just right and the fit is very
+                  flattering. I wore it to a wedding and felt so elegant and
+                  comfortable. The material is high quality, but it did fade
+                  slightly after a few washes.
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-2">
+                <p className="text-xs text-gray">Sarah Williams</p>
+                <div className="flex gap-[2px]">
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col gap-2">
+                <h2 className="font-semibold leading-[23px]">
+                  Absolutely in love, but...
+                </h2>
+                <p className="text-sm">
+                  This dress is like, perfect—fits great, super high quality. So
+                  comfy and versatile, but it picked up way too much sand at the
+                  beach.
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-2">
+                <p className="text-xs text-gray">Emily Davis</p>
+                <div className="flex gap-[2px]">
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col gap-2">
+                <h2 className="font-semibold leading-[23px]">
+                  Love the fabric
+                </h2>
+                <p className="text-sm">
+                  The fabric is super soft and lightweight, really breathable
+                  and comfy. Got tons of compliments at the barbecue! Just watch
+                  out for static cling—keep some anti-static spray handy.
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-2">
+                <p className="text-xs text-gray">Ashley Rodriguez</p>
+                <div className="flex gap-[2px]">
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col gap-2">
+                <h2 className="font-semibold leading-[23px]">
+                  These are so perfect for weddings
+                </h2>
+                <p className="text-sm">
+                  Getting it on and off solo is a bit tricky due to the zipper.
+                  It was perfect for the wedding, though!
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-2">
+                <p className="text-xs text-gray">Jessica Thompson</p>
+                <div className="flex gap-[2px]">
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col gap-2">
+                <h2 className="font-semibold leading-[23px]">
+                  Perfect for curvy girls
+                </h2>
+                <p className="text-sm">
+                  This dress hugs my curves perfectly and gives me such a cute
+                  shape... It's usually hard to find dresses that really flatter
+                  me, but this one does it so well! I feel super confident and
+                  stylish whenever I wear it.
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-2">
+                <p className="text-xs text-gray">Amanda Wilson</p>
+                <div className="flex gap-[2px]">
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col gap-2">
+                <h2 className="font-semibold leading-[23px]">
+                  Worth every penny
+                </h2>
+                <p className="text-sm">
+                  The fabric feels so comfy, and get this—my ex who dumped me
+                  for some girl at my aunt's wedding started eyeing me. Can you
+                  believe that? Ugh, I'm so mad...
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-2">
+                <p className="text-xs text-gray">Melissa Martinez</p>
+                <div className="flex gap-[2px]">
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col gap-2">
+                <h2 className="font-semibold leading-[23px]">Perfect length</h2>
+                <p className="text-sm">
+                  It hits just above the knee and is really flattering. Wore it
+                  to a garden party and felt elegant and comfy. The fabric is
+                  soft and doesn't wrinkle easily, which is a big plus!
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-2">
+                <p className="text-xs text-gray">Nicole Anderson</p>
+                <div className="flex gap-[2px]">
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col gap-2">
+                <h2 className="font-semibold leading-[23px]">
+                  My BFF is totally in love with it
+                </h2>
+                <p className="text-sm">
+                  Girl, this dress is a must-have for when you wanna turn heads
+                  and feel extra fabulous.
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-2">
+                <p className="text-xs text-gray">Christina Novak</p>
+                <div className="flex gap-[2px]">
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col gap-2">
+                <h2 className="font-semibold leading-[23px]">
+                  Definitely a statement piece
+                </h2>
+                <p className="text-sm">
+                  The color of this dress is seriously stunning! I picked the
+                  red, and it's just gorgeous. The fit is perfect and so
+                  flattering. Wore it to a summer party and felt like everyone's
+                  eyes were on me. It's totally a statement piece.
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-2">
+                <p className="text-xs text-gray">Danielle Chen</p>
+                <div className="flex gap-[2px]">
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col gap-2">
+                <h2 className="font-semibold leading-[23px]">
+                  Fits perfectly, high-quality material
+                </h2>
+                <p className="text-sm">
+                  The only issue is that it wrinkles easily, so be prepared to
+                  iron it before heading out.
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-2">
+                <p className="text-xs text-gray">Rachel Goldstein</p>
+                <div className="flex gap-[2px]">
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                  <StarIcon
+                    className="stroke-custom-amber fill-custom-amber"
+                    size={17}
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col gap-2">
+                <h2 className="font-semibold leading-[23px]">
+                  White's cute, but it's see-through
+                </h2>
+                <p className="text-sm">
+                  Make sure you've got a slip handy, 'cause it's a bit
+                  see-through. Otherwise, it's perfect for those sunny days and
+                  casual outings!
+                </p>
+              </div>
+            </div>
           </div>
         </div>
         <div className="hidden w-full mt-[22px] p-5 rounded-3xl">
