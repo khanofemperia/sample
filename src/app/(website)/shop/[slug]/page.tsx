@@ -49,7 +49,7 @@ export default function ProductDetails({
 
   return (
     <>
-      <main className="w-[1080px] mx-auto py-16">
+      <main className="w-[1080px] mx-auto py-16 flex flex-col gap-20">
         <div className="flex gap-5">
           <div className="flex">
             <div
@@ -278,6 +278,140 @@ export default function ProductDetails({
                 Yes, Let's Upgrade
               </button>
             </div>
+          </div>
+        </div>
+        <div className="w-full rounded-3xl px-8 py-10 bg-lightgray">
+          <div className="w-[580px] mx-auto flex flex-col gap-7">
+            <div className="text-[21px] font-bold max-w-[540px]">
+              Shoes That Grow with Your Baby!
+            </div>
+            <div className="text-lg font-medium">
+              Watching your little one take their{" "}
+              <strong>first wobbly steps</strong> is a moment you'll cherish
+              forever.
+            </div>
+            <div className="text-lg font-medium">
+              As a mom myself, I know the excitement (and maybe a touch of
+              worry!) when your baby starts exploring on their own.
+            </div>
+            <div className="text-lg font-medium">
+              Wondering what makes our baby shoes so <strong>special?</strong>{" "}
+              Here's what parents are saying:
+            </div>
+            <div className="text-lg font-medium">
+              <strong>“No more buying new shoes every few weeks!”</strong>
+            </div>
+            <div className="text-lg font-medium">They're designed to last.</div>
+            <div className="text-lg font-medium">
+              Our secret?{" "}
+              <strong>
+                A soft, flexible sole that grows with your baby's feet.
+              </strong>
+            </div>
+            <div className="text-lg font-medium">
+              Imagine the comfort of <strong>soft socks</strong> on your own
+              feet - that's what our shoes feel like!
+            </div>
+            <div className="text-lg font-medium">
+              They're gentle on your baby's delicate toes and provide just the
+              right amount of support for their wobbly ankles, promoting{" "}
+              <strong>healthy foot development.</strong>
+            </div>
+            <div className="text-lg font-medium">
+              Embrace the joy of those first steps...
+            </div>
+            <div className="text-lg font-medium">
+              <strong>
+                Choose comfort and support for your precious little one.
+              </strong>
+            </div>
+          </div>
+        </div>
+        <div className="w-full h-[500px]">
+          <div className="w-max mx-auto mb-10 flex items-center gap-1">
+            <div className="flex gap-[2px]">
+              <StarIcon
+                className="stroke-custom-amber fill-custom-amber"
+                size={21}
+              />
+              <StarIcon
+                className="stroke-custom-amber fill-custom-amber"
+                size={21}
+              />
+              <StarIcon
+                className="stroke-custom-amber fill-custom-amber"
+                size={21}
+              />
+              <StarIcon
+                className="stroke-custom-amber fill-custom-amber"
+                size={21}
+              />
+              <StarIcon
+                className="stroke-custom-amber fill-custom-amber"
+                size={21}
+              />
+            </div>
+            <div className="text-[#008a00] font-medium text-[21px]">
+              18,640+ Happy Customers
+            </div>
+          </div>
+          <div className="flex flex-wrap justify-center gap-5 *:w-[calc(25%-15px)] *:h-48 *:rounded-xl *:bg-lightgray">
+            <div className=""></div>
+            <div className=""></div>
+            <div className=""></div>
+            <div className=""></div>
+            <div className=""></div>
+            <div className=""></div>
+            <div className=""></div>
+            <div className=""></div>
+          </div>
+        </div>
+        <div className="hidden w-full mt-[22px] p-5 rounded-3xl">
+          <div>
+            <p>
+              <strong>
+                Watching your little one take their first wobbly steps is a
+                moment you'll cherish forever.
+              </strong>{" "}
+              Make sure they feel comfortable and supported with our specially
+              designed baby shoes.
+            </p>
+          </div>
+          <div>
+            <br />
+          </div>
+          <div>
+            <p>
+              <strong>
+                No more worrying about outgrowing shoes in a blink!
+              </strong>{" "}
+              Our innovative <strong>Grow-with-Me Design</strong> features a
+              soft, flexible sole that adapts to your baby's growing feet,
+              saving you time and money.
+            </p>
+          </div>
+          <div>
+            <br />
+          </div>
+          <div>
+            <p>
+              <strong>
+                Imagine the feeling of soft socks on your own feet - that's what
+                our shoes feel like!
+              </strong>{" "}
+              They're gentle on your baby's delicate toes and provide just the
+              right amount of support for their wobbly ankles, promoting healthy
+              foot development.
+            </p>
+          </div>
+          <div>
+            <br />
+          </div>
+          <div>
+            <p>
+              <strong>Embrace the joy of those first steps.</strong> Choose
+              comfort and support for your precious little one.
+            </p>
           </div>
         </div>
       </main>
