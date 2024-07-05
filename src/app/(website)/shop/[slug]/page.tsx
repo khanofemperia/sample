@@ -10,6 +10,7 @@ import {
 } from "@/icons";
 import Images from "@/components/website/Product/Images";
 import Image from "next/image";
+import StickyBar from "@/components/website/Product/StickyBar";
 
 function getProduct(): ProductType {
   return {
@@ -219,23 +220,18 @@ export default function ProductDetails({
                 </div>
               </div>
               <div
-                className={`${styles.custom_border} mt-7 py-[18px] px-6 w-max rounded-md bg-white`}
+                className={`${styles.custom_border} mt-7 pt-5 pb-[26px] px-6 w-max rounded-md bg-white`}
               >
                 <div className="w-full">
                   <div>
                     <h2 className="font-black text-center text-[21px] text-custom-red leading-6 [letter-spacing:-1px] [word-spacing:2px] [text-shadow:_1px_1px_1px_rgba(0,0,0,0.15)] w-[248px] mx-auto">
                       UPGRADE MY ORDER
                     </h2>
-                    <div className="mt-1 text-center font-medium text-gray">
-                      <span className="font-bold text-[#008a00]">$137.99</span>{" "}
-                      (Save 58% - was{" "}
-                      <span className="line-through font-medium text-gray">
-                        $189.99
-                      </span>
-                      )
+                    <div className="mt-1 text-center font-medium text-custom-amber-dimmed">
+                      $137.99 (42% Off)
                     </div>
                   </div>
-                  <div className="mt-2 h-[210px] aspect-square mx-auto overflow-hidden">
+                  <div className="mt-3 h-[210px] aspect-square mx-auto overflow-hidden">
                     <Image
                       src="https://i.pinimg.com/564x/ab/d7/1b/abd71b557fc77916f1570da50c0325a8.jpg"
                       alt="Upgrade my order"
@@ -243,6 +239,41 @@ export default function ProductDetails({
                       height={240}
                       priority
                     />
+                  </div>
+                  <div className="w-[200px] mx-auto mt-5 text-xs leading-6 [word-spacing:1px]">
+                    <ul className="*:flex *:justify-between">
+                      <li>
+                        <p>Shorts</p>
+                        <p>
+                          <strong>$67.99</strong>{" "}
+                          <span className="line-through">$79.99</span>
+                        </p>
+                      </li>
+                      <li>
+                        <p>Backpack</p>
+                        <p>
+                          <strong>$41.99</strong>{" "}
+                          <span className="line-through">$99.99</span>
+                        </p>
+                      </li>
+                      <li>
+                        <p>Sneakers</p>
+                        <p>
+                          <strong>$29.99</strong>{" "}
+                          <span className="line-through">$69.99</span>
+                        </p>
+                      </li>
+                      <li>
+                        <p>Hoodie</p>
+                        <p>
+                          <strong>$79.99</strong>{" "}
+                          <span className="line-through">$189.99</span>
+                        </p>
+                      </li>
+                      <li className="mt-2 h-7 flex items-center rounded bg-lightgray font-bold">
+                        <p className="mx-auto">You Save $100.00</p>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -343,69 +374,7 @@ export default function ProductDetails({
           </div>
         </div>
       </main>
-      <div className="w-full py-4 fixed top-0 border-b bg-white">
-        <div className="w-[1080px] h-16 mx-auto flex items-center justify-between">
-          <div className="h-full flex gap-5">
-            <div className="h-full aspect-square relative rounded-md flex items-center justify-center overflow-hidden">
-              <Image
-                src="https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/fbf522c1b1d84378bd9bda770affaa9a.jpg?imageView2/2/w/800/q/70/format/webp"
-                alt="High Waisted Running Shorts"
-                width={64}
-                height={64}
-                priority={true}
-              />
-              <div className="w-full h-full rounded-md absolute top-0 bottom-0 left-0 right-0 ease-in-out hover:bg-blue hover:bg-opacity-40 hover:duration-300 hover:ease-out"></div>
-            </div>
-            <div className="h-full flex gap-5 items-center">
-              <span className="font-bold">$49.99</span>
-              <button className="h-8 w-max px-4 rounded-full flex items-center justify-center gap-[2px] ease-in-out duration-300 transition bg-lightgray hover:bg-lightgray-dimmed">
-                <span className="text-sm font-medium">Select Color & Size</span>
-                <ChevronRightIcon className="-mr-[7px]" size={20} />
-              </button>
-            </div>
-          </div>
-          <div className="w-[410px] flex gap-3">
-            <button className="font-semibold w-full h-12 rounded-full ease-in-out duration-150 transition border border-[rgb(150,150,150)] hover:border-[rgb(80,80,80)] active:border-[rgb(150,150,150)] active:shadow-[inset_0_3px_8px_rgba(0,0,0,0.16)]">
-              Add to Cart
-            </button>
-            <div className="w-full h-12 relative">
-              <button className="inline-block text-center align-middle h-12 w-full border border-[rgba(0,0,0,0.1)_rgba(0,0,0,0.1)_rgba(0,0,0,0.25)] rounded-full ease-in-out duration-300 transition bg-custom-amber hover:bg-custom-amber-dimmed active:shadow-[inset_0_3px_8px_rgba(0,0,0,0.2)] font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_1px_2px_rgba(0,0,0,0.05)]">
-                Yes, Let's Upgrade
-              </button>
-              <div className="absolute top-[58px] -right-3 py-[18px] px-6 rounded-xl shadow-dropdown bg-white || before:content-[''] before:w-[14px] before:h-[14px] before:bg-white before:rounded-tl-[2px] before:rotate-45 before:origin-top-left before:absolute before:-top-[10px] before:border-l before:border-t before:border-[#d9d9d9] before:right-24">
-                <div className={`w-max rounded-md bg-white`}>
-                  <div className="w-full">
-                    <div>
-                      <h2 className="font-black text-center text-[21px] text-custom-red leading-6 [letter-spacing:-1px] [word-spacing:2px] [text-shadow:_1px_1px_1px_rgba(0,0,0,0.15)] w-[248px] mx-auto">
-                        UPGRADE MY ORDER
-                      </h2>
-                      <div className="mt-1 text-center font-medium text-gray">
-                        <span className="font-bold text-[#008a00]">
-                          $137.99
-                        </span>{" "}
-                        (Save 58% - was{" "}
-                        <span className="line-through font-medium text-gray">
-                          $189.99
-                        </span>
-                        )
-                      </div>
-                    </div>
-                    <div className="mt-2 h-[210px] aspect-square mx-auto overflow-hidden">
-                      <Image
-                        src="https://i.pinimg.com/564x/ab/d7/1b/abd71b557fc77916f1570da50c0325a8.jpg"
-                        alt="Upgrade my order"
-                        width={240}
-                        height={240}
-                        priority
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <StickyBar />
     </>
   );
 }
