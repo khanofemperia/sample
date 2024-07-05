@@ -49,7 +49,7 @@ export default function ProductDetails({
 
   return (
     <>
-      <main className="w-[1080px] mx-auto py-16 flex flex-col gap-20">
+      <main className="w-[1080px] mx-auto py-16 flex flex-col gap-16">
         <div className="flex gap-5 items-start justify-start relative">
           <div className="sticky top-16 w-[650px] flex flex-col gap-16">
             <div className="flex">
@@ -260,9 +260,9 @@ export default function ProductDetails({
           </div>
         </div>
         <div className="w-full px-[70px] mx-auto">
-          <div className="w-[580px] flex flex-col gap-16">
+          <div className="w-[580px] flex flex-col gap-12">
             <div>
-              <h2 className="text-[21px] leading-6 mb-5 font-bold">
+              <h2 className="text-[21px] leading-6 mb-4 font-bold">
                 The Next-Gen Blender
               </h2>
               <p className="leading-7">
@@ -287,7 +287,7 @@ export default function ProductDetails({
               </div>
             </div>
             <div>
-              <h2 className="text-[21px] leading-6 mb-5 font-bold">
+              <h2 className="text-[21px] leading-6 mb-4 font-bold">
                 Patented TurboJet Technology
               </h2>
               <p className="leading-7">
@@ -316,7 +316,7 @@ export default function ProductDetails({
               </div>
             </div>
             <div>
-              <h2 className="text-[21px] leading-6 mb-5 font-bold">
+              <h2 className="text-[21px] leading-6 mb-4 font-bold">
                 Perfect for Everything
               </h2>
               <p className="leading-7">
@@ -346,7 +346,7 @@ export default function ProductDetails({
       <div className="w-full py-4 fixed top-0 border-b bg-white">
         <div className="w-[1080px] h-16 mx-auto flex items-center justify-between">
           <div className="h-full flex gap-5">
-            <div className="h-full aspect-square relative rounded-md flex items-center justify-center overflow-hidden bg-red-400">
+            <div className="h-full aspect-square relative rounded-md flex items-center justify-center overflow-hidden">
               <Image
                 src="https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/fbf522c1b1d84378bd9bda770affaa9a.jpg?imageView2/2/w/800/q/70/format/webp"
                 alt="High Waisted Running Shorts"
