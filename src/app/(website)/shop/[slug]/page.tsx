@@ -219,7 +219,7 @@ export default function ProductDetails({
                 </div>
               </div>
               <div
-                className={`${styles.custom_border} mt-7 py-[22px] px-6 w-max rounded-md bg-white`}
+                className={`${styles.custom_border} mt-7 py-[18px] px-6 w-max rounded-md bg-white`}
               >
                 <div className="w-full">
                   <div>
@@ -372,7 +372,7 @@ export default function ProductDetails({
               <button className="inline-block text-center align-middle h-12 w-full border border-[rgba(0,0,0,0.1)_rgba(0,0,0,0.1)_rgba(0,0,0,0.25)] rounded-full ease-in-out duration-300 transition bg-custom-amber hover:bg-custom-amber-dimmed active:shadow-[inset_0_3px_8px_rgba(0,0,0,0.2)] font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_1px_2px_rgba(0,0,0,0.05)]">
                 Yes, Let's Upgrade
               </button>
-              <div className="absolute top-[58px] -right-3 py-[22px] px-6 rounded-xl shadow-dropdown bg-white || before:content-[''] before:w-[14px] before:h-[14px] before:bg-white before:rounded-tl-[2px] before:rotate-45 before:origin-top-left before:absolute before:-top-[10px] before:border-l before:border-t before:border-[#d9d9d9] before:right-24">
+              <div className="absolute top-[58px] -right-3 py-[18px] px-6 rounded-xl shadow-dropdown bg-white || before:content-[''] before:w-[14px] before:h-[14px] before:bg-white before:rounded-tl-[2px] before:rotate-45 before:origin-top-left before:absolute before:-top-[10px] before:border-l before:border-t before:border-[#d9d9d9] before:right-24">
                 <div className={`w-max rounded-md bg-white`}>
                   <div className="w-full">
                     <div>
