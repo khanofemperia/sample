@@ -9,21 +9,9 @@ type ImageCarouselType = {
 };
 
 export default function ImageCarousel({ images, name }: ImageCarouselType) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
-    const scrollPosition = event.currentTarget.scrollLeft;
-    const cardWidth = event.currentTarget.offsetWidth;
-    const newIndex = Math.round(scrollPosition / cardWidth);
-    setCurrentIndex(newIndex);
-  };
-
   return (
     <>
-      <div
-        className="invisible-scrollbar snap-x snap-mandatory w-full max-w-full overflow-x-scroll flex gap-2"
-        onScroll={handleScroll}
-      >
+      <div className="invisible-scrollbar snap-x snap-mandatory w-full max-w-full overflow-x-scroll flex gap-2">
         {images?.map((image, index) => (
           <div
             key={index}
@@ -47,9 +35,6 @@ export default function ImageCarousel({ images, name }: ImageCarouselType) {
             />
           </div>
         ))}
-      </div>
-      <div className="flex items-center justify-center absolute bottom-4 right-5 bg-black/80 text-white px-3 h-8 rounded-full transition duration-300 ease-in-out">
-        {currentIndex + 1}/{images.length}
       </div>
     </>
   );

@@ -87,34 +87,42 @@ export default function StickyBar() {
                     <div className="w-[200px] mx-auto mt-5 text-xs leading-6 [word-spacing:1px]">
                       <ul className="*:flex *:justify-between">
                         <li>
-                          <p>Shorts</p>
+                          <p className="text-gray">Shorts</p>
                           <p>
-                            <strong>$67.99</strong>{" "}
-                            <span className="line-through">$79.99</span>
+                            <span className="font-semibold">$67.99</span>{" "}
+                            <span className="line-through text-gray">
+                              $79.99
+                            </span>
                           </p>
                         </li>
                         <li>
-                          <p>Backpack</p>
+                          <p className="text-gray">Backpack</p>
                           <p>
-                            <strong>$41.99</strong>{" "}
-                            <span className="line-through">$99.99</span>
+                            <span className="font-semibold">$41.99</span>{" "}
+                            <span className="line-through text-gray">
+                              $99.99
+                            </span>
                           </p>
                         </li>
                         <li>
-                          <p>Sneakers</p>
+                          <p className="text-gray">Sneakers</p>
                           <p>
-                            <strong>$29.99</strong>{" "}
-                            <span className="line-through">$69.99</span>
+                            <span className="font-semibold">$29.99</span>{" "}
+                            <span className="line-through text-gray">
+                              $69.99
+                            </span>
                           </p>
                         </li>
                         <li>
-                          <p>Hoodie</p>
+                          <p className="text-gray">Hoodie</p>
                           <p>
-                            <strong>$79.99</strong>{" "}
-                            <span className="line-through">$189.99</span>
+                            <span className="font-semibold">$79.99</span>{" "}
+                            <span className="line-through text-gray">
+                              $189.99
+                            </span>
                           </p>
                         </li>
-                        <li className="mt-2 h-7 flex items-center rounded bg-lightgray font-bold">
+                        <li className="mt-2 h-7 flex items-center rounded bg-lightgray font-semibold">
                           <p className="mx-auto">You Save $100.00</p>
                         </li>
                       </ul>
