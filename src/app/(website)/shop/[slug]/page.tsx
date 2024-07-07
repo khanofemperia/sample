@@ -621,11 +621,11 @@ export default function ProductDetails({
               </div>
               <div className="sticky top-16 pt-5 w-[410px]">
                 <div>
-                  <p className="mt-[-6px] text-sm text-gray">
-                    High Waisted Running Shorts
-                  </p>
-                  <div className="mt-4 flex flex-col gap-5">
-                    <div className="flex flex-col gap-3">
+                  <div className="flex flex-col gap-5">
+                    <p className="text-sm text-gray">
+                      High Waisted Running Shorts
+                    </p>
+                    <div className="flex flex-col gap-4">
                       <p className="text-lg leading-[26px]">
                         <strong className="font-bold text-lg leading-[26px]">
                           Struggling with uncomfortable shorts during workouts?
