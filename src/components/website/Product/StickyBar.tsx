@@ -5,7 +5,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-const SCROLL_THRESHOLD = 840;
+const SCROLL_THRESHOLD = 1000;
 
 export default function StickyBar() {
   const [barIsHidden, setBarIsHidden] = useState(true);
