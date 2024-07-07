@@ -28,7 +28,7 @@ export default function StickyBar() {
   return (
     <div
       className={clsx(
-        "w-full py-4 fixed top-0 border-b -translate-y-full bg-white",
+        "hidden md:block w-full py-4 fixed top-0 border-b -translate-y-full bg-white",
         {
           "-translate-y-full": barIsHidden,
           "translate-y-0 ease-in-out duration-150 transition": !barIsHidden,
