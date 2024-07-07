@@ -260,8 +260,8 @@ export default function ProductDetails({
 
   return (
     <>
-      <nav className="w-full h-16 z-20 border-b bg-white">
-        <div className="w-full max-w-[1080px] mx-auto py-2 relative flex">
+      <nav className="hidden md:block w-full h-16 z-20 border-b bg-white">
+        <div className="w-full max-w-[1080px] mx-auto py-2 px-5 min-[1120px]:px-0 relative flex gap-1 flex-col md:flex-row">
           <Link
             href="/"
             className="h-12 min-w-[168px] w-[168px] flex items-center"
@@ -277,7 +277,7 @@ export default function ProductDetails({
           <div className="w-full flex items-center justify-center overflow-hidden">
             <Link
               href="/shop"
-              className="flex items-center gap-[10px] px-5 -ml-24 w-full md:max-w-[580px] h-12 rounded-full ease-in-out transition duration-300 bg-[#e9eff6] active:bg-[#c4f8d6] lg:hover:bg-[#c4f8d6]"
+              className="flex items-center gap-[10px] px-5 -ml-28 w-[70%] max-w-[580px] h-12 rounded-full ease-in-out transition duration-300 bg-[#e9eff6] active:bg-[#c4f8d6] lg:hover:bg-[#c4f8d6]"
             >
               <Image
                 src="/images/other/waving_hand.webp"
@@ -286,10 +286,10 @@ export default function ProductDetails({
                 height={28}
                 priority
               />
-              <span className="lg:hidden font-medium text-gray">
+              <span className="min-[896px]:hidden font-medium text-gray">
                 Browse the store
               </span>
-              <span className="hidden lg:block font-medium text-gray">
+              <span className="hidden min-[896px]:block font-medium text-gray">
                 Click here to browse the store
               </span>
             </Link>
