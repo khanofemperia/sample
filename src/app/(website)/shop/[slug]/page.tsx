@@ -3,14 +3,18 @@ import Upsell from "@/components/website/Product/Upsell";
 import ImageCarousel from "@/components/website/Product/ImageCarousel";
 import styles from "./styles.module.css";
 import {
+  CartIcon,
   CheckmarkIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
+  SearchIcon,
   StarIcon,
 } from "@/icons";
 import Images from "@/components/website/Product/Images";
 import Image from "next/image";
 import StickyBar from "@/components/website/Product/StickyBar";
+import Link from "next/link";
+import clsx from "clsx";
 
 function getProduct(): ProductType {
   return {
@@ -256,6 +260,48 @@ export default function ProductDetails({
 
   return (
     <>
+      <nav className="w-full h-16 z-20 border-b bg-white">
+        <div className="w-full max-w-[1080px] mx-auto py-2 relative flex">
+          <Link
+            href="/"
+            className="h-12 min-w-[168px] w-[168px] flex items-center"
+          >
+            <Image
+              src="/images/logos/cherlygood_wordmark.svg"
+              alt="Cherly Good"
+              width={160}
+              height={40}
+              priority
+            />
+          </Link>
+          <div className="w-full flex items-center justify-center overflow-hidden">
+            <Link
+              href="/shop"
+              className="flex items-center gap-[10px] px-5 -ml-24 w-full md:max-w-[580px] h-12 rounded-full ease-in-out transition duration-300 bg-[#e9eff6] active:bg-[#c4f8d6] lg:hover:bg-[#c4f8d6]"
+            >
+              <Image
+                src="/images/other/waving_hand.webp"
+                alt="Cherly Good"
+                width={28}
+                height={28}
+                priority
+              />
+              <span className="lg:hidden font-medium text-gray">
+                Browse the store
+              </span>
+              <span className="hidden lg:block font-medium text-gray">
+                Click here to browse the store
+              </span>
+            </Link>
+          </div>
+          <Link
+            href="/cart"
+            className="h-12 min-w-12 w-12 rounded-full flex items-center justify-center ease-in-out transition duration-300 active:bg-lightgray lg:hover:bg-lightgray"
+          >
+            <CartIcon size={26} />
+          </Link>
+        </div>
+      </nav>
       <main>
         <div className="md:hidden">
           <div className="w-full min-h-screen max-h-screen overflow-hidden flex flex-col">
@@ -498,9 +544,9 @@ export default function ProductDetails({
           </div>
         </div>
         <div className="hidden md:block">
-          <div className="w-full max-w-[1080px] mx-auto py-16 px-5 min-[1120px]:px-0 flex flex-col gap-16">
+          <div className="w-full max-w-[1080px] mx-auto pt-5 pb-16 px-5 min-[1120px]:px-0 flex flex-col gap-16">
             <div className="flex gap-5 items-start justify-start relative">
-              <div className="sticky top-16 max-w-[650px] flex flex-col gap-16">
+              <div className="sticky top-5 max-w-[650px] flex flex-col gap-16">
                 <div className="flex">
                   <div
                     className={`${styles.custom_scrollbar} apply-custom-scrollbar min-w-[62px] max-w-[62px] max-h-[380px] overflow-x-hidden overflow-y-visible flex flex-col gap-2 mr-2`}
@@ -619,7 +665,7 @@ export default function ProductDetails({
                   </div>
                 </div>
               </div>
-              <div className="sticky top-16 pt-5 min-w-[340px] w-[340px] min-[896px]:min-w-[400px] min-[896px]:w-[400px]">
+              <div className="sticky top-5 pt-5 min-w-[340px] w-[340px] min-[896px]:min-w-[400px] min-[896px]:w-[400px]">
                 <div>
                   <div className="flex flex-col gap-5">
                     <p className="text-sm text-gray">

@@ -185,7 +185,7 @@ export default function Navbar() {
                   Browse the store
                 </span>
                 <span className="hidden lg:block font-medium text-gray">
-                  What's up! Click here to browse the store
+                  Click here to browse the store
                 </span>
               </Link>
             </div>
