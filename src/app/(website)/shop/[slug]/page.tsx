@@ -597,10 +597,10 @@ export default function ProductDetails({
               </button>
               <ImageCarousel images={images} name={name} />
             </div>
-            <div className="pb-12 pt-5 px-5">
+            <div className="max-w-[580px] mx-auto pb-12 pt-5 px-5">
               <div className="flex flex-col gap-5">
                 <p className="text-sm text-gray">High Waisted Running Shorts</p>
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-4">
                   <p className="text-lg leading-[26px]">
                     <strong className="font-bold text-lg leading-[26px]">
                       Struggling with uncomfortable shorts during workouts?
@@ -800,7 +800,7 @@ export default function ProductDetails({
             </div>
           </div>
           <div className="h-[72px] pt-2 pb-5 px-[6px] min-[350px]:px-2 bg-white">
-            <div className="flex gap-[6px] min-[350px]:gap-2">
+            <div className="max-w-[580px] mx-auto flex gap-[6px] min-[350px]:gap-2">
               <button className="leading-5 text-[13px] min-[340px]:text-sm font-semibold w-full h-[44px] rounded-full ease-in-out duration-150 transition border border-[rgb(150,150,150)] hover:border-[rgb(80,80,80)] active:border-[rgb(150,150,150)] active:shadow-[inset_0_3px_8px_rgba(0,0,0,0.16)]">
                 Add to Cart
               </button>
