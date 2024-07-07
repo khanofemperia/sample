@@ -498,12 +498,12 @@ export default function ProductDetails({
           </div>
         </div>
         <div className="hidden md:block">
-          <div className="w-[1080px] mx-auto py-16 flex flex-col gap-16">
+          <div className="w-full max-w-[1080px] mx-auto py-16 px-5 min-[1120px]:px-0 flex flex-col gap-16">
             <div className="flex gap-5 items-start justify-start relative">
-              <div className="sticky top-16 w-[650px] flex flex-col gap-16">
+              <div className="sticky top-16 max-w-[650px] flex flex-col gap-16">
                 <div className="flex">
                   <div
-                    className={`${styles.custom_scrollbar} apply-custom-scrollbar min-w-[56px] w-[62px] max-h-[380px] overflow-x-hidden overflow-y-visible flex flex-col gap-2 mr-2`}
+                    className={`${styles.custom_scrollbar} apply-custom-scrollbar min-w-[62px] max-w-[62px] max-h-[380px] overflow-x-hidden overflow-y-visible flex flex-col gap-2 mr-2`}
                   >
                     <div className="w-[56px] h-[56px] relative min-h-[56px] min-w-[56px] rounded-md flex items-center justify-center overflow-hidden">
                       <Image
@@ -606,7 +606,7 @@ export default function ProductDetails({
                       <div className="w-full h-full rounded-md absolute top-0 bottom-0 left-0 right-0 ease-in-out hover:bg-blue hover:bg-opacity-40 hover:duration-300 hover:ease-out"></div>
                     </div>
                   </div>
-                  <div className="w-[580px] h-full flex flex-col gap-5">
+                  <div className="w-full max-w-[580px] h-full flex flex-col gap-5">
                     <div className="w-full aspect-square relative flex items-center justify-center bg-lightgray overflow-hidden rounded-3xl [box-shadow:0px_1.6px_3.6px_rgb(0,_0,_0,_0.4),_0px_0px_2.9px_rgb(0,_0,_0,_0.1)]">
                       <Image
                         src="https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/fbf522c1b1d84378bd9bda770affaa9a.jpg?imageView2/2/w/800/q/70/format/webp"
@@ -619,7 +619,7 @@ export default function ProductDetails({
                   </div>
                 </div>
               </div>
-              <div className="sticky top-16 pt-5 w-[410px]">
+              <div className="sticky top-16 pt-5 min-w-[340px] w-[340px] min-[896px]:min-w-[400px] min-[896px]:w-[400px]">
                 <div>
                   <div className="flex flex-col gap-5">
                     <p className="text-sm text-gray">
@@ -680,7 +680,7 @@ export default function ProductDetails({
                     </div>
                   </div>
                   <div
-                    className={`${styles.custom_border} mt-7 pt-5 pb-[26px] px-6 w-max rounded-md bg-white`}
+                    className={`${styles.custom_border} mt-7 pt-5 pb-[26px] px-6 w-max rounded-md select-none bg-white`}
                   >
                     <div className="w-full">
                       <div>
@@ -747,11 +747,11 @@ export default function ProductDetails({
                   </div>
                 </div>
                 <div className="sticky left-0 right-0 bottom-0 z-10 mt-6 pt-1 pb-5 shadow-[0_-12px_16px_2px_white] bg-white">
-                  <div className="flex gap-3">
-                    <button className="font-semibold w-full h-12 rounded-full ease-in-out duration-150 transition border border-[rgb(150,150,150)] hover:border-[rgb(80,80,80)] active:border-[rgb(150,150,150)] active:shadow-[inset_0_3px_8px_rgba(0,0,0,0.16)]">
+                  <div className="flex gap-2 min-[896px]:gap-3">
+                    <button className="text-sm min-[896px]:text-base font-semibold w-full h-[44px] min-[896px]:h-12  rounded-full ease-in-out duration-150 transition border border-[rgb(150,150,150)] hover:border-[rgb(80,80,80)] active:border-[rgb(150,150,150)] active:shadow-[inset_0_3px_8px_rgba(0,0,0,0.16)]">
                       Add to Cart
                     </button>
-                    <button className="inline-block text-center align-middle h-12 w-full border border-[rgba(0,0,0,0.1)_rgba(0,0,0,0.1)_rgba(0,0,0,0.25)] rounded-full ease-in-out duration-300 transition bg-custom-amber hover:bg-custom-amber-dimmed active:shadow-[inset_0_3px_8px_rgba(0,0,0,0.2)] font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_1px_2px_rgba(0,0,0,0.05)]">
+                    <button className="text-sm min-[896px]:text-base inline-block text-center align-middle h-[44px] min-[896px]:h-12 w-full border border-[rgba(0,0,0,0.1)_rgba(0,0,0,0.1)_rgba(0,0,0,0.25)] rounded-full ease-in-out duration-300 transition bg-custom-amber hover:bg-custom-amber-dimmed active:shadow-[inset_0_3px_8px_rgba(0,0,0,0.2)] font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_1px_2px_rgba(0,0,0,0.05)]">
                       Yes, Let's Upgrade
                     </button>
                   </div>
