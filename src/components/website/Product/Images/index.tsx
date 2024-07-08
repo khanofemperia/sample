@@ -13,7 +13,7 @@ export default function Images({ images, productName }: ProductImagesType) {
   const [hoveredImage, setHoveredImage] = useState("");
 
   return (
-    <div className="flex w-full">
+    <div className="flex w-full select-none">
       <div
         className={`${styles.custom_scrollbar} apply-custom-scrollbar min-w-[62px] max-w-[62px] max-h-[380px] overflow-x-hidden overflow-y-visible flex flex-col gap-2 mr-2`}
       >
@@ -30,7 +30,7 @@ export default function Images({ images, productName }: ProductImagesType) {
               height={68}
               priority={true}
             />
-            <div className="w-full h-full rounded-md absolute top-0 bottom-0 left-0 right-0 ease-in-out hover:bg-blue hover:bg-opacity-40 hover:duration-300 hover:ease-out"></div>
+            <div className="w-full h-full rounded-md absolute top-0 bottom-0 left-0 right-0 ease-in-out duration-200 transition hover:bg-custom-amber/30"></div>
           </div>
         ))}
       </div>

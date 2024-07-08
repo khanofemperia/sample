@@ -348,10 +348,10 @@ export default function ProductDetails({
         <div className="md:hidden">
           <div className="w-full min-h-screen max-h-screen overflow-hidden flex flex-col">
             <div className="overflow-x-hidden h-[calc(100%-72px)]">
-              <div className="w-full max-w-full relative">
+              <div className="w-full max-w-full relative select-none">
                 <button
                   type="button"
-                  className="h-10 w-10 bg-black/80 rounded-full flex items-center justify-center absolute top-4 left-5 transition duration-300 ease-in-out active:bg-black"
+                  className="h-9 w-9 bg-black/80 rounded-full flex items-center justify-center absolute top-4 left-5 z-10 transition duration-300 ease-in-out active:bg-black"
                 >
                   <ChevronLeftIcon
                     className="stroke-white mr-[2px]"

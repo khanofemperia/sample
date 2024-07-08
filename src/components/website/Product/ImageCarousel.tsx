@@ -18,7 +18,7 @@ export default function ImageCarousel({
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
@@ -28,21 +28,24 @@ export default function ImageCarousel({
   };
 
   return (
-    <div className="relative">
+    <div className="relative select-none">
       <Slider {...settings}>
         {images.map((image, index) => (
-          <div key={index}>
+          <div
+            className="w-full aspect-square flex items-center justify-center overflow-hidden"
+            key={index}
+          >
             <Image
               src={image}
               alt={`${productName} ${index + 1}`}
-              width={1000}
-              height={1000}
+              width={580}
+              height={580}
               priority={true}
             />
           </div>
         ))}
       </Slider>
-      <div className="flex items-center justify-center absolute bottom-4 right-5 bg-black/80 text-white px-3 h-8 rounded-full transition duration-300 ease-in-out">
+      <div className="flex items-center justify-center absolute bottom-5 right-[14px] bg-black/80 text-sm text-white px-3 h-6 rounded-full transition duration-300 ease-in-out">
         {currentIndex + 1}/{images.length}
       </div>
     </div>
