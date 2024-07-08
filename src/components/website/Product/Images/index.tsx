@@ -6,19 +6,16 @@ import styles from "./styles.module.css";
 
 type ProductImagesType = {
   images: string[];
-  name: string;
+  productName: string;
 };
 
-export default function Images({
-  images,
-  name,
-}: ProductImagesType) {
+export default function Images({ images, productName }: ProductImagesType) {
   const [hoveredImage, setHoveredImage] = useState("");
 
   return (
     <div className="flex w-full">
       <div
-        className={`${styles.custom_scrollbar} apply-custom-scrollbar min-w-[56px] max-h-[380px] overflow-x-hidden overflow-y-visible flex flex-col gap-2 mr-4`}
+        className={`${styles.custom_scrollbar} apply-custom-scrollbar min-w-[62px] max-w-[62px] max-h-[380px] overflow-x-hidden overflow-y-visible flex flex-col gap-2 mr-2`}
       >
         {images.map((image, index) => (
           <div
@@ -28,7 +25,7 @@ export default function Images({
           >
             <Image
               src={image}
-              alt={name}
+              alt={productName}
               width={56}
               height={68}
               priority={true}
@@ -37,11 +34,11 @@ export default function Images({
           </div>
         ))}
       </div>
-      <div className="w-full h-full flex flex-col gap-5">
-        <div className="w-full max-w-[510px] aspect-square relative flex items-center justify-center bg-lightgray overflow-hidden rounded-[24px] [box-shadow:0px_1.6px_3.6px_rgb(0,_0,_0,_0.4),_0px_0px_2.9px_rgb(0,_0,_0,_0.1)]">
+      <div className="w-full max-w-[580px] h-full flex flex-col gap-5">
+        <div className="w-full aspect-square relative flex items-center justify-center bg-lightgray overflow-hidden rounded-3xl [box-shadow:0px_1.6px_3.6px_rgb(0,_0,_0,_0.4),_0px_0px_2.9px_rgb(0,_0,_0,_0.1)]">
           <Image
             src={hoveredImage || images[0]}
-            alt={name}
+            alt={productName}
             width={510}
             height={510}
             priority={true}

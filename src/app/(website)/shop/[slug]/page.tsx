@@ -358,7 +358,7 @@ export default function ProductDetails({
                     size={22}
                   />
                 </button>
-                <ImageCarousel images={images} name={name} />
+                <ImageCarousel images={images} productName={name} />
               </div>
               <div className="max-w-[580px] mx-auto pb-12 pt-5 px-5">
                 <div className="flex flex-col gap-5">
@@ -589,123 +589,7 @@ export default function ProductDetails({
           <div className="w-full max-w-[1080px] mx-auto pt-5 pb-16 px-5 min-[1120px]:px-0 flex flex-col gap-16">
             <div className="flex gap-5 items-start justify-start relative">
               <div className="sticky top-5 max-w-[650px] flex flex-col gap-16">
-                <div className="flex">
-                  <div
-                    className={`${styles.custom_scrollbar} apply-custom-scrollbar min-w-[62px] max-w-[62px] max-h-[380px] overflow-x-hidden overflow-y-visible flex flex-col gap-2 mr-2`}
-                  >
-                    <div className="w-[56px] h-[56px] relative min-h-[56px] min-w-[56px] rounded-md flex items-center justify-center overflow-hidden">
-                      <Image
-                        src="https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/fbf522c1b1d84378bd9bda770affaa9a.jpg?imageView2/2/w/800/q/70/format/webp"
-                        alt="High Waisted Running Shorts"
-                        width={56}
-                        height={56}
-                        priority={true}
-                      />
-                      <div className="w-full h-full rounded-md absolute top-0 bottom-0 left-0 right-0 ease-in-out hover:bg-blue hover:bg-opacity-40 hover:duration-300 hover:ease-out"></div>
-                    </div>
-                    <div className="w-[56px] h-[56px] relative min-h-[56px] min-w-[56px] rounded-md flex items-center justify-center overflow-hidden">
-                      <Image
-                        src="https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/fbf522c1b1d84378bd9bda770affaa9a.jpg?imageView2/2/w/800/q/70/format/webp"
-                        alt="High Waisted Running Shorts"
-                        width={56}
-                        height={56}
-                        priority={true}
-                      />
-                      <div className="w-full h-full rounded-md absolute top-0 bottom-0 left-0 right-0 ease-in-out hover:bg-blue hover:bg-opacity-40 hover:duration-300 hover:ease-out"></div>
-                    </div>
-                    <div className="w-[56px] h-[56px] relative min-h-[56px] min-w-[56px] rounded-md flex items-center justify-center overflow-hidden">
-                      <Image
-                        src="https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/fbf522c1b1d84378bd9bda770affaa9a.jpg?imageView2/2/w/800/q/70/format/webp"
-                        alt="High Waisted Running Shorts"
-                        width={56}
-                        height={56}
-                        priority={true}
-                      />
-                      <div className="w-full h-full rounded-md absolute top-0 bottom-0 left-0 right-0 ease-in-out hover:bg-blue hover:bg-opacity-40 hover:duration-300 hover:ease-out"></div>
-                    </div>
-                    <div className="w-[56px] h-[56px] relative min-h-[56px] min-w-[56px] rounded-md flex items-center justify-center overflow-hidden">
-                      <Image
-                        src="https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/fbf522c1b1d84378bd9bda770affaa9a.jpg?imageView2/2/w/800/q/70/format/webp"
-                        alt="High Waisted Running Shorts"
-                        width={56}
-                        height={56}
-                        priority={true}
-                      />
-                      <div className="w-full h-full rounded-md absolute top-0 bottom-0 left-0 right-0 ease-in-out hover:bg-blue hover:bg-opacity-40 hover:duration-300 hover:ease-out"></div>
-                    </div>
-                    <div className="w-[56px] h-[56px] relative min-h-[56px] min-w-[56px] rounded-md flex items-center justify-center overflow-hidden">
-                      <Image
-                        src="https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/fbf522c1b1d84378bd9bda770affaa9a.jpg?imageView2/2/w/800/q/70/format/webp"
-                        alt="High Waisted Running Shorts"
-                        width={56}
-                        height={56}
-                        priority={true}
-                      />
-                      <div className="w-full h-full rounded-md absolute top-0 bottom-0 left-0 right-0 ease-in-out hover:bg-blue hover:bg-opacity-40 hover:duration-300 hover:ease-out"></div>
-                    </div>
-                    <div className="w-[56px] h-[56px] relative min-h-[56px] min-w-[56px] rounded-md flex items-center justify-center overflow-hidden">
-                      <Image
-                        src="https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/fbf522c1b1d84378bd9bda770affaa9a.jpg?imageView2/2/w/800/q/70/format/webp"
-                        alt="High Waisted Running Shorts"
-                        width={56}
-                        height={56}
-                        priority={true}
-                      />
-                      <div className="w-full h-full rounded-md absolute top-0 bottom-0 left-0 right-0 ease-in-out hover:bg-blue hover:bg-opacity-40 hover:duration-300 hover:ease-out"></div>
-                    </div>
-                    <div className="w-[56px] h-[56px] relative min-h-[56px] min-w-[56px] rounded-md flex items-center justify-center overflow-hidden">
-                      <Image
-                        src="https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/fbf522c1b1d84378bd9bda770affaa9a.jpg?imageView2/2/w/800/q/70/format/webp"
-                        alt="High Waisted Running Shorts"
-                        width={56}
-                        height={56}
-                        priority={true}
-                      />
-                      <div className="w-full h-full rounded-md absolute top-0 bottom-0 left-0 right-0 ease-in-out hover:bg-blue hover:bg-opacity-40 hover:duration-300 hover:ease-out"></div>
-                    </div>
-                    <div className="w-[56px] h-[56px] relative min-h-[56px] min-w-[56px] rounded-md flex items-center justify-center overflow-hidden">
-                      <Image
-                        src="https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/fbf522c1b1d84378bd9bda770affaa9a.jpg?imageView2/2/w/800/q/70/format/webp"
-                        alt="High Waisted Running Shorts"
-                        width={56}
-                        height={56}
-                        priority={true}
-                      />
-                      <div className="w-full h-full rounded-md absolute top-0 bottom-0 left-0 right-0 ease-in-out hover:bg-blue hover:bg-opacity-40 hover:duration-300 hover:ease-out"></div>
-                    </div>
-                    <div className="w-[56px] h-[56px] relative min-h-[56px] min-w-[56px] rounded-md flex items-center justify-center overflow-hidden">
-                      <Image
-                        src="https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/fbf522c1b1d84378bd9bda770affaa9a.jpg?imageView2/2/w/800/q/70/format/webp"
-                        alt="High Waisted Running Shorts"
-                        width={56}
-                        height={56}
-                        priority={true}
-                      />
-                      <div className="w-full h-full rounded-md absolute top-0 bottom-0 left-0 right-0 ease-in-out hover:bg-blue hover:bg-opacity-40 hover:duration-300 hover:ease-out"></div>
-                    </div>
-                    <div className="w-[56px] h-[56px] relative min-h-[56px] min-w-[56px] rounded-md flex items-center justify-center overflow-hidden">
-                      <Image
-                        src="https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/fbf522c1b1d84378bd9bda770affaa9a.jpg?imageView2/2/w/800/q/70/format/webp"
-                        alt="High Waisted Running Shorts"
-                        width={56}
-                        height={56}
-                        priority={true}
-                      />
-                      <div className="w-full h-full rounded-md absolute top-0 bottom-0 left-0 right-0 ease-in-out hover:bg-blue hover:bg-opacity-40 hover:duration-300 hover:ease-out"></div>
-                    </div>
-                  </div>
-                  <div className="w-full max-w-[580px] h-full flex flex-col gap-5">
-                    <div className="w-full aspect-square relative flex items-center justify-center bg-lightgray overflow-hidden rounded-3xl [box-shadow:0px_1.6px_3.6px_rgb(0,_0,_0,_0.4),_0px_0px_2.9px_rgb(0,_0,_0,_0.1)]">
-                      <Image
-                        src="https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/fbf522c1b1d84378bd9bda770affaa9a.jpg?imageView2/2/w/800/q/70/format/webp"
-                        alt="High Waisted Running Shorts"
-                        width={580}
-                        height={580}
-                        priority={true}
-                      />
-                    </div>
-                  </div>
-                </div>
+                <Images images={images} productName={name} />
               </div>
               <div className="sticky top-5 pt-5 min-w-[340px] w-[340px] min-[896px]:min-w-[400px] min-[896px]:w-[400px]">
                 <div>
