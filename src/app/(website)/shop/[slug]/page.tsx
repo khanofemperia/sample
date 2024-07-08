@@ -16,6 +16,8 @@ import StickyBar from "@/components/website/Product/StickyBar";
 import Link from "next/link";
 import clsx from "clsx";
 import OptionOverlay from "@/components/website/Product/OptionOverlay";
+import { cookies } from "next/headers";
+import config from "@/libraries/config";
 
 function getProduct(): ProductType {
   return {
@@ -283,7 +285,39 @@ function getProduct(): ProductType {
   };
 }
 
-export default function ProductDetails({
+type ProductInCartProps = {
+  id: string;
+  color: string;
+  size: string;
+};
+
+async function getCart() {
+  const deviceIdentifier = cookies().get("device_identifier")?.value;
+
+  if (!deviceIdentifier) return null;
+
+  try {
+    const response = await fetch(
+      `${config.BASE_URL}/api/carts/${deviceIdentifier}`,
+      {
+        cache: "no-store",
+      }
+    );
+
+    if (!response.ok) return null;
+
+    const data = await response.json();
+
+    if (Object.keys(data).length === 0) return null;
+
+    return data;
+  } catch (error) {
+    console.error("Error fetching cart:", error);
+    return null;
+  }
+}
+
+export default async function ProductDetails({
   params,
 }: {
   params: { slug: string };
@@ -300,6 +334,19 @@ export default function ProductDetails({
   const product = getProduct();
   const { id, name, price, description, colors, sizes } = product;
   const images = [product.mainImage, ...(product.images ?? [])];
+
+  const existingCart = await getCart();
+  const isInCart = existingCart?.products.some(
+    (product: any) => product.id === id
+  );
+
+  let productInCart;
+
+  if (isInCart) {
+    productInCart = existingCart.products.find(
+      (p: ProductInCartProps) => p.id === id
+    );
+  }
 
   return (
     <>
@@ -820,7 +867,18 @@ export default function ProductDetails({
         </div>
       </main>
       <StickyBar />
-      <OptionOverlay />
+      <OptionOverlay
+        cartInfo={{
+          isInCart,
+          productInCart,
+        }}
+        productInfo={{
+          id,
+          price,
+          colors,
+          sizeChart: sizes,
+        }}
+      />
     </>
   );
 }
