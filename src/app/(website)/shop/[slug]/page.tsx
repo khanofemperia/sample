@@ -15,6 +15,7 @@ import Image from "next/image";
 import StickyBar from "@/components/website/Product/StickyBar";
 import Link from "next/link";
 import clsx from "clsx";
+import OptionOverlay from "@/components/website/Product/OptionOverlay";
 
 function getProduct(): ProductType {
   return {
@@ -819,6 +820,7 @@ export default function ProductDetails({
         </div>
       </main>
       <StickyBar />
+      <OptionOverlay />
     </>
   );
 }
