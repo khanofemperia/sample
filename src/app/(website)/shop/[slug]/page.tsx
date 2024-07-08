@@ -29,15 +29,11 @@ function getProduct(): ProductType {
       "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/5be9317ac12c41ae2b663a11b8ab6f9b.jpg?imageView2/2/w/800/q/70/format/webp",
       "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/4ffde039b5cf007db0ac509219dbcc67.jpg?imageView2/2/w/800/q/70/format/webp",
     ],
-    description: null,
-    visibility: "PUBLISHED",
-    createdAt: "2024-04-07 08:21:51",
-    updatedAt: "2024-04-07 08:39:08",
     colors: [
       {
+        name: "White",
         image:
           "https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/4ffde039b5cf007db0ac509219dbcc67.jpg?imageView2/2/w/800/q/70/format/webp",
-        name: "White",
       },
       {
         name: "Black",
@@ -45,14 +41,14 @@ function getProduct(): ProductType {
           "https://img.kwcdn.com/product/fancy/b6d66280-c933-4ffa-b117-4365e6667030.jpg?imageView2/2/w/800/q/70/format/webp",
       },
       {
+        name: "Blue",
         image:
           "https://img.kwcdn.com/product/fancy/f9258448-8eb0-46ca-905e-3d636a6a3f9b.jpg?imageView2/2/w/800/q/70/format/webp",
-        name: "Blue",
       },
       {
+        name: "Yellow",
         image:
           "https://img.kwcdn.com/product/fancy/2c8bb570-d2b0-41dd-a2e5-2f7633b4a2da.jpg?imageView2/2/w/800/q/70/format/webp",
-        name: "Yellow",
       },
       {
         name: "Rose",
@@ -63,24 +59,24 @@ function getProduct(): ProductType {
     sizes: {
       columns: [
         {
-          name: "Size",
           index: 1,
+          name: "Size",
         },
         {
           index: 2,
           name: "US",
         },
         {
-          name: "Bust size",
           index: 3,
+          name: "Bust size",
         },
         {
-          name: "Clothing length",
           index: 4,
+          name: "Clothing length",
         },
         {
-          name: "Sleeve length",
           index: 5,
+          name: "Sleeve length",
         },
         {
           index: 6,
@@ -89,6 +85,7 @@ function getProduct(): ProductType {
       ],
       sizes: [
         {
+          size: "S",
           measurements: {
             "Bust size": {
               in: "34.7",
@@ -99,30 +96,29 @@ function getProduct(): ProductType {
               cm: "4",
             },
             "Clothing length": {
-              cm: "65",
               in: "25.6",
+              cm: "65",
             },
             "Sleeve length": {
-              cm: "27.9",
               in: "11",
+              cm: "27.9",
             },
             Hem: {
-              cm: "106.2",
               in: "41.8",
+              cm: "106.2",
             },
           },
-          size: "S",
         },
         {
           size: "M",
           measurements: {
             "Bust size": {
-              cm: "91.9",
               in: "36.2",
+              cm: "91.9",
             },
             "Sleeve length": {
-              cm: "28.7",
               in: "11.3",
+              cm: "28.7",
             },
             Hem: {
               in: "43.3",
@@ -141,18 +137,6 @@ function getProduct(): ProductType {
         {
           size: "L",
           measurements: {
-            "Sleeve length": {
-              cm: "30",
-              in: "11.8",
-            },
-            Hem: {
-              cm: "116.1",
-              in: "45.7",
-            },
-            "Clothing length": {
-              in: "26.6",
-              cm: "67.6",
-            },
             "Bust size": {
               in: "38.6",
               cm: "98",
@@ -161,57 +145,69 @@ function getProduct(): ProductType {
               in: "8/10",
               cm: "8/10",
             },
+            "Clothing length": {
+              in: "26.6",
+              cm: "67.6",
+            },
+            "Sleeve length": {
+              in: "11.8",
+              cm: "30",
+            },
+            Hem: {
+              in: "45.7",
+              cm: "116.1",
+            },
           },
         },
         {
+          size: "XL",
           measurements: {
-            "Sleeve length": {
-              cm: "31.2",
-              in: "12.3",
-            },
-            Hem: {
-              cm: "122.2",
-              in: "48.1",
+            "Bust size": {
+              in: "41",
+              cm: "104.1",
             },
             US: {
               in: "12",
               cm: "12",
             },
-            "Bust size": {
-              cm: "104.1",
-              in: "41",
-            },
             "Clothing length": {
-              cm: "69.1",
               in: "27.2",
-            },
-          },
-          size: "XL",
-        },
-        {
-          measurements: {
-            "Clothing length": {
-              cm: "70.6",
-              in: "27.8",
-            },
-            Hem: {
-              in: "50.4",
-              cm: "128",
+              cm: "69.1",
             },
             "Sleeve length": {
-              in: "12.8",
-              cm: "32.5",
+              in: "12.3",
+              cm: "31.2",
+            },
+            Hem: {
+              in: "48.1",
+              cm: "122.2",
+            },
+          },
+        },
+        {
+          size: "XXL",
+          measurements: {
+            "Bust size": {
+              in: "43.3",
+              cm: "110",
             },
             US: {
               in: "14",
               cm: "14",
             },
-            "Bust size": {
-              cm: "110",
-              in: "43.3",
+            "Clothing length": {
+              in: "27.8",
+              cm: "70.6",
+            },
+            "Sleeve length": {
+              in: "12.8",
+              cm: "32.5",
+            },
+            Hem: {
+              in: "50.4",
+              cm: "128",
             },
           },
-          size: "XXL",
         },
       ],
       entryLabels: [
@@ -224,19 +220,65 @@ function getProduct(): ProductType {
           name: "M",
         },
         {
-          name: "L",
           index: 3,
+          name: "L",
         },
         {
           index: 4,
           name: "XL",
         },
         {
-          name: "XXL",
           index: 5,
+          name: "XXL",
         },
       ],
     },
+    upsell: {
+      id: "72704",
+      mainImage:
+        "https:i.pinimg.com/564x/ab/d7/1b/abd71b557fc77916f1570da50c0325a8.jpg",
+      price: 137.99,
+      discount: {
+        percentage: 42,
+        savings: 100.0,
+      },
+      items: [
+        {
+          name: "Shorts",
+          salePrice: 67.99,
+          price: 79.99,
+        },
+        {
+          name: "Backpack",
+          salePrice: 41.99,
+          price: 59.99,
+        },
+        {
+          name: "Sneakers",
+          salePrice: 29.99,
+          price: 69.99,
+        },
+        {
+          name: "Hoodie",
+          salePrice: 79.99,
+          price: 109.99,
+        },
+      ],
+    },
+    highlights: {
+      headline:
+        "<p><b>Struggling with uncomfortable shorts during workouts?</b> Say no more, our shorts guarantee <b><i>comfort and style</i></b> for every activity!</p>",
+      keyPoints: [
+        "Quick-dry fabric for cool comfort.",
+        "Double layer design for better movement.",
+        "Zipper pocket to secure your phone.",
+        "Ideal for running, gym, and casual wear.",
+      ],
+    },
+    description: null,
+    visibility: "PUBLISHED",
+    createdAt: "2024-04-07 08:21:51",
+    updatedAt: "2024-04-07 08:39:08",
   };
 }
 

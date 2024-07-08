@@ -1,3 +1,51 @@
+// Smaller, reusable types
+
+type ImageType = {
+  name: string;
+  image: string;
+};
+
+type MeasurementType = {
+  in: string;
+  cm: string;
+};
+
+type DiscountType = {
+  percentage: number;
+  savings: number;
+};
+
+type UpsellItemType = {
+  name: string;
+  salePrice: number;
+  price: number;
+};
+
+type UpsellType = {
+  id: string;
+  mainImage: string;
+  price: number;
+  discount: DiscountType;
+  items: UpsellItemType[];
+} | null;
+
+type HighlightsType = {
+  headline: string;
+  keyPoints: string[];
+} | null;
+
+type CampaignDurationType = {
+  startDate: string;
+  endDate: string;
+};
+
+type BannerImageType = {
+  desktopImage: string;
+  mobileImage: string;
+};
+
+// Main types
+
 type CategoryType = {
   id: string;
   index: number;
@@ -6,15 +54,22 @@ type CategoryType = {
   visibility: string;
 };
 
+type SizeChartColumnType = {
+  index: number;
+  name: string;
+};
+
+type SizeChartEntryLabelType = {
+  index: number;
+  name: string;
+};
+
 type SizeChartType = {
-  columns: { index: number; name: string }[];
-  entryLabels: { index: number; name: string }[];
+  columns: SizeChartColumnType[];
+  entryLabels: SizeChartEntryLabelType[];
   sizes: {
     measurements: {
-      [key: string]: {
-        in: string;
-        cm: string;
-      };
+      [key: string]: MeasurementType;
     };
     size: string;
   }[];
@@ -28,9 +83,11 @@ type ProductType = {
   price: string;
   mainImage: string;
   images: string[] | null;
-  colors: { name: string; image: string }[] | null;
+  colors: ImageType[] | null;
   sizes: SizeChartType | null;
+  upsell: UpsellType;
   description: string | null;
+  highlights: HighlightsType;
   visibility: string;
   createdAt: string;
   updatedAt: string;
@@ -41,15 +98,9 @@ type CollectionType = {
   index: number;
   title: string;
   slug: string;
-  campaignDuration: {
-    startDate: string;
-    endDate: string;
-  };
+  campaignDuration: CampaignDurationType;
   collectionType: string;
-  bannerImages?: {
-    desktopImage: string;
-    mobileImage: string;
-  };
+  bannerImages?: BannerImageType;
   products: ProductType[];
   visibility: string;
   createdAt: string;
@@ -64,7 +115,7 @@ type SettingType = {
   };
 };
 
-type UpsellType = {
+type UpsellVisibilityType = {
   id: string;
   price: string;
   salePrice: string;
@@ -74,12 +125,14 @@ type UpsellType = {
   updatedAt: string;
 };
 
+type PageHeroImageType = {
+  desktopImage: string;
+  mobileImage: string;
+};
+
 type PageHeroType = {
   id: string;
-  images: {
-    desktopImage: string;
-    mobileImage: string;
-  };
+  images: PageHeroImageType;
   title: string;
   destinationUrl: string;
   visibility: string;
