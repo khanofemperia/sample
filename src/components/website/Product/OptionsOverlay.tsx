@@ -64,20 +64,9 @@ function ProductSizeChart({
 }: ProductSizeChartType) {
   const { showOverlay, hideOverlay } = useOverlayStore();
 
-  const {
-    pageName,
-    sizeChartOverlayName,
-    isSizeChartOverlayVisible,
-    optionsOverlayName,
-    isOptionsOverlayVisible,
-  } = useOverlayStore((state) => ({
+  const { pageName, overlayName } = useOverlayStore((state) => ({
     pageName: state.pages.productDetails.name,
-    sizeChartOverlayName: state.pages.productDetails.overlays.sizeChart.name,
-    isSizeChartOverlayVisible:
-      state.pages.productDetails.overlays.sizeChart.isVisible,
-    optionsOverlayName: state.pages.productDetails.overlays.options.name,
-    isOptionsOverlayVisible:
-      state.pages.productDetails.overlays.options.isVisible,
+    overlayName: state.pages.productDetails.overlays.sizeChart.name,
   }));
 
   return (
@@ -100,8 +89,7 @@ function ProductSizeChart({
       {selectedSize && (
         <div
           onClick={() => {
-            hideOverlay({ pageName, overlayName: optionsOverlayName });
-            showOverlay({ pageName, overlayName: sizeChartOverlayName });
+            showOverlay({ pageName, overlayName });
           }}
           className="bg-lightgray pl-3 pr-8 py-2 mt-2 rounded-lg relative cursor-pointer"
         >
