@@ -37,7 +37,7 @@ function ProductColors({
   setSelectedColor,
 }: ProductColorsType) {
   return (
-    <div className="w-full md:w-max">
+    <div className="w-full">
       <div className="flex flex-wrap gap-3">
         {colors.map(({ name, image }, index) => (
           <div
@@ -71,7 +71,7 @@ function ProductSizeChart({
   }));
 
   return (
-    <div className="w-full md:w-max">
+    <div className="w-full">
       <div className="w-full max-w-[298px] flex flex-wrap gap-[10px]">
         {sizeChart.entryLabels.map((size, index) => (
           <div key={index} className="relative cursor-pointer">
@@ -92,7 +92,7 @@ function ProductSizeChart({
           onClick={() => {
             showOverlay({ pageName, overlayName });
           }}
-          className="w-full min-w-52 pl-3 pr-8 py-2 mt-2 rounded-lg relative cursor-pointer bg-lightgray"
+          className="w-full max-w-56 pl-3 pr-8 py-2 mt-2 rounded-lg relative cursor-pointer bg-lightgray"
         >
           <div>
             {sizeChart.entryLabels.find((label) => label.name === selectedSize)
@@ -553,218 +553,233 @@ export default function OptionsOverlay({
                 </div>
               </div>
             </div>
-            <div className="hidden min-[650px]:block w-full h-[calc(100vh-200px)] rounded-md p-8 bg-white">
-              <div className="w-full h-full overflow-x-hidden overflow-y-visible invisible-scrollbar flex gap-5 items-start justify-start relative">
-                <div className="sticky top-0 max-w-[650px] flex flex-col gap-16">
-                  <div className="flex w-full select-none">
-                    <div
-                      className={`${styles.custom_scrollbar} apply-custom-scrollbar min-w-[52px] max-w-[52px] max-h-[380px] overflow-x-hidden overflow-y-visible flex flex-col gap-2 mr-2`}
-                    >
-                      {productInfo.images.map((image, index) => (
-                        <div
-                          onMouseEnter={() => setHoveredImage(image)}
-                          key={index}
-                          className="w-[46px] h-[46px] relative min-h-[46px] min-w-[46px] rounded-md flex items-center justify-center overflow-hidden"
-                        >
+            <div className="hidden min-[650px]:block w-full max-w-[964px] h-[calc(100vh-200px)] rounded-md bg-white">
+              <div className="w-full flex items-center justify-end p-1">
+                <button
+                  onClick={() => {
+                    hideOverlay({
+                      pageName,
+                      overlayName: optionsOverlayName,
+                    });
+                  }}
+                  className="w-9 h-9 rounded-full flex items-center justify-center transition duration-300 ease-in-out active:bg-lightgray lg:active:bg-lightgray-dimmed lg:hover:bg-lightgray"
+                >
+                  <CloseIcon size={20} />
+                </button>
+              </div>
+              <div className="h-[calc(100%-44px)] p-8 pt-0">
+                <div className="w-full h-full overflow-x-hidden overflow-y-visible invisible-scrollbar flex gap-5 items-start justify-start relative">
+                  <div className="sticky top-0 max-w-[650px] flex flex-col gap-16">
+                    <div className="flex w-full select-none">
+                      <div
+                        className={`${styles.custom_scrollbar} apply-custom-scrollbar min-w-[52px] max-w-[52px] md:min-w-[62px] md:max-w-[62px] max-h-[380px] overflow-x-hidden overflow-y-visible flex flex-col gap-2 mr-2`}
+                      >
+                        {productInfo.images.map((image, index) => (
+                          <div
+                            onMouseEnter={() => setHoveredImage(image)}
+                            key={index}
+                            className="w-[46px] h-[46px] relative min-h-[46px] min-w-[46px] md:min-h-[56px] md:min-w-[56px] rounded-md flex items-center justify-center overflow-hidden"
+                          >
+                            <Image
+                              src={image}
+                              alt={productInfo.name}
+                              width={56}
+                              height={68}
+                              priority={true}
+                            />
+                            <div className="w-full h-full rounded-md absolute top-0 bottom-0 left-0 right-0 ease-in-out duration-200 transition hover:bg-custom-amber/30"></div>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="w-full max-w-[580px] h-full flex flex-col gap-5">
+                        <div className="w-full aspect-square relative flex items-center justify-center bg-lightgray overflow-hidden rounded-3xl [box-shadow:0px_1.6px_3.6px_rgb(0,_0,_0,_0.4),_0px_0px_2.9px_rgb(0,_0,_0,_0.1)]">
                           <Image
-                            src={image}
+                            src={hoveredImage || productInfo.images[0]}
                             alt={productInfo.name}
-                            width={56}
-                            height={68}
+                            width={510}
+                            height={510}
                             priority={true}
                           />
-                          <div className="w-full h-full rounded-md absolute top-0 bottom-0 left-0 right-0 ease-in-out duration-200 transition hover:bg-custom-amber/30"></div>
                         </div>
-                      ))}
-                    </div>
-                    <div className="w-full max-w-[580px] h-full flex flex-col gap-5">
-                      <div className="w-full aspect-square relative flex items-center justify-center bg-lightgray overflow-hidden rounded-3xl [box-shadow:0px_1.6px_3.6px_rgb(0,_0,_0,_0.4),_0px_0px_2.9px_rgb(0,_0,_0,_0.1)]">
-                        <Image
-                          src={hoveredImage || productInfo.images[0]}
-                          alt={productInfo.name}
-                          width={510}
-                          height={510}
-                          priority={true}
-                        />
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="pt-4 min-w-[200px] w-[200px] min-[896px]:min-w-[400px] min-[896px]:w-[400px]">
-                  <div>
-                    <div className="flex flex-col gap-[5px]">
-                      <p className="text-sm text-gray">
-                        High Waisted Running Shorts
-                      </p>
-                      <span className="font-bold">$49.99</span>
-                    </div>
-                    <div className="flex flex-col gap-8 pt-4 pb-3">
-                      <>
-                        {productInfo.colors &&
-                          productInfo.colors?.length > 0 &&
-                          productInfo.sizeChart &&
-                          productInfo.sizeChart.entryLabels?.length > 0 && (
-                            <div className="flex flex-col gap-4 select-none">
+                  <div className="pt-4 min-w-[200px] w-[200px] md:min-w-[280px] md:w-[280px] min-[896px]:min-w-[400px] min-[896px]:w-[400px]">
+                    <div>
+                      <div className="flex flex-col gap-[5px]">
+                        <p className="text-sm text-gray">
+                          High Waisted Running Shorts
+                        </p>
+                        <span className="font-bold">$49.99</span>
+                      </div>
+                      <div className="flex flex-col gap-8 pt-4 pb-3">
+                        <>
+                          {productInfo.colors &&
+                            productInfo.colors?.length > 0 &&
+                            productInfo.sizeChart &&
+                            productInfo.sizeChart.entryLabels?.length > 0 && (
+                              <div className="flex flex-col gap-4 select-none">
+                                <ProductColors
+                                  colors={productInfo.colors}
+                                  selectedColor={selectedColor}
+                                  setSelectedColor={setSelectedColor}
+                                />
+                                <ProductSizeChart
+                                  sizeChart={productInfo.sizeChart}
+                                  selectedSize={selectedSize}
+                                  setSelectedSize={setSelectedSize}
+                                />
+                              </div>
+                            )}
+                          {productInfo.colors &&
+                            productInfo.colors?.length > 0 &&
+                            !productInfo.sizeChart && (
                               <ProductColors
                                 colors={productInfo.colors}
                                 selectedColor={selectedColor}
                                 setSelectedColor={setSelectedColor}
                               />
+                            )}
+                          {productInfo.colors?.length === 0 &&
+                            productInfo.sizeChart &&
+                            productInfo.sizeChart.entryLabels?.length > 0 && (
                               <ProductSizeChart
                                 sizeChart={productInfo.sizeChart}
                                 selectedSize={selectedSize}
                                 setSelectedSize={setSelectedSize}
                               />
-                            </div>
-                          )}
-                        {productInfo.colors &&
-                          productInfo.colors?.length > 0 &&
-                          !productInfo.sizeChart && (
-                            <ProductColors
-                              colors={productInfo.colors}
-                              selectedColor={selectedColor}
-                              setSelectedColor={setSelectedColor}
-                            />
-                          )}
-                        {productInfo.colors?.length === 0 &&
-                          productInfo.sizeChart &&
-                          productInfo.sizeChart.entryLabels?.length > 0 && (
-                            <ProductSizeChart
-                              sizeChart={productInfo.sizeChart}
-                              selectedSize={selectedSize}
-                              setSelectedSize={setSelectedSize}
-                            />
-                          )}
-                        {isSizeChartOverlayVisible && productInfo.sizeChart && (
-                          <Overlay>
-                            <div className="w-full h-[calc(100%-60px)] rounded-t-2xl absolute bottom-0 overflow-hidden bg-white">
-                              <div className="flex items-center justify-center pt-5 pb-2">
-                                <h2 className="font-semibold">
-                                  Product measurements
-                                </h2>
-                                <button
-                                  onClick={() => {
-                                    hideOverlay({
-                                      pageName,
-                                      overlayName: sizeChartOverlayName,
-                                    });
-                                    showOverlay({
-                                      pageName,
-                                      overlayName: optionsOverlayName,
-                                    });
-                                  }}
-                                  className="h-7 w-7 rounded-full absolute right-5 flex items-center justify-center transition duration-300 ease-in-out bg-lightgray active:bg-lightgray-dimmed"
-                                  type="button"
-                                >
-                                  <CloseIcon size={18} />
-                                </button>
-                              </div>
-                              <div className="w-full h-[calc(100%-52px)] px-5 pt-2 pb-[240px] invisible-scrollbar overflow-x-hidden overflow-y-visible">
-                                <div className="w-full max-w-[620px] mx-auto flex flex-col gap-6 mt-6">
-                                  <div>
-                                    <h3 className="font-semibold mb-4">
-                                      Inches
-                                    </h3>
-                                    <SizeChartTable
-                                      sizeChart={productInfo.sizeChart}
-                                      unit="in"
-                                    />
+                            )}
+                          {isSizeChartOverlayVisible &&
+                            productInfo.sizeChart && (
+                              <Overlay>
+                                <div className="w-full h-[calc(100%-60px)] rounded-t-2xl absolute bottom-0 overflow-hidden bg-white">
+                                  <div className="flex items-center justify-center pt-5 pb-2">
+                                    <h2 className="font-semibold">
+                                      Product measurements
+                                    </h2>
+                                    <button
+                                      onClick={() => {
+                                        hideOverlay({
+                                          pageName,
+                                          overlayName: sizeChartOverlayName,
+                                        });
+                                        showOverlay({
+                                          pageName,
+                                          overlayName: optionsOverlayName,
+                                        });
+                                      }}
+                                      className="h-7 w-7 rounded-full absolute right-5 flex items-center justify-center transition duration-300 ease-in-out bg-lightgray active:bg-lightgray-dimmed"
+                                      type="button"
+                                    >
+                                      <CloseIcon size={18} />
+                                    </button>
                                   </div>
-                                  <div>
-                                    <h3 className="font-semibold mb-4">
-                                      Centimeters
-                                    </h3>
-                                    <SizeChartTable
-                                      sizeChart={productInfo.sizeChart}
-                                      unit="cm"
-                                    />
-                                  </div>
-                                  <div>
-                                    <h3 className="font-semibold mb-4">
-                                      International size conversions
-                                    </h3>
-                                    <div className="border w-full max-w-[max-content] rounded overflow-y-hidden overflow-x-visible custom-x-scrollbar">
-                                      <table className="w-max bg-white">
-                                        <thead className="h-10 border-b">
-                                          <tr>
-                                            {Object.keys(
-                                              productInternationalSizes
-                                            ).map((sizeType, index) => (
-                                              <th
-                                                key={index}
-                                                className={`px-5 text-nowrap text-sm ${
-                                                  index ===
-                                                  Object.keys(
-                                                    productInternationalSizes
-                                                  ).length -
-                                                    1
-                                                    ? ""
-                                                    : "border-r"
-                                                } ${
-                                                  index === 0
-                                                    ? "sticky left-0 bg-neutral-100"
-                                                    : ""
-                                                }`}
-                                              >
-                                                {sizeType}
-                                              </th>
-                                            ))}
-                                          </tr>
-                                        </thead>
-                                        <tbody>
-                                          {productInternationalSizes.Size.map(
-                                            (_, sizeIndex) => (
-                                              <tr
-                                                key={sizeIndex}
-                                                className={`h-10 ${
-                                                  sizeIndex !==
-                                                  productInternationalSizes.Size
-                                                    .length -
-                                                    1
-                                                    ? "border-b"
-                                                    : ""
-                                                }`}
-                                              >
+                                  <div className="w-full h-[calc(100%-52px)] px-5 pt-2 pb-[240px] invisible-scrollbar overflow-x-hidden overflow-y-visible">
+                                    <div className="w-full max-w-[620px] mx-auto flex flex-col gap-6 mt-6">
+                                      <div>
+                                        <h3 className="font-semibold mb-4">
+                                          Inches
+                                        </h3>
+                                        <SizeChartTable
+                                          sizeChart={productInfo.sizeChart}
+                                          unit="in"
+                                        />
+                                      </div>
+                                      <div>
+                                        <h3 className="font-semibold mb-4">
+                                          Centimeters
+                                        </h3>
+                                        <SizeChartTable
+                                          sizeChart={productInfo.sizeChart}
+                                          unit="cm"
+                                        />
+                                      </div>
+                                      <div>
+                                        <h3 className="font-semibold mb-4">
+                                          International size conversions
+                                        </h3>
+                                        <div className="border w-full max-w-[max-content] rounded overflow-y-hidden overflow-x-visible custom-x-scrollbar">
+                                          <table className="w-max bg-white">
+                                            <thead className="h-10 border-b">
+                                              <tr>
                                                 {Object.keys(
                                                   productInternationalSizes
                                                 ).map((sizeType, index) => (
-                                                  <td
+                                                  <th
                                                     key={index}
-                                                    className={`text-center px-5 w-[100px] ${
-                                                      index === 0
-                                                        ? "sticky left-0 bg-neutral-100 border-r text-sm"
-                                                        : index ===
-                                                          Object.keys(
-                                                            productInternationalSizes
-                                                          ).length -
-                                                            1
+                                                    className={`px-5 text-nowrap text-sm ${
+                                                      index ===
+                                                      Object.keys(
+                                                        productInternationalSizes
+                                                      ).length -
+                                                        1
                                                         ? ""
                                                         : "border-r"
+                                                    } ${
+                                                      index === 0
+                                                        ? "sticky left-0 bg-neutral-100"
+                                                        : ""
                                                     }`}
                                                   >
-                                                    {
-                                                      (
-                                                        productInternationalSizes as Record<
-                                                          string,
-                                                          string[]
-                                                        >
-                                                      )[sizeType][sizeIndex]
-                                                    }
-                                                  </td>
+                                                    {sizeType}
+                                                  </th>
                                                 ))}
                                               </tr>
-                                            )
-                                          )}
-                                        </tbody>
-                                      </table>
+                                            </thead>
+                                            <tbody>
+                                              {productInternationalSizes.Size.map(
+                                                (_, sizeIndex) => (
+                                                  <tr
+                                                    key={sizeIndex}
+                                                    className={`h-10 ${
+                                                      sizeIndex !==
+                                                      productInternationalSizes
+                                                        .Size.length -
+                                                        1
+                                                        ? "border-b"
+                                                        : ""
+                                                    }`}
+                                                  >
+                                                    {Object.keys(
+                                                      productInternationalSizes
+                                                    ).map((sizeType, index) => (
+                                                      <td
+                                                        key={index}
+                                                        className={`text-center px-5 w-[100px] ${
+                                                          index === 0
+                                                            ? "sticky left-0 bg-neutral-100 border-r text-sm"
+                                                            : index ===
+                                                              Object.keys(
+                                                                productInternationalSizes
+                                                              ).length -
+                                                                1
+                                                            ? ""
+                                                            : "border-r"
+                                                        }`}
+                                                      >
+                                                        {
+                                                          (
+                                                            productInternationalSizes as Record<
+                                                              string,
+                                                              string[]
+                                                            >
+                                                          )[sizeType][sizeIndex]
+                                                        }
+                                                      </td>
+                                                    ))}
+                                                  </tr>
+                                                )
+                                              )}
+                                            </tbody>
+                                          </table>
+                                        </div>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
-                            </div>
-                          </Overlay>
-                        )}
-                        {/*
+                              </Overlay>
+                            )}
+                          {/*
 
                   {cartInfo.isInCart || response?.success ? (
                     <ViewCartButton />
@@ -788,17 +803,18 @@ export default function OptionsOverlay({
                   )}
                   
                   */}
-                      </>
+                        </>
+                      </div>
                     </div>
-                  </div>
-                  <div className="sticky left-0 right-0 bottom-0 z-10 mt-5 pt-1 shadow-[0_-12px_16px_2px_white] bg-white">
-                    <div className="flex flex-col gap-2">
-                      <button className="font-semibold w-full h-12 min-[896px]:h-12  rounded-full ease-in-out duration-150 transition border border-[rgb(150,150,150)] hover:border-[rgb(80,80,80)] active:border-[rgb(150,150,150)] active:shadow-[inset_0_3px_8px_rgba(0,0,0,0.16)]">
-                        Add to Cart
-                      </button>
-                      <button className="inline-block text-center align-middle h-12 min-[896px]:h-12 w-full border border-[rgba(0,0,0,0.1)_rgba(0,0,0,0.1)_rgba(0,0,0,0.25)] rounded-full ease-in-out duration-300 transition bg-custom-amber hover:bg-custom-amber-dimmed active:shadow-[inset_0_3px_8px_rgba(0,0,0,0.2)] font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_1px_2px_rgba(0,0,0,0.05)]">
-                        Yes, Let's Upgrade
-                      </button>
+                    <div className="sticky left-0 right-0 bottom-1 z-10 mt-5 pt-1 shadow-[0_-12px_16px_2px_white] bg-white">
+                      <div className="flex gap-2 flex-col min-[896px]:flex-row min-[896px]:gap-3">
+                        <button className="font-semibold w-full h-12 rounded-full ease-in-out duration-150 transition border border-[rgb(150,150,150)] hover:border-[rgb(80,80,80)] active:border-[rgb(150,150,150)] active:shadow-[inset_0_3px_8px_rgba(0,0,0,0.16)]">
+                          Add to Cart
+                        </button>
+                        <button className="inline-block text-center align-middle h-12 w-full border border-[rgba(0,0,0,0.1)_rgba(0,0,0,0.1)_rgba(0,0,0,0.25)] rounded-full ease-in-out duration-300 transition bg-custom-amber hover:bg-custom-amber-dimmed active:shadow-[inset_0_3px_8px_rgba(0,0,0,0.2)] font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_1px_2px_rgba(0,0,0,0.05)]">
+                          Yes, Let's Upgrade
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
