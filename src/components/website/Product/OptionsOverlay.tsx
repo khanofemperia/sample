@@ -62,11 +62,22 @@ function ProductSizeChart({
   selectedSize,
   setSelectedSize,
 }: ProductSizeChartType) {
-  const { showOverlay } = useOverlayStore();
-  const { pageName, overlayName } = useOverlayStore((state) => ({
-    pageName: state.pages.post.name,
-    overlayName: state.pages.post.overlays.productSizeChart.name,
-    isOverlayVisible: state.pages.post.overlays.productSizeChart.isVisible,
+  const { showOverlay, hideOverlay } = useOverlayStore();
+
+  const {
+    pageName,
+    sizeChartOverlayName,
+    isSizeChartOverlayVisible,
+    optionsOverlayName,
+    isOptionsOverlayVisible,
+  } = useOverlayStore((state) => ({
+    pageName: state.pages.productDetails.name,
+    sizeChartOverlayName: state.pages.productDetails.overlays.sizeChart.name,
+    isSizeChartOverlayVisible:
+      state.pages.productDetails.overlays.sizeChart.isVisible,
+    optionsOverlayName: state.pages.productDetails.overlays.options.name,
+    isOptionsOverlayVisible:
+      state.pages.productDetails.overlays.options.isVisible,
   }));
 
   return (
@@ -88,7 +99,10 @@ function ProductSizeChart({
       </div>
       {selectedSize && (
         <div
-          onClick={() => showOverlay({ pageName, overlayName })}
+          onClick={() => {
+            hideOverlay({ pageName, overlayName: optionsOverlayName });
+            showOverlay({ pageName, overlayName: sizeChartOverlayName });
+          }}
           className="bg-lightgray pl-3 pr-8 py-2 mt-2 rounded-lg relative cursor-pointer"
         >
           <div>
@@ -192,7 +206,7 @@ function SizeChartTable({ sizeChart, unit }: SizeChartTableType) {
   );
 }
 
-export function OptionButton() {
+export function OptionsButton() {
   const { showOverlay } = useOverlayStore();
 
   const { pageName, overlayName } = useOverlayStore((state) => ({
@@ -211,7 +225,7 @@ export function OptionButton() {
   );
 }
 
-export default function OptionOverlay({
+export default function OptionsOverlay({
   cartInfo,
   productInfo,
 }: {
@@ -379,7 +393,7 @@ export default function OptionOverlay({
                             />
                           )}
                         {isSizeChartOverlayVisible && productInfo.sizeChart && (
-                          <div className="custom-scrollbar overflow-x-hidden overflow-y-visible w-screen h-screen z-20 fixed top-0 bottom-0 left-0 right-0 flex justify-center bg-black/60">
+                          <Overlay>
                             <div className="w-full h-[calc(100%-60px)] rounded-t-2xl absolute bottom-0 overflow-hidden bg-white">
                               <div className="flex items-center justify-center pt-5 pb-2">
                                 <h2 className="font-semibold">
@@ -510,7 +524,7 @@ export default function OptionOverlay({
                                 </div>
                               </div>
                             </div>
-                          </div>
+                          </Overlay>
                         )}
                         {/*
 

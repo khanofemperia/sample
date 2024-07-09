@@ -15,7 +15,9 @@ import Image from "next/image";
 import StickyBar from "@/components/website/Product/StickyBar";
 import Link from "next/link";
 import clsx from "clsx";
-import OptionOverlay, { OptionButton } from "@/components/website/Product/OptionOverlay";
+import OptionsOverlay, {
+  OptionsButton,
+} from "@/components/website/Product/OptionsOverlay";
 import { cookies } from "next/headers";
 import config from "@/libraries/config";
 
@@ -459,7 +461,7 @@ export default async function ProductDetails({
                   </div>
                   <div className="flex flex-col gap-5">
                     <span className="font-bold">$49.99</span>
-                    <OptionButton />
+                    <OptionsButton />
                   </div>
                 </div>
                 <div
@@ -686,7 +688,7 @@ export default async function ProductDetails({
                     </div>
                     <div className="flex flex-col gap-5">
                       <span className="font-bold">$49.99</span>
-                      <OptionButton />
+                      <OptionsButton />
                     </div>
                   </div>
                   <div
@@ -857,7 +859,7 @@ export default async function ProductDetails({
         </div>
       </main>
       <StickyBar />
-      <OptionOverlay
+      <OptionsOverlay
         cartInfo={{
           isInCart,
           productInCart,
