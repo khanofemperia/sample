@@ -29,15 +29,15 @@ type OverlayStoreProps = {
 export const useOverlayStore = createWithEqualityFn<OverlayStoreProps>(
   (set) => ({
     pages: {
-      post: {
-        name: "post",
+      productDetails: {
+        name: "productDetails",
         overlays: {
-          productSizeChart: {
-            name: "productSizeChart",
+          options: {
+            name: "options",
             isVisible: false,
           },
-          specialOffer: {
-            name: "specialOffer",
+          sizeChart: {
+            name: "sizeChart",
             isVisible: false,
           },
         },
