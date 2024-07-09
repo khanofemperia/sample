@@ -21,6 +21,32 @@ import OptionsOverlay, {
 import { cookies } from "next/headers";
 import config from "@/libraries/config";
 
+type UpsellType = {
+  id: string;
+  mainImage: string;
+  price: number;
+  discount: DiscountType;
+  items: UpsellItemType[];
+} | null;
+
+type ProductType = {
+  id: string;
+  category: string;
+  name: string;
+  slug: string;
+  price: string;
+  mainImage: string;
+  images: string[] | null;
+  colors: ImageType[] | null;
+  sizes: SizeChartType | null;
+  upsell: UpsellType;
+  description: string | null;
+  highlights: HighlightsType;
+  visibility: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
 function getProduct(): ProductType {
   return {
     id: "05550",
