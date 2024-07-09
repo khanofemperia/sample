@@ -892,7 +892,9 @@ export default async function ProductDetails({
         }}
         productInfo={{
           id,
+          name,
           price,
+          images,
           colors,
           sizeChart: sizes,
         }}
