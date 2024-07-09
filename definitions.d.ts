@@ -23,11 +23,13 @@ type UpsellItemType = {
 
 type UpsellType = {
   id: string;
+  price: string;
+  salePrice: string;
   mainImage: string;
-  price: number;
-  discount: DiscountType;
-  items: UpsellItemType[];
-} | null;
+  visibility: string;
+  createdAt: string;
+  updatedAt: string;
+};
 
 type HighlightsType = {
   headline: string;

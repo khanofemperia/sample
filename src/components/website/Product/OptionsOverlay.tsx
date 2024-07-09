@@ -36,7 +36,7 @@ function ProductColors({
   setSelectedColor,
 }: ProductColorsType) {
   return (
-    <div>
+    <div className="w-max">
       <div className="flex flex-wrap gap-3">
         {colors.map(({ name, image }, index) => (
           <div
@@ -70,7 +70,7 @@ function ProductSizeChart({
   }));
 
   return (
-    <div>
+    <div className="w-max">
       <div className="w-full max-w-[298px] flex flex-wrap gap-[10px]">
         {sizeChart.entryLabels.map((size, index) => (
           <div key={index} className="relative cursor-pointer">
@@ -91,7 +91,7 @@ function ProductSizeChart({
           onClick={() => {
             showOverlay({ pageName, overlayName });
           }}
-          className="bg-lightgray pl-3 pr-8 py-2 mt-2 rounded-lg relative cursor-pointer"
+          className="w-full min-w-52 pl-3 pr-8 py-2 mt-2 rounded-lg relative cursor-pointer bg-lightgray"
         >
           <div>
             {sizeChart.entryLabels.find((label) => label.name === selectedSize)
@@ -343,7 +343,7 @@ export default function OptionsOverlay({
                     </div>
                   </div>
                   <div className="h-full w-full overflow-x-hidden overflow-y-visible invisible-scrollbar">
-                    <div className="flex flex-col gap-8 px-5 pt-4">
+                    <div className="flex flex-col gap-8 px-5 pt-4 pb-3">
                       <>
                         {productInfo.colors &&
                           productInfo.colors?.length > 0 &&
