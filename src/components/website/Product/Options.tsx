@@ -3,9 +3,7 @@
 import Image from "next/image";
 import { ChevronRightIcon } from "@/icons";
 import { useOverlayStore } from "@/zustand/website/overlayStore";
-// import { AddToCartAction } from "@/actions/add-to-cart";
-import { useAlertStore } from "@/zustand/website/alertStore";
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useState } from "react";
 
 type ColorType = {
   name: string;
@@ -160,60 +158,7 @@ export default function ProductOptions({
   const [selectedSize, setSelectedSize] = useState(
     cartInfo.productInCart?.size ?? ""
   );
-  const [isPending, startTransition] = useTransition();
-  const [response, setResponse] = useState<
-    { success: boolean; message: string } | undefined
-  >(undefined);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
-
-  const { showAlert } = useAlertStore();
-  const { hideOverlay } = useOverlayStore();
-
-  const { pageName, overlayName, isOverlayVisible } = useOverlayStore(
-    (state) => ({
-      pageName: state.pages.productDetails.name,
-      overlayName: state.pages.productDetails.overlays.sizeChart.name,
-      isOverlayVisible: state.pages.productDetails.overlays.sizeChart.isVisible,
-    })
-  );
-
-  useEffect(() => {
-    if (isOverlayVisible) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "visible";
-    }
-
-    return () => {
-      document.body.style.overflow = "visible";
-    };
-  }, [isOverlayVisible]);
-
-  const handleAddToCart = async () => {
-    // if (!selectedColor || !selectedSize) {
-    //   return showAlert(!selectedColor ? "Select a color" : "Select a size");
-    // }
-    // startTransition(async () => {
-    //   const result = await AddToCartAction({
-    //     id: productInfo.id,
-    //     color: selectedColor,
-    //     size: selectedSize,
-    //   });
-    //   setResponse(result);
-    // });
-  };
-
-  useEffect(() => {
-    if (response) {
-      if (response.success === false) {
-        showAlert("Error, refresh and try again");
-      } else {
-        console.log(cartInfo.isInCart);
-        console.log(response.success);
-        showAlert(response.message);
-      }
-    }
-  }, [response]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
