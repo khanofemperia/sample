@@ -122,7 +122,7 @@ export default function StickyBar() {
                             </span>
                           </p>
                         </li>
-                        <li className="mt-2 h-7 flex items-center rounded bg-lightgray font-semibold">
+                        <li className="mt-2 flex items-center rounded font-semibold">
                           <p className="mx-auto">You Save $100.00</p>
                         </li>
                       </ul>

@@ -541,7 +541,7 @@ export default async function ProductDetails({
                             </span>
                           </p>
                         </li>
-                        <li className="mt-2 h-7 flex items-center rounded bg-lightgray font-semibold">
+                        <li className="mt-2 flex items-center rounded font-semibold">
                           <p className="mx-auto">You Save $100.00</p>
                         </li>
                       </ul>
@@ -713,7 +713,7 @@ export default async function ProductDetails({
                           </span>
                           <ChevronRightIcon className="-mr-[7px]" size={20} />
                         </button>
-                        <div className="w-[334px] absolute top-[42px] left-0 p-5 rounded-xl shadow-dropdown bg-white before:content-[''] before:w-[14px] before:h-[14px] before:bg-white before:rounded-tl-[2px] before:rotate-45 before:origin-top-left before:absolute before:-top-[10px] before:border-l before:border-t before:border-[#d9d9d9] before:left-16 min-[840px]:before:right-24">
+                        <div className="w-max min-w-[238px] max-w-[334px] absolute top-[42px] left-0 p-5 rounded-xl shadow-dropdown bg-white before:content-[''] before:w-[14px] before:h-[14px] before:bg-white before:rounded-tl-[2px] before:rotate-45 before:origin-top-left before:absolute before:-top-[10px] before:border-l before:border-t before:border-[#d9d9d9] before:left-16 min-[840px]:before:right-24">
                           <Options
                             cartInfo={{
                               isInCart,
@@ -791,7 +791,7 @@ export default async function ProductDetails({
                               </span>
                             </p>
                           </li>
-                          <li className="mt-2 h-7 flex items-center rounded bg-lightgray font-semibold">
+                          <li className="mt-2 flex items-center rounded font-semibold">
                             <p className="mx-auto">You Save $100.00</p>
                           </li>
                         </ul>
