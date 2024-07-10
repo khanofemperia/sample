@@ -1,12 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import {  ChevronRightIcon, CloseIcon } from "@/icons";
+import { ChevronRightIcon, CloseIcon } from "@/icons";
 import { useOverlayStore } from "@/zustand/website/overlayStore";
 import { productInternationalSizes } from "@/libraries/utils";
 // import { AddToCartAction } from "@/actions/add-to-cart";
 import { useAlertStore } from "@/zustand/website/alertStore";
 import { useEffect, useState, useTransition } from "react";
+import Overlay from "@/ui/Overlay";
 
 type ColorType = {
   name: string;
@@ -36,15 +37,15 @@ function ProductColors({
   setSelectedColor,
 }: ProductColorsType) {
   return (
-    <div>
-      <div className="flex flex-wrap gap-2">
+    <div className="w-full">
+      <div className="flex flex-wrap gap-3">
         {colors.map(({ name, image }, index) => (
           <div
             onClick={() => setSelectedColor(name)}
             key={index}
-            className={`relative w-[40px] h-[40px] flex items-center justify-center ${
+            className={`relative w-[40px] h-[40px] flex items-center justify-center cursor-pointer hover:before:content-[''] hover:before:h-12 hover:before:w-12 hover:before:absolute hover:before:rounded-[6px] hover:before:border hover:before:border-black ${
               selectedColor === name &&
-              "before:content-[''] before:h-12 before:w-12 before:absolute before:rounded-[6px] before:border before:border-custom-blue"
+              "before:content-[''] before:h-12 before:w-12 before:absolute before:rounded-[6px] before:border before:border-custom-blue hover:before:!border-custom-blue"
             }`}
           >
             <div className="w-full h-full flex items-center justify-center relative overflow-hidden bg-lightgray border rounded">
@@ -62,16 +63,16 @@ function ProductSizeChart({
   selectedSize,
   setSelectedSize,
 }: ProductSizeChartType) {
-  const { showOverlay } = useOverlayStore();
+  const { showOverlay, hideOverlay } = useOverlayStore();
+
   const { pageName, overlayName } = useOverlayStore((state) => ({
-    pageName: state.pages.post.name,
-    overlayName: state.pages.post.overlays.productSizeChart.name,
-    isOverlayVisible: state.pages.post.overlays.productSizeChart.isVisible,
+    pageName: state.pages.productDetails.name,
+    overlayName: state.pages.productDetails.overlays.sizeChart.name,
   }));
 
   return (
-    <div>
-      <div className="w-[285px] flex flex-wrap gap-[5px]">
+    <div className="w-full">
+      <div className="w-full max-w-[298px] flex flex-wrap gap-[10px]">
         {sizeChart.entryLabels.map((size, index) => (
           <div key={index} className="relative cursor-pointer">
             <div
@@ -88,8 +89,10 @@ function ProductSizeChart({
       </div>
       {selectedSize && (
         <div
-          onClick={() => showOverlay({ pageName, overlayName })}
-          className="bg-lightgray pl-3 pr-8 py-2 mt-2 rounded-lg relative cursor-pointer"
+          onClick={() => {
+            showOverlay({ pageName, overlayName });
+          }}
+          className="w-full py-3 pl-[14px] pr-8 mt-2 rounded-lg relative cursor-pointer bg-lightgray"
         >
           <div>
             {sizeChart.entryLabels.find((label) => label.name === selectedSize)
@@ -99,7 +102,7 @@ function ProductSizeChart({
                   (label) => label.name === selectedSize
                 )!.index - 1
               ].measurements && (
-                <ul className="text-sm max-w-[300px] flex flex-col gap-1">
+                <ul className="leading-3 max-w-[calc(100%-20px)] flex flex-row flex-wrap gap-2">
                   {sizeChart.columns
                     .filter(
                       (column) =>
@@ -112,8 +115,8 @@ function ProductSizeChart({
                     .sort((a, b) => a.index - b.index)
                     .map((column) => (
                       <li key={column.name} className="text-nowrap">
-                        <span className="text-sm text-gray">{`${column.name}: `}</span>
-                        <span className="text-sm font-semibold">
+                        <span className="text-xs text-gray">{`${column.name}: `}</span>
+                        <span className="text-xs font-semibold">
                           {`${
                             sizeChart.sizes[
                               sizeChart.entryLabels.find(
@@ -128,7 +131,7 @@ function ProductSizeChart({
               )}
           </div>
           <ChevronRightIcon
-            className="absolute top-[7px] right-[4px] stroke-neutral-400"
+            className="absolute top-[50%] -translate-y-1/2 right-[6px] stroke-neutral-400"
             size={22}
           />
         </div>
@@ -139,7 +142,7 @@ function ProductSizeChart({
 
 function SizeChartTable({ sizeChart, unit }: SizeChartTableType) {
   return (
-    <div className="border w-full rounded overflow-y-hidden overflow-x-visible invisible-scrollbar">
+    <div className="border w-full max-w-[max-content] rounded overflow-y-hidden overflow-x-visible custom-x-scrollbar">
       <table className="w-max bg-white">
         <thead className="h-10 border-b">
           <tr>
@@ -192,6 +195,25 @@ function SizeChartTable({ sizeChart, unit }: SizeChartTableType) {
   );
 }
 
+export function OptionsButton() {
+  const { showOverlay } = useOverlayStore();
+
+  const { pageName, overlayName } = useOverlayStore((state) => ({
+    pageName: state.pages.productDetails.name,
+    overlayName: state.pages.productDetails.overlays.options.name,
+  }));
+
+  return (
+    <button
+      onClick={() => showOverlay({ pageName, overlayName })}
+      className="h-8 w-max px-4 rounded-full flex items-center justify-center gap-[2px] ease-in-out duration-300 transition bg-lightgray active:bg-lightgray-dimmed lg:hover:bg-lightgray-dimmed"
+    >
+      <span className="text-sm font-medium">Select Color & Size</span>
+      <ChevronRightIcon className="-mr-[7px]" size={20} />
+    </button>
+  );
+}
+
 export default function ProductOptions({
   cartInfo,
   productInfo,
@@ -206,7 +228,9 @@ export default function ProductOptions({
   };
   productInfo: {
     id: string;
+    name: string;
     price: string;
+    images: string[];
     colors: ColorType[] | null;
     sizeChart: SizeChartType | null;
   };
@@ -227,9 +251,9 @@ export default function ProductOptions({
 
   const { pageName, overlayName, isOverlayVisible } = useOverlayStore(
     (state) => ({
-      pageName: state.pages.post.name,
-      overlayName: state.pages.post.overlays.productSizeChart.name,
-      isOverlayVisible: state.pages.post.overlays.productSizeChart.isVisible,
+      pageName: state.pages.productDetails.name,
+      overlayName: state.pages.productDetails.overlays.sizeChart.name,
+      isOverlayVisible: state.pages.productDetails.overlays.sizeChart.isVisible,
     })
   );
 
@@ -309,12 +333,17 @@ export default function ProductOptions({
           />
         )}
       {isOverlayVisible && productInfo.sizeChart && (
-        <div className="custom-scrollbar overflow-x-hidden overflow-y-visible w-screen h-screen z-20 fixed top-0 bottom-0 left-0 right-0 flex justify-center bg-black/60">
+        <Overlay>
           <div className="w-full h-[calc(100%-60px)] rounded-t-2xl absolute bottom-0 overflow-hidden bg-white">
             <div className="flex items-center justify-center pt-5 pb-2">
               <h2 className="font-semibold">Product measurements</h2>
               <button
-                onClick={() => hideOverlay({ pageName, overlayName })}
+                onClick={() => {
+                  hideOverlay({
+                    pageName,
+                    overlayName: overlayName,
+                  });
+                }}
                 className="h-7 w-7 rounded-full absolute right-5 flex items-center justify-center transition duration-300 ease-in-out bg-lightgray active:bg-lightgray-dimmed"
                 type="button"
               >
@@ -322,12 +351,7 @@ export default function ProductOptions({
               </button>
             </div>
             <div className="w-full h-[calc(100%-52px)] px-5 pt-2 pb-[240px] invisible-scrollbar overflow-x-hidden overflow-y-visible">
-              <p className="text-sm text-gray max-w-[300px] w-full mx-auto text-center">
-                Look for words like 'fitted,' 'loose,' and 'baggy' in the
-                product description to better understand how the style will fit
-                you.
-              </p>
-              <div className="flex flex-col gap-6 mt-6">
+              <div className="w-full max-w-[620px] mx-auto flex flex-col gap-6 mt-6">
                 <div>
                   <h3 className="font-semibold mb-4">Inches</h3>
                   <SizeChartTable sizeChart={productInfo.sizeChart} unit="in" />
@@ -340,7 +364,7 @@ export default function ProductOptions({
                   <h3 className="font-semibold mb-4">
                     International size conversions
                   </h3>
-                  <div className="border w-full rounded overflow-y-hidden overflow-x-visible invisible-scrollbar">
+                  <div className="border w-full max-w-[max-content] rounded overflow-y-hidden overflow-x-visible custom-x-scrollbar">
                     <table className="w-max bg-white">
                       <thead className="h-10 border-b">
                         <tr>
@@ -413,32 +437,32 @@ export default function ProductOptions({
               </div>
             </div>
           </div>
-        </div>
+        </Overlay>
       )}
       {/*
-      
-      {cartInfo.isInCart || response?.success ? (
-        <ViewCartButton />
-      ) : (
-        <div className="flex flex-col gap-3">
-          <button
-            onClick={handleAddToCart}
-            type="button"
-            className={`rounded-full flex items-center justify-center px-3 h-12 min-h-12 w-[320px] relative font-semibold text-white bg-[#484848] ease-in-out hover:duration-300 hover:ease-out hover:bg-black ${
-              isPending ? "cursor-context-menu opacity-50" : ""
-            }`}
-            disabled={isPending}
-          >
-            {isPending ? (
-              <SpinnerWhite size={28} />
-            ) : (
-              `Add to Cart - $${formatThousands(productInfo.price)}`
-            )}
-          </button>
-        </div>
-      )}
-      
-      */}
+
+                  {cartInfo.isInCart || response?.success ? (
+                    <ViewCartButton />
+                  ) : (
+                    <div className="flex flex-col gap-3">
+                      <button
+                        onClick={handleAddToCart}
+                        type="button"
+                        className={`rounded-full flex items-center justify-center px-3 h-12 min-h-12 w-[320px] relative font-semibold text-white bg-[#484848] ease-in-out hover:duration-300 hover:ease-out hover:bg-black ${
+                          isPending ? "cursor-context-menu opacity-50" : ""
+                        }`}
+                        disabled={isPending}
+                      >
+                        {isPending ? (
+                          <SpinnerWhite size={28} />
+                        ) : (
+                          `Add to Cart - $${formatThousands(productInfo.price)}`
+                        )}
+                      </button>
+                    </div>
+                  )}
+                  
+                  */}
     </>
   );
 }

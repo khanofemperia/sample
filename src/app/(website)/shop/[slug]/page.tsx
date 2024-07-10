@@ -1,5 +1,4 @@
 import Options from "@/components/website/Product/Options";
-import Upsell from "@/components/website/Product/Upsell";
 import ImageCarousel from "@/components/website/Product/ImageCarousel";
 import styles from "./styles.module.css";
 import {
@@ -7,17 +6,11 @@ import {
   CheckmarkIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
-  SearchIcon,
-  StarIcon,
 } from "@/icons";
 import Images from "@/components/website/Product/Images";
 import Image from "next/image";
 import StickyBar from "@/components/website/Product/StickyBar";
 import Link from "next/link";
-import clsx from "clsx";
-import OptionsOverlay, {
-  OptionsButton,
-} from "@/components/website/Product/OptionsOverlay";
 import { cookies } from "next/headers";
 import config from "@/libraries/config";
 
@@ -487,7 +480,6 @@ export default async function ProductDetails({
                   </div>
                   <div className="flex flex-col gap-5">
                     <span className="font-bold">$49.99</span>
-                    <OptionsButton />
                   </div>
                 </div>
                 <div
@@ -714,7 +706,30 @@ export default async function ProductDetails({
                     </div>
                     <div className="flex flex-col gap-5">
                       <span className="font-bold">$49.99</span>
-                      <OptionsButton />
+                      <div className="bg-blue-200 w-max rounded-full relative">
+                        <button className="h-8 w-max px-4 rounded-full flex items-center justify-center gap-[2px] ease-in-out duration-300 transition bg-lightgray active:bg-lightgray-dimmed lg:hover:bg-lightgray-dimmed">
+                          <span className="text-sm font-medium">
+                            Select Color & Size
+                          </span>
+                          <ChevronRightIcon className="-mr-[7px]" size={20} />
+                        </button>
+                        <div className="w-[334px] absolute top-[42px] left-0 p-5 rounded-xl shadow-dropdown bg-white before:content-[''] before:w-[14px] before:h-[14px] before:bg-white before:rounded-tl-[2px] before:rotate-45 before:origin-top-left before:absolute before:-top-[10px] before:border-l before:border-t before:border-[#d9d9d9] before:left-16 min-[840px]:before:right-24">
+                          <Options
+                            cartInfo={{
+                              isInCart,
+                              productInCart,
+                            }}
+                            productInfo={{
+                              id,
+                              name,
+                              price,
+                              images,
+                              colors,
+                              sizeChart: sizes,
+                            }}
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div
@@ -885,20 +900,6 @@ export default async function ProductDetails({
         </div>
       </main>
       <StickyBar />
-      <OptionsOverlay
-        cartInfo={{
-          isInCart,
-          productInCart,
-        }}
-        productInfo={{
-          id,
-          name,
-          price,
-          images,
-          colors,
-          sizeChart: sizes,
-        }}
-      />
     </>
   );
 }
