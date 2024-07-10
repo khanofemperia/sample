@@ -6,7 +6,7 @@ import { useOverlayStore } from "@/zustand/website/overlayStore";
 import { productInternationalSizes } from "@/libraries/utils";
 // import { AddToCartAction } from "@/actions/add-to-cart";
 import { useAlertStore } from "@/zustand/website/alertStore";
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import Overlay from "@/ui/Overlay";
 
 type ColorType = {
@@ -63,7 +63,7 @@ function ProductSizeChart({
   selectedSize,
   setSelectedSize,
 }: ProductSizeChartType) {
-  const { showOverlay, hideOverlay } = useOverlayStore();
+  const { showOverlay } = useOverlayStore();
 
   const { pageName, overlayName } = useOverlayStore((state) => ({
     pageName: state.pages.productDetails.name,
@@ -195,25 +195,6 @@ function SizeChartTable({ sizeChart, unit }: SizeChartTableType) {
   );
 }
 
-export function OptionsButton() {
-  const { showOverlay } = useOverlayStore();
-
-  const { pageName, overlayName } = useOverlayStore((state) => ({
-    pageName: state.pages.productDetails.name,
-    overlayName: state.pages.productDetails.overlays.options.name,
-  }));
-
-  return (
-    <button
-      onClick={() => showOverlay({ pageName, overlayName })}
-      className="h-8 w-max px-4 rounded-full flex items-center justify-center gap-[2px] ease-in-out duration-300 transition bg-lightgray active:bg-lightgray-dimmed lg:hover:bg-lightgray-dimmed"
-    >
-      <span className="text-sm font-medium">Select Color & Size</span>
-      <ChevronRightIcon className="-mr-[7px]" size={20} />
-    </button>
-  );
-}
-
 export default function ProductOptions({
   cartInfo,
   productInfo,
@@ -245,6 +226,7 @@ export default function ProductOptions({
   const [response, setResponse] = useState<
     { success: boolean; message: string } | undefined
   >(undefined);
+  const [isDropdownVisible, setDropdownVisible] = useState(false);
 
   const { showAlert } = useAlertStore();
   const { hideOverlay } = useOverlayStore();
@@ -295,46 +277,115 @@ export default function ProductOptions({
     }
   }, [response]);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Element;
+
+      if (
+        isDropdownVisible &&
+        !target.closest(".dropdown-container") &&
+        !target.closest(".overlay")
+      ) {
+        setDropdownVisible(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isDropdownVisible]);
+
+  const handleMouseEnter = () => {
+    setDropdownVisible(true);
+  };
+
+  const toggleDropdown = () => {
+    setDropdownVisible((prev) => !prev);
+  };
+
   return (
     <>
-      {productInfo.colors &&
-        productInfo.colors?.length > 0 &&
-        productInfo.sizeChart &&
-        productInfo.sizeChart.entryLabels?.length > 0 && (
-          <div className="flex flex-col gap-4 select-none">
-            <ProductColors
-              colors={productInfo.colors}
-              selectedColor={selectedColor}
-              setSelectedColor={setSelectedColor}
-            />
-            <ProductSizeChart
-              sizeChart={productInfo.sizeChart}
-              selectedSize={selectedSize}
-              setSelectedSize={setSelectedSize}
-            />
+      <div className="dropdown-container w-max rounded-full relative">
+        <button
+          onClick={toggleDropdown}
+          onMouseEnter={handleMouseEnter}
+          className="h-8 w-max px-4 rounded-full flex items-center justify-center gap-[2px] ease-in-out duration-300 transition bg-lightgray active:bg-lightgray-dimmed lg:hover:bg-lightgray-dimmed"
+        >
+          <span className="text-sm font-medium">Select Color & Size</span>
+          <ChevronRightIcon className="-mr-[7px]" size={20} />
+        </button>
+        {isDropdownVisible && (
+          <div className="w-max min-w-[238px] max-w-[334px] absolute top-[42px] left-0 p-5 rounded-xl shadow-dropdown bg-white before:content-[''] before:w-[14px] before:h-[14px] before:bg-white before:rounded-tl-[2px] before:rotate-45 before:origin-top-left before:absolute before:-top-[10px] before:border-l before:border-t before:border-[#d9d9d9] before:left-16 min-[840px]:before:right-24">
+            <>
+              {productInfo.colors &&
+                productInfo.colors?.length > 0 &&
+                productInfo.sizeChart &&
+                productInfo.sizeChart.entryLabels?.length > 0 && (
+                  <div className="flex flex-col gap-4 select-none">
+                    <ProductColors
+                      colors={productInfo.colors}
+                      selectedColor={selectedColor}
+                      setSelectedColor={setSelectedColor}
+                    />
+                    <ProductSizeChart
+                      sizeChart={productInfo.sizeChart}
+                      selectedSize={selectedSize}
+                      setSelectedSize={setSelectedSize}
+                    />
+                  </div>
+                )}
+              {productInfo.colors &&
+                productInfo.colors?.length > 0 &&
+                !productInfo.sizeChart && (
+                  <ProductColors
+                    colors={productInfo.colors}
+                    selectedColor={selectedColor}
+                    setSelectedColor={setSelectedColor}
+                  />
+                )}
+              {productInfo.colors?.length === 0 &&
+                productInfo.sizeChart &&
+                productInfo.sizeChart.entryLabels?.length > 0 && (
+                  <ProductSizeChart
+                    sizeChart={productInfo.sizeChart}
+                    selectedSize={selectedSize}
+                    setSelectedSize={setSelectedSize}
+                  />
+                )}
+
+              {/*
+
+                  {cartInfo.isInCart || response?.success ? (
+                    <ViewCartButton />
+                  ) : (
+                    <div className="flex flex-col gap-3">
+                      <button
+                        onClick={handleAddToCart}
+                        type="button"
+                        className={`rounded-full flex items-center justify-center px-3 h-12 min-h-12 w-[320px] relative font-semibold text-white bg-[#484848] ease-in-out hover:duration-300 hover:ease-out hover:bg-black ${
+                          isPending ? "cursor-context-menu opacity-50" : ""
+                        }`}
+                        disabled={isPending}
+                      >
+                        {isPending ? (
+                          <SpinnerWhite size={28} />
+                        ) : (
+                          `Add to Cart - $${formatThousands(productInfo.price)}`
+                        )}
+                      </button>
+                    </div>
+                  )}
+                  
+                  */}
+            </>
           </div>
         )}
-      {productInfo.colors &&
-        productInfo.colors?.length > 0 &&
-        !productInfo.sizeChart && (
-          <ProductColors
-            colors={productInfo.colors}
-            selectedColor={selectedColor}
-            setSelectedColor={setSelectedColor}
-          />
-        )}
-      {productInfo.colors?.length === 0 &&
-        productInfo.sizeChart &&
-        productInfo.sizeChart.entryLabels?.length > 0 && (
-          <ProductSizeChart
-            sizeChart={productInfo.sizeChart}
-            selectedSize={selectedSize}
-            setSelectedSize={setSelectedSize}
-          />
-        )}
+      </div>
       {isOverlayVisible && productInfo.sizeChart && (
         <Overlay>
-          <div className="w-full h-[calc(100%-60px)] rounded-t-2xl absolute bottom-0 overflow-hidden bg-white">
+          <div className="size-chart-container w-full h-[calc(100%-60px)] rounded-t-2xl absolute bottom-0 overflow-hidden bg-white">
             <div className="flex items-center justify-center pt-5 pb-2">
               <h2 className="font-semibold">Product measurements</h2>
               <button
@@ -439,30 +490,6 @@ export default function ProductOptions({
           </div>
         </Overlay>
       )}
-      {/*
-
-                  {cartInfo.isInCart || response?.success ? (
-                    <ViewCartButton />
-                  ) : (
-                    <div className="flex flex-col gap-3">
-                      <button
-                        onClick={handleAddToCart}
-                        type="button"
-                        className={`rounded-full flex items-center justify-center px-3 h-12 min-h-12 w-[320px] relative font-semibold text-white bg-[#484848] ease-in-out hover:duration-300 hover:ease-out hover:bg-black ${
-                          isPending ? "cursor-context-menu opacity-50" : ""
-                        }`}
-                        disabled={isPending}
-                      >
-                        {isPending ? (
-                          <SpinnerWhite size={28} />
-                        ) : (
-                          `Add to Cart - $${formatThousands(productInfo.price)}`
-                        )}
-                      </button>
-                    </div>
-                  )}
-                  
-                  */}
     </>
   );
 }
