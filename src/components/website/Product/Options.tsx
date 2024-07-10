@@ -297,20 +297,11 @@ export default function ProductOptions({
     };
   }, [isDropdownVisible]);
 
-  const handleMouseEnter = () => {
-    setDropdownVisible(true);
-  };
-
-  const toggleDropdown = () => {
-    setDropdownVisible((prev) => !prev);
-  };
-
   return (
     <>
       <div className="dropdown-container w-max rounded-full relative">
         <button
-          onClick={toggleDropdown}
-          onMouseEnter={handleMouseEnter}
+          onClick={() => setDropdownVisible((prev) => !prev)}
           className="h-8 w-max px-4 rounded-full flex items-center justify-center gap-[2px] ease-in-out duration-300 transition bg-lightgray active:bg-lightgray-dimmed lg:hover:bg-lightgray-dimmed"
         >
           <span className="text-sm font-medium">Select Color & Size</span>
