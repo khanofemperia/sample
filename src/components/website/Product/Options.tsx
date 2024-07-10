@@ -6,7 +6,7 @@ import { useOverlayStore } from "@/zustand/website/overlayStore";
 import { productInternationalSizes } from "@/libraries/utils";
 // import { AddToCartAction } from "@/actions/add-to-cart";
 import { useAlertStore } from "@/zustand/website/alertStore";
-import { useEffect, useRef, useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import Overlay from "@/ui/Overlay";
 
 type ColorType = {
