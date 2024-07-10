@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 const SCROLL_THRESHOLD = 1040;
 
-export default function StickyBar() {
+export default function StickyBar({ Options }: { Options: React.ReactNode }) {
   const [barIsHidden, setBarIsHidden] = useState(true);
 
   useEffect(() => {
@@ -49,10 +49,7 @@ export default function StickyBar() {
           </div>
           <div className="h-full flex gap-5 items-center">
             <span className="font-bold">$49.99</span>
-            <button className="h-8 w-max px-4 rounded-full flex items-center justify-center gap-[2px] ease-in-out duration-300 transition bg-lightgray hover:bg-lightgray-dimmed">
-              <span className="text-sm font-medium">Select Color & Size</span>
-              <ChevronRightIcon className="-mr-[7px]" size={20} />
-            </button>
+            {Options}
           </div>
         </div>
         <div className="w-[348px] min-[840px]:w-[410px] flex gap-3">

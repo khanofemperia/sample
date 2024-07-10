@@ -13,6 +13,7 @@ import StickyBar from "@/components/website/Product/StickyBar";
 import Link from "next/link";
 import { cookies } from "next/headers";
 import config from "@/libraries/config";
+import OptionsOverlay from "@/components/website/Product/OptionsOverlay";
 
 type UpsellType = {
   id: string;
@@ -903,7 +904,34 @@ export default async function ProductDetails({
           </div>
         </div>
       </main>
-      <StickyBar />
+      <StickyBar
+        Options={
+          <Options
+            cartInfo={{
+              isInCart,
+              productInCart,
+            }}
+            productInfo={{
+              id,
+              name,
+              price,
+              images,
+              colors,
+              sizeChart: sizes,
+            }}
+          />
+        }
+      />
+      <OptionsOverlay
+        productInfo={{
+          id,
+          name,
+          price,
+          images,
+          colors,
+          sizeChart: sizes,
+        }}
+      />
     </>
   );
 }
